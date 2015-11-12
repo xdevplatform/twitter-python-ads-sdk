@@ -1,0 +1,14 @@
+language: python
+
+matrix:
+  include:
+    - python: 2.7
+      script: python setup.py flake8 && python setup.py test
+    - python: 3.2
+      script: python setup.py test
+    - python: 3.3
+      script: python setup.py test
+    - python: 3.4
+      script: python setup.py test
+    - python: pypy
+      script: python setup.py flake8 && python setup.py test
