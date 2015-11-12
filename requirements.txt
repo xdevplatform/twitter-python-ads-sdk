@@ -1,0 +1,7 @@
+pyyaml
+requests-oauthlib
+python-dateutil
+nose
+httpretty
+mock
+pylint
