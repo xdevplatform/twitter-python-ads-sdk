@@ -15,10 +15,9 @@ Quick Start
 .. code:: python
 
     import twitter_ads
-    from twitter_ads import *
 
     # initialize the client
-    client = Client(
+    client = twitter_ads.Client(
       consumer_key, consumer_secret, access_token,
       access_token_secret, sandbox=True)
 
