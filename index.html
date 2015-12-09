@@ -1,0 +1,156 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Twitter Ads API SDK for Python by twitterdev</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Twitter Ads API SDK for Python</h1>
+        <p>A Twitter supported and maintained Ads API SDK for Python.</p>
+
+        <p class="view"><a href="https://github.com/twitterdev/twitter-python-ads-sdk">View the Project on GitHub <small>twitterdev/twitter-python-ads-sdk</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/twitterdev/twitter-python-ads-sdk/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/twitterdev/twitter-python-ads-sdk/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/twitterdev/twitter-python-ads-sdk">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <p><a href="https://travis-ci.org/twitterdev/twitter-python-ads-sdk"><img src="https://travis-ci.org/twitterdev/twitter-python-ads-sdk.svg?branch=master" alt="Build Status"></a> <a href="https://codeclimate.com/github/twitterdev/twitter-python-ads-sdk"><img src="https://codeclimate.com/github/twitterdev/twitter-python-ads-sdk/badges/gpa.svg" alt="Code Climate"></a> <a href="http://badge.fury.io/rb/twitter-ads"><img src="https://badge.fury.io/py/twitter-ads.svg" alt="PyPy Version"></a></p>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<pre lang="sourceCode"><code># installing the latest signed release
+pip install twitter-ads
+</code></pre>
+
+<h2>
+<a id="quick-start" class="anchor" href="#quick-start" aria-hidden="true"><span class="octicon octicon-link"></span></a>Quick Start</h2>
+
+<pre lang="sourceCode"><code>from twitter_ads.client import Client
+from twitter_ads.account import Account
+from twitter_ads.campaign import Campaign
+
+CONSUMER_KEY = 'your consumer key'
+CONSUMER_SECRET = 'your consumer secret'
+ACCESS_TOKEN = 'access token'
+ACCESS_TOKEN_SECRET = 'access token secret'
+ACCOUNT_ID = 'account id'
+
+# initialize the client
+client = Client(
+    CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
+
+# load the advertiser account instance
+account = client.accounts(id=ACCOUNT_ID)
+
+# load and update a specific campaign
+campaign = account.campaigns().next()
+campaign.name = 'updated campaign name'
+campaign.paused = True
+campaign.save()
+
+# iterate through campaigns
+for campaign in account.campaigns():
+    print(campaign.id)
+</code></pre>
+
+<h2>
+<a id="command-line-helper" class="anchor" href="#command-line-helper" aria-hidden="true"><span class="octicon octicon-link"></span></a>Command Line Helper</h2>
+
+<pre lang="sourceCode"><code># The twitter-ads command launches an interactive session for testing purposes
+# with a client instance automatically loaded from your .twurlrc file.
+
+~ ❯ twitter-ads
+</code></pre>
+
+<p>For more help please see our <a href="https://github.com/twitterdev/twitter-python-ads-sdk/tree/master/examples">Examples and Guides</a> or check the online <a href="http://twitterdev.github.io/twitter-python-ads-sdk/reference/index.html">Reference Documentation</a>.</p>
+
+<h1>
+<a id="compatibility--versioning" class="anchor" href="#compatibility--versioning" aria-hidden="true"><span class="octicon octicon-link"></span></a>Compatibility &amp; Versioning</h1>
+
+<p>This project is designed to work with Python 2.7 or greater. While it may work on other version of Python, below are the platform and runtime versions we officially support and regularly test against.</p>
+
+<table>
+
+
+
+
+<thead>
+<tr>
+<th align="left">Platform</th>
+<th align="left">Versions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">CPython</td>
+<td align="left">2.7, 3.2, 3.3, 3.4</td>
+</tr>
+<tr>
+<td align="left">PyPy</td>
+<td align="left">2.x, 4.x</td>
+</tr>
+</tbody>
+</table>
+
+<p>All releases adhere to strict <a href="http://semver.org">semantic versioning</a>. For Example, major.minor.patch-pre (aka. stick.carrot.oops-peek).</p>
+
+<h1>
+<a id="development" class="anchor" href="#development" aria-hidden="true"><span class="octicon octicon-link"></span></a>Development</h1>
+
+<p>If you’d like to contribute to the project or try an unreleased development version of this project locally, you can do so quite easily by following the examples below.</p>
+
+<pre lang="sourceCode"><code># clone the repository
+git clone git@github.com:twitterdev/twitter-python-ads-sdk.git
+cd twitter-python-ads-sdk
+
+# install dependencies
+pip install -r requirements.txt
+
+# installing a local unsigned release
+pip install -e .
+</code></pre>
+
+<p>We love community contributions! If you’re planning to send us a pull request, please make sure read our <a href="https://github.com/twitterdev/twitter-python-ads-sdk/blob/master/CONTRIBUTING.md">Contributing Guidelines</a> first.</p>
+
+<h1>
+<a id="feedback-and-bug-reports" class="anchor" href="#feedback-and-bug-reports" aria-hidden="true"><span class="octicon octicon-link"></span></a>Feedback and Bug Reports</h1>
+
+<p>Found an issue? Please open up a <a href="https://github.com/twitterdev/twitter-python-ads-sdk/issues">GitHub issue</a> or even better yet <a href="https://github.com/twitterdev/twitter-python-ads-sdk/blob/master/CONTRIBUTING.md">send us</a> a pull request. Have a question? Want to discuss a new feature? Come chat with us in the <a href="https://twittercommunity.com/c/advertiser-api">Twitter Community Forums</a>.</p>
+
+<h1>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h1>
+
+<p>The MIT License (MIT)</p>
+
+<p>Copyright (C) 2015 Twitter, Inc.</p>
+
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+
+<p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+
+<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/twitterdev">twitterdev</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
