@@ -32,7 +32,7 @@ Submitting A Pull Request
 
     git clone git@github.com:twitterdev/twitter-python-ads-sdk.git
 
-2) Install development dependencies (virtualenv recommended):
+2) Install development dependencies (`virtualenv recommended`_):
 
 .. code:: bash
 
@@ -79,3 +79,4 @@ and what type of upcoming release its best suited for.
 .. _good commit message: http://chris.beams.io/posts/git-commit/
 .. _pull request: https://github.com/thoughtbot/suspenders/compare/
 .. _semantic versioning: http://semver.org/
+.. _virtualenv recommended: https://virtualenv.readthedocs.org
