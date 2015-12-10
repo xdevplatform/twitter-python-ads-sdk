@@ -1,3 +1,5 @@
+# Copyright (C) 2015 Twitter, Inc.
+
 import os
 import sys
 from setuptools import setup, find_packages
