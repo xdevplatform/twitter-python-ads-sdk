@@ -140,4 +140,4 @@ SOFTWARE.
 .. |Code Climate| image:: https://codeclimate.com/github/twitterdev/twitter-python-ads-sdk/badges/gpa.svg
    :target: https://codeclimate.com/github/twitterdev/twitter-python-ads-sdk
 .. |PyPy Version| image:: https://badge.fury.io/py/twitter-ads.svg
-   :target: http://badge.fury.io/rb/twitter-ads
+   :target: http://badge.fury.io/py/twitter-ads
