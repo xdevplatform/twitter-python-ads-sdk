@@ -58,7 +58,7 @@ length allowed) and we use `Flake8`_ to enforce style and code quality.
 
 6) Submit your changes!
 
--  Squash your development commits.
+-  `Squash`_ your development commits. Put features in a single clean commit whenever possible or logically split it into a few commits (no development commits). Test coverage can be included in a separate commit if preferred.
 -  Write a `good commit message`_ for your change.
 -  Push to your fork.
 -  Submit a `pull request`_.
@@ -80,3 +80,4 @@ and what type of upcoming release its best suited for.
 .. _pull request: https://github.com/thoughtbot/suspenders/compare/
 .. _semantic versioning: http://semver.org/
 .. _virtualenv recommended: https://virtualenv.readthedocs.org
+.. _Squash: http://eli.thegreenplace.net/2014/02/19/squashing-github-pull-requests-into-a-single-commit
