@@ -32,7 +32,7 @@ Submitting A Pull Request
 
     git clone git@github.com:twitterdev/twitter-python-ads-sdk.git
 
-2) Install development dependencies:
+2) Install development dependencies (virtualenv recommended):
 
 .. code:: bash
 
@@ -46,7 +46,7 @@ Submitting A Pull Request
 
 4) Make your changes! (Don’t forget tests and documentation)
 
-5) Test your changes again and make sure everything passes:
+5) Check style and test your changes again to make sure everything is green:
 
 .. code:: bash
 
@@ -54,7 +54,7 @@ Submitting A Pull Request
 
 The test suite will automatically enforce test coverage and code style.
 This project adhere’s fully to the `PEP-8 style guide`_ (100 character line
-length allowed) and we use `PyLint`_ to enforce style and code quality.
+length allowed) and we use `Flake8`_ to enforce style and code quality.
 
 6) Submit your changes!
 
@@ -75,7 +75,7 @@ and what type of upcoming release its best suited for.
 
 .. _reporting an issue: https://github.com/twitterdev/twitter-python-ads-sdk/issues?q=is%3Aopen+is%3Aissue
 .. _PEP-8 style guide: https://www.python.org/dev/peps/pep-0008
-.. _PyLint: https://github.com/twitterdev/twitter-python-ads-sdk/blob/master/.pylintrc
+.. _Flake8: https://github.com/twitterdev/twitter-python-ads-sdk/blob/master/setup.cfg
 .. _good commit message: http://chris.beams.io/posts/git-commit/
 .. _pull request: https://github.com/thoughtbot/suspenders/compare/
 .. _semantic versioning: http://semver.org/
