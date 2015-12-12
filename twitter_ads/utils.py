@@ -6,6 +6,6 @@ from twitter_ads import VERSION
 
 
 def get_version():
-    if isinstance(VERSION[-1], int):
+    if isinstance(VERSION[-1], str):
         return '.'.join(map(str, VERSION[:-1])) + VERSION[-1]
     return '.'.join(map(str, VERSION))
