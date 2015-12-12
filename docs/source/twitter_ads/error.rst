@@ -1,6 +1,6 @@
-:mod:`error` -- Module for all error types raised by the SDK
+:mod:`error`
 ============================================================
 
-.. automodule:: twitter_ads.error
+.. automodule:: error
    :synopsis: Module for all error types raised by the SDK.
    :members:
