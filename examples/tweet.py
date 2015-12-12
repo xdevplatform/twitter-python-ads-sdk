@@ -22,12 +22,12 @@ account = client.accounts(ACCOUNT_ID)
 Tweet.preview(account, id=661845592138776576)
 
 # preview a new tweet
-Tweet.preview(status='Hello @AdsAPI!')
-Tweet.preview(status='Hello @AdsAPI!', media_ids=[634458428836962305, 634458428836962306])
+Tweet.preview(account, status='Hello @AdsAPI!')
+Tweet.preview(account, status='Hello @AdsAPI!', media_ids=[634458428836962305, 634458428836962306])
 
 # preview a new tweet with an embedded card
 website_card = WebsiteCard.load(account, 'xyz1')
-Tweet.preview(status='Hello @AdsAPI!', card_id=website_card.id)
+Tweet.preview(account, status='Hello @AdsAPI!', card_id=website_card.id)
 
 # create a new null-casted tweet
 Tweet.create(account, status='Hello from Python @AdsAPI!')
