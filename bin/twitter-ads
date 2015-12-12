@@ -1,6 +1,12 @@
 #!/usr/bin/env python
 
-import os, yaml, code, sys
+import os
+import yaml
+import code
+import sys
+import readline
+import rlcompleter
+import atexit
 
 try:
     import twitter_ads
@@ -27,7 +33,19 @@ if os.path.isfile(twurl_path):
                         default_profile['token'],
                         default_profile['secret'])
 
-# begin an interactive session
+# tab completion
+readline.parse_and_bind('tab: complete')
+
+# history file
+histfile = os.path.join(os.environ['HOME'], '.pythonhistory')
+try:
+    readline.read_history_file(histfile)
+except IOError:
+    pass
+atexit.register(readline.write_history_file, histfile)
+del os, histfile, readline, rlcompleter
+
+# start interactive session
 init_with = { 'CLIENT': CLIENT } if CLIENT else {}
 code.InteractiveConsole(locals=init_with).interact(
     BANNER.format(twitter_ads.utils.get_version()))
