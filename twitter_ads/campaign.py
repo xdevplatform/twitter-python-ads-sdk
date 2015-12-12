@@ -223,3 +223,35 @@ class LineItem(Resource, Persistence, Analytics):
             return TargetingCriteria.all(self.account, self.id, **kwargs)
         else:
             return TargetingCriteria.load(self.account, id, **kwargs)
+
+
+class Tweet(object):
+
+    TWEET_PREVIEW = '/0/accounts/{account_id}/tweet/preview'
+    TWEET_ID_PREVIEW = '/0/accounts/{account_id}/tweet/preview/{id}'
+    TWEET_CREATE = '/0/accounts/{account_id}/tweet'
+
+    def __init__(self):
+        raise StandardError(
+            'Error! {name} cannot be instantiated.'.format(name=self.__class__.__name__))
+
+    @classmethod
+    def preview(klass, account, **kwargs):
+        """
+        Returns an HTML preview of a tweet, either new or existing.
+        """
+        resource = klass.TWEET_ID_PREVIEW if kwargs.get('id') else klass.TWEET_PREVIEW
+        resource = resource.format(account_id=account.id, id=kwargs.get('id'))
+        response = Request(account.client(), 'get', resource, params=kwargs).perform()
+        return response.body['data']
+
+    @classmethod
+    def create(klass, account, status, **kwargs):
+        """
+        Creates a "Promoted-Only" Tweet using the specialized Ads API end point.
+        """
+        params = {'status': status}
+        params.update(kwargs)
+        resource = klass.TWEET_CREATE.format(account_id=account.id)
+        response = Request(account.client(), 'post', resource, params=params).perform()
+        return response.body['data']
