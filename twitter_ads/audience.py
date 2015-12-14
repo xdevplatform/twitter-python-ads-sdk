@@ -2,28 +2,11 @@
 
 """Container for all audience management logic used by the Ads API SDK."""
 
-from twitter_ads.enum import TA_OPERATIONS
-from twitter_ads.resource import resource, Resource
+from twitter_ads.enum import TA_OPERATIONS, TRANSFORM
+from twitter_ads.resource import resource_property, Resource
 
 
-@resource
 class TailoredAudience(Resource):
-
-    PROPERTIES = {
-        'id': {'readonly': True},
-        'created_at': {'readonly': True, 'transform': 'time'},
-        'updated_at': {'readonly': True, 'transform': 'time'},
-        'deleted': {'readonly': True},
-        'audience_size': {'readonly': True},
-        'audience_type': {'readonly': True},
-        'metadata': {'readonly': True},
-        'partner_source': {'readonly': True},
-        'reasons_not_targetable': {'readonly': True},
-        'targetable': {'readonly': True},
-        'targetable_types': {'readonly': True},
-        'name': {},
-        'list_type': {}
-    }
 
     RESOURCE_COLLECTION = '/0/accounts/{account_id}/tailored_audiences'
     RESOURCE = '/0/accounts/{account_id}/tailored_audiences/{id}'
@@ -63,3 +46,20 @@ class TailoredAudience(Resource):
         audience instance.
         """
         raise NotImplementedError
+
+# tailored audience properties
+# read-only
+resource_property(TailoredAudience, 'id', readonly=True)
+resource_property(TailoredAudience, 'created_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(TailoredAudience, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(TailoredAudience, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
+resource_property(TailoredAudience, 'audience_size', readonly=True)
+resource_property(TailoredAudience, 'audience_type', readonly=True)
+resource_property(TailoredAudience, 'metadata', readonly=True)
+resource_property(TailoredAudience, 'partner_source', readonly=True)
+resource_property(TailoredAudience, 'reasons_not_targetable', readonly=True)
+resource_property(TailoredAudience, 'targetable', readonly=True)
+resource_property(TailoredAudience, 'targetable_types', readonly=True)
+# writable
+resource_property(TailoredAudience, 'name')
+resource_property(TailoredAudience, 'list_type')

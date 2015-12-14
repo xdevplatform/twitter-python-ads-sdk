@@ -4,17 +4,17 @@
 A Twitter supported and maintained Ads API SDK for Python.
 """
 
+from twitter_ads.enum import TRANSFORM
 from twitter_ads.http import Request
 from twitter_ads.cursor import Cursor
 
-from twitter_ads.resource import (resource, Resource)
+from twitter_ads.resource import resource_property, Resource
 from twitter_ads.creative import Video
 from twitter_ads.audience import TailoredAudience
 from twitter_ads.campaign import (FundingInstrument, Campaign, LineItem,
                                   AppList, PromotableUser)
 
 
-@resource
 class Account(Resource):
     """
     The Ads API :class:`Account` class which functions as a context container
@@ -25,17 +25,6 @@ class Account(Resource):
     RESOURCE = '/0/accounts/{id}'
     FEATURES = '/0/accounts/{id}/features'
     SCOPED_TIMELINE = '/0/accounts/{id}/scoped_timeline'
-
-    PROPERTIES = {
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'salt': {'readonly': True},
-        'timezone': {'readonly': True},
-        'timezone_switch_at': {'readonly': True, 'transform': 'time'},
-        'created_at': {'readonly': True, 'transform': 'time'},
-        'updated_at': {'readonly': True, 'transform': 'time'},
-        'deleted': {'readonly': True}
-    }
 
     def __init__(self, client):
         self._client = client
@@ -150,3 +139,13 @@ class Account(Resource):
             self.client(), 'get', resource, params=params).perform()
 
         return response.body['data']
+
+# account properties
+resource_property(Account, 'id', readonly=True)
+resource_property(Account, 'name', readonly=True)
+resource_property(Account, 'salt', readonly=True)
+resource_property(Account, 'timezone', readonly=True)
+resource_property(Account, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
+resource_property(Account, 'timezone_switch_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(Account, 'created_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(Account, 'updated_at', readonly=True, transform=TRANSFORM.TIME)

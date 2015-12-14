@@ -40,7 +40,7 @@ CLASSIFIERS = [
 
 extra_opts = {
     'setup_requires': ['pytest-runner'],
-    'tests_require': ['pytest', 'httpretty']
+    'tests_require': ['pytest']
 }
 
 if sys.version_info[0] != 3:
