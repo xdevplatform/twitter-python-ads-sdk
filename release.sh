@@ -6,9 +6,6 @@ RELEASE=$(printf "from twitter_ads.utils import get_version\nprint(get_version()
 git tag "v$RELEASE"
 git push --tags
 
-# push to pypi
-python setup.py sdist upload
-
 # clean and build new docs
 cd docs && make clean && make html && cd ..
 
@@ -20,3 +17,6 @@ git add reference
 git commit -m "\"[update] docs refresh for $RELEASE\""
 git push origin HEAD:gh-pages
 git checkout master
+
+# push to pypi
+python setup.py sdist upload
