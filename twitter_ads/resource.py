@@ -5,7 +5,8 @@
 import datetime
 import dateutil.parser
 
-from twitter_ads.enum import TRANSFORM
+from twitter_ads.utils import format_time, to_time
+from twitter_ads.enum import TRANSFORM, GRANULARITY
 from twitter_ads.http import Request
 from twitter_ads.cursor import Cursor
 
@@ -64,7 +65,7 @@ class Resource(object):
                 continue
 
             if isinstance(value, datetime.datetime):
-                params[name] = value.strftime('%Y-%m-%dT%H:%M:%SZ')
+                params[name] = format_time(value)
             elif isinstance(value, list):
                 params[name] = ','.join(map(str, value))
             elif isinstance(value, bool):
@@ -166,15 +167,40 @@ class Analytics(object):
     Container for all analytics related logic used by API resource objects.
     """
 
-    @classmethod
-    def stats(klass, account, ids, metrics, **kwargs):
-        """
-        Pulls a list of metrics for a specified set of object IDs.
-        """
-        raise NotImplementedError
+    ANALYTICS_MAP = {
+        'LineItem': 'line_item_ids',
+        'OrganicTweet': 'tweet_ids',
+        'Tweet': 'tweet_ids',
+        'PromotedTweet': 'promoted_tweet_ids'
+    }
 
     def stats(self, metrics, **kwargs):  # noqa
         """
         Pulls a list of metrics for the current object instance.
         """
-        return self.__class__.stats(self.account, self.id, metrics, kwargs)
+        return self.__class__.all_stats(self.account, [self.id], metrics, **kwargs)
+
+    @classmethod
+    def all_stats(klass, account, ids, metrics, **kwargs):
+        """
+        Pulls a list of metrics for a specified set of object IDs.
+        """
+        end_time = kwargs.get('end_time', datetime.datetime.utcnow())
+        start_time = kwargs.get('start_time', end_time - datetime.timedelta(seconds=604800))
+        granularity = kwargs.get('granularity', GRANULARITY.HOUR)
+        segmentation_type = kwargs.get('segmentation_type', None)
+
+        params = {
+            'metrics': ','.join(metrics),
+            'start_time': to_time(start_time, granularity),
+            'end_time': to_time(end_time, granularity),
+            'granularity': granularity.upper()
+        }
+        if segmentation_type is not None:
+            params['segmentation_type'] = segmentation_type.upper()
+
+        params[klass.ANALYTICS_MAP[klass.__name__]] = ','.join(ids)
+
+        resource = klass.RESOURCE_STATS.format(account_id=account.id)
+        response = Request(account.client(), 'get', resource, params=params).perform()
+        return response.body['data']

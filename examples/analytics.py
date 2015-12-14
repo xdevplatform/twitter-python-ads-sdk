@@ -34,4 +34,4 @@ line_items[0].stats(metrics)
 
 # fetching stats for multiple line items
 ids = map(lambda x: x.id, line_items)
-LineItem.stats(account, ids, metrics)
+LineItem.all_stats(account, ids, metrics)
