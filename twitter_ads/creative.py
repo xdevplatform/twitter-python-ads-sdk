@@ -4,6 +4,7 @@
 
 from twitter_ads.enum import TRANSFORM
 from twitter_ads.resource import resource_property, Resource, Persistence, Analytics
+from twitter_ads.http import Request
 
 
 class PromotedAccount(Resource, Persistence):
@@ -44,6 +45,31 @@ class PromotedTweet(Resource, Persistence, Analytics):
     @property
     def account(self):
         return self._account
+
+    def save(self):
+        """
+        Saves or updates the current object instance depending on the
+        presence of `object.id`.
+        """
+        if self.id:
+            method = 'put'
+            resource = self.RESOURCE.format(
+                account_id=self.account.id, id=self.id)
+        else:
+            method = 'post'
+            resource = self.RESOURCE_COLLECTION.format(
+                account_id=self.account.id)
+
+        params = self.to_params()
+        if 'tweet_id' in params:
+            params['tweet_ids'] = [params['tweet_id']]
+            del params['tweet_id']
+
+        response = Request(
+            self.account.client(), method,
+            resource, params=params).perform()
+
+        self.from_response(response.body['data'])
 
 # promoted tweet properties
 # read-only

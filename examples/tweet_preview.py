@@ -26,7 +26,7 @@ Tweet.preview(account, status='Hello @AdsAPI!')
 Tweet.preview(account, status='Hello @AdsAPI!', media_ids=[634458428836962305, 634458428836962306])
 
 # preview a new tweet with an embedded card
-website_card = WebsiteCard.load(account, 'xyz1')
+website_card = WebsiteCard.all(account).next()
 Tweet.preview(account, status='Hello @AdsAPI!', card_id=website_card.id)
 
 # create a new null-casted tweet
@@ -34,5 +34,5 @@ Tweet.create(account, status='Hello from Python @AdsAPI!')
 Tweet.create(account, status='Hello @AdsAPI!', media_ids=[634458428836962305, 634458428836962306])
 
 # create a new null-casted tweet with an embedded card
-website_card = WebsiteCard.load(account, 'xyz2')
+website_card = WebsiteCard.all(account).next()
 Tweet.create(account, status='Hello @AdsAPI! {link}'.format(link=website_card.preview_url))

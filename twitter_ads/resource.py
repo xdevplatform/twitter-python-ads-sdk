@@ -15,10 +15,8 @@ def resource_property(klass, name, **kwargs):
         klass.PROPERTIES[name] = kwargs
 
         def getter(self):
-            default = kwargs.get('default', None)
-            if kwargs.get('transform', None):
-                default = kwargs.get('default', None) or kwargs.get('transform', None)
-            return getattr(self, '_%s' % name, default)
+            return getattr(self, '_%s' % name, kwargs.get('default', None))
+
         if kwargs.get('readonly', False):
             setattr(klass, name, property(getter))
         else:
@@ -59,18 +57,17 @@ class Resource(object):
         params = {}
         for name in self.PROPERTIES:
             attr = '_{0}'.format(name)
-            transform = self.PROPERTIES[name].get('transform', None)
             value = getattr(self, attr, None) or getattr(self, name, None)
 
             # skip attribute
             if value is None:
                 continue
 
-            if isinstance(value, datetime.datetime) or transform == TRANSFORM.TIME:
+            if isinstance(value, datetime.datetime):
                 params[name] = value.strftime('%Y-%m-%dT%H:%M:%SZ')
-            elif isinstance(value, list) or transform == TRANSFORM.LIST:
+            elif isinstance(value, list):
                 params[name] = ','.join(map(str, value))
-            elif isinstance(value, bool) or transform == TRANSFORM.BOOL:
+            elif isinstance(value, bool):
                 params[name] = str(value).lower()
             else:
                 params[name] = value
