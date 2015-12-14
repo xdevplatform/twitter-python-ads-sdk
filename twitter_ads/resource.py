@@ -5,31 +5,32 @@
 import datetime
 import dateutil.parser
 
+from twitter_ads.enum import TRANSFORM
 from twitter_ads.http import Request
 from twitter_ads.cursor import Cursor
 
 
-def resource(klass):
-    """Class decorator for API resource objects."""
-    for prop in klass.PROPERTIES:
-        klass.create_property(prop, **(klass.PROPERTIES[prop] or {}))
-    return klass
-
-
-class Resource(object):
-    """Base class for all API resource objects."""
-
-    @classmethod
-    def create_property(klass, name, **kwargs):
+def resource_property(klass, name, **kwargs):
         """Builds a resource object property."""
+        klass.PROPERTIES[name] = kwargs
+
         def getter(self):
-            return getattr(self, '_%s' % name, kwargs.get('default', None))
+            default = kwargs.get('default', None)
+            if kwargs.get('transform', None):
+                default = kwargs.get('default', None) or kwargs.get('transform', None)
+            return getattr(self, '_%s' % name, default)
         if kwargs.get('readonly', False):
             setattr(klass, name, property(getter))
         else:
             def setter(self, value):
                 setattr(self, '_%s' % name, value)
             setattr(klass, name, property(getter, setter))
+
+
+class Resource(object):
+    """Base class for all API resource objects."""
+
+    PROPERTIES = {}
 
     def from_response(self, response):
         """
@@ -41,7 +42,7 @@ class Resource(object):
             attr = '_{0}'.format(name)
             transform = self.PROPERTIES[name].get('transform', None)
             value = response.get(name, None)
-            if transform and transform == 'time' and value:
+            if transform and transform == TRANSFORM.TIME and value:
                 setattr(self, attr, dateutil.parser.parse(value))
             if isinstance(value, int) and value == 0:
                 continue  # skip attribute
@@ -58,17 +59,18 @@ class Resource(object):
         params = {}
         for name in self.PROPERTIES:
             attr = '_{0}'.format(name)
+            transform = self.PROPERTIES[name].get('transform', None)
             value = getattr(self, attr, None) or getattr(self, name, None)
 
             # skip attribute
             if value is None:
                 continue
 
-            if isinstance(value, datetime.datetime):
+            if isinstance(value, datetime.datetime) or transform == TRANSFORM.TIME:
                 params[name] = value.strftime('%Y-%m-%dT%H:%M:%SZ')
-            elif isinstance(value, list):
+            elif isinstance(value, list) or transform == TRANSFORM.LIST:
                 params[name] = ','.join(map(str, value))
-            elif isinstance(value, bool):
+            elif isinstance(value, bool) or transform == TRANSFORM.BOOL:
                 params[name] = str(value).lower()
             else:
                 params[name] = value

@@ -2,29 +2,13 @@
 
 """Container for all campaign management logic used by the Ads API SDK."""
 
-from twitter_ads.resource import resource, Resource, Persistence, Analytics
+from twitter_ads.enum import TRANSFORM
+from twitter_ads.resource import resource_property, Resource, Persistence, Analytics
 from twitter_ads.http import Request
 from twitter_ads.cursor import Cursor
 
 
-@resource
 class TargetingCriteria(Resource, Persistence):
-
-    PROPERTIES = {
-        # read-only
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'localized_name': {'readonly': True},
-        'created_at': {'readonly': True, 'transform': 'time'},
-        'updated_at': {'readonly': True, 'transform': 'time'},
-        'deleted': {'readonly': True},
-        # writable
-        'line_item_id': {},
-        'targeting_type': {},
-        'targeting_value': {},
-        'tailored_audience_expansion': {},
-        'tailored_audience_type': {}
-    }
 
     RESOURCE_COLLECTION = '/0/accounts/{account_id}/targeting_criteria'
     RESOURCE = '/0/accounts/{account_id}/targeting_criteria/{id}'
@@ -47,24 +31,22 @@ class TargetingCriteria(Resource, Persistence):
 
         return Cursor(klass, request, init_with=[account])
 
+# targeting criteria properties
+# read-only
+resource_property(TargetingCriteria, 'id', readonly=True)
+resource_property(TargetingCriteria, 'localized_name', readonly=True)
+resource_property(TargetingCriteria, 'created_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(TargetingCriteria, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(TargetingCriteria, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
+# writable
+resource_property(TargetingCriteria, 'line_item_id')
+resource_property(TargetingCriteria, 'targeting_type')
+resource_property(TargetingCriteria, 'targeting_value')
+resource_property(TargetingCriteria, 'tailored_audience_expansion')
+resource_property(TargetingCriteria, 'tailored_audience_type')
 
-@resource
+
 class FundingInstrument(Resource, Persistence):
-
-    PROPERTIES = {
-        # read-only
-        'id': {'readonly': True},
-        'name': {'readonly': True},
-        'cancelled': {'readonly': True},
-        'credit_limit_local_micro': {'readonly': True},
-        'currency': {'readonly': True},
-        'description': {'readonly': True},
-        'funded_amount_local_micro': {'readonly': True},
-        'type': {'readonly': True},
-        'created_at': {'readonly': True, 'transform': 'time'},
-        'updated_at': {'readonly': True, 'transform': 'time'},
-        'deleted': {'readonly': True}
-    }
 
     RESOURCE_COLLECTION = '/0/accounts/{account_id}/funding_instruments'
     RESOURCE = '/0/accounts/{account_id}/funding_instruments/{id}'
@@ -76,19 +58,22 @@ class FundingInstrument(Resource, Persistence):
     def account(self):
         return self._account
 
+# funding instrument properties
+# read-only
+resource_property(FundingInstrument, 'id', readonly=True)
+resource_property(FundingInstrument, 'name', readonly=True)
+resource_property(FundingInstrument, 'cancelled', readonly=True, transform=TRANSFORM.BOOL)
+resource_property(FundingInstrument, 'credit_limit_local_micro', readonly=True)
+resource_property(FundingInstrument, 'currency', readonly=True)
+resource_property(FundingInstrument, 'description', readonly=True)
+resource_property(FundingInstrument, 'funded_amount_local_micro', readonly=True)
+resource_property(FundingInstrument, 'type', readonly=True)
+resource_property(FundingInstrument, 'created_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(FundingInstrument, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(FundingInstrument, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
 
-@resource
+
 class PromotableUser(Resource):
-
-    PROPERTIES = {
-        # read-only
-        'id': {'readonly': True},
-        'promotable_user_type': {'readonly': True},
-        'user_id': {'readonly': True},
-        'created_at': {'readonly': True, 'transform': 'time'},
-        'updated_at': {'readonly': True, 'transform': 'time'},
-        'deleted': {'readonly': True}
-    }
 
     RESOURCE_COLLECTION = '/0/accounts/{account_id}/promotable_users'
     RESOURCE = '/0/accounts/{account_id}/promotable_users/{id}'
@@ -100,16 +85,17 @@ class PromotableUser(Resource):
     def account(self):
         return self._account
 
+# promotable user properties
+# read-only
+resource_property(PromotableUser, 'id', readonly=True)
+resource_property(PromotableUser, 'promotable_user_type', readonly=True)
+resource_property(PromotableUser, 'user_id', readonly=True)
+resource_property(PromotableUser, 'created_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(PromotableUser, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(PromotableUser, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
 
-@resource
+
 class AppList(Resource, Persistence):
-
-    PROPERTIES = {
-        # read-only
-        'id': {'readonly': True},
-        'apps': {'readonly': True},
-        'name': {'readonly': True}
-    }
 
     RESOURCE_COLLECTION = '/0/accounts/{account_id}/app_lists'
     RESOURCE = '/0/accounts/{account_id}/app_lists/{id}'
@@ -138,29 +124,14 @@ class AppList(Resource, Persistence):
             self.reload()
         return self._apps
 
+# app list properties
+# read-only
+resource_property(AppList, 'id', readonly=True)
+resource_property(AppList, 'name', readonly=True)
+resource_property(AppList, 'apps', readonly=True)
 
-@resource
+
 class Campaign(Resource, Persistence):
-
-    PROPERTIES = {
-        # read-only
-        'id': {'readonly': True},
-        'reasons_not_servable': {'readonly': True},
-        'servable': {'readonly': True},
-        'deleted': {'readonly': True},
-        'created_at': {'readonly': True, 'transform': 'time'},
-        'updated_at': {'readonly': True, 'transform': 'time'},
-        # writable
-        'name': {},
-        'funding_instrument_id': {},
-        'end_time': {'transform': 'time'},
-        'start_time': {'transform': 'time'},
-        'paused': {},
-        'currency': {},
-        'standard_delivery': {},
-        'daily_budget_amount_local_micro': {},
-        'total_budget_amount_local_micro': {}
-    }
 
     RESOURCE_COLLECTION = '/0/accounts/{account_id}/campaigns'
     RESOURCE_STATS = '/0/stats/accounts/{account_id}/campaigns'
@@ -173,34 +144,27 @@ class Campaign(Resource, Persistence):
     def account(self):
         return self._account
 
+# campaign properties
+# read-only
+resource_property(Campaign, 'id', readonly=True)
+resource_property(Campaign, 'reasons_not_servable', readonly=True)
+resource_property(Campaign, 'servable', readonly=True, transform=TRANSFORM.BOOL)
+resource_property(Campaign, 'created_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(Campaign, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(Campaign, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
+# writable
+resource_property(Campaign, 'name')
+resource_property(Campaign, 'funding_instrument_id')
+resource_property(Campaign, 'start_time', transform=TRANSFORM.TIME)
+resource_property(Campaign, 'end_time', transform=TRANSFORM.TIME)
+resource_property(Campaign, 'paused', transform=TRANSFORM.BOOL)
+resource_property(Campaign, 'currency')
+resource_property(Campaign, 'standard_delivery')
+resource_property(Campaign, 'daily_budget_amount_local_micro')
+resource_property(Campaign, 'total_budget_amount_local_micro')
 
-@resource
+
 class LineItem(Resource, Persistence, Analytics):
-
-    PROPERTIES = {
-        # read-only
-        'id': {'readonly': True},
-        'created_at': {'readonly': True, 'transform': 'time'},
-        'updated_at': {'readonly': True, 'transform': 'time'},
-        'deleted': {'readonly': True},
-        # writable
-        'name': {},
-        'campaign_id': {},
-        'advertiser_domain': {},
-        'categories': {},
-        'charge_by': {},
-        'include_sentiment': {},
-        'objective': {},
-        'optimization': {},
-        'paused': {},
-        'primary_web_event_tag': {},
-        'product_type': {},
-        'placements': {},
-        'bid_unit': {},
-        'automatically_select_bid': {},
-        'bid_amount_local_micro': {},
-        'total_budget_amount_local_micro': {}
-    }
 
     RESOURCE_COLLECTION = '/0/accounts/{account_id}/line_items'
     RESOURCE_STATS = '/0/stats/accounts/{account_id}/line_items'
@@ -223,6 +187,30 @@ class LineItem(Resource, Persistence, Analytics):
             return TargetingCriteria.all(self.account, self.id, **kwargs)
         else:
             return TargetingCriteria.load(self.account, id, **kwargs)
+
+# line item properties
+# read-only
+resource_property(LineItem, 'id', readonly=True)
+resource_property(LineItem, 'created_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(LineItem, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(LineItem, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
+# writable
+resource_property(LineItem, 'name')
+resource_property(LineItem, 'campaign_id')
+resource_property(LineItem, 'advertiser_domain')
+resource_property(LineItem, 'categories', transform=TRANSFORM.LIST)
+resource_property(LineItem, 'charge_by')
+resource_property(LineItem, 'include_sentiment')
+resource_property(LineItem, 'objective')
+resource_property(LineItem, 'optimization')
+resource_property(LineItem, 'paused', transform=TRANSFORM.BOOL)
+resource_property(LineItem, 'primary_web_event_tag')
+resource_property(LineItem, 'product_type')
+resource_property(LineItem, 'placements', transform=TRANSFORM.LIST)
+resource_property(LineItem, 'bid_unit')
+resource_property(LineItem, 'automatically_select_bid', transform=TRANSFORM.BOOL)
+resource_property(LineItem, 'bid_amount_local_micro')
+resource_property(LineItem, 'total_budget_amount_local_micro')
 
 
 class Tweet(object):

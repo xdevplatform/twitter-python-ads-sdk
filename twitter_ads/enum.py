@@ -6,6 +6,14 @@
 def enum(**enums):
     return type('Enum', (), enums)
 
+TRANSFORM = enum(
+    TIME=0,
+    BOOL=1,
+    INT=2,
+    LIST=3,
+    OBJECT=4
+)
+
 BID_UNIT = enum(
     APP_CLICK='APP_CLICK',
     APP_INSTALL='APP_INSTALL',
