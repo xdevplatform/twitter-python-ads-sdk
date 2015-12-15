@@ -13,13 +13,6 @@ class PromotedAccount(Resource, Persistence):
     RESOURCE_STATS = '/0/stats/accounts/{account_id}/promoted_accounts'
     RESOURCE = '/0/accounts/{account_id}/promoted_accounts/{id}'
 
-    def __init__(self, account):
-        self._account = account
-
-    @property
-    def account(self):
-        return self._account
-
 # promoted account properties
 # read-only
 resource_property(PromotedAccount, 'id', readonly=True)
@@ -39,13 +32,6 @@ class PromotedTweet(Resource, Persistence, Analytics):
     RESOURCE_STATS = '/0/stats/accounts/{account_id}/promoted_tweets'
     RESOURCE = '/0/accounts/{account_id}/promoted_tweets/{id}'
 
-    def __init__(self, account):
-        self._account = account
-
-    @property
-    def account(self):
-        return self._account
-
     def save(self):
         """
         Saves or updates the current object instance depending on the
@@ -53,12 +39,10 @@ class PromotedTweet(Resource, Persistence, Analytics):
         """
         if self.id:
             method = 'put'
-            resource = self.RESOURCE.format(
-                account_id=self.account.id, id=self.id)
+            resource = self.RESOURCE.format(account_id=self.account.id, id=self.id)
         else:
             method = 'post'
-            resource = self.RESOURCE_COLLECTION.format(
-                account_id=self.account.id)
+            resource = self.RESOURCE_COLLECTION.format(account_id=self.account.id)
 
         params = self.to_params()
         if 'tweet_id' in params:
@@ -66,7 +50,7 @@ class PromotedTweet(Resource, Persistence, Analytics):
             del params['tweet_id']
 
         response = Request(
-            self.account.client(), method,
+            self.account.client, method,
             resource, params=params).perform()
 
         self.from_response(response.body['data'])
@@ -88,13 +72,6 @@ class Video(Resource, Persistence):
 
     RESOURCE_COLLECTION = '/0/accounts/{account_id}/videos'
     RESOURCE = '/0/accounts/{account_id}/videos/{id}'
-
-    def __init__(self, account):
-        self._account = account
-
-    @property
-    def account(self):
-        return self._account
 
 # video properties
 # read-only
@@ -118,13 +95,6 @@ class WebsiteCard(Resource, Persistence):
     RESOURCE_COLLECTION = '/0/accounts/{account_id}/cards/website'
     RESOURCE = '/0/accounts/{account_id}/cards/website/{id}'
 
-    def __init__(self, account):
-        self._account = account
-
-    @property
-    def account(self):
-        return self._account
-
 # website card properties
 # read-only
 resource_property(WebsiteCard, 'id', readonly=True)
@@ -144,13 +114,6 @@ class LeadGenCard(Resource, Persistence):
 
     RESOURCE_COLLECTION = '/0/accounts/{account_id}/cards/lead_gen'
     RESOURCE = '/0/accounts/{account_id}/cards/lead_gen/{id}'
-
-    def __init__(self, account):
-        self._account = account
-
-    @property
-    def account(self):
-        return self._account
 
 # lead gen card properties
 # read-only
@@ -180,13 +143,6 @@ class AppDownloadCard(Resource, Persistence):
     RESOURCE_COLLECTION = '/0/accounts/{account_id}/cards/app_download'
     RESOURCE = '/0/accounts/{account_id}/cards/app_download/{id}'
 
-    def __init__(self, account):
-        self._account = account
-
-    @property
-    def account(self):
-        return self._account
-
 # app download card properties
 # read-only
 resource_property(AppDownloadCard, 'id', readonly=True)
@@ -213,13 +169,6 @@ class ImageAppDownloadCard(Resource, Persistence):
     RESOURCE_COLLECTION = '/0/accounts/{account_id}/cards/image_app_download'
     RESOURCE = '/0/accounts/{account_id}/cards/image_app_download/{id}'
 
-    def __init__(self, account):
-        self._account = account
-
-    @property
-    def account(self):
-        return self._account
-
 # image app download card properties
 # read-only
 resource_property(ImageAppDownloadCard, 'id', readonly=True)
@@ -244,13 +193,6 @@ class VideoAppDownloadCard(Resource, Persistence):
 
     RESOURCE_COLLECTION = '/0/accounts/{account_id}/cards/video_app_download'
     RESOURCE = '/0/accounts/{account_id}/cards/video_app_download/{id}'
-
-    def __init__(self, account):
-        self._account = account
-
-    @property
-    def account(self):
-        return self._account
 
 # video app download card properties
 # read-only
@@ -280,13 +222,6 @@ class ImageConversationCard(Resource, Persistence):
     RESOURCE_COLLECTION = '/0/accounts/{account_id}/cards/image_conversation'
     RESOURCE = '/0/accounts/{account_id}/cards/image_conversation/{id}'
 
-    def __init__(self, account):
-        self._account = account
-
-    @property
-    def account(self):
-        return self._account
-
 # image conversation card properties
 # read-only
 resource_property(ImageConversationCard, 'id', readonly=True)
@@ -310,13 +245,6 @@ class VideoConversationCard(Resource, Persistence):
 
     RESOURCE_COLLECTION = '/0/accounts/{account_id}/cards/video_conversation'
     RESOURCE = '/0/accounts/{account_id}/cards/video_conversation/{id}'
-
-    def __init__(self, account):
-        self._account = account
-
-    @property
-    def account(self):
-        return self._account
 
 # video conversation card properties
 # read-only

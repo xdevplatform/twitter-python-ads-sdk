@@ -10,9 +10,11 @@ import atexit
 
 try:
     import twitter_ads
+    print('[INFO] using pip installed twitter-ads.')
 except ImportError:
     sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
     import twitter_ads
+    print('[INFO] using local clone of twitter-ads.')
 
 from twitter_ads.client import Client
 
