@@ -31,6 +31,13 @@ class Resource(object):
 
     PROPERTIES = {}
 
+    def __init__(self, account):
+        self._account = account
+
+    @property
+    def account(self):
+        return self._account
+
     def from_response(self, response):
         """
         Populates a given objects attributes from a parsed JSON API response.

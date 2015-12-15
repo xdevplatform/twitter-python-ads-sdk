@@ -13,13 +13,6 @@ class TailoredAudience(Resource):
     RESOURCE_UPDATE = '/0/accounts/{account_id}/tailored_audience_changes'
     OPT_OUT = '/0/accounts/{account_id}/tailored_audiences/global_opt_out'
 
-    def __init__(self, account):
-        self._account = account
-
-    @property
-    def account(self):
-        return self._account
-
     @classmethod
     def create(klass, account, file_path, name, list_type):
         raise NotImplementedError

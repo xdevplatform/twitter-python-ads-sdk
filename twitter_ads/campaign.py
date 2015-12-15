@@ -13,13 +13,6 @@ class TargetingCriteria(Resource, Persistence):
     RESOURCE_COLLECTION = '/0/accounts/{account_id}/targeting_criteria'
     RESOURCE = '/0/accounts/{account_id}/targeting_criteria/{id}'
 
-    def __init__(self, account):
-        self._account = account
-
-    @property
-    def account(self):
-        return self._account
-
     @classmethod
     def all(klass, account, line_item_id, **kwargs):
         """Returns a Cursor instance for a given resource."""
@@ -51,13 +44,6 @@ class FundingInstrument(Resource, Persistence):
     RESOURCE_COLLECTION = '/0/accounts/{account_id}/funding_instruments'
     RESOURCE = '/0/accounts/{account_id}/funding_instruments/{id}'
 
-    def __init__(self, account):
-        self._account = account
-
-    @property
-    def account(self):
-        return self._account
-
 # funding instrument properties
 # read-only
 resource_property(FundingInstrument, 'id', readonly=True)
@@ -78,13 +64,6 @@ class PromotableUser(Resource):
     RESOURCE_COLLECTION = '/0/accounts/{account_id}/promotable_users'
     RESOURCE = '/0/accounts/{account_id}/promotable_users/{id}'
 
-    def __init__(self, account):
-        self._account = account
-
-    @property
-    def account(self):
-        return self._account
-
 # promotable user properties
 # read-only
 resource_property(PromotableUser, 'id', readonly=True)
@@ -99,13 +78,6 @@ class AppList(Resource, Persistence):
 
     RESOURCE_COLLECTION = '/0/accounts/{account_id}/app_lists'
     RESOURCE = '/0/accounts/{account_id}/app_lists/{id}'
-
-    def __init__(self, account):
-        self._account = account
-
-    @property
-    def account(self):
-        return self._account
 
     def create(self, name, *ids):
         if isinstance(ids, list):
@@ -135,13 +107,6 @@ class Campaign(Resource, Persistence):
     RESOURCE_STATS = '/0/stats/accounts/{account_id}/campaigns'
     RESOURCE = '/0/accounts/{account_id}/campaigns/{id}'
 
-    def __init__(self, account):
-        self._account = account
-
-    @property
-    def account(self):
-        return self._account
-
 # campaign properties
 # read-only
 resource_property(Campaign, 'id', readonly=True)
@@ -167,13 +132,6 @@ class LineItem(Resource, Persistence, Analytics):
     RESOURCE_COLLECTION = '/0/accounts/{account_id}/line_items'
     RESOURCE_STATS = '/0/stats/accounts/{account_id}/line_items'
     RESOURCE = '/0/accounts/{account_id}/line_items/{id}'
-
-    def __init__(self, account):
-        self._account = account
-
-    @property
-    def account(self):
-        return self._account
 
     def targeting_criteria(self, id=None, **kwargs):
         """
@@ -218,7 +176,7 @@ class Tweet(object):
     TWEET_CREATE = '/0/accounts/{account_id}/tweet'
 
     def __init__(self):
-        raise StandardError(
+        raise NotImplementedError(
             'Error! {name} cannot be instantiated.'.format(name=self.__class__.__name__))
 
     @classmethod

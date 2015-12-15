@@ -33,6 +33,10 @@ class Account(Resource):
     def client(self):
         return self._client
 
+    @property
+    def account(self):
+        return NotImplementedError
+
     @classmethod
     def load(klass, client, id, **kwargs):
         """Returns an object instance for a given resource."""
