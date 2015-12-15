@@ -6,6 +6,7 @@ branches:
     - stable
 
 matrix:
+  fast_finish: true
   include:
     - python: 2.7
       script: python setup.py flake8 && python setup.py test
