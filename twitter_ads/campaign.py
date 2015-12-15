@@ -27,7 +27,7 @@ class TargetingCriteria(Resource, Persistence):
         params.update(kwargs)
 
         resource = klass.RESOURCE_COLLECTION.format(account_id=account.id)
-        request = Request(account.client(), 'get', resource, params=params)
+        request = Request(account.client, 'get', resource, params=params)
 
         return Cursor(klass, request, init_with=[account])
 
@@ -112,10 +112,8 @@ class AppList(Resource, Persistence):
             ids = ','.join(map(str, ids))
 
         resource = self.RESOURCE_COLLECTION.format(account_id=self.account.id)
-        params = self.to_params.update({
-            'app_store_identifiers': ids, 'name': name})
-        response = Request(
-            self.account.client(), 'post', resource, params=params).perform()
+        params = self.to_params.update({'app_store_identifiers': ids, 'name': name})
+        response = Request(self.account.client, 'post', resource, params=params).perform()
 
         return self.from_response(response.body['data'])
 
@@ -230,7 +228,7 @@ class Tweet(object):
         """
         resource = klass.TWEET_ID_PREVIEW if kwargs.get('id') else klass.TWEET_PREVIEW
         resource = resource.format(account_id=account.id, id=kwargs.get('id'))
-        response = Request(account.client(), 'get', resource, params=kwargs).perform()
+        response = Request(account.client, 'get', resource, params=kwargs).perform()
         return response.body['data']
 
     @classmethod
@@ -241,5 +239,5 @@ class Tweet(object):
         params = {'status': status}
         params.update(kwargs)
         resource = klass.TWEET_CREATE.format(account_id=account.id)
-        response = Request(account.client(), 'post', resource, params=params).perform()
+        response = Request(account.client, 'post', resource, params=params).perform()
         return response.body['data']

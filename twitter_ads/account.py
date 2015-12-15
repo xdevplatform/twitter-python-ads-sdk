@@ -29,10 +29,8 @@ class Account(Resource):
     def __init__(self, client):
         self._client = client
 
+    @property
     def client(self):
-        """
-        Returns the :class:`Client` instance stored in this account object.
-        """
         return self._client
 
     @classmethod
@@ -60,8 +58,7 @@ class Account(Resource):
         params.update(kwargs)
 
         resource = self.RESOURCE.format(account_id=self.account.id, id=self.id)
-        response = Request(
-            self.account.client, 'get', resource, params=params).perform()
+        response = Request(self.account.client, 'get', resource, params=params).perform()
 
         self.from_response(response.body['data'])
 
@@ -72,7 +69,7 @@ class Account(Resource):
         self._validate_loaded()
 
         resource = self.FEATURES.format(id=self.id)
-        response = Request(self.client(), 'get', resource).perform()
+        response = Request(self.client, 'get', resource).perform()
 
         return response.body['data']
 
@@ -135,8 +132,7 @@ class Account(Resource):
         params.update(kwargs)
 
         resource = self.SCOPED_TIMELINE.format(id=self.id)
-        response = Request(
-            self.client(), 'get', resource, params=params).perform()
+        response = Request(self.client, 'get', resource, params=params).perform()
 
         return response.body['data']
 

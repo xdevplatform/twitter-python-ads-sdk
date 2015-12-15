@@ -53,12 +53,10 @@ class PromotedTweet(Resource, Persistence, Analytics):
         """
         if self.id:
             method = 'put'
-            resource = self.RESOURCE.format(
-                account_id=self.account.id, id=self.id)
+            resource = self.RESOURCE.format(account_id=self.account.id, id=self.id)
         else:
             method = 'post'
-            resource = self.RESOURCE_COLLECTION.format(
-                account_id=self.account.id)
+            resource = self.RESOURCE_COLLECTION.format(account_id=self.account.id)
 
         params = self.to_params()
         if 'tweet_id' in params:
@@ -66,7 +64,7 @@ class PromotedTweet(Resource, Persistence, Analytics):
             del params['tweet_id']
 
         response = Request(
-            self.account.client(), method,
+            self.account.client, method,
             resource, params=params).perform()
 
         self.from_response(response.body['data'])

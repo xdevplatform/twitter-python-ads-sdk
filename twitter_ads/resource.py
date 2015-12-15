@@ -79,15 +79,14 @@ class Resource(object):
     def all(klass, account, **kwargs):
         """Returns a Cursor instance for a given resource."""
         resource = klass.RESOURCE_COLLECTION.format(account_id=account.id)
-        request = Request(account.client(), 'get', resource, params=kwargs)
+        request = Request(account.client, 'get', resource, params=kwargs)
         return Cursor(klass, request, init_with=[account])
 
     @classmethod
     def load(klass, account, id, **kwargs):
         """Returns an object instance for a given resource."""
         resource = klass.RESOURCE.format(account_id=account.id, id=id)
-        response = Request(
-            account.client(), 'get', resource, params=kwargs).perform()
+        response = Request(account.client, 'get', resource, params=kwargs).perform()
 
         return klass(account).from_response(response.body['data'])
 
@@ -98,10 +97,8 @@ class Resource(object):
         if not self.id:
             return self
 
-        resource = self.RESOURCE.format(
-            account_id=self.account.id, id=self.id)
-        response = Request(
-            self.account.client(), 'get', resource, params=kwargs).perform()
+        resource = self.RESOURCE.format(account_id=self.account.id, id=self.id)
+        response = Request(self.account.client, 'get', resource, params=kwargs).perform()
 
         self.from_response(response.body['data'])
 
@@ -139,15 +136,13 @@ class Persistence(object):
         """
         if self.id:
             method = 'put'
-            resource = self.RESOURCE.format(
-                account_id=self.account.id, id=self.id)
+            resource = self.RESOURCE.format(account_id=self.account.id, id=self.id)
         else:
             method = 'post'
-            resource = self.RESOURCE_COLLECTION.format(
-                account_id=self.account.id)
+            resource = self.RESOURCE_COLLECTION.format(account_id=self.account.id)
 
         response = Request(
-            self.account.client(), method,
+            self.account.client, method,
             resource, params=self.to_params()).perform()
 
         self.from_response(response.body['data'])
@@ -158,7 +153,7 @@ class Persistence(object):
         presence of `object.id`.
         """
         resource = self.RESOURCE.format(account_id=self.account.id, id=self.id)
-        response = Request(self.account.client(), 'delete', resource).perform()
+        response = Request(self.account.client, 'delete', resource).perform()
         self.from_response(response.body['data'])
 
 
@@ -202,5 +197,5 @@ class Analytics(object):
         params[klass.ANALYTICS_MAP[klass.__name__]] = ','.join(ids)
 
         resource = klass.RESOURCE_STATS.format(account_id=account.id)
-        response = Request(account.client(), 'get', resource, params=params).perform()
+        response = Request(account.client, 'get', resource, params=params).perform()
         return response.body['data']
