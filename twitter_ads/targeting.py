@@ -11,13 +11,10 @@ class ReachEstimate(object):
 
     @classmethod
     def fetch(klass, account, product_type, objective, user_id, **kwargs):
-        params = {'product_type': product_type,
-                  'objective': objective,
-                  'user_id': user_id}
+        params = {'product_type': product_type, 'objective': objective, 'user_id': user_id}
         params.update(kwargs)
 
         resource = klass.RESOURCE.format(account_id=account.id)
-        response = Request(
-            account.client(), 'get', resource, params=params).perform()
+        response = Request(account.client, 'get', resource, params=params).perform()
 
         return response.body['data']

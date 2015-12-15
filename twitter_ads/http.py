@@ -78,9 +78,7 @@ class Request(object):
         logging.propagate = True
 
     def __user_agent(self):
-        python_verison = "{0}.{1}".format(
-            sys.version_info.major, sys.version_info.minor)
-
+        python_verison = "{0}.{1}".format(sys.version_info.major, sys.version_info.minor)
         return 'twitter-ads version: {0} platform: Python {1} ({2}/{3})'.format(
             get_version(),
             python_verison,

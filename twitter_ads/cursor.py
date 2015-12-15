@@ -75,8 +75,7 @@ class Cursor(object):
 
     def __fetch_next(self):
         params = self._options.copy().update({'next_cursor': self._next_cursor})
-        response = Request(
-            self._client, self._method, self._resource, params=params).perform()
+        response = Request(self._client, self._method, self._resource, params=params).perform()
         return self.__from_response(response)
 
     def __from_response(self, response):
