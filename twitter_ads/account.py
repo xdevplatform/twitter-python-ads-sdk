@@ -41,8 +41,8 @@ class Account(Resource):
     def load(klass, client, id, **kwargs):
         """Returns an object instance for a given resource."""
         resource = klass.RESOURCE.format(id=id)
-        request = Request(client, 'get', resource, params=kwargs)
-        return Cursor(klass, request, init_with=[client])
+        response = Request(client, 'get', resource, params=kwargs).perform()
+        return klass(client).from_response(response.body['data'])
 
     @classmethod
     def all(klass, client, **kwargs):
