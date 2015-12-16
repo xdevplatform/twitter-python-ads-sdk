@@ -1,0 +1,208 @@
+{
+  "request": {
+    "params": {
+      "account_id": "2iqph"
+    }
+  },
+  "data": [
+    {
+      "name": "Intelligent Granite Computer",
+      "start_time": "2015-08-12T20:26:23Z",
+      "reasons_not_servable": [],
+      "servable": true,
+      "daily_budget_amount_local_micro": 1000000,
+      "end_time": null,
+      "funding_instrument_id": "5aa0p",
+      "standard_delivery": true,
+      "total_budget_amount_local_micro": null,
+      "id": "2wap7",
+      "paused": false,
+      "account_id": "2iqph",
+      "currency": "USD",
+      "created_at": "2015-08-12T20:26:24Z",
+      "updated_at": "2015-08-12T20:26:24Z",
+      "deleted": false
+    },
+    {
+      "name": "Awesome Wooden Table",
+      "start_time": "2015-08-12T20:17:19Z",
+      "reasons_not_servable": [
+        "EXPIRED"
+      ],
+      "servable": false,
+      "daily_budget_amount_local_micro": 1000000,
+      "end_time": "2015-08-14T20:17:19Z",
+      "funding_instrument_id": "5aa0p",
+      "standard_delivery": true,
+      "total_budget_amount_local_micro": null,
+      "id": "2wamv",
+      "paused": true,
+      "account_id": "2iqph",
+      "currency": "USD",
+      "created_at": "2015-08-12T20:17:39Z",
+      "updated_at": "2015-08-12T20:18:21Z",
+      "deleted": false
+    },
+    {
+      "name": "Fantastic Concrete Car",
+      "start_time": "2015-08-12T19:56:08Z",
+      "reasons_not_servable": [
+        "EXPIRED",
+        "FUNDING_PROBLEM"
+      ],
+      "servable": false,
+      "daily_budget_amount_local_micro": 1000000,
+      "end_time": null,
+      "funding_instrument_id": "7cdql",
+      "standard_delivery": true,
+      "total_budget_amount_local_micro": null,
+      "id": "2wai9",
+      "paused": true,
+      "account_id": "2iqph",
+      "currency": "USD",
+      "created_at": "2015-08-12T19:56:10Z",
+      "updated_at": "2015-08-12T19:56:10Z",
+      "deleted": false
+    },
+    {
+      "name": "Small Concrete Hat",
+      "start_time": "2015-06-29T22:00:00Z",
+      "reasons_not_servable": [
+        "PAUSED_BY_ADVERTISER"
+      ],
+      "servable": false,
+      "daily_budget_amount_local_micro": 1000000,
+      "end_time": null,
+      "funding_instrument_id": "5aa0p",
+      "standard_delivery": true,
+      "total_budget_amount_local_micro": 1000000,
+      "id": "2of1n",
+      "paused": true,
+      "account_id": "2iqph",
+      "currency": "USD",
+      "created_at": "2015-06-29T22:24:17Z",
+      "updated_at": "2015-08-12T18:58:56Z",
+      "deleted": false
+    },
+    {
+      "name": "Rustic Rubber Pants",
+      "start_time": "2015-08-12T18:09:27Z",
+      "reasons_not_servable": [
+        "EXPIRED",
+        "FUNDING_PROBLEM"
+      ],
+      "servable": false,
+      "daily_budget_amount_local_micro": 1000000,
+      "end_time": null,
+      "funding_instrument_id": "7cdql",
+      "standard_delivery": true,
+      "total_budget_amount_local_micro": null,
+      "id": "2w9n1",
+      "paused": true,
+      "account_id": "2iqph",
+      "currency": "USD",
+      "created_at": "2015-08-12T18:09:28Z",
+      "updated_at": "2015-08-12T18:09:28Z",
+      "deleted": false
+    },
+    {
+      "name": "Incredible Wooden Car",
+      "start_time": "2015-08-10T21:58:00Z",
+      "reasons_not_servable": [
+        "PAUSED_BY_ADVERTISER"
+      ],
+      "servable": false,
+      "daily_budget_amount_local_micro": 1000000,
+      "end_time": null,
+      "funding_instrument_id": "5aa0p",
+      "standard_delivery": true,
+      "total_budget_amount_local_micro": 1000000,
+      "id": "2vuug",
+      "paused": true,
+      "account_id": "2iqph",
+      "currency": "USD",
+      "created_at": "2015-08-10T21:58:39Z",
+      "updated_at": "2015-08-10T21:59:43Z",
+      "deleted": false
+    },
+    {
+      "name": "Gorgeous Cotton Computer",
+      "start_time": "2015-08-10T21:06:00Z",
+      "reasons_not_servable": [],
+      "servable": true,
+      "daily_budget_amount_local_micro": 1000000,
+      "end_time": null,
+      "funding_instrument_id": "5aa0p",
+      "standard_delivery": true,
+      "total_budget_amount_local_micro": null,
+      "id": "2vuj3",
+      "paused": false,
+      "account_id": "2iqph",
+      "currency": "USD",
+      "created_at": "2015-08-10T21:06:04Z",
+      "updated_at": "2015-08-10T21:06:04Z",
+      "deleted": false
+    },
+    {
+      "name": "Sleek Rubber Car",
+      "start_time": "2015-08-06T06:53:00Z",
+      "reasons_not_servable": [],
+      "servable": true,
+      "daily_budget_amount_local_micro": 10000,
+      "end_time": null,
+      "funding_instrument_id": "5aa0p",
+      "standard_delivery": true,
+      "total_budget_amount_local_micro": 10000,
+      "id": "2v3c4",
+      "paused": false,
+      "account_id": "2iqph",
+      "currency": "USD",
+      "created_at": "2015-08-06T06:54:13Z",
+      "updated_at": "2015-08-06T06:54:13Z",
+      "deleted": false
+    },
+    {
+      "name": "Practical Plastic Computer",
+      "start_time": "2015-08-04T23:20:10Z",
+      "reasons_not_servable": [
+        "INCOMPLETE"
+      ],
+      "servable": false,
+      "daily_budget_amount_local_micro": 100000000,
+      "end_time": null,
+      "funding_instrument_id": "5aa0p",
+      "standard_delivery": true,
+      "total_budget_amount_local_micro": 100000000,
+      "id": "2uubq",
+      "paused": false,
+      "account_id": "2iqph",
+      "currency": "USD",
+      "created_at": "2015-08-04T23:20:11Z",
+      "updated_at": "2015-08-04T23:20:11Z",
+      "deleted": false
+    },
+    {
+      "name": "Ergonomic Rubber Car",
+      "start_time": "2015-07-29T23:04:00Z",
+      "reasons_not_servable": [
+        "PAUSED_BY_ADVERTISER"
+      ],
+      "servable": false,
+      "daily_budget_amount_local_micro": 1000000,
+      "end_time": null,
+      "funding_instrument_id": "5aa0p",
+      "standard_delivery": true,
+      "total_budget_amount_local_micro": null,
+      "id": "2ttv3",
+      "paused": true,
+      "account_id": "2iqph",
+      "currency": "USD",
+      "created_at": "2015-07-29T23:05:56Z",
+      "updated_at": "2015-07-31T18:01:26Z",
+      "deleted": false
+    }
+  ],
+  "data_type": "campaign",
+  "total_count": 10,
+  "next_cursor": null
+}

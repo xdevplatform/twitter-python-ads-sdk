@@ -1,0 +1,22 @@
+{
+  "data_type": "video",
+  "data": {
+    "tweeted": false,
+    "ready_to_tweet": true,
+    "duration": 289149,
+    "reasons_not_servable": [],
+    "description": "youtubz",
+    "preview_url": "https://amp.twimg.com/prod/multibr_v_1/video/2015/09/24/21/d5e3ae4d-34c4-4f49-894e-0c17735916a4-libx264-baseline-2528k.mp4?rYDB9GoYJcfWyizjXnBZra4UnGQMTkzUkIuW6OKjlXw%3D",
+    "id": "d5e3ae4d-34c4-4f49-894e-0c17735916a4",
+    "created_at": "2015-09-24T21:21:00Z",
+    "title": "video #1",
+    "updated_at": "2015-09-24T21:25:42Z",
+    "deleted": false
+  },
+  "request": {
+    "params": {
+      "video_id": "d5e3ae4d-34c4-4f49-894e-0c17735916a4",
+      "account_id": "2iqph"
+    }
+  }
+}

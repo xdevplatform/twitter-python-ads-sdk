@@ -1,0 +1,50 @@
+{
+  "data_type": "video",
+  "data": [
+    {
+      "tweeted": false,
+      "ready_to_tweet": true,
+      "duration": 289149,
+      "reasons_not_servable": [],
+      "description": "youtubz",
+      "preview_url": "https://amp.twimg.com/prod/multibr_v_1/video/2015/09/24/21/d5e3ae4d-34c4-4f49-894e-0c17735916a4-libx264-baseline-2528k.mp4?rYDB9GoYJcfWyizjXnBZra4UnGQMTkzUkIuW6OKjlXw%3D",
+      "id": "d5e3ae4d-34c4-4f49-894e-0c17735916a4",
+      "created_at": "2015-09-24T21:21:00Z",
+      "title": "video #1",
+      "updated_at": "2015-09-24T21:25:42Z",
+      "deleted": false
+    },
+    {
+      "tweeted": false,
+      "ready_to_tweet": true,
+      "duration": 16517,
+      "reasons_not_servable": [],
+      "description": "my favorite video",
+      "preview_url": "https://amp.twimg.com/prod/multibr_v_1/video/2015/09/24/21/a6d50810-c0bd-408e-b703-b789a82981ce-libx264-baseline-2528k.mp4?rYDB9GoYJcfWyizjXnBZra4UnGQMTkzUkIuW6OKjlXw%3D",
+      "id": "a6d50810-c0bd-408e-b703-b789a82981ce",
+      "created_at": "2015-09-24T21:11:01Z",
+      "title": "video #2",
+      "updated_at": "2015-09-24T21:11:41Z",
+      "deleted": false
+    },
+    {
+      "tweeted": false,
+      "ready_to_tweet": false,
+      "duration": 16517,
+      "reasons_not_servable": ["ERROR"],
+      "description": "another great video",
+      "preview_url": "https://amp.twimg.com/prod/multibr_v_1/video/2015/09/24/21/3beaeaca-0f2f-4aff-a025-e0d53a0aef2c-libx264-baseline-2528k.mp4?rYDB9GoYJcfWyizjXnBZra4UnGQMTkzUkIuW6OKjlXw%3D",
+      "id": "3beaeaca-0f2f-4aff-a025-e0d53a0aef2c",
+      "created_at": "2015-09-24T21:08:55Z",
+      "title": "video #3",
+      "updated_at": "2015-09-24T21:10:01Z",
+      "deleted": true
+    }
+  ],
+  "request": {
+    "params": {
+      "account_id": "2iqph"
+    }
+  },
+  "next_cursor": null
+}

@@ -1,0 +1,74 @@
+{
+  "request": {
+    "params": {
+      "funding_instrument_ids": [
+        "7cdql", "5aa0p", "dhuk2"
+      ],
+      "account_id": "2iqph"
+    }
+  },
+  "data": [
+    {
+      "start_time": "2015-08-25T09:18:19Z",
+      "description": "Denesik, O'Reilly and Zulauf",
+      "credit_limit_local_micro": null,
+      "end_time": "2017-02-28T08:15:40Z",
+      "cancelled": false,
+      "id": "5aa0p",
+      "paused": false,
+      "account_id": "2iqph",
+      "reasons_not_able_to_fund": [],
+      "currency": "USD",
+      "funded_amount_local_micro": 5000000000,
+      "created_at": "2015-08-19T01:35:10Z",
+      "type": "INSERTION_ORDER",
+      "able_to_fund": false,
+      "updated_at": "2015-08-19T01:35:10Z",
+      "credit_remaining_local_micro": null,
+      "deleted": false
+    },
+    {
+      "start_time": "2011-07-11T07:00:00Z",
+      "description": "Simonis-Barton",
+      "credit_limit_local_micro": null,
+      "end_time": "2012-07-12T06:59:59Z",
+      "cancelled": false,
+      "id": "7cdql",
+      "paused": false,
+      "account_id": "2iqph",
+      "reasons_not_able_to_fund": [
+        "EXPIRED"
+      ],
+      "currency": "USD",
+      "funded_amount_local_micro": 5000000000,
+      "created_at": "2011-07-11T17:33:01Z",
+      "type": "INSERTION_ORDER",
+      "able_to_fund": false,
+      "updated_at": "2012-01-18T19:19:56Z",
+      "credit_remaining_local_micro": null,
+      "deleted": false
+    },
+    {
+      "start_time": "2015-08-25T09:18:19Z",
+      "description": "Farrell Group",
+      "credit_limit_local_micro": 5000000000,
+      "end_time": "2017-02-28T08:15:40Z",
+      "cancelled": false,
+      "id": "dhuk2",
+      "paused": false,
+      "account_id": "2iqph",
+      "reasons_not_able_to_fund": [],
+      "currency": "USD",
+      "funded_amount_local_micro": null,
+      "created_at": "2015-08-19T01:35:10Z",
+      "type": "CREDIT_LINE",
+      "able_to_fund": false,
+      "updated_at": "2015-08-19T01:35:10Z",
+      "credit_remaining_local_micro": null,
+      "deleted": false
+    }
+  ],
+  "data_type": "funding_instrument",
+  "total_count": 3,
+  "next_cursor": null
+}

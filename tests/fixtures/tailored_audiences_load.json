@@ -1,0 +1,29 @@
+{
+  "data_type": "tailored_audiences",
+  "data": {
+    "targetable": false,
+    "name": "TA #2",
+    "targetable_types": [
+      "WEB",
+      "EXCLUDED_WEB"
+    ],
+    "audience_type": "WEB",
+    "id": "abc2",
+    "reasons_not_targetable": [
+      "TOO_SMALL"
+    ],
+    "list_type": null,
+    "created_at": "2014-03-09T20:35:41Z",
+    "updated_at": "2014-06-11T09:38:06Z",
+    "partner_source": "OTHER",
+    "deleted": false,
+    "audience_size": null
+  },
+  "request": {
+    "params": {
+      "account_id": "2iqph",
+      "name": "TA #2",
+      "list_type": "EMAIL"
+    }
+  }
+}

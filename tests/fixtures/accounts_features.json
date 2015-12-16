@@ -1,0 +1,18 @@
+{
+  "data_type": "features",
+  "data": [
+    "CPI_CHARGING",
+    "EVENT_TARGETING",
+    "INSTALLED_APP_CATEGORY_TARGETING",
+    "MOBILE_CONVERSION_TRANSACTION_VALUE",
+    "OPTIMIZED_ACTION_BIDDING",
+    "OPTIMIZED_WEBSITE_CONVERSIONS",
+    "VIDEO_VIEWS_OBJECTIVE",
+    "VIDEO_APP_DOWNLOAD_CARD"
+  ],
+  "request": {
+    "params": {
+      "account_id": "2iqph"
+    }
+  }
+}

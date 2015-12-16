@@ -1,0 +1,18 @@
+{
+  "request": {
+    "params": {
+      "promotable_user_id": "4k",
+      "account_id": "2iqph"
+    }
+  },
+  "data_type": "promotable_user",
+  "data": {
+    "user_id": "330677333",
+    "id": "4k",
+    "account_id": "2iqph",
+    "created_at": "2011-11-14T21:26:54Z",
+    "updated_at": "2014-07-30T23:49:23Z",
+    "deleted": false,
+    "promotable_user_type": "FULL"
+  }
+}

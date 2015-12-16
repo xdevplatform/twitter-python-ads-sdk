@@ -29,8 +29,6 @@ def resource_property(klass, name, **kwargs):
 class Resource(object):
     """Base class for all API resource objects."""
 
-    PROPERTIES = {}
-
     def __init__(self, account):
         self._account = account
 
@@ -107,7 +105,7 @@ class Resource(object):
         resource = self.RESOURCE.format(account_id=self.account.id, id=self.id)
         response = Request(self.account.client, 'get', resource, params=kwargs).perform()
 
-        self.from_response(response.body['data'])
+        return self.from_response(response.body['data'])
 
     def __repr__(self):
         return '<{name} resource at {mem} id={id}>'.format(
@@ -152,7 +150,7 @@ class Persistence(object):
             self.account.client, method,
             resource, params=self.to_params()).perform()
 
-        self.from_response(response.body['data'])
+        return self.from_response(response.body['data'])
 
     def delete(self):
         """

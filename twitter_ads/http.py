@@ -6,7 +6,15 @@ import sys
 import platform
 import datetime
 import logging
-import httplib
+
+try:
+    import httplib2 as httplib
+except ImportError:
+    if sys.version_info[0] != 3:
+        import httplib
+    else:
+        import http.client as httplib
+
 
 from dateutil import parser
 from requests_oauthlib import OAuth1Session

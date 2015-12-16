@@ -9,6 +9,8 @@ from twitter_ads.http import Request
 
 class PromotedAccount(Resource, Persistence):
 
+    PROPERTIES = {}
+
     RESOURCE_COLLECTION = '/0/accounts/{account_id}/promoted_accounts'
     RESOURCE_STATS = '/0/stats/accounts/{account_id}/promoted_accounts'
     RESOURCE = '/0/accounts/{account_id}/promoted_accounts/{id}'
@@ -27,6 +29,8 @@ resource_property(PromotedAccount, 'paused', transform=TRANSFORM.BOOL)
 
 
 class PromotedTweet(Resource, Persistence, Analytics):
+
+    PROPERTIES = {}
 
     RESOURCE_COLLECTION = '/0/accounts/{account_id}/promoted_tweets'
     RESOURCE_STATS = '/0/stats/accounts/{account_id}/promoted_tweets'
@@ -70,6 +74,8 @@ resource_property(PromotedTweet, 'paused', transform=TRANSFORM.BOOL)
 
 class Video(Resource, Persistence):
 
+    PROPERTIES = {}
+
     RESOURCE_COLLECTION = '/0/accounts/{account_id}/videos'
     RESOURCE = '/0/accounts/{account_id}/videos/{id}'
 
@@ -92,6 +98,8 @@ resource_property(Video, 'video_media_id')
 
 class WebsiteCard(Resource, Persistence):
 
+    PROPERTIES = {}
+
     RESOURCE_COLLECTION = '/0/accounts/{account_id}/cards/website'
     RESOURCE = '/0/accounts/{account_id}/cards/website/{id}'
 
@@ -111,6 +119,8 @@ resource_property(WebsiteCard, 'image_media_id')
 
 
 class LeadGenCard(Resource, Persistence):
+
+    PROPERTIES = {}
 
     RESOURCE_COLLECTION = '/0/accounts/{account_id}/cards/lead_gen'
     RESOURCE = '/0/accounts/{account_id}/cards/lead_gen/{id}'
@@ -140,6 +150,8 @@ resource_property(LeadGenCard, 'custom_key_email')
 
 class AppDownloadCard(Resource, Persistence):
 
+    PROPERTIES = {}
+
     RESOURCE_COLLECTION = '/0/accounts/{account_id}/cards/app_download'
     RESOURCE = '/0/accounts/{account_id}/cards/app_download/{id}'
 
@@ -166,6 +178,8 @@ resource_property(AppDownloadCard, 'custom_app_description')
 
 class ImageAppDownloadCard(Resource, Persistence):
 
+    PROPERTIES = {}
+
     RESOURCE_COLLECTION = '/0/accounts/{account_id}/cards/image_app_download'
     RESOURCE = '/0/accounts/{account_id}/cards/image_app_download/{id}'
 
@@ -190,6 +204,8 @@ resource_property(ImageAppDownloadCard, 'wide_app_image_media_id')
 
 
 class VideoAppDownloadCard(Resource, Persistence):
+
+    PROPERTIES = {}
 
     RESOURCE_COLLECTION = '/0/accounts/{account_id}/cards/video_app_download'
     RESOURCE = '/0/accounts/{account_id}/cards/video_app_download/{id}'
@@ -219,6 +235,8 @@ resource_property(VideoAppDownloadCard, 'video_id')
 
 class ImageConversationCard(Resource, Persistence):
 
+    PROPERTIES = {}
+
     RESOURCE_COLLECTION = '/0/accounts/{account_id}/cards/image_conversation'
     RESOURCE = '/0/accounts/{account_id}/cards/image_conversation/{id}'
 
@@ -242,6 +260,8 @@ resource_property(ImageConversationCard, 'image_media_id')
 
 
 class VideoConversationCard(Resource, Persistence):
+
+    PROPERTIES = {}
 
     RESOURCE_COLLECTION = '/0/accounts/{account_id}/cards/video_conversation'
     RESOURCE = '/0/accounts/{account_id}/cards/video_conversation/{id}'

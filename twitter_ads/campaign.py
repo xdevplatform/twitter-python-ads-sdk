@@ -10,6 +10,8 @@ from twitter_ads.cursor import Cursor
 
 class TargetingCriteria(Resource, Persistence):
 
+    PROPERTIES = {}
+
     RESOURCE_COLLECTION = '/0/accounts/{account_id}/targeting_criteria'
     RESOURCE = '/0/accounts/{account_id}/targeting_criteria/{id}'
 
@@ -41,6 +43,8 @@ resource_property(TargetingCriteria, 'tailored_audience_type')
 
 class FundingInstrument(Resource, Persistence):
 
+    PROPERTIES = {}
+
     RESOURCE_COLLECTION = '/0/accounts/{account_id}/funding_instruments'
     RESOURCE = '/0/accounts/{account_id}/funding_instruments/{id}'
 
@@ -61,6 +65,8 @@ resource_property(FundingInstrument, 'deleted', readonly=True, transform=TRANSFO
 
 class PromotableUser(Resource):
 
+    PROPERTIES = {}
+
     RESOURCE_COLLECTION = '/0/accounts/{account_id}/promotable_users'
     RESOURCE = '/0/accounts/{account_id}/promotable_users/{id}'
 
@@ -75,6 +81,8 @@ resource_property(PromotableUser, 'deleted', readonly=True, transform=TRANSFORM.
 
 
 class AppList(Resource, Persistence):
+
+    PROPERTIES = {}
 
     RESOURCE_COLLECTION = '/0/accounts/{account_id}/app_lists'
     RESOURCE = '/0/accounts/{account_id}/app_lists/{id}'
@@ -103,6 +111,8 @@ resource_property(AppList, 'apps', readonly=True)
 
 class Campaign(Resource, Persistence):
 
+    PROPERTIES = {}
+
     RESOURCE_COLLECTION = '/0/accounts/{account_id}/campaigns'
     RESOURCE_STATS = '/0/stats/accounts/{account_id}/campaigns'
     RESOURCE = '/0/accounts/{account_id}/campaigns/{id}'
@@ -128,6 +138,8 @@ resource_property(Campaign, 'total_budget_amount_local_micro')
 
 
 class LineItem(Resource, Persistence, Analytics):
+
+    PROPERTIES = {}
 
     RESOURCE_COLLECTION = '/0/accounts/{account_id}/line_items'
     RESOURCE_STATS = '/0/stats/accounts/{account_id}/line_items'

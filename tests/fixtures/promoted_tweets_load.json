@@ -1,0 +1,19 @@
+{
+  "data_type": "promoted_tweet",
+  "data": {
+    "line_item_id": "2b7xw",
+    "id": "6thl4",
+    "paused": false,
+    "created_at": "2015-04-11T20:50:25Z",
+    "updated_at": "2015-04-11T20:50:25Z",
+    "approval_status": "ACCEPTED",
+    "tweet_id": "585127452231467008",
+    "deleted": false
+  },
+  "request": {
+    "params": {
+      "promoted_tweet_id": "6thl4",
+      "account_id": "2iqph"
+    }
+  }
+}
