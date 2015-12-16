@@ -6,25 +6,25 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>twitter_ads.error &mdash; Twitter Ads API SDK for Python 0.1.0 documentation</title>
+    <title>error &mdash; Twitter Ads API SDK for Python 0.1.1 documentation</title>
     
-    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../../',
-        VERSION:     '0.1.0',
+        URL_ROOT:    '../',
+        VERSION:     '0.1.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
     </script>
-    <script type="text/javascript" src="../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Twitter Ads API SDK for Python 0.1.0 documentation" href="../../index.html" />
-    <link rel="up" title="Module code" href="../index.html" />
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Twitter Ads API SDK for Python 0.1.1 documentation" href="../index.html" />
+    <link rel="up" title="Module code" href="index.html" />
    
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
@@ -37,13 +37,13 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <h1>Source code for twitter_ads.error</h1><div class="highlight"><pre>
+  <h1>Source code for error</h1><div class="highlight"><pre>
 <span class="c"># Copyright (C) 2015 Twitter, Inc.</span>
 
 <span class="sd">&quot;&quot;&quot;Container for all errors raised by the Twitter Ads SDK.&quot;&quot;&quot;</span>
 
 
-<div class="viewcode-block" id="Error"><a class="viewcode-back" href="../../twitter_ads/error.html#twitter_ads.error.Error">[docs]</a><span class="k">class</span> <span class="nc">Error</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<div class="viewcode-block" id="Error"><a class="viewcode-back" href="../twitter_ads/error.html#error.Error">[docs]</a><span class="k">class</span> <span class="nc">Error</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;The base class for all SDK error types.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -72,7 +72,7 @@
         <span class="p">)</span>
 
     <span class="nd">@staticmethod</span>
-<div class="viewcode-block" id="Error.from_response"><a class="viewcode-back" href="../../twitter_ads/error.html#twitter_ads.error.Error.from_response">[docs]</a>    <span class="k">def</span> <span class="nf">from_response</span><span class="p">(</span><span class="n">response</span><span class="p">):</span>
+<div class="viewcode-block" id="Error.from_response"><a class="viewcode-back" href="../twitter_ads/error.html#error.Error.from_response">[docs]</a>    <span class="k">def</span> <span class="nf">from_response</span><span class="p">(</span><span class="n">response</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns the correct error type from a ::class::`Response` object.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">code</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">ERRORS</span><span class="p">[</span><span class="n">response</span><span class="o">.</span><span class="n">code</span><span class="p">](</span><span class="n">response</span><span class="p">)</span>
@@ -80,27 +80,27 @@
             <span class="k">return</span> <span class="n">Error</span><span class="p">(</span><span class="n">response</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="ClientError"><a class="viewcode-back" href="../../twitter_ads/error.html#twitter_ads.error.ClientError">[docs]</a><span class="k">class</span> <span class="nc">ClientError</span><span class="p">(</span><span class="n">Error</span><span class="p">):</span>
+<div class="viewcode-block" id="ClientError"><a class="viewcode-back" href="../twitter_ads/error.html#error.ClientError">[docs]</a><span class="k">class</span> <span class="nc">ClientError</span><span class="p">(</span><span class="n">Error</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Parent class for preventable client errors.&quot;&quot;&quot;</span></div>
 
 
-<div class="viewcode-block" id="BadRequest"><a class="viewcode-back" href="../../twitter_ads/error.html#twitter_ads.error.BadRequest">[docs]</a><span class="k">class</span> <span class="nc">BadRequest</span><span class="p">(</span><span class="n">ClientError</span><span class="p">):</span>
+<div class="viewcode-block" id="BadRequest"><a class="viewcode-back" href="../twitter_ads/error.html#error.BadRequest">[docs]</a><span class="k">class</span> <span class="nc">BadRequest</span><span class="p">(</span><span class="n">ClientError</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Bad Request (400).&quot;&quot;&quot;</span></div>
 
 
-<div class="viewcode-block" id="NotAuthorized"><a class="viewcode-back" href="../../twitter_ads/error.html#twitter_ads.error.NotAuthorized">[docs]</a><span class="k">class</span> <span class="nc">NotAuthorized</span><span class="p">(</span><span class="n">ClientError</span><span class="p">):</span>
+<div class="viewcode-block" id="NotAuthorized"><a class="viewcode-back" href="../twitter_ads/error.html#error.NotAuthorized">[docs]</a><span class="k">class</span> <span class="nc">NotAuthorized</span><span class="p">(</span><span class="n">ClientError</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Not Authorized (401).&quot;&quot;&quot;</span></div>
 
 
-<div class="viewcode-block" id="Forbidden"><a class="viewcode-back" href="../../twitter_ads/error.html#twitter_ads.error.Forbidden">[docs]</a><span class="k">class</span> <span class="nc">Forbidden</span><span class="p">(</span><span class="n">ClientError</span><span class="p">):</span>
+<div class="viewcode-block" id="Forbidden"><a class="viewcode-back" href="../twitter_ads/error.html#error.Forbidden">[docs]</a><span class="k">class</span> <span class="nc">Forbidden</span><span class="p">(</span><span class="n">ClientError</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Forbidden (403).&quot;&quot;&quot;</span></div>
 
 
-<div class="viewcode-block" id="NotFound"><a class="viewcode-back" href="../../twitter_ads/error.html#twitter_ads.error.NotFound">[docs]</a><span class="k">class</span> <span class="nc">NotFound</span><span class="p">(</span><span class="n">ClientError</span><span class="p">):</span>
+<div class="viewcode-block" id="NotFound"><a class="viewcode-back" href="../twitter_ads/error.html#error.NotFound">[docs]</a><span class="k">class</span> <span class="nc">NotFound</span><span class="p">(</span><span class="n">ClientError</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Forbidden (404).&quot;&quot;&quot;</span></div>
 
 
-<div class="viewcode-block" id="RateLimit"><a class="viewcode-back" href="../../twitter_ads/error.html#twitter_ads.error.RateLimit">[docs]</a><span class="k">class</span> <span class="nc">RateLimit</span><span class="p">(</span><span class="n">ClientError</span><span class="p">):</span>
+<div class="viewcode-block" id="RateLimit"><a class="viewcode-back" href="../twitter_ads/error.html#error.RateLimit">[docs]</a><span class="k">class</span> <span class="nc">RateLimit</span><span class="p">(</span><span class="n">ClientError</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Rate Limit (429).&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -117,11 +117,11 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_retry_after</span></div>
 
 
-<div class="viewcode-block" id="ServerError"><a class="viewcode-back" href="../../twitter_ads/error.html#twitter_ads.error.ServerError">[docs]</a><span class="k">class</span> <span class="nc">ServerError</span><span class="p">(</span><span class="n">Error</span><span class="p">):</span>
+<div class="viewcode-block" id="ServerError"><a class="viewcode-back" href="../twitter_ads/error.html#error.ServerError">[docs]</a><span class="k">class</span> <span class="nc">ServerError</span><span class="p">(</span><span class="n">Error</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Server Error (500).&quot;&quot;&quot;</span></div>
 
 
-<div class="viewcode-block" id="ServiceUnavailable"><a class="viewcode-back" href="../../twitter_ads/error.html#twitter_ads.error.ServiceUnavailable">[docs]</a><span class="k">class</span> <span class="nc">ServiceUnavailable</span><span class="p">(</span><span class="n">ServerError</span><span class="p">):</span>
+<div class="viewcode-block" id="ServiceUnavailable"><a class="viewcode-back" href="../twitter_ads/error.html#error.ServiceUnavailable">[docs]</a><span class="k">class</span> <span class="nc">ServiceUnavailable</span><span class="p">(</span><span class="n">ServerError</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Service Unavailable (503).&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -154,15 +154,15 @@
         <div class="sphinxsidebarwrapper"><div class="relations">
 <h3>Related Topics</h3>
 <ul>
-  <li><a href="../../index.html">Documentation overview</a><ul>
-  <li><a href="../index.html">Module code</a><ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Module code</a><ul>
   </ul></li>
   </ul></li>
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
-    <form class="search" action="../../search.html" method="get">
+    <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />

@@ -6,6 +6,9 @@
    :hidden:
 
    twitter_ads/index
+   twitter_ads/code
+   twitter_ads/account
+   twitter_ads/audience
    twitter_ads/error
 
 Getting Started

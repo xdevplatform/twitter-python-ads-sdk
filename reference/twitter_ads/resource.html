@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>resource &mdash; Twitter Ads API SDK for Python 0.1.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Twitter Ads API SDK for Python 0.1.1 documentation" href="../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-resource">
+<span id="resource"></span><h1><a class="reference internal" href="#module-resource" title="resource"><code class="xref py py-mod docutils literal"><span class="pre">resource</span></code></a><a class="headerlink" href="#module-resource" title="Permalink to this headline">¶</a></h1>
+<p>Container for all plugable resource object logic used by the Ads API SDK.</p>
+<dl class="class">
+<dt id="resource.Analytics">
+<em class="property">class </em><code class="descclassname">resource.</code><code class="descname">Analytics</code><a class="reference internal" href="../_modules/resource.html#Analytics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#resource.Analytics" title="Permalink to this definition">¶</a></dt>
+<dd><p>Container for all analytics related logic used by API resource objects.</p>
+<dl class="classmethod">
+<dt id="resource.Analytics.all_stats">
+<em class="property">classmethod </em><code class="descname">all_stats</code><span class="sig-paren">(</span><em>klass</em>, <em>account</em>, <em>ids</em>, <em>metrics</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/resource.html#Analytics.all_stats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#resource.Analytics.all_stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pulls a list of metrics for a specified set of object IDs.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="resource.Analytics.stats">
+<code class="descname">stats</code><span class="sig-paren">(</span><em>metrics</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/resource.html#Analytics.stats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#resource.Analytics.stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pulls a list of metrics for the current object instance.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="resource.Persistence">
+<em class="property">class </em><code class="descclassname">resource.</code><code class="descname">Persistence</code><a class="reference internal" href="../_modules/resource.html#Persistence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#resource.Persistence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Container for all persistence related logic used by API resource objects.</p>
+<dl class="method">
+<dt id="resource.Persistence.delete">
+<code class="descname">delete</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/resource.html#Persistence.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#resource.Persistence.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes the current object instance depending on the
+presence of <cite>object.id</cite>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="resource.Persistence.save">
+<code class="descname">save</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/resource.html#Persistence.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#resource.Persistence.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves or updates the current object instance depending on the
+presence of <cite>object.id</cite>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="resource.Resource">
+<em class="property">class </em><code class="descclassname">resource.</code><code class="descname">Resource</code><span class="sig-paren">(</span><em>account</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/resource.html#Resource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#resource.Resource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for all API resource objects.</p>
+<dl class="classmethod">
+<dt id="resource.Resource.all">
+<em class="property">classmethod </em><code class="descname">all</code><span class="sig-paren">(</span><em>klass</em>, <em>account</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/resource.html#Resource.all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#resource.Resource.all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a Cursor instance for a given resource.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="resource.Resource.from_response">
+<code class="descname">from_response</code><span class="sig-paren">(</span><em>response</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/resource.html#Resource.from_response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#resource.Resource.from_response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Populates a given objects attributes from a parsed JSON API response.
+This helper handles all necessary type coercions as it assigns
+attribute values.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="resource.Resource.load">
+<em class="property">classmethod </em><code class="descname">load</code><span class="sig-paren">(</span><em>klass</em>, <em>account</em>, <em>id</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/resource.html#Resource.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#resource.Resource.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an object instance for a given resource.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="resource.Resource.reload">
+<code class="descname">reload</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/resource.html#Resource.reload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#resource.Resource.reload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reloads all attributes for the current object instance from the API.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="resource.Resource.to_params">
+<code class="descname">to_params</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/resource.html#Resource.to_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#resource.Resource.to_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a Hash of property values for the current object. This helper
+handles all necessary type coercions as it generates its output.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="resource.resource_property">
+<code class="descclassname">resource.</code><code class="descname">resource_property</code><span class="sig-paren">(</span><em>klass</em>, <em>name</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/resource.html#resource_property"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#resource.resource_property" title="Permalink to this definition">¶</a></dt>
+<dd><p>Builds a resource object property.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/twitter_ads/resource.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Twitter, Inc.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+      |
+      <a href="../_sources/twitter_ads/resource.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

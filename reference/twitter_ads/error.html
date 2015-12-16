@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>error – Module for all error types raised by the SDK &mdash; Twitter Ads API SDK for Python 0.1.0 documentation</title>
+    <title>error &mdash; Twitter Ads API SDK for Python 0.1.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.1.0',
+        VERSION:     '0.1.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,8 +23,8 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Twitter Ads API SDK for Python 0.1.0 documentation" href="../index.html" />
-    <link rel="prev" title="twitter_ads – Base module for the Twitter Ads SDK" href="index.html" />
+    <link rel="top" title="Twitter Ads API SDK for Python 0.1.1 documentation" href="../index.html" />
+    <link rel="prev" title="audience" href="audience.html" />
    
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
@@ -37,66 +37,66 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="module-twitter_ads.error">
-<span id="error-module-for-all-error-types-raised-by-the-sdk"></span><h1><code class="xref py py-mod docutils literal"><span class="pre">error</span></code> &#8211; Module for all error types raised by the SDK<a class="headerlink" href="#module-twitter_ads.error" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-error">
+<span id="error"></span><h1><a class="reference internal" href="#module-error" title="error: Module for all error types raised by the SDK."><code class="xref py py-mod docutils literal"><span class="pre">error</span></code></a><a class="headerlink" href="#module-error" title="Permalink to this headline">¶</a></h1>
 <p>Container for all errors raised by the Twitter Ads SDK.</p>
 <dl class="exception">
-<dt id="twitter_ads.error.BadRequest">
-<em class="property">exception </em><code class="descclassname">twitter_ads.error.</code><code class="descname">BadRequest</code><span class="sig-paren">(</span><em>response</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/twitter_ads/error.html#BadRequest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#twitter_ads.error.BadRequest" title="Permalink to this definition">¶</a></dt>
+<dt id="error.BadRequest">
+<em class="property">exception </em><code class="descclassname">error.</code><code class="descname">BadRequest</code><span class="sig-paren">(</span><em>response</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/error.html#BadRequest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#error.BadRequest" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bad Request (400).</p>
 </dd></dl>
 
 <dl class="exception">
-<dt id="twitter_ads.error.ClientError">
-<em class="property">exception </em><code class="descclassname">twitter_ads.error.</code><code class="descname">ClientError</code><span class="sig-paren">(</span><em>response</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/twitter_ads/error.html#ClientError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#twitter_ads.error.ClientError" title="Permalink to this definition">¶</a></dt>
+<dt id="error.ClientError">
+<em class="property">exception </em><code class="descclassname">error.</code><code class="descname">ClientError</code><span class="sig-paren">(</span><em>response</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/error.html#ClientError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#error.ClientError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parent class for preventable client errors.</p>
 </dd></dl>
 
 <dl class="exception">
-<dt id="twitter_ads.error.Error">
-<em class="property">exception </em><code class="descclassname">twitter_ads.error.</code><code class="descname">Error</code><span class="sig-paren">(</span><em>response</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/twitter_ads/error.html#Error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#twitter_ads.error.Error" title="Permalink to this definition">¶</a></dt>
+<dt id="error.Error">
+<em class="property">exception </em><code class="descclassname">error.</code><code class="descname">Error</code><span class="sig-paren">(</span><em>response</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/error.html#Error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#error.Error" title="Permalink to this definition">¶</a></dt>
 <dd><p>The base class for all SDK error types.</p>
 <dl class="staticmethod">
-<dt id="twitter_ads.error.Error.from_response">
-<em class="property">static </em><code class="descname">from_response</code><span class="sig-paren">(</span><em>response</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/twitter_ads/error.html#Error.from_response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#twitter_ads.error.Error.from_response" title="Permalink to this definition">¶</a></dt>
+<dt id="error.Error.from_response">
+<em class="property">static </em><code class="descname">from_response</code><span class="sig-paren">(</span><em>response</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/error.html#Error.from_response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#error.Error.from_response" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the correct error type from a ::class::<cite>Response</cite> object.</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="exception">
-<dt id="twitter_ads.error.Forbidden">
-<em class="property">exception </em><code class="descclassname">twitter_ads.error.</code><code class="descname">Forbidden</code><span class="sig-paren">(</span><em>response</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/twitter_ads/error.html#Forbidden"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#twitter_ads.error.Forbidden" title="Permalink to this definition">¶</a></dt>
+<dt id="error.Forbidden">
+<em class="property">exception </em><code class="descclassname">error.</code><code class="descname">Forbidden</code><span class="sig-paren">(</span><em>response</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/error.html#Forbidden"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#error.Forbidden" title="Permalink to this definition">¶</a></dt>
 <dd><p>Forbidden (403).</p>
 </dd></dl>
 
 <dl class="exception">
-<dt id="twitter_ads.error.NotAuthorized">
-<em class="property">exception </em><code class="descclassname">twitter_ads.error.</code><code class="descname">NotAuthorized</code><span class="sig-paren">(</span><em>response</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/twitter_ads/error.html#NotAuthorized"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#twitter_ads.error.NotAuthorized" title="Permalink to this definition">¶</a></dt>
+<dt id="error.NotAuthorized">
+<em class="property">exception </em><code class="descclassname">error.</code><code class="descname">NotAuthorized</code><span class="sig-paren">(</span><em>response</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/error.html#NotAuthorized"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#error.NotAuthorized" title="Permalink to this definition">¶</a></dt>
 <dd><p>Not Authorized (401).</p>
 </dd></dl>
 
 <dl class="exception">
-<dt id="twitter_ads.error.NotFound">
-<em class="property">exception </em><code class="descclassname">twitter_ads.error.</code><code class="descname">NotFound</code><span class="sig-paren">(</span><em>response</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/twitter_ads/error.html#NotFound"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#twitter_ads.error.NotFound" title="Permalink to this definition">¶</a></dt>
+<dt id="error.NotFound">
+<em class="property">exception </em><code class="descclassname">error.</code><code class="descname">NotFound</code><span class="sig-paren">(</span><em>response</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/error.html#NotFound"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#error.NotFound" title="Permalink to this definition">¶</a></dt>
 <dd><p>Forbidden (404).</p>
 </dd></dl>
 
 <dl class="exception">
-<dt id="twitter_ads.error.RateLimit">
-<em class="property">exception </em><code class="descclassname">twitter_ads.error.</code><code class="descname">RateLimit</code><span class="sig-paren">(</span><em>response</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/twitter_ads/error.html#RateLimit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#twitter_ads.error.RateLimit" title="Permalink to this definition">¶</a></dt>
+<dt id="error.RateLimit">
+<em class="property">exception </em><code class="descclassname">error.</code><code class="descname">RateLimit</code><span class="sig-paren">(</span><em>response</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/error.html#RateLimit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#error.RateLimit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Rate Limit (429).</p>
 </dd></dl>
 
 <dl class="exception">
-<dt id="twitter_ads.error.ServerError">
-<em class="property">exception </em><code class="descclassname">twitter_ads.error.</code><code class="descname">ServerError</code><span class="sig-paren">(</span><em>response</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/twitter_ads/error.html#ServerError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#twitter_ads.error.ServerError" title="Permalink to this definition">¶</a></dt>
+<dt id="error.ServerError">
+<em class="property">exception </em><code class="descclassname">error.</code><code class="descname">ServerError</code><span class="sig-paren">(</span><em>response</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/error.html#ServerError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#error.ServerError" title="Permalink to this definition">¶</a></dt>
 <dd><p>Server Error (500).</p>
 </dd></dl>
 
 <dl class="exception">
-<dt id="twitter_ads.error.ServiceUnavailable">
-<em class="property">exception </em><code class="descclassname">twitter_ads.error.</code><code class="descname">ServiceUnavailable</code><span class="sig-paren">(</span><em>response</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/twitter_ads/error.html#ServiceUnavailable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#twitter_ads.error.ServiceUnavailable" title="Permalink to this definition">¶</a></dt>
+<dt id="error.ServiceUnavailable">
+<em class="property">exception </em><code class="descclassname">error.</code><code class="descname">ServiceUnavailable</code><span class="sig-paren">(</span><em>response</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/error.html#ServiceUnavailable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#error.ServiceUnavailable" title="Permalink to this definition">¶</a></dt>
 <dd><p>Service Unavailable (503).</p>
 </dd></dl>
 
@@ -111,7 +111,7 @@
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="index.html" title="previous chapter"><code class="docutils literal"><span class="pre">twitter_ads</span></code> &#8211; Base module for the Twitter Ads SDK</a></li>
+      <li>Previous: <a href="audience.html" title="previous chapter"><code class="docutils literal"><span class="pre">audience</span></code></a></li>
   </ul></li>
 </ul>
 </div>
