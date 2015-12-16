@@ -21,6 +21,8 @@ class Account(Resource):
     for the advertiser and nearly all interactions with the API.
     """
 
+    PROPERTIES = {}
+
     RESOURCE_COLLECTION = '/0/accounts'
     RESOURCE = '/0/accounts/{id}'
     FEATURES = '/0/accounts/{id}/features'

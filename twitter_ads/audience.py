@@ -8,6 +8,8 @@ from twitter_ads.resource import resource_property, Resource
 
 class TailoredAudience(Resource):
 
+    PROPERTIES = {}
+
     RESOURCE_COLLECTION = '/0/accounts/{account_id}/tailored_audiences'
     RESOURCE = '/0/accounts/{account_id}/tailored_audiences/{id}'
     RESOURCE_UPDATE = '/0/accounts/{account_id}/tailored_audience_changes'

@@ -29,8 +29,6 @@ def resource_property(klass, name, **kwargs):
 class Resource(object):
     """Base class for all API resource objects."""
 
-    PROPERTIES = {}
-
     def __init__(self, account):
         self._account = account
 
