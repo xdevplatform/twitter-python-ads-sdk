@@ -28,7 +28,7 @@ Quick Start
         CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
 
     # load the advertiser account instance
-    account = client.accounts(id=ACCOUNT_ID)
+    account = client.accounts(ACCOUNT_ID)
 
     # load and update a specific campaign
     campaign = account.campaigns().next()
