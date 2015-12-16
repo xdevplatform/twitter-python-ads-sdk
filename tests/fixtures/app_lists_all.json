@@ -1,0 +1,22 @@
+{
+   "request" : {
+      "params" : {
+         "account_id" : "2iqph"
+      }
+   },
+   "data_type" : "app_list",
+   "data" : [
+      {
+         "name" : "Some test app list",
+         "id" : "abc2"
+      },
+      {
+         "name" : "Yet another app list",
+         "id" : "wdpr"
+      },
+      {
+         "name" : "The best app list yet",
+         "id" : "wdps"
+      }
+   ]
+}

@@ -1,0 +1,35 @@
+{
+  "data_type": "placement",
+  "data": [
+    {
+      "product_type": "PROMOTED_TWEETS",
+      "placements": [
+        [
+          "ALL_ON_TWITTER"
+        ],
+        [
+          "ALL_ON_TWITTER",
+          "PUBLISHER_NETWORK"
+        ],
+        [
+          "PUBLISHER_NETWORK"
+        ],
+        [
+          "PUBLISHER_NETWORK",
+          "TWITTER_TIMELINE"
+        ],
+        [
+          "TWITTER_SEARCH"
+        ],
+        [
+          "TWITTER_TIMELINE"
+        ]
+      ]
+    }
+  ],
+  "request": {
+    "params": {
+      "product_type": "PROMOTED_TWEETS"
+    }
+  }
+}

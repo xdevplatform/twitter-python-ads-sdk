@@ -40,13 +40,11 @@ CLASSIFIERS = [
 
 extra_opts = {
     'setup_requires': ['pytest-runner'],
-    'tests_require': ['pytest']
+    'tests_require': ['pytest', 'responses', 'mock']
 }
 
 if sys.version_info[0] != 3:
     extra_opts['setup_requires'].append('flake8')
-else:
-    extra_opts['tests_require'].append('mock')
 
 setup(
     name='twitter-ads',

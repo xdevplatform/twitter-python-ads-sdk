@@ -1,0 +1,31 @@
+{
+   "data_type" : "app_list",
+   "data" : {
+      "apps" : [
+         {
+            "os_type" : "Android",
+            "app_store_identifier" : "com.supercell.clashofclans"
+         },
+         {
+            "app_store_identifier" : "com.functionx.viggle",
+            "os_type" : "Android"
+         },
+         {
+            "app_store_identifier" : "io.fabric.samples.cannonball",
+            "os_type" : "Android"
+         },
+         {
+            "os_type" : "Android",
+            "app_store_identifier" : "com.hoteltonight.android.prod"
+         }
+      ],
+      "name" : "Some test app list",
+      "id" : "abc2"
+   },
+   "request" : {
+      "params" : {
+         "account_id" : "2iqph",
+         "app_list_id" : "abc2"
+      }
+   }
+}

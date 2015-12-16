@@ -1,0 +1,27 @@
+{
+  "data_type": "campaign",
+  "data": {
+    "name": "Intelligent Granite Computer",
+    "start_time": "2015-08-12T20:26:23Z",
+    "reasons_not_servable": [],
+    "servable": true,
+    "daily_budget_amount_local_micro": 1000000,
+    "end_time": null,
+    "funding_instrument_id": "5aa0p",
+    "standard_delivery": true,
+    "total_budget_amount_local_micro": null,
+    "id": "2wap7",
+    "paused": false,
+    "account_id": "2iqph",
+    "currency": "USD",
+    "created_at": "2015-08-12T20:26:24Z",
+    "updated_at": "2015-08-12T20:26:24Z",
+    "deleted": false
+  },
+  "request": {
+    "params": {
+      "campaign_id": "2wap7",
+      "account_id": "2iqph"
+    }
+  }
+}

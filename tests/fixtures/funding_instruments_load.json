@@ -1,0 +1,28 @@
+{
+  "data_type": "funding_instrument",
+  "data": {
+    "start_time": "2015-08-25T09:18:19Z",
+    "description": "Denesik, O'Reilly and Zulauf",
+    "credit_limit_local_micro": null,
+    "end_time": "2017-02-28T08:15:40Z",
+    "cancelled": false,
+    "id": "5aa0p",
+    "paused": false,
+    "account_id": "2iqph",
+    "reasons_not_able_to_fund": [],
+    "currency": "USD",
+    "funded_amount_local_micro": 5000000000,
+    "created_at": "2015-08-19T01:35:10Z",
+    "type": "INSERTION_ORDER",
+    "able_to_fund": false,
+    "updated_at": "2015-08-19T01:35:10Z",
+    "credit_remaining_local_micro": null,
+    "deleted": false
+  },
+  "request": {
+    "params": {
+      "funding_instrument_id": "5aa0p",
+      "account_id": "2iqph"
+    }
+  }
+}

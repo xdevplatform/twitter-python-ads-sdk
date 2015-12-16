@@ -1,0 +1,57 @@
+{
+  "request": {
+    "params": {
+      "account_id": "2iqph"
+    }
+  },
+  "data": [
+    {
+      "user_id": "330677333",
+      "id": "4k",
+      "account_id": "2iqph",
+      "created_at": "2011-11-14T21:26:54Z",
+      "updated_at": "2014-07-30T23:49:23Z",
+      "deleted": false,
+      "promotable_user_type": "FULL"
+    },
+    {
+      "user_id": "154303893",
+      "id": "5ze",
+      "account_id": "2iqph",
+      "created_at": "2012-04-23T16:02:08Z",
+      "updated_at": "2014-05-20T19:07:17Z",
+      "deleted": false,
+      "promotable_user_type": "RETWEETS_ONLY"
+    },
+    {
+      "user_id": "16088304",
+      "id": "2jbq3",
+      "account_id": "2iqph",
+      "created_at": "2013-08-21T10:31:01Z",
+      "updated_at": "2014-05-20T12:35:01Z",
+      "deleted": false,
+      "promotable_user_type": "RETWEETS_ONLY"
+    },
+    {
+      "user_id": "14216557",
+      "id": "2jlym",
+      "account_id": "2iqph",
+      "created_at": "2013-09-04T22:36:24Z",
+      "updated_at": "2014-05-20T20:09:11Z",
+      "deleted": false,
+      "promotable_user_type": "RETWEETS_ONLY"
+    },
+    {
+      "user_id": "312226591",
+      "id": "2kuyo",
+      "account_id": "2iqph",
+      "created_at": "2013-09-12T22:59:10Z",
+      "updated_at": "2014-05-22T14:36:22Z",
+      "deleted": false,
+      "promotable_user_type": "RETWEETS_ONLY"
+    }
+  ],
+  "data_type": "promotable_user",
+  "total_count": 5,
+  "next_cursor": null
+}

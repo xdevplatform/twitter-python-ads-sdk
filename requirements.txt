@@ -2,3 +2,5 @@ pyyaml
 requests-oauthlib
 python-dateutil
 sphinx
+responses
+mock
