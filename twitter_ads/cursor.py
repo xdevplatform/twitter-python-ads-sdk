@@ -58,7 +58,7 @@ class Cursor(object):
             value = self._collection[self._current_index]
             self._current_index += 1
             return value
-        elif self._current_index > len(self._collection) and self._next_cursor:
+        elif self._next_cursor:
             self.__fetch_next()
             return self.next()
         else:
@@ -74,8 +74,11 @@ class Cursor(object):
         self.__die()
 
     def __fetch_next(self):
-        params = self._options.copy().update({'next_cursor': self._next_cursor})
-        response = Request(self._client, self._method, self._resource, params=params).perform()
+        options = self._options.copy()
+        params = options.get('params', {})
+        params.update({'cursor': self._next_cursor})
+        options['params'] = params
+        response = Request(self._client, self._method, self._resource, **options).perform()
         return self.__from_response(response)
 
     def __from_response(self, response):
