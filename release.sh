@@ -19,4 +19,4 @@ git push origin HEAD:gh-pages
 git checkout master
 
 # push to pypi
-python setup.py sdist upload
+python setup.py sdist upload --sign --identity="Twitter Ads API <twitterdev-ads@twitter.com>"
