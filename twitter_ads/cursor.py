@@ -43,6 +43,13 @@ class Cursor(object):
         return self._total_count or len(self._collection)
 
     @property
+    def first(self):
+        """
+        Returns the first item of available items available to the cursor instance.
+        """
+        return next(iter(self._collection), None)
+
+    @property
     def fetched(self):
         """
         Returns the number of items fetched so far.
