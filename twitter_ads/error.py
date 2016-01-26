@@ -9,7 +9,11 @@ class Error(Exception):
     def __init__(self, response, **kwargs):
         self._response = response
         self._code = kwargs.get('code', response.code)
-        self._details = kwargs.get('details', response.body.get('errors', None))
+
+        if response.body and 'errors' in response.body:
+            self._details = kwargs.get('details', response.body.get('errors'))
+        else:
+            self._details = None
 
     @property
     def response(self):
@@ -30,6 +34,9 @@ class Error(Exception):
             code=getattr(self, 'code'),
             details=getattr(self, 'details')
         )
+
+    def __str__(self):
+        return self.__repr__()
 
     @staticmethod
     def from_response(response):
