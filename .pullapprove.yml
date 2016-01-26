@@ -6,5 +6,6 @@ reviewers:
   members:
   - brandonblack
   - jaakko-sf
+  - garethpaul
   name: dpr-ads-leads
   required: 1
