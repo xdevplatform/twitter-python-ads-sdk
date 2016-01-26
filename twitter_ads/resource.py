@@ -2,8 +2,8 @@
 
 """Container for all plugable resource object logic used by the Ads API SDK."""
 
-import datetime
 import dateutil.parser
+from datetime import datetime, timedelta
 
 from twitter_ads.utils import format_time, to_time
 from twitter_ads.enum import TRANSFORM, GRANULARITY
@@ -69,7 +69,7 @@ class Resource(object):
             if value is None:
                 continue
 
-            if isinstance(value, datetime.datetime):
+            if isinstance(value, datetime):
                 params[name] = format_time(value)
             elif isinstance(value, list):
                 params[name] = ','.join(map(str, value))
@@ -185,8 +185,8 @@ class Analytics(object):
         """
         Pulls a list of metrics for a specified set of object IDs.
         """
-        end_time = kwargs.get('end_time', datetime.datetime.utcnow())
-        start_time = kwargs.get('start_time', end_time - datetime.timedelta(seconds=604800))
+        end_time = kwargs.get('end_time', datetime.utcnow())
+        start_time = kwargs.get('start_time', end_time - timedelta(seconds=604800))
         granularity = kwargs.get('granularity', GRANULARITY.HOUR)
         segmentation_type = kwargs.get('segmentation_type', None)
 

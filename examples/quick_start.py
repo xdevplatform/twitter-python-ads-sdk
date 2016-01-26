@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 
 from twitter_ads.client import Client
 from twitter_ads.campaign import Campaign, LineItem, TargetingCriteria
@@ -22,7 +22,7 @@ campaign.funding_instrument_id = account.funding_instruments().next().id
 campaign.daily_budget_amount_local_micro = 1000000
 campaign.name = 'my first campaign'
 campaign.paused = True
-campaign.start_time = datetime.datetime.utcnow()
+campaign.start_time = datetime.utcnow()
 campaign.save()
 
 # create a line item for the campaign
