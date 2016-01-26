@@ -3,6 +3,7 @@
 from twitter_ads.client import Client
 from twitter_ads.cursor import Cursor
 from twitter_ads.http import Request
+from twitter_ads.error import Error
 
 CONSUMER_KEY = 'your consumer key'
 CONSUMER_SECRET = 'your consumer secret'
@@ -22,9 +23,14 @@ account = client.accounts(ADS_ACCOUNT)
 resource = '/0/accounts/{account_id}/features'.format(account_id=account.id)
 params = {'feature_keys': 'AGE_TARGETING,CPI_CHARGING'}
 
-# build and execute the request
-response = Request(client, 'get', resource, params=params).perform()
-print(response.body['data'][0])
+# try, build and execute the request with error handling
+try:
+    response = Request(client, 'get', resource, params=params).perform()
+    print(response.body['data'][0])
+except Error as e:
+    # see twitter_ads.error for more details
+    print e.details
+    raise
 
 # you can also manually construct requests to be
 # used in Cursor objects.
