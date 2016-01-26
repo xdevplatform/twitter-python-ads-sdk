@@ -41,23 +41,19 @@ class PromotedTweet(Resource, Persistence, Analytics):
         Saves or updates the current object instance depending on the
         presence of `object.id`.
         """
-        if self.id:
-            method = 'put'
-            resource = self.RESOURCE.format(account_id=self.account.id, id=self.id)
-        else:
-            method = 'post'
-            resource = self.RESOURCE_COLLECTION.format(account_id=self.account.id)
-
         params = self.to_params()
         if 'tweet_id' in params:
             params['tweet_ids'] = [params['tweet_id']]
             del params['tweet_id']
 
-        response = Request(
-            self.account.client, method,
-            resource, params=params).perform()
+        if self.id:
+            resource = self.RESOURCE.format(account_id=self.account.id, id=self.id)
+            response = Request(self.account.client, 'put', resource, params=params).perform()
+            return self.from_response(response.body['data'])
 
-        self.from_response(response.body['data'])
+        resource = self.RESOURCE_COLLECTION.format(account_id=self.account.id)
+        response = Request(self.account.client, 'post', resource, params=params).perform()
+        return self.from_response(response.body['data'][0])
 
 # promoted tweet properties
 # read-only

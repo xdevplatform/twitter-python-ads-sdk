@@ -1,0 +1,10 @@
+approve_by_comment: true
+approve_regex: '^([Aa]pprove(d)?|:\+1:|:shipit:|:thumpsup:|:ship:)'
+reject_regex: '^([Aa]eject(ed)?|:thumpsdown:)'
+reset_on_push: false
+reviewers:
+  members:
+  - brandonblack
+  - jaakko-sf
+  name: dpr-ads-leads
+  required: 1
