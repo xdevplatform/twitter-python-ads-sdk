@@ -16,7 +16,7 @@ client = Client(CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET
 # load up the account instance, campaign and line item
 account = client.accounts(ADS_ACCOUNT)
 campaign = account.campaigns().next()
-line_item = account.line_items(None, params={'campaign_id': campaign.id}).next()
+line_item = account.line_items(None, campaign_ids=campaign.id).next()
 
 # create request for a simple nullcasted tweet
 tweet1 = Tweet.create(account, 'There can be only one...')
