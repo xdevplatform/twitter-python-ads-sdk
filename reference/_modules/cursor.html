@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>cursor &mdash; Twitter Ads API SDK for Python 0.1.3 documentation</title>
+    <title>cursor &mdash; Twitter Ads API SDK for Python 0.2.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.1.3',
+        VERSION:     '0.2.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Twitter Ads API SDK for Python 0.1.3 documentation" href="../index.html" />
+    <link rel="top" title="Twitter Ads API SDK for Python 0.2.0 documentation" href="../index.html" />
     <link rel="up" title="Module code" href="index.html" />
    
   
@@ -38,11 +38,11 @@
           <div class="body" role="main">
             
   <h1>Source code for cursor</h1><div class="highlight"><pre>
-<span class="c"># Copyright (C) 2015 Twitter, Inc.</span>
+<span class="c1"># Copyright (C) 2015 Twitter, Inc.</span>
 
 <span class="sd">&quot;&quot;&quot;Container for all Cursor logic used by the Ads API SDK.&quot;&quot;&quot;</span>
 
-<span class="c"># from twitter_ads import *</span>
+<span class="c1"># from twitter_ads import *</span>
 <span class="kn">from</span> <span class="nn">twitter_ads.http</span> <span class="kn">import</span> <span class="n">Request</span>
 
 
@@ -122,20 +122,20 @@
 
     <span class="k">def</span> <span class="nf">__fetch_next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">options</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-        <span class="n">params</span> <span class="o">=</span> <span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;params&#39;</span><span class="p">,</span> <span class="p">{})</span>
-        <span class="n">params</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s">&#39;cursor&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_next_cursor</span><span class="p">})</span>
-        <span class="n">options</span><span class="p">[</span><span class="s">&#39;params&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">params</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;params&#39;</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="n">params</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;cursor&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_next_cursor</span><span class="p">})</span>
+        <span class="n">options</span><span class="p">[</span><span class="s1">&#39;params&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">params</span>
         <span class="n">response</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_method</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_resource</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__from_response</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__from_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_next_cursor</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;next_cursor&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
-        <span class="k">if</span> <span class="s">&#39;total_count&#39;</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_total_count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">&#39;total_count&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_next_cursor</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;next_cursor&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;total_count&#39;</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_total_count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s1">&#39;total_count&#39;</span><span class="p">])</span>
 
-        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">&#39;data&#39;</span><span class="p">]:</span>
-            <span class="k">if</span> <span class="s">&#39;from_response&#39;</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_klass</span><span class="p">):</span>
-                <span class="n">init_with</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;init_with&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="s1">&#39;from_response&#39;</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_klass</span><span class="p">):</span>
+                <span class="n">init_with</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;init_with&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
                 <span class="n">obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_klass</span><span class="p">(</span><span class="o">*</span><span class="n">init_with</span><span class="p">)</span> <span class="k">if</span> <span class="n">init_with</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_klass</span><span class="p">()</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_collection</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">from_response</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
             <span class="k">else</span><span class="p">:</span>
@@ -176,7 +176,7 @@
       &copy;2015, Twitter, Inc.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.5</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
       
     </div>

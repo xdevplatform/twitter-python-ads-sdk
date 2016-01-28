@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>account &mdash; Twitter Ads API SDK for Python 0.1.3 documentation</title>
+    <title>account &mdash; Twitter Ads API SDK for Python 0.2.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.1.3',
+        VERSION:     '0.2.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Twitter Ads API SDK for Python 0.1.3 documentation" href="../index.html" />
+    <link rel="top" title="Twitter Ads API SDK for Python 0.2.0 documentation" href="../index.html" />
     <link rel="up" title="Module code" href="index.html" />
    
   
@@ -38,7 +38,7 @@
           <div class="body" role="main">
             
   <h1>Source code for account</h1><div class="highlight"><pre>
-<span class="c"># Copyright (C) 2015 Twitter, Inc.</span>
+<span class="c1"># Copyright (C) 2015 Twitter, Inc.</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">A Twitter supported and maintained Ads API SDK for Python.</span>
@@ -63,10 +63,10 @@
 
     <span class="n">PROPERTIES</span> <span class="o">=</span> <span class="p">{}</span>
 
-    <span class="n">RESOURCE_COLLECTION</span> <span class="o">=</span> <span class="s">&#39;/0/accounts&#39;</span>
-    <span class="n">RESOURCE</span> <span class="o">=</span> <span class="s">&#39;/0/accounts/{id}&#39;</span>
-    <span class="n">FEATURES</span> <span class="o">=</span> <span class="s">&#39;/0/accounts/{id}/features&#39;</span>
-    <span class="n">SCOPED_TIMELINE</span> <span class="o">=</span> <span class="s">&#39;/0/accounts/{id}/scoped_timeline&#39;</span>
+    <span class="n">RESOURCE_COLLECTION</span> <span class="o">=</span> <span class="s1">&#39;/0/accounts&#39;</span>
+    <span class="n">RESOURCE</span> <span class="o">=</span> <span class="s1">&#39;/0/accounts/{id}&#39;</span>
+    <span class="n">FEATURES</span> <span class="o">=</span> <span class="s1">&#39;/0/accounts/{id}/features&#39;</span>
+    <span class="n">SCOPED_TIMELINE</span> <span class="o">=</span> <span class="s1">&#39;/0/accounts/{id}/scoped_timeline&#39;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">client</span>
@@ -83,14 +83,14 @@
 <div class="viewcode-block" id="Account.load"><a class="viewcode-back" href="../twitter_ads/account.html#account.Account.load">[docs]</a>    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="n">client</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns an object instance for a given resource.&quot;&quot;&quot;</span>
         <span class="n">resource</span> <span class="o">=</span> <span class="n">klass</span><span class="o">.</span><span class="n">RESOURCE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span>
-        <span class="n">response</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="s">&#39;get&#39;</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">kwargs</span><span class="p">)</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">klass</span><span class="p">(</span><span class="n">client</span><span class="p">)</span><span class="o">.</span><span class="n">from_response</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">&#39;data&#39;</span><span class="p">])</span></div>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">kwargs</span><span class="p">)</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">klass</span><span class="p">(</span><span class="n">client</span><span class="p">)</span><span class="o">.</span><span class="n">from_response</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">])</span></div>
 
     <span class="nd">@classmethod</span>
 <div class="viewcode-block" id="Account.all"><a class="viewcode-back" href="../twitter_ads/account.html#account.Account.all">[docs]</a>    <span class="k">def</span> <span class="nf">all</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="n">client</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns a Cursor instance for a given resource.&quot;&quot;&quot;</span>
         <span class="n">resource</span> <span class="o">=</span> <span class="n">klass</span><span class="o">.</span><span class="n">RESOURCE_COLLECTION</span>
-        <span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="s">&#39;get&#39;</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">Cursor</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">init_with</span><span class="o">=</span><span class="p">[</span><span class="n">client</span><span class="p">])</span></div>
 
 <div class="viewcode-block" id="Account.reload"><a class="viewcode-back" href="../twitter_ads/account.html#account.Account.reload">[docs]</a>    <span class="k">def</span> <span class="nf">reload</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -100,13 +100,13 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span>
 
-        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;with_deleted&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;with_deleted&#39;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}</span>
         <span class="n">params</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
 
         <span class="n">resource</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">RESOURCE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">account_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">account</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
-        <span class="n">response</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">account</span><span class="o">.</span><span class="n">client</span><span class="p">,</span> <span class="s">&#39;get&#39;</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">account</span><span class="o">.</span><span class="n">client</span><span class="p">,</span> <span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">from_response</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">&#39;data&#39;</span><span class="p">])</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">from_response</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">])</span></div>
 
 <div class="viewcode-block" id="Account.features"><a class="viewcode-back" href="../twitter_ads/account.html#account.Account.features">[docs]</a>    <span class="k">def</span> <span class="nf">features</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -115,9 +115,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_validate_loaded</span><span class="p">()</span>
 
         <span class="n">resource</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">FEATURES</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
-        <span class="n">response</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">,</span> <span class="s">&#39;get&#39;</span><span class="p">,</span> <span class="n">resource</span><span class="p">)</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">,</span> <span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="n">resource</span><span class="p">)</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
 
-        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">&#39;data&#39;</span><span class="p">]</span></div>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="Account.promotable_users"><a class="viewcode-back" href="../twitter_ads/account.html#account.Account.promotable_users">[docs]</a>    <span class="k">def</span> <span class="nf">promotable_users</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -172,25 +172,25 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_validate_loaded</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ids</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-            <span class="n">ids</span> <span class="o">=</span> <span class="s">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">ids</span><span class="p">))</span>
+            <span class="n">ids</span> <span class="o">=</span> <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">ids</span><span class="p">))</span>
 
-        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;user_ids&#39;</span><span class="p">:</span> <span class="n">ids</span><span class="p">}</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;user_ids&#39;</span><span class="p">:</span> <span class="n">ids</span><span class="p">}</span>
         <span class="n">params</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
 
         <span class="n">resource</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">SCOPED_TIMELINE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
-        <span class="n">response</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">,</span> <span class="s">&#39;get&#39;</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">,</span> <span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
 
-        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s">&#39;data&#39;</span><span class="p">]</span></div></div>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span></div></div>
 
-<span class="c"># account properties</span>
-<span class="n">resource_property</span><span class="p">(</span><span class="n">Account</span><span class="p">,</span> <span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="n">resource_property</span><span class="p">(</span><span class="n">Account</span><span class="p">,</span> <span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="n">resource_property</span><span class="p">(</span><span class="n">Account</span><span class="p">,</span> <span class="s">&#39;salt&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="n">resource_property</span><span class="p">(</span><span class="n">Account</span><span class="p">,</span> <span class="s">&#39;timezone&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="n">resource_property</span><span class="p">(</span><span class="n">Account</span><span class="p">,</span> <span class="s">&#39;deleted&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">BOOL</span><span class="p">)</span>
-<span class="n">resource_property</span><span class="p">(</span><span class="n">Account</span><span class="p">,</span> <span class="s">&#39;timezone_switch_at&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span>
-<span class="n">resource_property</span><span class="p">(</span><span class="n">Account</span><span class="p">,</span> <span class="s">&#39;created_at&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span>
-<span class="n">resource_property</span><span class="p">(</span><span class="n">Account</span><span class="p">,</span> <span class="s">&#39;updated_at&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span>
+<span class="c1"># account properties</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">Account</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">Account</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">Account</span><span class="p">,</span> <span class="s1">&#39;salt&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">Account</span><span class="p">,</span> <span class="s1">&#39;timezone&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">Account</span><span class="p">,</span> <span class="s1">&#39;deleted&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">BOOL</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">Account</span><span class="p">,</span> <span class="s1">&#39;timezone_switch_at&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">Account</span><span class="p">,</span> <span class="s1">&#39;created_at&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">Account</span><span class="p">,</span> <span class="s1">&#39;updated_at&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span>
 </pre></div>
 
           </div>
@@ -227,7 +227,7 @@
       &copy;2015, Twitter, Inc.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.5</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
       
     </div>

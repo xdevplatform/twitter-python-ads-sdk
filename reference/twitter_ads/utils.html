@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>utils &mdash; Twitter Ads API SDK for Python 0.1.3 documentation</title>
+    <title>utils &mdash; Twitter Ads API SDK for Python 0.2.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.1.3',
+        VERSION:     '0.2.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Twitter Ads API SDK for Python 0.1.3 documentation" href="../index.html" />
+    <link rel="top" title="Twitter Ads API SDK for Python 0.2.0 documentation" href="../index.html" />
    
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
@@ -39,6 +39,30 @@
   <div class="section" id="module-utils">
 <span id="utils"></span><h1><a class="reference internal" href="#module-utils" title="utils"><code class="xref py py-mod docutils literal"><span class="pre">utils</span></code></a><a class="headerlink" href="#module-utils" title="Permalink to this headline">¶</a></h1>
 <p>Container for all helpers and utilities used throughout the Ads API SDK.</p>
+<dl class="function">
+<dt id="utils.format_time">
+<code class="descclassname">utils.</code><code class="descname">format_time</code><span class="sig-paren">(</span><em>time</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/utils.html#format_time"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.format_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Formats a datetime as an ISO 8601 compliant string.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="utils.get_version">
+<code class="descclassname">utils.</code><code class="descname">get_version</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/utils.html#get_version"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.get_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a string representation of the current SDK version.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="utils.http_time">
+<code class="descclassname">utils.</code><code class="descname">http_time</code><span class="sig-paren">(</span><em>time</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/utils.html#http_time"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.http_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Formats a datetime as an RFC 1123 compliant string.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="utils.to_time">
+<code class="descclassname">utils.</code><code class="descname">to_time</code><span class="sig-paren">(</span><em>time</em>, <em>granularity</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/utils.html#to_time"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.to_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a truncated and rounded time string based on the specified granularity.</p>
+</dd></dl>
+
 </div>
 
 
@@ -81,7 +105,7 @@
       &copy;2015, Twitter, Inc.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.5</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
       
       |
