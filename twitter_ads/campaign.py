@@ -196,9 +196,16 @@ class Tweet(object):
         """
         Returns an HTML preview of a tweet, either new or existing.
         """
-        resource = klass.TWEET_ID_PREVIEW if kwargs.get('id') else klass.TWEET_PREVIEW
-        resource = resource.format(account_id=account.id, id=kwargs.get('id'))
-        response = Request(account.client, 'get', resource, params=kwargs).perform()
+        params = {}
+        params.update(kwargs)
+
+        # handles array to string conversion for media IDs
+        if 'media_ids' in params and isinstance(params['media_ids'], list):
+            params['media_ids'] = ','.join(map(params['media_ids']))
+
+        resource = klass.TWEET_ID_PREVIEW if params.get('id') else klass.TWEET_PREVIEW
+        resource = resource.format(account_id=account.id, id=params.get('id'))
+        response = Request(account.client, 'get', resource, params=params).perform()
         return response.body['data']
 
     @classmethod
@@ -208,6 +215,11 @@ class Tweet(object):
         """
         params = {'status': status}
         params.update(kwargs)
+
+        # handles array to string conversion for media IDs
+        if 'media_ids' in params and isinstance(params['media_ids'], list):
+            params['media_ids'] = ','.join(map(params['media_ids']))
+
         resource = klass.TWEET_CREATE.format(account_id=account.id)
         response = Request(account.client, 'post', resource, params=params).perform()
         return response.body['data']
