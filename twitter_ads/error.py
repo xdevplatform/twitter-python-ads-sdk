@@ -96,10 +96,6 @@ class ServiceUnavailable(ServerError):
         self._retry_after = response.headers.get('retry-after', None)
 
     @property
-    def reset_at(self):
-        return self._reset_at
-
-    @property
     def retry_after(self):
         return self._retry_after
 
