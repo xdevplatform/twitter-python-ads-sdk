@@ -81,6 +81,7 @@ class Request(object):
 
         params = self.options.get('params', None)
         data = self.options.get('body', None)
+        files = self.options.get('files', None)
 
         consumer = OAuth1Session(
             self._client.consumer_key,
@@ -90,7 +91,7 @@ class Request(object):
 
         url = self.__domain() + self._resource
         method = getattr(consumer, self._method)
-        response = method(url, headers=headers, data=data, params=params)
+        response = method(url, headers=headers, data=data, params=params, files=files)
 
         return Response(response.status_code, response.headers,
                         body=response.raw, raw_body=response.text)
