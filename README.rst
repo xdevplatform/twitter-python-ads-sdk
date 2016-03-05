@@ -102,6 +102,14 @@ Found an issue? Please open up a `GitHub issue`_ or even better yet
 `send us`_ a pull request. Have a question? Want to discuss a new
 feature? Come chat with us in the `Twitter Community Forums`_.
 
+Error Handling
+--------------
+
+Like the `Response`_ and `Request`_ classes, the Ads API SDK fully models
+all `error objects`_ for easy error handling.
+
+|error-hierarchy|
+
 License
 -------
 
@@ -141,3 +149,8 @@ SOFTWARE.
    :target: https://codeclimate.com/github/twitterdev/twitter-python-ads-sdk
 .. |PyPy Version| image:: https://badge.fury.io/py/twitter-ads.svg
    :target: http://badge.fury.io/py/twitter-ads
+
+.. _Request: https://github.com/twitterdev/twitter-python-ads-sdk/blob/master/twitter_ads/http.py#L28
+.. _Response: https://github.com/twitterdev/twitter-python-ads-sdk/blob/master/twitter_ads/http.py#L118
+.. _error objects: https://github.com/twitterdev/twitter-python-ads-sdk/blob/master/twitter_ads/error.py
+.. |error-hierarchy| image:: http://i.imgur.com/XcLDWLO.png
