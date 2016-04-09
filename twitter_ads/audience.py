@@ -13,10 +13,10 @@ class TailoredAudience(Resource):
 
     PROPERTIES = {}
 
-    RESOURCE_COLLECTION = '/0/accounts/{account_id}/tailored_audiences'
-    RESOURCE = '/0/accounts/{account_id}/tailored_audiences/{id}'
-    RESOURCE_UPDATE = '/0/accounts/{account_id}/tailored_audience_changes'
-    OPT_OUT = '/0/accounts/{account_id}/tailored_audiences/global_opt_out'
+    RESOURCE_COLLECTION = '/1/accounts/{account_id}/tailored_audiences'
+    RESOURCE = '/1/accounts/{account_id}/tailored_audiences/{id}'
+    RESOURCE_UPDATE = '/1/accounts/{account_id}/tailored_audience_changes'
+    OPT_OUT = '/1/accounts/{account_id}/tailored_audiences/global_opt_out'
 
     @classmethod
     def create(klass, account, file_path, name, list_type):
