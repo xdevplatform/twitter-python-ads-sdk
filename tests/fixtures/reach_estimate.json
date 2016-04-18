@@ -1,19 +1,40 @@
 {
-   "data" : {
-      "count" : 1617516,
-      "infinite_bid_count" : 1840178
-   },
-   "data_type" : "reach_estimate",
-   "request" : {
-      "params" : {
-         "objective" : "WEBSITE_CLICKS",
-         "gender" : "FEMALE",
-         "followers_of_users" : null,
-         "product_type" : "PROMOTED_TWEETS",
-         "similar_to_followers_of_users" : [
-            2153688540
-         ],
-         "account_id" : "2iqph"
-      }
-   }
+  "data_type": "reach_estimate",
+  "data": {
+    "impressions": {
+      "min": 285,
+      "max": 428
+    },
+    "count": {
+      "min": 232,
+      "max": 349
+    },
+    "infinite_bid_count": {
+      "min": 1638,
+      "max": 2457
+    },
+    "engagements": {
+      "min": 7,
+      "max": 11
+    },
+    "estimated_daily_spend_local_micro": {
+      "min": 440000,
+      "max": 660000
+    }
+  },
+  "request": {
+    "params": {
+      "bid_amount_local_micro": 150000,
+      "similar_to_followers_of_users": [
+        14230524,
+        90420314
+      ],
+      "product_type": "PROMOTED_TWEETS",
+      "objective": "TWEET_ENGAGEMENTS",
+      "account_id": "2iqph",
+      "currency": "USD",
+      "followers_of_users": null,
+      "campaign_daily_budget_amount_local_micro": 550000
+    }
+  }
 }

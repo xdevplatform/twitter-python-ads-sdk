@@ -61,7 +61,7 @@
       "audience_size": null
     }
   ],
-  "data_type": "tailored_audiences",
+  "data_type": "tailored_audience",
   "total_count": 3,
   "next_cursor": null
 }
