@@ -16,6 +16,7 @@ class TailoredAudience(Resource):
     RESOURCE_COLLECTION = '/1/accounts/{account_id}/tailored_audiences'
     RESOURCE = '/1/accounts/{account_id}/tailored_audiences/{id}'
     RESOURCE_UPDATE = '/1/accounts/{account_id}/tailored_audience_changes'
+    RESOURCE_PERMISSIONS = '/1/accounts/{account_id}/tailored_audiences/{id}/permissions'
     OPT_OUT = '/1/accounts/{account_id}/tailored_audiences/global_opt_out'
 
     @classmethod
@@ -73,6 +74,13 @@ class TailoredAudience(Resource):
 
         return filter(lambda change: change['tailored_audience_id'] == self.id, cursor)
 
+    def permissions(self, **kwargs):
+        """
+        Returns a collection of permissions for the curent tailored audience.
+        """
+        self._validate_loaded()
+        return TailoredAudiencePermission.all(self.account, self.id, **kwargs)
+
     def __create_audience__(self, name, list_type):
         params = {'name': name, 'list_type': list_type}
         resource = self.RESOURCE_COLLECTION.format(account_id=self.account.id)
@@ -106,3 +114,67 @@ resource_property(TailoredAudience, 'targetable_types', readonly=True)
 # writable
 resource_property(TailoredAudience, 'name')
 resource_property(TailoredAudience, 'list_type')
+
+
+class TailoredAudiencePermission(Resource):
+
+    PROPERTIES = {}
+
+    RESOURCE_COLLECTION = '/1/accounts/{account_id}/tailored_audiences/'
+    RESOURCE_COLLECTION += '{tailored_audience_id}/permissions'
+    RESOURCE = '/1/accounts/{account_id}/tailored_audiences/{tailored_audience_id}/permissions/{id}'
+
+    @classmethod
+    def all(klass, account, tailored_audience_id, **kwargs):
+        """Returns a Cursor instance for the given tailored audience permission resource."""
+
+        resource = klass.RESOURCE_COLLECTION.format(
+            account_id=account.id,
+            tailored_audience_id=tailored_audience_id)
+        request = Request(account.client, 'get', resource, params=kwargs)
+
+        return Cursor(klass, request, init_with=[account])
+
+    def save(self):
+        """
+        Saves or updates the current tailored audience permission.
+        """
+        if self.id:
+            method = 'put'
+            resource = self.RESOURCE.format(
+                account_id=self.account.id,
+                tailored_audience_id=self.tailored_audience_id,
+                id=self.id)
+        else:
+            method = 'post'
+            resource = self.RESOURCE_COLLECTION.format(
+                account_id=self.account.id,
+                tailored_audience_id=self.tailored_audience_id)
+
+        response = Request(
+            self.account.client, method,
+            resource, params=self.to_params()).perform()
+
+        return self.from_response(response.body['data'])
+
+    def delete(self):
+        """
+        Deletes the current tailored audience permission.
+        """
+        resource = self.RESOURCE.format(
+            account_id=self.account.id,
+            tailored_audience_id=self.tailored_audience_id,
+            id=self.id)
+        response = Request(self.account.client, 'delete', resource).perform()
+        return self.from_response(response.body['data'])
+
+# tailored audience permission properties
+# read-only
+resource_property(TailoredAudiencePermission, 'id', readonly=True)
+resource_property(TailoredAudiencePermission, 'created_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(TailoredAudiencePermission, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(TailoredAudiencePermission, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
+# writable
+resource_property(TailoredAudiencePermission, 'tailored_audience_id')
+resource_property(TailoredAudiencePermission, 'granted_account_id')
+resource_property(TailoredAudiencePermission, 'permission_level')
