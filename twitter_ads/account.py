@@ -124,17 +124,13 @@ class Account(Resource):
         """
         return self._load_resource(Video, id, **kwargs)
 
-    def scoped_timeline(self, *ids, **kwargs):
+    def scoped_timeline(self, *id, **kwargs):
         """
-        Returns the most recent promotable Tweets created by one or more
-        specified Twitter users.
+        Returns the most recent promotable Tweets created by the specified Twitter user.
         """
         self._validate_loaded()
 
-        if isinstance(ids, list):
-            ids = ','.join(map(str, ids))
-
-        params = {'user_ids': ids}
+        params = {'user_id': id}
         params.update(kwargs)
 
         resource = self.SCOPED_TIMELINE.format(id=self.id)

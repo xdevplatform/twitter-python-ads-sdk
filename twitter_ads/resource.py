@@ -6,7 +6,7 @@ import dateutil.parser
 from datetime import datetime, timedelta
 
 from twitter_ads.utils import format_time, to_time
-from twitter_ads.enum import TRANSFORM, GRANULARITY
+from twitter_ads.enum import ENTITY, GRANULARITY, PLACEMENT, TRANSFORM
 from twitter_ads.http import Request
 from twitter_ads.cursor import Cursor
 
@@ -168,11 +168,12 @@ class Analytics(object):
     """
 
     ANALYTICS_MAP = {
-        'LineItem': 'line_item_ids',
-        'OrganicTweet': 'tweet_ids',
-        'Tweet': 'tweet_ids',
-        'PromotedTweet': 'promoted_tweet_ids'
+        'LineItem': ENTITY.LINE_ITEM,
+        'OrganicTweet': ENTITY.ORGANIC_TWEET,
+        'PromotedTweet': ENTITY.PROMOTED_TWEET
     }
+
+    RESOURCE_SYNC = '/1/stats/accounts/{account_id}'
 
     def stats(self, metrics, **kwargs):  # noqa
         """
@@ -181,26 +182,26 @@ class Analytics(object):
         return self.__class__.all_stats(self.account, [self.id], metrics, **kwargs)
 
     @classmethod
-    def all_stats(klass, account, ids, metrics, **kwargs):
+    def all_stats(klass, account, ids, metric_groups, **kwargs):
         """
         Pulls a list of metrics for a specified set of object IDs.
         """
         end_time = kwargs.get('end_time', datetime.utcnow())
         start_time = kwargs.get('start_time', end_time - timedelta(seconds=604800))
         granularity = kwargs.get('granularity', GRANULARITY.HOUR)
-        segmentation_type = kwargs.get('segmentation_type', None)
+        placement = kwargs.get('placement', PLACEMENT.ALL_ON_TWITTER)
 
         params = {
-            'metrics': ','.join(metrics),
+            'metric_groups': ','.join(metric_groups),
             'start_time': to_time(start_time, granularity),
             'end_time': to_time(end_time, granularity),
-            'granularity': granularity.upper()
+            'granularity': granularity.upper(),
+            'entity': klass.ANALYTICS_MAP[klass.__name__],
+            'placement': placement
         }
-        if segmentation_type is not None:
-            params['segmentation_type'] = segmentation_type.upper()
 
-        params[klass.ANALYTICS_MAP[klass.__name__]] = ','.join(ids)
+        params['entity_ids'] = ','.join(ids)
 
-        resource = klass.RESOURCE_STATS.format(account_id=account.id)
+        resource = klass.RESOURCE_SYNC.format(account_id=account.id)
         response = Request(account.client, 'get', resource, params=params).perform()
         return response.body['data']

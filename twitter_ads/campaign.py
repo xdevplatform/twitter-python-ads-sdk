@@ -12,8 +12,8 @@ class TargetingCriteria(Resource, Persistence):
 
     PROPERTIES = {}
 
-    RESOURCE_COLLECTION = '/0/accounts/{account_id}/targeting_criteria'
-    RESOURCE = '/0/accounts/{account_id}/targeting_criteria/{id}'
+    RESOURCE_COLLECTION = '/1/accounts/{account_id}/targeting_criteria'
+    RESOURCE = '/1/accounts/{account_id}/targeting_criteria/{id}'
 
     @classmethod
     def all(klass, account, line_item_id, **kwargs):
@@ -45,8 +45,8 @@ class FundingInstrument(Resource, Persistence):
 
     PROPERTIES = {}
 
-    RESOURCE_COLLECTION = '/0/accounts/{account_id}/funding_instruments'
-    RESOURCE = '/0/accounts/{account_id}/funding_instruments/{id}'
+    RESOURCE_COLLECTION = '/1/accounts/{account_id}/funding_instruments'
+    RESOURCE = '/1/accounts/{account_id}/funding_instruments/{id}'
 
 # funding instrument properties
 # read-only
@@ -67,8 +67,8 @@ class PromotableUser(Resource):
 
     PROPERTIES = {}
 
-    RESOURCE_COLLECTION = '/0/accounts/{account_id}/promotable_users'
-    RESOURCE = '/0/accounts/{account_id}/promotable_users/{id}'
+    RESOURCE_COLLECTION = '/1/accounts/{account_id}/promotable_users'
+    RESOURCE = '/1/accounts/{account_id}/promotable_users/{id}'
 
 # promotable user properties
 # read-only
@@ -84,8 +84,8 @@ class AppList(Resource, Persistence):
 
     PROPERTIES = {}
 
-    RESOURCE_COLLECTION = '/0/accounts/{account_id}/app_lists'
-    RESOURCE = '/0/accounts/{account_id}/app_lists/{id}'
+    RESOURCE_COLLECTION = '/1/accounts/{account_id}/app_lists'
+    RESOURCE = '/1/accounts/{account_id}/app_lists/{id}'
 
     def create(self, name, *ids):
         if isinstance(ids, list):
@@ -113,9 +113,8 @@ class Campaign(Resource, Persistence):
 
     PROPERTIES = {}
 
-    RESOURCE_COLLECTION = '/0/accounts/{account_id}/campaigns'
-    RESOURCE_STATS = '/0/stats/accounts/{account_id}/campaigns'
-    RESOURCE = '/0/accounts/{account_id}/campaigns/{id}'
+    RESOURCE_COLLECTION = '/1/accounts/{account_id}/campaigns'
+    RESOURCE = '/1/accounts/{account_id}/campaigns/{id}'
 
 # campaign properties
 # read-only
@@ -141,9 +140,8 @@ class LineItem(Resource, Persistence, Analytics):
 
     PROPERTIES = {}
 
-    RESOURCE_COLLECTION = '/0/accounts/{account_id}/line_items'
-    RESOURCE_STATS = '/0/stats/accounts/{account_id}/line_items'
-    RESOURCE = '/0/accounts/{account_id}/line_items/{id}'
+    RESOURCE_COLLECTION = '/1/accounts/{account_id}/line_items'
+    RESOURCE = '/1/accounts/{account_id}/line_items/{id}'
 
     def targeting_criteria(self, id=None, **kwargs):
         """
@@ -183,9 +181,9 @@ resource_property(LineItem, 'total_budget_amount_local_micro')
 
 class Tweet(object):
 
-    TWEET_PREVIEW = '/0/accounts/{account_id}/tweet/preview'
-    TWEET_ID_PREVIEW = '/0/accounts/{account_id}/tweet/preview/{id}'
-    TWEET_CREATE = '/0/accounts/{account_id}/tweet'
+    TWEET_PREVIEW = '/1/accounts/{account_id}/tweet/preview'
+    TWEET_ID_PREVIEW = '/1/accounts/{account_id}/tweet/preview/{id}'
+    TWEET_CREATE = '/1/accounts/{account_id}/tweet'
 
     def __init__(self):
         raise NotImplementedError(
