@@ -1,4 +1,4 @@
-# Copyright (C) 2015 Twitter, Inc.
+# Copyright (C) 2015-2016 Twitter, Inc.
 
 # note: the following is just a simple example. before making any stats calls, make
 # sure to read our best practices for analytics which can be found here:
@@ -9,6 +9,7 @@
 
 from twitter_ads.client import Client
 from twitter_ads.campaign import LineItem
+from twitter_ads.enum import METRIC_GROUP
 
 CONSUMER_KEY = 'your consumer key'
 CONSUMER_SECRET = 'your consumer secret'
@@ -27,11 +28,11 @@ line_items = list(account.line_items(None, count=10))[:10]
 
 # the list of metrics we want to fetch, for a full list of possible metrics
 # see: https://dev.twitter.com/ads/analytics/metrics-and-segmentation
-metrics = ['billed_engagements', 'billed_follows']
+metric_groups = [METRIC_GROUP.BILLING]
 
 # fetching stats on the instance
-line_items[0].stats(metrics)
+line_items[0].stats(metric_groups)
 
 # fetching stats for multiple line items
 ids = map(lambda x: x.id, line_items)
-LineItem.all_stats(account, ids, metrics)
+LineItem.all_stats(account, ids, metric_groups)
