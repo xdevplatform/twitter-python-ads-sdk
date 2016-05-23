@@ -174,17 +174,19 @@ class Analytics(object):
     }
 
     RESOURCE_SYNC = '/1/stats/accounts/{account_id}'
+    RESOURCE_ASYNC = '/1/stats/jobs/accounts/{account_id}'  #jaakko both POST and GET
+    # jaakko note that /1/stats/jobs/accounts/{account_id}/{id} does not exist
 
     def stats(self, metrics, **kwargs):  # noqa
         """
         Pulls a list of metrics for the current object instance.
         """
-        return self.__class__.all_stats(self.account, [self.id], metrics, **kwargs)
+        return self.__class__.all_stats(self.account, [self.id], metrics, **kwargs)  # jaakko rename sync_stats?
 
     @classmethod
-    def all_stats(klass, account, ids, metric_groups, **kwargs):
+    def _standard_params(klass, ids, metric_groups, **kwargs):
         """
-        Pulls a list of metrics for a specified set of object IDs.
+        Sets the standard params for a stats request
         """
         end_time = kwargs.get('end_time', datetime.utcnow())
         start_time = kwargs.get('start_time', end_time - timedelta(seconds=604800))
@@ -198,10 +200,37 @@ class Analytics(object):
             'granularity': granularity.upper(),
             'entity': klass.ANALYTICS_MAP[klass.__name__],
             'placement': placement
+            # platform, country, segmentation_type
         }
 
         params['entity_ids'] = ','.join(ids)
 
+        return params
+
+    @classmethod
+    def all_stats(klass, account, ids, metric_groups, **kwargs):  #jaakkko make placement required input? #rename sync_stats?
+        """
+        Pulls a list of metrics for a specified set of object IDs.
+        """
+        params = klass._standard_params(ids, metric_groups, **kwargs)
+
         resource = klass.RESOURCE_SYNC.format(account_id=account.id)
         response = Request(account.client, 'get', resource, params=params).perform()
         return response.body['data']
+
+    # @classmethod
+    # def async_stats(klass, account, ids, metric_groups, **kwargs):
+    #     """
+    #     Queues a list of metrics for a specified set of object IDs asynchronously
+    #     """
+    #     #jaakko
+
+    #     return response.body['data']
+
+    # @classmethod
+    # def async_stats_job_result(klass, account, job_id, **kwargs):
+    #     """
+    #     Returns the results of the specified async job IDs
+    #     """
+
+    #     return response.body['data']  #jaakko this needs to return the data if the job is completed, right?
