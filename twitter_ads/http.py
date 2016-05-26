@@ -82,6 +82,7 @@ class Request(object):
         params = self.options.get('params', None)
         data = self.options.get('body', None)
         files = self.options.get('files', None)
+        stream = self.options.get('stream', False)
 
         consumer = OAuth1Session(
             self._client.consumer_key,
@@ -91,10 +92,14 @@ class Request(object):
 
         url = self.__domain() + self._resource
         method = getattr(consumer, self._method)
-        response = method(url, headers=headers, data=data, params=params, files=files)
+
+        response = method(url, headers=headers, data=data, params=params,
+                          files=files, stream=stream)
+
+        raw_response_body = response.raw.read() if stream else response.text
 
         return Response(response.status_code, response.headers,
-                        body=response.raw, raw_body=response.text)
+                        body=response.raw, raw_body=raw_response_body)
 
     def __enable_logging(self):
         httplib.HTTPConnection.debuglevel = 1

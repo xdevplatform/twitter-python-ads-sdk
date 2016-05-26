@@ -7,6 +7,8 @@
 # https://dev.twitter.com/ads/analytics/metrics-and-segmentation
 # https://dev.twitter.com/ads/analytics/metrics-derived
 
+import time
+
 from twitter_ads.client import Client
 from twitter_ads.campaign import LineItem
 from twitter_ads.enum import METRIC_GROUP
@@ -36,3 +38,17 @@ line_items[0].stats(metric_groups)
 # fetching stats for multiple line items
 ids = map(lambda x: x.id, line_items)
 LineItem.all_stats(account, ids, metric_groups)
+
+# fetching async stats on the instance
+queued_job = LineItem.queue_async_stats_job(account, ids, metric_groups)
+
+# get the job_id:
+job_id = queued_job['id']
+
+# let the job complete
+seconds = 15
+time.sleep(seconds)
+
+async_stats_job_result = LineItem.async_stats_job_result(account, job_id)
+
+async_data = LineItem.async_stats_job_data(account, async_stats_job_result['url'])

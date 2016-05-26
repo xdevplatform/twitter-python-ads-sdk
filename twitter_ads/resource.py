@@ -4,6 +4,8 @@
 
 import dateutil.parser
 from datetime import datetime, timedelta
+from urlparse import urlparse
+import zlib
 
 from twitter_ads.utils import format_time, to_time
 from twitter_ads.enum import ENTITY, GRANULARITY, PLACEMENT, TRANSFORM
@@ -166,7 +168,6 @@ class Analytics(object):
     """
     Container for all analytics related logic used by API resource objects.
     """
-
     ANALYTICS_MAP = {
         'LineItem': ENTITY.LINE_ITEM,
         'OrganicTweet': ENTITY.ORGANIC_TWEET,
@@ -174,8 +175,7 @@ class Analytics(object):
     }
 
     RESOURCE_SYNC = '/1/stats/accounts/{account_id}'
-    RESOURCE_ASYNC = '/1/stats/jobs/accounts/{account_id}'  #jaakko both POST and GET
-    # jaakko note that /1/stats/jobs/accounts/{account_id}/{id} does not exist
+    RESOURCE_ASYNC = '/1/stats/jobs/accounts/{account_id}'
 
     def stats(self, metrics, **kwargs):  # noqa
         """
@@ -200,7 +200,6 @@ class Analytics(object):
             'granularity': granularity.upper(),
             'entity': klass.ANALYTICS_MAP[klass.__name__],
             'placement': placement
-            # platform, country, segmentation_type
         }
 
         params['entity_ids'] = ','.join(ids)
@@ -208,7 +207,7 @@ class Analytics(object):
         return params
 
     @classmethod
-    def all_stats(klass, account, ids, metric_groups, **kwargs):  #jaakkko make placement required input? #rename sync_stats?
+    def all_stats(klass, account, ids, metric_groups, **kwargs):  #jaakko rename sync_stats?
         """
         Pulls a list of metrics for a specified set of object IDs.
         """
@@ -218,19 +217,55 @@ class Analytics(object):
         response = Request(account.client, 'get', resource, params=params).perform()
         return response.body['data']
 
-    # @classmethod
-    # def async_stats(klass, account, ids, metric_groups, **kwargs):
-    #     """
-    #     Queues a list of metrics for a specified set of object IDs asynchronously
-    #     """
-    #     #jaakko
+    @classmethod
+    def queue_async_stats_job(klass, account, ids, metric_groups, **kwargs):
+        """
+        Queues a list of metrics for a specified set of object IDs asynchronously
+        """
+        params = klass._standard_params(ids, metric_groups, **kwargs)
 
-    #     return response.body['data']
+        params['platform'] = kwargs.get('platform', None)
+        params['country'] = kwargs.get('country', None)
+        params['segmentation_type'] = kwargs.get('segmentation_type', None)
 
-    # @classmethod
-    # def async_stats_job_result(klass, account, job_id, **kwargs):
-    #     """
-    #     Returns the results of the specified async job IDs
-    #     """
+        resource = klass.RESOURCE_ASYNC.format(account_id=account.id)
+        response = Request(account.client, 'post', resource, params=params).perform()
+        return response.body['data']
 
-    #     return response.body['data']  #jaakko this needs to return the data if the job is completed, right?
+    @classmethod
+    def async_stats_job_result(klass, account, job_id, **kwargs):
+        """
+        Returns the results of the specified async job IDs
+        """
+        params = {
+            'job_ids': job_id
+        }
+
+        resource = klass.RESOURCE_ASYNC.format(account_id=account.id)
+        response = Request(account.client, 'get', resource, params=params).perform()
+
+        data_url = response.body['data'][0]['url']
+
+        return response.body['data'][0]
+
+    @classmethod
+    def async_stats_job_data(klass, account, url, **kwargs):
+        """
+        Returns the results of the specified async job IDs
+        """
+        resource = urlparse(url)
+        domain = '{0}://{1}'.format(resource.scheme, resource.netloc)
+
+        response = Request(account.client, 'get', resource.path, domain=domain,
+                           raw_body=True, stream=True).perform()
+
+        if response.headers['content-type'] == 'application/gzip':
+            # hack because Twitter TON API doesn't return headers as it should
+            # and instead returns a gzipp'd file rather than a gzipp encoded response
+            # Content-Encoding: gzip
+            # Content-Type: application/json
+            # instead it returns:
+            # Content-Type: application/gzip
+            return zlib.decompress(response.raw_body, 16+zlib.MAX_WBITS)
+
+        return response.body
