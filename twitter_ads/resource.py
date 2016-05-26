@@ -244,8 +244,6 @@ class Analytics(object):
         resource = klass.RESOURCE_ASYNC.format(account_id=account.id)
         response = Request(account.client, 'get', resource, params=params).perform()
 
-        data_url = response.body['data'][0]['url']
-
         return response.body['data'][0]
 
     @classmethod
@@ -266,6 +264,6 @@ class Analytics(object):
             # Content-Type: application/json
             # instead it returns:
             # Content-Type: application/gzip
-            return zlib.decompress(response.raw_body, 16+zlib.MAX_WBITS)
+            return zlib.decompress(response.raw_body, 16 + zlib.MAX_WBITS)
 
         return response.body
