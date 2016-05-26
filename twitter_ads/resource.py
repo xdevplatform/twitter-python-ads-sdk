@@ -181,7 +181,7 @@ class Analytics(object):
         """
         Pulls a list of metrics for the current object instance.
         """
-        return self.__class__.all_stats(self.account, [self.id], metrics, **kwargs)  # jaakko rename sync_stats?
+        return self.__class__.all_stats(self.account, [self.id], metrics, **kwargs)
 
     @classmethod
     def _standard_params(klass, ids, metric_groups, **kwargs):
@@ -207,7 +207,7 @@ class Analytics(object):
         return params
 
     @classmethod
-    def all_stats(klass, account, ids, metric_groups, **kwargs):  #jaakko rename sync_stats?
+    def all_stats(klass, account, ids, metric_groups, **kwargs):
         """
         Pulls a list of metrics for a specified set of object IDs.
         """
