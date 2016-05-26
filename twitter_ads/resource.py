@@ -4,7 +4,10 @@
 
 import dateutil.parser
 from datetime import datetime, timedelta
-from urlparse import urlparse
+try:
+    from urllib.parse import urlparse
+except ImportError:
+    from urlparse import urlparse
 import zlib
 
 from twitter_ads.utils import format_time, to_time
