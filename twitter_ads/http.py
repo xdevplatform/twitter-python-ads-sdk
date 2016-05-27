@@ -7,6 +7,7 @@ import sys
 import platform
 import logging
 import json
+import zlib
 
 try:
     import httplib2 as httplib
