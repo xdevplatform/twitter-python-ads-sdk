@@ -260,13 +260,4 @@ class Analytics(object):
         response = Request(account.client, 'get', resource.path, domain=domain,
                            raw_body=True, stream=True).perform()
 
-        if response.headers['content-type'] == 'application/gzip':
-            # hack because Twitter TON API doesn't return headers as it should
-            # and instead returns a gzipp'd file rather than a gzipp encoded response
-            # Content-Encoding: gzip
-            # Content-Type: application/json
-            # instead it returns:
-            # Content-Type: application/gzip
-            return zlib.decompress(response.raw_body, 16 + zlib.MAX_WBITS)
-
         return response.body

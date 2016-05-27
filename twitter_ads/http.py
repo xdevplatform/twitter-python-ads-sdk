@@ -7,6 +7,7 @@ import sys
 import platform
 import logging
 import json
+import zlib
 
 try:
     import httplib2 as httplib
@@ -128,10 +129,21 @@ class Response(object):
         self._headers = headers
         self._raw_body = kwargs.get('raw_body', None)
 
+        if headers['content-type'] == 'application/gzip':
+            # hack because Twitter TON API doesn't return headers as it should
+            # and instead returns a gzipp'd file rather than a gzipp encoded response
+            # Content-Encoding: gzip
+            # Content-Type: application/json
+            # instead it returns:
+            # Content-Type: application/gzip
+            raw_response_body = zlib.decompress(self._raw_body, 16 + zlib.MAX_WBITS)
+        else:
+            raw_response_body = self._raw_body
+
         try:
-            self._body = json.loads(self._raw_body)
+            self._body = json.loads(raw_response_body)
         except ValueError:
-            self._body = self._raw_body
+            self._body = raw_response_body
 
         if 'x-rate-limit-reset' in headers:
             self._rate_limit = int(headers['x-rate-limit-limit'])
