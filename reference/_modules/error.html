@@ -26,11 +26,13 @@
     <link rel="top" title="Twitter Ads API SDK for Python 0.2.1 documentation" href="../index.html" />
     <link rel="up" title="Module code" href="index.html" />
    
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
   </head>
-  <body role="document">  
+  <body role="document">
+  
 
     <div class="document">
       <div class="documentwrapper">
@@ -84,29 +86,29 @@
         <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">code</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">ERRORS</span><span class="p">[</span><span class="n">response</span><span class="o">.</span><span class="n">code</span><span class="p">](</span><span class="n">response</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">Error</span><span class="p">(</span><span class="n">response</span><span class="p">)</span></div></div>
+            <span class="k">return</span> <span class="n">Error</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
 
-
+</div></div>
 <div class="viewcode-block" id="ClientError"><a class="viewcode-back" href="../twitter_ads/error.html#error.ClientError">[docs]</a><span class="k">class</span> <span class="nc">ClientError</span><span class="p">(</span><span class="n">Error</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Parent class for preventable client errors.&quot;&quot;&quot;</span></div>
+    <span class="sd">&quot;&quot;&quot;Parent class for preventable client errors.&quot;&quot;&quot;</span>
 
-
+</div>
 <div class="viewcode-block" id="BadRequest"><a class="viewcode-back" href="../twitter_ads/error.html#error.BadRequest">[docs]</a><span class="k">class</span> <span class="nc">BadRequest</span><span class="p">(</span><span class="n">ClientError</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Bad Request (400).&quot;&quot;&quot;</span></div>
+    <span class="sd">&quot;&quot;&quot;Bad Request (400).&quot;&quot;&quot;</span>
 
-
+</div>
 <div class="viewcode-block" id="NotAuthorized"><a class="viewcode-back" href="../twitter_ads/error.html#error.NotAuthorized">[docs]</a><span class="k">class</span> <span class="nc">NotAuthorized</span><span class="p">(</span><span class="n">ClientError</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Not Authorized (401).&quot;&quot;&quot;</span></div>
+    <span class="sd">&quot;&quot;&quot;Not Authorized (401).&quot;&quot;&quot;</span>
 
-
+</div>
 <div class="viewcode-block" id="Forbidden"><a class="viewcode-back" href="../twitter_ads/error.html#error.Forbidden">[docs]</a><span class="k">class</span> <span class="nc">Forbidden</span><span class="p">(</span><span class="n">ClientError</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Forbidden (403).&quot;&quot;&quot;</span></div>
+    <span class="sd">&quot;&quot;&quot;Forbidden (403).&quot;&quot;&quot;</span>
 
-
+</div>
 <div class="viewcode-block" id="NotFound"><a class="viewcode-back" href="../twitter_ads/error.html#error.NotFound">[docs]</a><span class="k">class</span> <span class="nc">NotFound</span><span class="p">(</span><span class="n">ClientError</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Forbidden (404).&quot;&quot;&quot;</span></div>
+    <span class="sd">&quot;&quot;&quot;Forbidden (404).&quot;&quot;&quot;</span>
 
-
+</div>
 <div class="viewcode-block" id="RateLimit"><a class="viewcode-back" href="../twitter_ads/error.html#error.RateLimit">[docs]</a><span class="k">class</span> <span class="nc">RateLimit</span><span class="p">(</span><span class="n">ClientError</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Rate Limit (429).&quot;&quot;&quot;</span>
 
@@ -121,13 +123,13 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">retry_after</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_retry_after</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_retry_after</span>
 
-
+</div>
 <div class="viewcode-block" id="ServerError"><a class="viewcode-back" href="../twitter_ads/error.html#error.ServerError">[docs]</a><span class="k">class</span> <span class="nc">ServerError</span><span class="p">(</span><span class="n">Error</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Server Error (500).&quot;&quot;&quot;</span></div>
+    <span class="sd">&quot;&quot;&quot;Server Error (500).&quot;&quot;&quot;</span>
 
-
+</div>
 <div class="viewcode-block" id="ServiceUnavailable"><a class="viewcode-back" href="../twitter_ads/error.html#error.ServiceUnavailable">[docs]</a><span class="k">class</span> <span class="nc">ServiceUnavailable</span><span class="p">(</span><span class="n">ServerError</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Service Unavailable (503).&quot;&quot;&quot;</span>
 
@@ -137,8 +139,8 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">retry_after</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_retry_after</span></div>
-
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_retry_after</span>
+</div>
 <span class="n">ERRORS</span> <span class="o">=</span> <span class="p">{</span>
     <span class="mi">400</span><span class="p">:</span> <span class="n">BadRequest</span><span class="p">,</span>
     <span class="mi">401</span><span class="p">:</span> <span class="n">NotAuthorized</span><span class="p">,</span>
@@ -171,6 +173,9 @@
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -181,8 +186,8 @@
       &copy;2015, Twitter, Inc.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
       
     </div>
 
