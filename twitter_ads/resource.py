@@ -4,6 +4,10 @@
 
 import dateutil.parser
 from datetime import datetime, timedelta
+try:
+    from urllib.parse import urlparse
+except ImportError:
+    from urlparse import urlparse
 
 from twitter_ads.utils import format_time, to_time
 from twitter_ads.enum import ENTITY, GRANULARITY, PLACEMENT, TRANSFORM
@@ -166,7 +170,6 @@ class Analytics(object):
     """
     Container for all analytics related logic used by API resource objects.
     """
-
     ANALYTICS_MAP = {
         'LineItem': ENTITY.LINE_ITEM,
         'OrganicTweet': ENTITY.ORGANIC_TWEET,
@@ -174,6 +177,7 @@ class Analytics(object):
     }
 
     RESOURCE_SYNC = '/1/stats/accounts/{account_id}'
+    RESOURCE_ASYNC = '/1/stats/jobs/accounts/{account_id}'
 
     def stats(self, metrics, **kwargs):  # noqa
         """
@@ -182,9 +186,9 @@ class Analytics(object):
         return self.__class__.all_stats(self.account, [self.id], metrics, **kwargs)
 
     @classmethod
-    def all_stats(klass, account, ids, metric_groups, **kwargs):
+    def _standard_params(klass, ids, metric_groups, **kwargs):
         """
-        Pulls a list of metrics for a specified set of object IDs.
+        Sets the standard params for a stats request
         """
         end_time = kwargs.get('end_time', datetime.utcnow())
         start_time = kwargs.get('start_time', end_time - timedelta(seconds=604800))
@@ -202,6 +206,57 @@ class Analytics(object):
 
         params['entity_ids'] = ','.join(ids)
 
+        return params
+
+    @classmethod
+    def all_stats(klass, account, ids, metric_groups, **kwargs):
+        """
+        Pulls a list of metrics for a specified set of object IDs.
+        """
+        params = klass._standard_params(ids, metric_groups, **kwargs)
+
         resource = klass.RESOURCE_SYNC.format(account_id=account.id)
         response = Request(account.client, 'get', resource, params=params).perform()
         return response.body['data']
+
+    @classmethod
+    def queue_async_stats_job(klass, account, ids, metric_groups, **kwargs):
+        """
+        Queues a list of metrics for a specified set of object IDs asynchronously
+        """
+        params = klass._standard_params(ids, metric_groups, **kwargs)
+
+        params['platform'] = kwargs.get('platform', None)
+        params['country'] = kwargs.get('country', None)
+        params['segmentation_type'] = kwargs.get('segmentation_type', None)
+
+        resource = klass.RESOURCE_ASYNC.format(account_id=account.id)
+        response = Request(account.client, 'post', resource, params=params).perform()
+        return response.body['data']
+
+    @classmethod
+    def async_stats_job_result(klass, account, job_id, **kwargs):
+        """
+        Returns the results of the specified async job IDs
+        """
+        params = {
+            'job_ids': job_id
+        }
+
+        resource = klass.RESOURCE_ASYNC.format(account_id=account.id)
+        response = Request(account.client, 'get', resource, params=params).perform()
+
+        return response.body['data'][0]
+
+    @classmethod
+    def async_stats_job_data(klass, account, url, **kwargs):
+        """
+        Returns the results of the specified async job IDs
+        """
+        resource = urlparse(url)
+        domain = '{0}://{1}'.format(resource.scheme, resource.netloc)
+
+        response = Request(account.client, 'get', resource.path, domain=domain,
+                           raw_body=True, stream=True).perform()
+
+        return response.body
