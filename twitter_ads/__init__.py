@@ -1,6 +1,6 @@
 # Copyright (C) 2015 Twitter, Inc.
 
-VERSION = (1, 0, 0)
+VERSION = (1, 1, 0)
 
 from twitter_ads.utils import get_version
 
