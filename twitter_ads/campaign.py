@@ -177,6 +177,7 @@ resource_property(LineItem, 'bid_unit')
 resource_property(LineItem, 'automatically_select_bid', transform=TRANSFORM.BOOL)
 resource_property(LineItem, 'bid_amount_local_micro')
 resource_property(LineItem, 'total_budget_amount_local_micro')
+resource_property(LineItem, 'bid_type')
 
 
 class Tweet(object):
