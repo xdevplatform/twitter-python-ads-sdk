@@ -71,7 +71,7 @@ class RateLimit(ClientError):
     """Rate Limit (429)."""
 
     def __init__(self, response, **kwargs):
-        super(self, response, **kwargs)
+        super(RateLimit, self).__init__(response, **kwargs)
         self._retry_after = response.headers.get('retry-after', None)
         self._reset_at = response.headers.get('rate_limit_reset', None)
 
@@ -92,7 +92,7 @@ class ServiceUnavailable(ServerError):
     """Service Unavailable (503)."""
 
     def __init__(self, response, **kwargs):
-        super(self, response, **kwargs)
+        super(ServiceUnavailable, self).__init__(response, **kwargs)
         self._retry_after = response.headers.get('retry-after', None)
 
     @property
