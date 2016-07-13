@@ -62,13 +62,13 @@ This project is designed to work with Python 2.7 or greater. While it
 may work on other version of Python, below are the platform and runtime
 versions we officially support and regularly test against.
 
-+------------+----------------------+
-| Platform   | Versions             |
-+============+======================+
-| CPython    | 2.7, 3.2, 3.3, 3.4   |
-+------------+----------------------+
-| PyPy       | 2.x, 4.x             |
-+------------+----------------------+
++------------+-------------------------+
+| Platform   | Versions                |
++============+=========================+
+| CPython    | 2.7, 3.2, 3.3, 3.4, 3.5 |
++------------+-------------------------+
+| PyPy       | 2.x, 4.x                |
++------------+-------------------------+
 
 All releases adhere to strict `semantic versioning`_. For Example,
 major.minor.patch-pre (aka. stick.carrot.oops-peek).
