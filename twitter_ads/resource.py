@@ -16,18 +16,18 @@ from twitter_ads.cursor import Cursor
 
 
 def resource_property(klass, name, **kwargs):
-        """Builds a resource object property."""
-        klass.PROPERTIES[name] = kwargs
+    """Builds a resource object property."""
+    klass.PROPERTIES[name] = kwargs
 
-        def getter(self):
-            return getattr(self, '_%s' % name, kwargs.get('default', None))
+    def getter(self):
+        return getattr(self, '_%s' % name, kwargs.get('default', None))
 
-        if kwargs.get('readonly', False):
-            setattr(klass, name, property(getter))
-        else:
-            def setter(self, value):
-                setattr(self, '_%s' % name, value)
-            setattr(klass, name, property(getter, setter))
+    if kwargs.get('readonly', False):
+        setattr(klass, name, property(getter))
+    else:
+        def setter(self, value):
+            setattr(self, '_%s' % name, value)
+        setattr(klass, name, property(getter, setter))
 
 
 class Resource(object):

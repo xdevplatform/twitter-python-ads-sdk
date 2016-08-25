@@ -129,7 +129,7 @@ class Response(object):
         self._headers = headers
         self._raw_body = kwargs.get('raw_body', None)
 
-        if headers['content-type'] == 'application/gzip':
+        if headers.get('content-type') == 'application/gzip':
             # hack because Twitter TON API doesn't return headers as it should
             # and instead returns a gzipp'd file rather than a gzipp encoded response
             # Content-Encoding: gzip
