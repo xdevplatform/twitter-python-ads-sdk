@@ -4,7 +4,6 @@ reject_regex: '^([Aa]eject(ed)?|:thumpsdown:)'
 reset_on_push: false
 reviewers:
   members:
-  - brandonblack
   - jaakko-sf
   - hwz
   - jbabichjapan
