@@ -8,6 +8,7 @@ try:
     from urllib.parse import urlparse
 except ImportError:
     from urlparse import urlparse
+import json
 
 from twitter_ads.utils import format_time, to_time
 from twitter_ads.enum import ENTITY, GRANULARITY, PLACEMENT, TRANSFORM
@@ -131,6 +132,50 @@ class Resource(object):
             return klass.all(self, **kwargs)
         else:
             return klass.load(self, id, **kwargs)
+
+
+class Batch(object):
+
+    _ENTITY_MAP = {
+        'LineItem': ENTITY.LINE_ITEM,
+        'Campaign': ENTITY.CAMPAIGN,
+        'TargetingCriteria': ENTITY.TARGETING_CRITERION
+    }
+
+    @classmethod
+    def batch_save(klass, account, *args):
+        """
+        Makes batch request(s) for a passed in list of objects
+        """
+
+        resource = klass.BATCH_RESOURCE_COLLECTION.format(account_id=account.id)
+
+        json_body = []
+
+        for obj in args:
+            entity_type = klass._ENTITY_MAP[klass.__name__].lower()
+            obj_json = {'params': obj.to_params()}
+
+            if obj.id is None:
+                obj_json['operation_type'] = 'Create'
+            elif obj.to_delete is True:
+                obj_json['operation_type'] = 'Delete'
+                obj_json['params'][entity_type+'_id'] = obj.id
+            else:
+                obj_json['operation_type'] = 'Update'
+                obj_json['params'][entity_type+'_id'] = obj.id
+
+            json_body.append(obj_json)
+
+        resource = klass.BATCH_RESOURCE_COLLECTION.format(account_id=account.id)
+        response = Request(account.client,
+                           'post', resource,
+                           body=json.dumps(json_body),
+                           headers={'Content-Type': 'application/json'}).perform()
+
+        # persist each entity
+        for obj, res_obj in zip(args, response.body['data']):
+            obj = obj.from_response(res_obj)
 
 
 class Persistence(object):
