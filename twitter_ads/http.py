@@ -141,6 +141,7 @@ class Response(object):
             raw_response_body = self._raw_body
 
         try:
+            raw_response_body = str(raw_response_body)
             self._body = json.loads(raw_response_body)
         except ValueError:
             self._body = raw_response_body
