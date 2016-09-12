@@ -42,4 +42,4 @@ cursor = Cursor(None, request)
 
 # execute requests and iterate cursor until exhausted
 for obj in cursor:
-    print(object['name'])
+    print(obj['name'])
