@@ -4,7 +4,7 @@ import pytest
 import requests_oauthlib
 import responses
 
-from support import with_resource, with_fixture, characters
+from tests.support import with_resource, with_fixture, characters
 
 from twitter_ads.client import Client
 from twitter_ads.account import Account
