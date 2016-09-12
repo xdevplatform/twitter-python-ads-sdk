@@ -154,7 +154,6 @@ class LineItem(Resource, Persistence, Analytics):
         else:
             return TargetingCriteria.load(self.account, id, **kwargs)
 
-
 # line item properties
 # read-only
 resource_property(LineItem, 'id', readonly=True)
