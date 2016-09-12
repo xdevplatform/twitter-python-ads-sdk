@@ -89,6 +89,28 @@ resource_property(Video, 'title')
 resource_property(Video, 'description')
 resource_property(Video, 'video_media_id')
 
+class AccountMedia(Resource, Persistence):
+
+    PROPERTIES = {}
+
+    RESOURCE_COLLECTION = '/1/accounts/{account_id}/account_media'
+    RESOURCE = '/1/accounts/{account_id}/account_media/{id}'
+
+# video properties
+# read-only
+resource_property(AccountMedia, 'id', readonly=True)
+resource_property(AccountMedia, 'media_url', readonly=True)
+resource_property(AccountMedia, 'duration', readonly=True)
+resource_property(AccountMedia, 'created_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(AccountMedia, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(AccountMedia, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
+# writable
+resource_property(AccountMedia, 'media_id')
+resource_property(AccountMedia, 'video_id')
+resource_property(AccountMedia, 'vast_url')
+resource_property(AccountMedia, 'creative_type')
+
+
 
 class WebsiteCard(Resource, Persistence):
 
