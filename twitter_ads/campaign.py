@@ -154,11 +154,6 @@ class LineItem(Resource, Persistence, Analytics):
         else:
             return TargetingCriteria.load(self.account, id, **kwargs)
 
-    def media_creatives(self, id=None, **kwargs):
-        """
-        Returns a collection of media creatives available to the current line item.
-        """
-        return self._load_resource(MediaCreatives, id, **kwargs)
 
 # line item properties
 # read-only
