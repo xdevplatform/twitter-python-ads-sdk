@@ -89,6 +89,7 @@ resource_property(Video, 'title')
 resource_property(Video, 'description')
 resource_property(Video, 'video_media_id')
 
+
 class AccountMedia(Resource, Persistence):
 
     PROPERTIES = {}
@@ -109,6 +110,7 @@ resource_property(AccountMedia, 'media_id')
 resource_property(AccountMedia, 'video_id')
 resource_property(AccountMedia, 'vast_url')
 resource_property(AccountMedia, 'creative_type')
+
 
 class MediaCreatives(Resource, Persistence):
 
