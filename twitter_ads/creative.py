@@ -110,6 +110,26 @@ resource_property(AccountMedia, 'video_id')
 resource_property(AccountMedia, 'vast_url')
 resource_property(AccountMedia, 'creative_type')
 
+class MediaCreatives(Resource, Persistence):
+
+    PROPERTIES = {}
+
+    RESOURCE_COLLECTION = '/1/accounts/{account_id}/media_creatives'
+    RESOURCE = '/1/accounts/{account_id}/media_creatives/{id}'
+
+# video properties
+# read-only
+resource_property(MediaCreatives, 'id', readonly=True)
+resource_property(MediaCreatives, 'created_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(MediaCreatives, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(MediaCreatives, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
+resource_property(MediaCreatives, 'approval_status', readonly=True)
+
+
+# writable
+resource_property(MediaCreatives, 'line_item_id')
+resource_property(MediaCreatives, 'account_media_id')
+resource_property(MediaCreatives, 'landing_url')
 
 
 class WebsiteCard(Resource, Persistence):
