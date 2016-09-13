@@ -43,6 +43,7 @@ resource_property(TargetingCriteria, 'tailored_audience_type')
 # sdk-only
 resource_property(TargetingCriteria, 'to_delete', transform=TRANSFORM.BOOL)
 
+
 class FundingInstrument(Resource, Persistence):
 
     PROPERTIES = {}
@@ -140,6 +141,7 @@ resource_property(Campaign, 'total_budget_amount_local_micro')
 # sdk-only
 resource_property(Campaign, 'to_delete', transform=TRANSFORM.BOOL)
 
+
 class LineItem(Resource, Persistence, Analytics, Batch):
 
     PROPERTIES = {}
@@ -185,6 +187,7 @@ resource_property(LineItem, 'total_budget_amount_local_micro')
 resource_property(LineItem, 'bid_type')
 # sdk-only
 resource_property(LineItem, 'to_delete', transform=TRANSFORM.BOOL)
+
 
 class Tweet(object):
 
