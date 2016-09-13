@@ -25,7 +25,7 @@ def to_time(time, granularity):
         return format_time(time - timedelta(
             minutes=time.minute, seconds=time.second, microseconds=time.microsecond))
     elif granularity == GRANULARITY.DAY:
-        return format_time(time - timedelta(
+        return format_date(time - timedelta(
             hours=time.hour, minutes=time.minute,
             seconds=time.second, microseconds=time.microsecond))
     else:
@@ -35,6 +35,11 @@ def to_time(time, granularity):
 def format_time(time):
     """Formats a datetime as an ISO 8601 compliant string."""
     return time.strftime('%Y-%m-%dT%H:%M:%SZ')
+
+
+def format_date(time):
+    """Formats a datetime as an ISO 8601 compliant string, dropping time."""
+    return time.strftime('%Y-%m-%d')
 
 
 def http_time(time):
