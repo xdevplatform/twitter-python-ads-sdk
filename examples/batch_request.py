@@ -31,13 +31,14 @@ campaign_2.name = 'my second campaign'
 campaign_2.paused = True
 campaign_2.start_time = datetime.utcnow()
 
-Campaign.batch_save(account, campaign_1, campaign_2)
+campaigns_list = [campaign_1, campaign_2]
+Campaign.batch_save(account, campaigns_list)
 
 # modify the created campaigns
 campaign_1.name = 'my modified first campaign'
 campaign_2.name = 'my modified second campaign'
 
-Campaign.batch_save(account, campaign_1, campaign_2)
+Campaign.batch_save(account, campaigns_list)
 
 # create line items for campaign_1
 line_item_1 = LineItem(account)
@@ -58,7 +59,8 @@ line_item_2.objective = OBJECTIVE.TWEET_ENGAGEMENTS
 line_item_2.bid_amount_local_micro = 20000
 line_item_2.paused = True
 
-LineItem.batch_save(account, line_item_1, line_item_2)
+line_items_list = [line_item_1, line_item_2]
+LineItem.batch_save(account, line_items_list)
 
 # create targeting criteria for line_item_1
 targeting_criterion_1 = TargetingCriteria(account)
@@ -71,19 +73,20 @@ targeting_criterion_2.line_item_id = line_item_1.id
 targeting_criterion_2.targeting_type = 'PHRASE_KEYWORD'
 targeting_criterion_2.targeting_value = 'righteous dude'
 
-TargetingCriteria.batch_save(account, targeting_criterion_1, targeting_criterion_2)
+targeting_criteria_list = [targeting_criterion_1, targeting_criterion_2]
+TargetingCriteria.batch_save(account, targeting_criteria_list)
 
 targeting_criterion_1.to_delete = True
 targeting_criterion_2.to_delete = True
 
-TargetingCriteria.batch_save(account, targeting_criterion_1, targeting_criterion_2)
+TargetingCriteria.batch_save(account, targeting_criteria_list)
 
 line_item_1.to_delete = True
 line_item_2.to_delete = True
 
-LineItem.batch_save(account, line_item_1, line_item_2)
+LineItem.batch_save(account, line_items_list)
 
 campaign_1.to_delete = True
 campaign_2.to_delete = True
 
-Campaign.batch_save(account, campaign_1, campaign_2)
+Campaign.batch_save(account, campaigns_list)

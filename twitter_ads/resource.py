@@ -143,7 +143,7 @@ class Batch(object):
     }
 
     @classmethod
-    def batch_save(klass, account, *args):
+    def batch_save(klass, account, objs):
         """
         Makes batch request(s) for a passed in list of objects
         """
@@ -152,7 +152,7 @@ class Batch(object):
 
         json_body = []
 
-        for obj in args:
+        for obj in objs:
             entity_type = klass._ENTITY_MAP[klass.__name__].lower()
             obj_json = {'params': obj.to_params()}
 
@@ -174,7 +174,7 @@ class Batch(object):
                            headers={'Content-Type': 'application/json'}).perform()
 
         # persist each entity
-        for obj, res_obj in zip(args, response.body['data']):
+        for obj, res_obj in zip(objs, response.body['data']):
             obj = obj.from_response(res_obj)
 
 
