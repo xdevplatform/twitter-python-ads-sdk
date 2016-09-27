@@ -41,7 +41,7 @@ account_media.save()
 media_creative = MediaCreative(account)
 media_creative.line_item_id = line_item_id
 media_creative.account_media_id = account_media_id
-media_creative.landing_ur = "https://my-landing-url"
+media_creative.landing_url = "https://my-landing-url"
 media_creative.save()
 
 # delete the media creative
