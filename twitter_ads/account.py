@@ -9,7 +9,7 @@ from twitter_ads.http import Request
 from twitter_ads.cursor import Cursor
 
 from twitter_ads.resource import resource_property, Resource
-from twitter_ads.creative import Video, AccountMedia, MediaCreatives
+from twitter_ads.creative import AccountMedia, MediaCreative, Video
 from twitter_ads.audience import TailoredAudience
 from twitter_ads.campaign import (FundingInstrument, Campaign, LineItem,
                                   AppList, PromotableUser)

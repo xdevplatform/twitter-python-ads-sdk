@@ -112,7 +112,7 @@ resource_property(AccountMedia, 'vast_url')
 resource_property(AccountMedia, 'creative_type')
 
 
-class MediaCreatives(Resource, Persistence):
+class MediaCreative(Resource, Persistence):
 
     PROPERTIES = {}
 
@@ -121,17 +121,17 @@ class MediaCreatives(Resource, Persistence):
 
 # video properties
 # read-only
-resource_property(MediaCreatives, 'id', readonly=True)
-resource_property(MediaCreatives, 'created_at', readonly=True, transform=TRANSFORM.TIME)
-resource_property(MediaCreatives, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
-resource_property(MediaCreatives, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
-resource_property(MediaCreatives, 'approval_status', readonly=True)
+resource_property(MediaCreative, 'id', readonly=True)
+resource_property(MediaCreative, 'created_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(MediaCreative, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(MediaCreative, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
+resource_property(MediaCreative, 'approval_status', readonly=True)
 
 
 # writable
-resource_property(MediaCreatives, 'line_item_id')
-resource_property(MediaCreatives, 'account_media_id')
-resource_property(MediaCreatives, 'landing_url')
+resource_property(MediaCreative, 'line_item_id')
+resource_property(MediaCreative, 'account_media_id')
+resource_property(MediaCreative, 'landing_url')
 
 
 class WebsiteCard(Resource, Persistence):

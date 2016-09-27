@@ -5,7 +5,7 @@
 from twitter_ads.client import Client
 from twitter_ads.http import Request
 from twitter_ads.enums import CREATIVE_TYPE
-from twitter_ads.creative import AccountMedia, MediaCreatives
+from twitter_ads.creative import AccountMedia, MediaCreative
 
 CONSUMER_KEY = 'your consumer key'
 CONSUMER_SECRET = 'your consumer secret'
@@ -30,14 +30,15 @@ account_media_id = account.account_media().first.id
 
 # create a new account media
 account_media = AccountMedia(account)
-account_media.media_id = 'your-media-id' # OR account_media.video_id OR account_media.vast_url
-										 # see the media_upload.py example for more details
+account_media.media_id = 'your-media-id' 
+# OR account_media.video_id OR account_media.vast_url
+# see the media_upload.py example for more details
 account_media.creative_type = CREATIVE_TYPE.BANNER
 account_media.save()
 
 
 #create a new media creative
-media_creative = MediaCreatives(account)
+media_creative = MediaCreative(account)
 media_creative.line_item_id = line_item_id
 media_creative.account_media_id = account_media_id
 media_creative.landing_ur = "https://my-landing-url"
