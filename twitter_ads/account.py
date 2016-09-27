@@ -134,7 +134,7 @@ class Account(Resource):
         """
         Returns a collection of media creatives available to the current account.
         """
-        return self._load_resource(MediaCreatives, id, **kwargs)
+        return self._load_resource(MediaCreative, id, **kwargs)
 
     def scoped_timeline(self, *id, **kwargs):
         """
