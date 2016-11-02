@@ -90,6 +90,50 @@ resource_property(Video, 'description')
 resource_property(Video, 'video_media_id')
 
 
+class AccountMedia(Resource, Persistence):
+
+    PROPERTIES = {}
+
+    RESOURCE_COLLECTION = '/1/accounts/{account_id}/account_media'
+    RESOURCE = '/1/accounts/{account_id}/account_media/{id}'
+
+# video properties
+# read-only
+resource_property(AccountMedia, 'id', readonly=True)
+resource_property(AccountMedia, 'media_url', readonly=True)
+resource_property(AccountMedia, 'duration', readonly=True)
+resource_property(AccountMedia, 'created_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(AccountMedia, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(AccountMedia, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
+# writable
+resource_property(AccountMedia, 'media_id')
+resource_property(AccountMedia, 'video_id')
+resource_property(AccountMedia, 'vast_url')
+resource_property(AccountMedia, 'creative_type')
+
+
+class MediaCreative(Resource, Persistence):
+
+    PROPERTIES = {}
+
+    RESOURCE_COLLECTION = '/1/accounts/{account_id}/media_creatives'
+    RESOURCE = '/1/accounts/{account_id}/media_creatives/{id}'
+
+# video properties
+# read-only
+resource_property(MediaCreative, 'id', readonly=True)
+resource_property(MediaCreative, 'created_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(MediaCreative, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(MediaCreative, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
+resource_property(MediaCreative, 'approval_status', readonly=True)
+
+
+# writable
+resource_property(MediaCreative, 'line_item_id')
+resource_property(MediaCreative, 'account_media_id')
+resource_property(MediaCreative, 'landing_url')
+
+
 class WebsiteCard(Resource, Persistence):
 
     PROPERTIES = {}
