@@ -3,15 +3,16 @@
 """Container for all campaign management logic used by the Ads API SDK."""
 
 from twitter_ads.enum import TRANSFORM
-from twitter_ads.resource import resource_property, Resource, Persistence, Analytics
+from twitter_ads.resource import resource_property, Resource, Persistence, Batch, Analytics
 from twitter_ads.http import Request
 from twitter_ads.cursor import Cursor
 
 
-class TargetingCriteria(Resource, Persistence):
+class TargetingCriteria(Resource, Persistence, Batch):
 
     PROPERTIES = {}
 
+    BATCH_RESOURCE_COLLECTION = '/1/batch/accounts/{account_id}/targeting_criteria'
     RESOURCE_COLLECTION = '/1/accounts/{account_id}/targeting_criteria'
     RESOURCE = '/1/accounts/{account_id}/targeting_criteria/{id}'
 
@@ -39,6 +40,8 @@ resource_property(TargetingCriteria, 'targeting_type')
 resource_property(TargetingCriteria, 'targeting_value')
 resource_property(TargetingCriteria, 'tailored_audience_expansion')
 resource_property(TargetingCriteria, 'tailored_audience_type')
+# sdk-only
+resource_property(TargetingCriteria, 'to_delete', transform=TRANSFORM.BOOL)
 
 
 class FundingInstrument(Resource, Persistence):
@@ -109,10 +112,11 @@ resource_property(AppList, 'name', readonly=True)
 resource_property(AppList, 'apps', readonly=True)
 
 
-class Campaign(Resource, Persistence):
+class Campaign(Resource, Persistence, Batch):
 
     PROPERTIES = {}
 
+    BATCH_RESOURCE_COLLECTION = '/1/batch/accounts/{account_id}/campaigns'
     RESOURCE_COLLECTION = '/1/accounts/{account_id}/campaigns'
     RESOURCE = '/1/accounts/{account_id}/campaigns/{id}'
 
@@ -134,12 +138,15 @@ resource_property(Campaign, 'currency')
 resource_property(Campaign, 'standard_delivery')
 resource_property(Campaign, 'daily_budget_amount_local_micro')
 resource_property(Campaign, 'total_budget_amount_local_micro')
+# sdk-only
+resource_property(Campaign, 'to_delete', transform=TRANSFORM.BOOL)
 
 
-class LineItem(Resource, Persistence, Analytics):
+class LineItem(Resource, Persistence, Analytics, Batch):
 
     PROPERTIES = {}
 
+    BATCH_RESOURCE_COLLECTION = '/1/batch/accounts/{account_id}/line_items'
     RESOURCE_COLLECTION = '/1/accounts/{account_id}/line_items'
     RESOURCE = '/1/accounts/{account_id}/line_items/{id}'
 
@@ -178,6 +185,8 @@ resource_property(LineItem, 'automatically_select_bid', transform=TRANSFORM.BOOL
 resource_property(LineItem, 'bid_amount_local_micro')
 resource_property(LineItem, 'total_budget_amount_local_micro')
 resource_property(LineItem, 'bid_type')
+# sdk-only
+resource_property(LineItem, 'to_delete', transform=TRANSFORM.BOOL)
 
 
 class Tweet(object):
