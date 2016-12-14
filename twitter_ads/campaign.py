@@ -112,7 +112,7 @@ resource_property(AppList, 'name', readonly=True)
 resource_property(AppList, 'apps', readonly=True)
 
 
-class Campaign(Resource, Persistence, Batch):
+class Campaign(Resource, Persistence, Analytics, Batch):
 
     PROPERTIES = {}
 

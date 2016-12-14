@@ -216,6 +216,7 @@ class Analytics(object):
     Container for all analytics related logic used by API resource objects.
     """
     ANALYTICS_MAP = {
+        'Campaign': ENTITY.CAMPAIGN,
         'LineItem': ENTITY.LINE_ITEM,
         'OrganicTweet': ENTITY.ORGANIC_TWEET,
         'PromotedTweet': ENTITY.PROMOTED_TWEET
