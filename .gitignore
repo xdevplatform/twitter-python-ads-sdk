@@ -61,3 +61,7 @@ target/
 
 # Virtualenv
 sdk/
+
+# IDE files
+.project
+.pydevproject
