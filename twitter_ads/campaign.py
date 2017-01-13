@@ -55,7 +55,7 @@ class FundingInstrument(Resource, Persistence):
 # funding instrument properties
 # read-only
 resource_property(FundingInstrument, 'id', readonly=True)
-resource_property(FundingInstrument, 'name', readonly=True)
+resource_property(FundingInstrument, 'name', readonly=True) # TODO: REMOVE THIS
 resource_property(FundingInstrument, 'cancelled', readonly=True, transform=TRANSFORM.BOOL)
 resource_property(FundingInstrument, 'credit_limit_local_micro', readonly=True)
 resource_property(FundingInstrument, 'currency', readonly=True)
@@ -65,6 +65,10 @@ resource_property(FundingInstrument, 'type', readonly=True)
 resource_property(FundingInstrument, 'created_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(FundingInstrument, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(FundingInstrument, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
+resource_property(FundingInstrument, 'able_to_fund', readonly=True, transform=TRANSFORM.BOOL)
+resource_property(FundingInstrument, 'paused', readonly=True, transform=TRANSFORM.BOOL)
+resource_property(FundingInstrument, 'io_header', readonly=True)
+resource_property(FundingInstrument, 'reasons_not_able_to_fund', readonly=True)
 
 
 class PromotableUser(Resource):
