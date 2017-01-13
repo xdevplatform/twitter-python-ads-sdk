@@ -65,6 +65,13 @@ resource_property(FundingInstrument, 'type', readonly=True)
 resource_property(FundingInstrument, 'created_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(FundingInstrument, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(FundingInstrument, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
+resource_property(FundingInstrument, 'able_to_fund', readonly=True, transform=TRANSFORM.BOOL)
+resource_property(FundingInstrument, 'paused', readonly=True, transform=TRANSFORM.BOOL)
+resource_property(FundingInstrument, 'io_header', readonly=True)
+resource_property(FundingInstrument, 'reasons_not_able_to_fund', readonly=True)
+resource_property(FundingInstrument, 'start_time', readonly=True)
+resource_property(FundingInstrument, 'end_time', readonly=True)
+resource_property(FundingInstrument, 'credit_remaining_local_micro', readonly=True)
 
 
 class PromotableUser(Resource):
