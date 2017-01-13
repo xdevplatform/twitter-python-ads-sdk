@@ -55,7 +55,7 @@ class FundingInstrument(Resource, Persistence):
 # funding instrument properties
 # read-only
 resource_property(FundingInstrument, 'id', readonly=True)
-resource_property(FundingInstrument, 'name', readonly=True) # TODO: REMOVE THIS
+resource_property(FundingInstrument, 'name', readonly=True)
 resource_property(FundingInstrument, 'cancelled', readonly=True, transform=TRANSFORM.BOOL)
 resource_property(FundingInstrument, 'credit_limit_local_micro', readonly=True)
 resource_property(FundingInstrument, 'currency', readonly=True)
