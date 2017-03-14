@@ -198,7 +198,7 @@ class TONUpload(object):
     _DEFAULT_RESOURCE = '/1.1/ton/bucket/'
     _DEFAULT_BUCKET = 'ta_partner'
     _DEFAULT_EXPIRE = datetime.now() + timedelta(days=10)
-    _MIN_FILE_SIZE = 1024 * 1024 * 1
+    _MIN_FILE_SIZE = 1024 * 1024 * 64
 
     def __init__(self, client, file_path, **kwargs):
         if not os.path.isfile(file_path):
@@ -263,7 +263,7 @@ class TONUpload(object):
                 self.__upload_chunk(location, chunk_size, bytes, bytes_start, bytes_read)
             f.close()
 
-            return location
+            return location.split("?")[0]
 
     def __repr__(self):
         return '<{name} object at {mem} bucket={bucket} file={file}>'.format(
