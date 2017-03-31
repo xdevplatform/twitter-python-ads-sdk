@@ -136,6 +136,12 @@ class Account(Resource):
         """
         return self._load_resource(MediaCreative, id, **kwargs)
 
+    def pixel(self, id=None, **kwargs):
+        """
+        Returns a collection of pixels (web_event_tags) available to the current account.
+        """
+        return self._load_resource(Pixel, id, **kwargs)
+
     def scoped_timeline(self, *id, **kwargs):
         """
         Returns the most recent promotable Tweets created by the specified Twitter user.
