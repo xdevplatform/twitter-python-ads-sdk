@@ -9,13 +9,10 @@ import logging
 import json
 import zlib
 
-try:
-    import httplib2 as httplib
-except ImportError:
-    if sys.version_info[0] != 3:
-        import httplib
-    else:
-        import http.client as httplib
+if sys.version_info[0] != 3:
+    import httplib
+else:
+    import http.client as httplib
 
 import dateutil.parser
 from datetime import datetime, timedelta
