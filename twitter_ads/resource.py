@@ -9,6 +9,7 @@ try:
 except ImportError:
     from urlparse import urlparse
 import json
+import csv
 
 from twitter_ads.utils import format_time, to_time
 from twitter_ads.enum import ENTITY, GRANULARITY, PLACEMENT, TRANSFORM
@@ -139,7 +140,8 @@ class Batch(object):
     _ENTITY_MAP = {
         'LineItem': ENTITY.LINE_ITEM,
         'Campaign': ENTITY.CAMPAIGN,
-        'TargetingCriteria': ENTITY.TARGETING_CRITERION
+        'TargetingCriteria': ENTITY.TARGETING_CRITERION,
+        'TailoredAudience': ENTITY.TAILORED_AUDIENCE
     }
 
     @classmethod
@@ -167,7 +169,6 @@ class Batch(object):
 
             json_body.append(obj_json)
 
-        resource = klass.BATCH_RESOURCE_COLLECTION.format(account_id=account.id)
         response = Request(account.client,
                            'post', resource,
                            body=json.dumps(json_body),
@@ -176,6 +177,48 @@ class Batch(object):
         # persist each entity
         for obj, res_obj in zip(objs, response.body['data']):
             obj = obj.from_response(res_obj)
+
+    @classmethod
+    def ta_batch_save(klass, account, objs):
+        """
+        Makes batch request(s) for a passed in list of objects
+        """
+
+        resource = klass.BATCH_RESOURCE_COLLECTION
+
+        json_body = []
+
+        for obj in objs:
+            obj_json = {}
+            obj_json['operation_type'] = 'Update'
+            obj_json['params'] = obj
+            json_body.append(obj_json)
+
+        response = Request(account.client,
+                           'post', resource,
+                           body=json.dumps(json_body),
+                           headers={'Content-Type': 'application/json'}).perform()
+
+        return response.body['data'][0]['success_count']
+
+    @classmethod
+    def ta_batch(klass, file_path, params):
+        """
+        Returns an iterator TA member entites for a passed in csv file
+        """
+        ta_member_list = []
+        with open(file_path, 'r') as file:
+            reader = csv.reader(file, dialect='excel')
+            for text in reader:
+                for line in text:
+                    if not line:
+                        break
+                    member = params.copy()
+                    line = line.rstrip()
+                    line = ''.join(line.split())
+                    member['user_identifier'] = line
+                    ta_member_list.append(member)
+        return ta_member_list
 
 
 class Persistence(object):

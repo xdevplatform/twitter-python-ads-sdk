@@ -3,21 +3,23 @@
 """Container for all audience management logic used by the Ads API SDK."""
 
 from twitter_ads.enum import TA_OPERATIONS, TRANSFORM
-from twitter_ads.resource import resource_property, Resource
+from twitter_ads.resource import resource_property, Resource, Persistence, Batch
 from twitter_ads.http import TONUpload, Request
 from twitter_ads.error import BadRequest
 from twitter_ads.cursor import Cursor
 
 
-class TailoredAudience(Resource):
+class TailoredAudience(Resource, Persistence, Batch):
 
     PROPERTIES = {}
 
+    BATCH_RESOURCE_COLLECTION = '/1/tailored_audience_memberships/'
     RESOURCE_COLLECTION = '/1/accounts/{account_id}/tailored_audiences'
     RESOURCE = '/1/accounts/{account_id}/tailored_audiences/{id}'
     RESOURCE_UPDATE = '/1/accounts/{account_id}/tailored_audience_changes'
     RESOURCE_PERMISSIONS = '/1/accounts/{account_id}/tailored_audiences/{id}/permissions'
     OPT_OUT = '/1/accounts/{account_id}/tailored_audiences/global_opt_out'
+    MAX_CHUNK_SIZE = 100
 
     @classmethod
     def create(klass, account, file_path, name, list_type):
@@ -33,6 +35,44 @@ class TailoredAudience(Resource):
         except BadRequest as e:
             audience.delete()
             raise e
+
+    @classmethod
+    def ta_file_upload(klass, account, file_path, name, list_type, expires_at, effective_at):
+        """
+        Uses the Real Time Audiences endpoint to create/update an Audience from a file
+        """
+
+        # TODO:
+        # - Add validations for expires_at and effective_at (correct format)
+
+        params = {
+            'advertiser_account_id': account.id,
+            'user_identifier_type': list_type,
+            'audience_names': name,
+            'expires_at': expires_at,
+            'efective_at': effective_at
+        }
+
+        # create batches
+        ta_members = klass.ta_batch(file_path, params)
+
+        # create groups of 100 entities per batch
+        ta_member_chunked = klass.chunkify(ta_members, klass.MAX_CHUNK_SIZE)
+
+        # run through the iterator and upload each of the objects
+        success_count = 0
+
+        for member in ta_member_chunked:
+            success_count += klass.ta_batch_save(account, member)
+
+        return {'success_count': success_count}
+
+    @classmethod
+    def chunkify(klass, lst, size):
+        """
+        Returns a list of lists broken into chunks of size "size"
+        """
+        return [lst[x: x + 100] for x in xrange(0, len(lst), size)]
 
     @classmethod
     def opt_out(klass, account, file_path, list_type):
