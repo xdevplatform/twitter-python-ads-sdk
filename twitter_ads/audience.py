@@ -42,9 +42,8 @@ class TailoredAudience(Resource, Persistence, Batch):
         Uses the Real Time Audiences endpoint to create/update an Audience from a file
         """
 
-        ## TODO: 
-        ## - Add validations for expires_at and effective_at (correct format)
-        
+        # TODO:
+        # - Add validations for expires_at and effective_at (correct format)
 
         params = {
             'advertiser_account_id': account.id,
@@ -55,10 +54,8 @@ class TailoredAudience(Resource, Persistence, Batch):
         }
         ## check if file exists
 
-
         ## create batches
         ta_members = klass.ta_batch(file_path, params)
-
 
         # create groups of 100 entities per batch
         ta_member_chunked = klass.chunkify(ta_members, klass.MAX_CHUNK_SIZE)
@@ -77,7 +74,6 @@ class TailoredAudience(Resource, Persistence, Batch):
         Returns a list of lists broken into chunks of size "size"
         """
         return [ lst[x:x+100] for x in xrange(0, len(lst), size)]
-
 
     @classmethod
     def opt_out(klass, account, file_path, list_type):

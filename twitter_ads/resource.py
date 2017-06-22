@@ -168,7 +168,6 @@ class Batch(object):
                 obj_json['params'][entity_type + '_id'] = obj.id
 
             json_body.append(obj_json)
-
         
         response = Request(account.client,
                            'post', resource,
@@ -195,7 +194,7 @@ class Batch(object):
             obj_json['operation_type'] = 'Update'
             obj_json['params'] = obj
             json_body.append(obj_json)
-        
+
         response = Request(account.client,
                            'post', resource,
                            body=json.dumps(json_body),
@@ -210,7 +209,7 @@ class Batch(object):
         """
         ta_member_list = []
         with open(file_path, 'r') as file:
-            reader = csv.reader(file, dialect='excel')            
+            reader = csv.reader(file, dialect='excel')
             for text in reader:
                 for line in text:
                     if not line:
@@ -221,8 +220,6 @@ class Batch(object):
                     member['user_identifier'] = line
                     ta_member_list.append(member)
         return ta_member_list
-
-
 
 class Persistence(object):
     """
@@ -255,7 +252,6 @@ class Persistence(object):
         resource = self.RESOURCE.format(account_id=self.account.id, id=self.id)
         response = Request(self.account.client, 'delete', resource).perform()
         self.from_response(response.body['data'])
-
 
 class Analytics(object):
     """
