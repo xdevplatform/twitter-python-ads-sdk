@@ -66,13 +66,13 @@ class TailoredAudience(Resource, Persistence, Batch):
             success_count += klass.ta_batch_save(account, member)
 
         return {'success_count': success_count}
-   
+
     @classmethod
     def chunkify(klass, lst, size):
         """
         Returns a list of lists broken into chunks of size "size"
         """
-        return [lst[x: x+100] for x in xrange(0, len(lst), size)]
+        return [lst[x: x + 100] for x in xrange(0, len(lst), size)]
 
     @classmethod
     def opt_out(klass, account, file_path, list_type):

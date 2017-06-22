@@ -168,7 +168,7 @@ class Batch(object):
                 obj_json['params'][entity_type + '_id'] = obj.id
 
             json_body.append(obj_json)
-        
+
         response = Request(account.client,
                            'post', resource,
                            body=json.dumps(json_body),
@@ -190,7 +190,7 @@ class Batch(object):
 
         for obj in objs:
             obj_json = {}
-            
+        
             obj_json['operation_type'] = 'Update'
             obj_json['params'] = obj
             json_body.append(obj_json)
