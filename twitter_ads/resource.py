@@ -221,6 +221,7 @@ class Batch(object):
                     ta_member_list.append(member)
         return ta_member_list
 
+
 class Persistence(object):
     """
     Container for all persistence related logic used by API resource objects.
@@ -252,6 +253,7 @@ class Persistence(object):
         resource = self.RESOURCE.format(account_id=self.account.id, id=self.id)
         response = Request(self.account.client, 'delete', resource).perform()
         self.from_response(response.body['data'])
+
 
 class Analytics(object):
     """
