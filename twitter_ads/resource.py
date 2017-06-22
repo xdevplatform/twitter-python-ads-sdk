@@ -189,7 +189,7 @@ class Batch(object):
         json_body = []
 
         for obj in objs:
-            obj_json = {}     
+            obj_json = {}
             obj_json['operation_type'] = 'Update'
             obj_json['params'] = obj
             json_body.append(obj_json)
