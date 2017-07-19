@@ -178,6 +178,15 @@ class LineItem(Resource, Persistence, Analytics, Batch):
         else:
             return TargetingCriteria.load(self.account, id, **kwargs)
 
+    def save(self, *args, **kwargs):
+        # `categories` should be null if would like to send empty to Twitter Ads API.
+        if not self.categories:
+            self.categories = None
+        # automatically_select_bid and bid_type are exclusive parameters.
+        if self.automatically_select_bid and self.bid_type:
+            self.automatically_select_bid = None
+        super(LineItem, self).save(*args, **kwargs)
+
 
 # line item properties
 # read-only
