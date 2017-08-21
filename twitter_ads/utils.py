@@ -47,7 +47,9 @@ def http_time(time):
     """Formats a datetime as an RFC 1123 compliant string."""
     return formatdate(timeval=mktime(time.timetuple()), localtime=False, usegmt=True)
 
+
 def size(default_chunk_size, response_time_max, response_time_actual):
+    """Determines the chunk size based on response times."""
     if response_time_actual == 0:
         response_time_actual = 1
     scale = 1 / (response_time_actual / response_time_max)
