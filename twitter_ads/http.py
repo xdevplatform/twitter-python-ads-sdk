@@ -19,7 +19,7 @@ from datetime import datetime, timedelta
 
 from requests_oauthlib import OAuth1Session
 
-from twitter_ads.utils import get_version, http_time
+from twitter_ads.utils import get_version, http_time, size
 from twitter_ads.error import Error
 
 
@@ -195,7 +195,9 @@ class TONUpload(object):
     _DEFAULT_RESOURCE = '/1.1/ton/bucket/'
     _DEFAULT_BUCKET = 'ta_partner'
     _DEFAULT_EXPIRE = datetime.now() + timedelta(days=10)
-    _MIN_FILE_SIZE = 1024 * 1024 * 64
+    _DEFAULT_CHUNK_SIZE = 64
+    _SINGLE_UPLOAD_MAX = 1024 * 1024 * _DEFAULT_CHUNK_SIZE
+    _RESPONSE_TIME_MAX = 5000
 
     def __init__(self, client, file_path, **kwargs):
         if not os.path.isfile(file_path):
@@ -240,13 +242,14 @@ class TONUpload(object):
     def perform(self):
         """Executes the current TONUpload object."""
 
-        if self._file_size < self._MIN_FILE_SIZE:
+        if self._file_size < self._SINGLE_UPLOAD_MAX:
             resource = "{0}{1}".format(self._DEFAULT_RESOURCE, self.bucket)
             response = self.__upload(resource, open(self._file_path, 'rb').read())
             return response.headers['location']
         else:
             response = self.__init_chunked_upload()
-            chunk_size = int(response.headers['x-ton-min-chunk-size'])
+            min_chunk_size = int(response.headers['x-ton-min-chunk-size'])
+            chunk_size = min_chunk_size * self._DEFAULT_CHUNK_SIZE
             location = response.headers['location']
 
             f = open(self._file_path, 'rb')
@@ -257,7 +260,11 @@ class TONUpload(object):
                     break
                 bytes_start = bytes_read
                 bytes_read += len(bytes)
-                self.__upload_chunk(location, chunk_size, bytes, bytes_start, bytes_read)
+                response = self.__upload_chunk(location, chunk_size, bytes, bytes_start, bytes_read)
+                response_time = int(response.headers['x-response-time'])
+                chunk_size = min_chunk_size * size(self._DEFAULT_CHUNK_SIZE,
+                                                   self._RESPONSE_TIME_MAX,
+                                                   response_time)
             f.close()
 
             return location.split("?")[0]
