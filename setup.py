@@ -43,7 +43,7 @@ extra_opts = {
 }
 
 if sys.version_info[0] != 3:
-    extra_opts['setup_requires'].append('flake8<=2.6.2')
+    extra_opts['setup_requires'].append('flake8')
 
 setup(
     name='twitter-ads',
