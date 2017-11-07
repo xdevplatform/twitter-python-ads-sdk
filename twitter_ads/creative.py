@@ -41,11 +41,6 @@ class PromotedTweet(Resource, Persistence, Analytics):
         """
         params = self.to_params()
 
-        if self.id:
-            resource = self.RESOURCE.format(account_id=self.account.id, id=self.id)
-            response = Request(self.account.client, 'put', resource, params=params).perform()
-            return self.from_response(response.body['data'])
-
         resource = self.RESOURCE_COLLECTION.format(account_id=self.account.id)
         response = Request(self.account.client, 'post', resource, params=params).perform()
         return self.from_response(response.body['data'][0])
