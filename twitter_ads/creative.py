@@ -40,9 +40,6 @@ class PromotedTweet(Resource, Persistence, Analytics):
         presence of `object.id`.
         """
         params = self.to_params()
-        if 'tweet_id' in params:
-            params['tweet_ids'] = [params['tweet_id']]
-            del params['tweet_id']
 
         if self.id:
             resource = self.RESOURCE.format(account_id=self.account.id, id=self.id)
@@ -55,15 +52,17 @@ class PromotedTweet(Resource, Persistence, Analytics):
 
 # promoted tweet properties
 # read-only
-resource_property(PromotedTweet, 'id', readonly=True)
 resource_property(PromotedTweet, 'approval_status', readonly=True)
 resource_property(PromotedTweet, 'created_at', readonly=True, transform=TRANSFORM.TIME)
-resource_property(PromotedTweet, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(PromotedTweet, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
+resource_property(PromotedTweet, 'id', readonly=True)
+resource_property(PromotedTweet, 'paused', readonly=True, transform=TRANSFORM.BOOL)
+resource_property(PromotedTweet, 'tweet_id', readonly=True)
+resource_property(PromotedTweet, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
+
 # writable
 resource_property(PromotedTweet, 'line_item_id')
-resource_property(PromotedTweet, 'tweet_id')
-resource_property(PromotedTweet, 'paused', transform=TRANSFORM.BOOL)
+resource_property(PromotedTweet, 'tweet_ids', transform=TRANSFORM.LIST)
 
 
 class Video(Resource, Persistence):
