@@ -2,6 +2,8 @@
 
 """Container for all creative management logic used by the Ads API SDK."""
 
+from requests.exceptions import HTTPError
+
 from twitter_ads.enum import TRANSFORM
 from twitter_ads.resource import resource_property, Resource, Persistence, Analytics
 from twitter_ads.http import Request
@@ -40,6 +42,9 @@ class PromotedTweet(Resource, Persistence, Analytics):
         presence of `object.id`.
         """
         params = self.to_params()
+
+        if self.id:
+            raise HTTPError("Method PUT not allowed.")
 
         resource = self.RESOURCE_COLLECTION.format(account_id=self.account.id)
         response = Request(self.account.client, 'post', resource, params=params).perform()
