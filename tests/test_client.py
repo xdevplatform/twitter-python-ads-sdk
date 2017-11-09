@@ -9,10 +9,11 @@ from tests.support import with_resource, with_fixture, characters
 from twitter_ads.client import Client
 from twitter_ads.account import Account
 from twitter_ads.cursor import Cursor
+from twitter_ads import API_VERSION
 
 @responses.activate
 def test_accounts_with_no_id():
-    responses.add(responses.GET, with_resource('/1/accounts'),
+    responses.add(responses.GET, with_resource('/'+API_VERSION+'/accounts'),
                                  body=with_fixture('accounts_all'),
                                  content_type='application/json')
 
@@ -30,7 +31,7 @@ def test_accounts_with_no_id():
 
 @responses.activate
 def test_accounts_with_id():
-    responses.add(responses.GET, with_resource('/1/accounts/2iqph'),
+    responses.add(responses.GET, with_resource('/'+API_VERSION+'/accounts/2iqph'),
                                  body=with_fixture('accounts_load'),
                                  content_type='application/json')
 

@@ -3,10 +3,10 @@
 """
 A Twitter supported and maintained Ads API SDK for Python.
 """
-
 from twitter_ads.enum import TRANSFORM
 from twitter_ads.http import Request
 from twitter_ads.cursor import Cursor
+from twitter_ads import API_VERSION
 
 from twitter_ads.resource import resource_property, Resource
 from twitter_ads.creative import AccountMedia, MediaCreative, Video
@@ -23,10 +23,10 @@ class Account(Resource):
 
     PROPERTIES = {}
 
-    RESOURCE_COLLECTION = '/1/accounts'
-    RESOURCE = '/1/accounts/{id}'
-    FEATURES = '/1/accounts/{id}/features'
-    SCOPED_TIMELINE = '/1/accounts/{id}/scoped_timeline'
+    RESOURCE_COLLECTION = '/'+API_VERSION+'/accounts'
+    RESOURCE = '/'+API_VERSION+'/accounts/{id}'
+    FEATURES = '/'+API_VERSION+'/accounts/{id}/features'
+    SCOPED_TIMELINE = '/'+API_VERSION+'/accounts/{id}/scoped_timeline'
 
     def __init__(self, client):
         self._client = client

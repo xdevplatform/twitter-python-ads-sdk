@@ -3,11 +3,12 @@
 """Container for all targeting related logic used by the Ads API SDK."""
 
 from twitter_ads.http import Request
+from twitter_ads import API_VERSION
 
 
 class ReachEstimate(object):
 
-    RESOURCE = '/1/accounts/{account_id}/reach_estimate'
+    RESOURCE = '/'+API_VERSION+'/accounts/{account_id}/reach_estimate'
 
     @classmethod
     def fetch(klass, account, product_type, objective, user_id, **kwargs):

@@ -14,6 +14,7 @@ from twitter_ads.utils import format_time, to_time
 from twitter_ads.enum import ENTITY, GRANULARITY, PLACEMENT, TRANSFORM
 from twitter_ads.http import Request
 from twitter_ads.cursor import Cursor
+from twitter_ads import API_VERSION
 
 
 def resource_property(klass, name, **kwargs):
@@ -222,8 +223,8 @@ class Analytics(object):
         'PromotedTweet': ENTITY.PROMOTED_TWEET
     }
 
-    RESOURCE_SYNC = '/1/stats/accounts/{account_id}'
-    RESOURCE_ASYNC = '/1/stats/jobs/accounts/{account_id}'
+    RESOURCE_SYNC = '/'+API_VERSION+'/stats/accounts/{account_id}'
+    RESOURCE_ASYNC = '/'+API_VERSION+'/stats/jobs/accounts/{account_id}'
 
     def stats(self, metrics, **kwargs):  # noqa
         """
