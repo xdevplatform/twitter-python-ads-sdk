@@ -97,7 +97,7 @@ class AccountMedia(Resource, Persistence):
     RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/account_media'
     RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/account_media/{id}'
 
-# video properties
+# account media properties
 # read-only
 resource_property(AccountMedia, 'id', readonly=True)
 resource_property(AccountMedia, 'media_url', readonly=True)
@@ -119,15 +119,13 @@ class MediaCreative(Resource, Persistence):
     RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/media_creatives'
     RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/media_creatives/{id}'
 
-# video properties
+# media creative properties
 # read-only
 resource_property(MediaCreative, 'id', readonly=True)
 resource_property(MediaCreative, 'created_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(MediaCreative, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(MediaCreative, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
 resource_property(MediaCreative, 'approval_status', readonly=True)
-
-
 # writable
 resource_property(MediaCreative, 'line_item_id')
 resource_property(MediaCreative, 'account_media_id')
