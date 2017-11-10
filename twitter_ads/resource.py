@@ -223,8 +223,8 @@ class Analytics(object):
         'PromotedTweet': ENTITY.PROMOTED_TWEET
     }
 
-    RESOURCE_SYNC = '/'+API_VERSION+'/stats/accounts/{account_id}'
-    RESOURCE_ASYNC = '/'+API_VERSION+'/stats/jobs/accounts/{account_id}'
+    RESOURCE_SYNC = '/' + API_VERSION + '/stats/accounts/{account_id}'
+    RESOURCE_ASYNC = '/' + API_VERSION + '/stats/jobs/accounts/{account_id}'
 
     def stats(self, metrics, **kwargs):  # noqa
         """

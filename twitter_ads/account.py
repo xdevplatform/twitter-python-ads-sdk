@@ -23,10 +23,10 @@ class Account(Resource):
 
     PROPERTIES = {}
 
-    RESOURCE_COLLECTION = '/'+API_VERSION+'/accounts'
-    RESOURCE = '/'+API_VERSION+'/accounts/{id}'
-    FEATURES = '/'+API_VERSION+'/accounts/{id}/features'
-    SCOPED_TIMELINE = '/'+API_VERSION+'/accounts/{id}/scoped_timeline'
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts'
+    RESOURCE = '/' + API_VERSION + '/accounts/{id}'
+    FEATURES = '/' + API_VERSION + '/accounts/{id}/features'
+    SCOPED_TIMELINE = '/' + API_VERSION + '/accounts/{id}/scoped_timeline'
 
     def __init__(self, client):
         self._client = client

@@ -13,9 +13,10 @@ class TargetingCriteria(Resource, Persistence, Batch):
 
     PROPERTIES = {}
 
-    BATCH_RESOURCE_COLLECTION = '/'+API_VERSION+'/batch/accounts/{account_id}/targeting_criteria'
-    RESOURCE_COLLECTION = '/'+API_VERSION+'/accounts/{account_id}/targeting_criteria'
-    RESOURCE = '/'+API_VERSION+'/accounts/{account_id}/targeting_criteria/{id}'
+    BATCH_RESOURCE_COLLECTION = '/' + API_VERSION + '/batch/accounts/{account_id}/\
+targeting_criteria'
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/targeting_criteria'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/targeting_criteria/{id}'
 
     @classmethod
     def all(klass, account, line_item_id, **kwargs):
@@ -50,8 +51,8 @@ class FundingInstrument(Resource, Persistence):
 
     PROPERTIES = {}
 
-    RESOURCE_COLLECTION = '/'+API_VERSION+'/accounts/{account_id}/funding_instruments'
-    RESOURCE = '/'+API_VERSION+'/accounts/{account_id}/funding_instruments/{id}'
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/funding_instruments'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/funding_instruments/{id}'
 
 # funding instrument properties
 # read-only
@@ -79,8 +80,8 @@ class PromotableUser(Resource):
 
     PROPERTIES = {}
 
-    RESOURCE_COLLECTION = '/'+API_VERSION+'/accounts/{account_id}/promotable_users'
-    RESOURCE = '/'+API_VERSION+'/accounts/{account_id}/promotable_users/{id}'
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/promotable_users'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/promotable_users/{id}'
 
 # promotable user properties
 # read-only
@@ -96,8 +97,8 @@ class AppList(Resource, Persistence):
 
     PROPERTIES = {}
 
-    RESOURCE_COLLECTION = '/'+API_VERSION+'/accounts/{account_id}/app_lists'
-    RESOURCE = '/'+API_VERSION+'/accounts/{account_id}/app_lists/{id}'
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/app_lists'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/app_lists/{id}'
 
     def create(self, name, *ids):
         if isinstance(ids, list):
@@ -125,9 +126,9 @@ class Campaign(Resource, Persistence, Analytics, Batch):
 
     PROPERTIES = {}
 
-    BATCH_RESOURCE_COLLECTION = '/'+API_VERSION+'/batch/accounts/{account_id}/campaigns'
-    RESOURCE_COLLECTION = '/'+API_VERSION+'/accounts/{account_id}/campaigns'
-    RESOURCE = '/'+API_VERSION+'/accounts/{account_id}/campaigns/{id}'
+    BATCH_RESOURCE_COLLECTION = '/' + API_VERSION + '/batch/accounts/{account_id}/campaigns'
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/campaigns'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/campaigns/{id}'
 
 # campaign properties
 # read-only
@@ -155,9 +156,9 @@ class LineItem(Resource, Persistence, Analytics, Batch):
 
     PROPERTIES = {}
 
-    BATCH_RESOURCE_COLLECTION = '/'+API_VERSION+'/batch/accounts/{account_id}/line_items'
-    RESOURCE_COLLECTION = '/'+API_VERSION+'/accounts/{account_id}/line_items'
-    RESOURCE = '/'+API_VERSION+'/accounts/{account_id}/line_items/{id}'
+    BATCH_RESOURCE_COLLECTION = '/' + API_VERSION + '/batch/accounts/{account_id}/line_items'
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/line_items'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/line_items/{id}'
 
     def targeting_criteria(self, id=None, **kwargs):
         """
@@ -200,9 +201,9 @@ resource_property(LineItem, 'to_delete', transform=TRANSFORM.BOOL)
 
 class Tweet(object):
 
-    TWEET_PREVIEW = '/'+API_VERSION+'/accounts/{account_id}/tweet/preview'
-    TWEET_ID_PREVIEW = '/'+API_VERSION+'/accounts/{account_id}/tweet/preview/{id}'
-    TWEET_CREATE = '/'+API_VERSION+'/accounts/{account_id}/tweet'
+    TWEET_PREVIEW = '/' + API_VERSION + '/accounts/{account_id}/tweet/preview'
+    TWEET_ID_PREVIEW = '/' + API_VERSION + '/accounts/{account_id}/tweet/preview/{id}'
+    TWEET_CREATE = '/' + API_VERSION + '/accounts/{account_id}/tweet'
 
     def __init__(self):
         raise NotImplementedError(

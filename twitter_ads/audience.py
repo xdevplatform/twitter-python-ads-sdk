@@ -14,11 +14,12 @@ class TailoredAudience(Resource):
 
     PROPERTIES = {}
 
-    RESOURCE_COLLECTION = '/'+API_VERSION+'/accounts/{account_id}/tailored_audiences'
-    RESOURCE = '/'+API_VERSION+'/accounts/{account_id}/tailored_audiences/{id}'
-    RESOURCE_UPDATE = '/'+API_VERSION+'/accounts/{account_id}/tailored_audience_changes'
-    RESOURCE_PERMISSIONS = '/'+API_VERSION+'/accounts/{account_id}/tailored_audiences/{id}/permissions'
-    OPT_OUT = '/'+API_VERSION+'/accounts/{account_id}/tailored_audiences/global_opt_out'
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/tailored_audiences'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/tailored_audiences/{id}'
+    RESOURCE_UPDATE = '/' + API_VERSION + '/accounts/{account_id}/tailored_audience_changes'
+    RESOURCE_PERMISSIONS = '/' + API_VERSION + '/accounts/{account_id}/tailored_audiences/\
+{id}/permissions'
+    OPT_OUT = '/' + API_VERSION + '/accounts/{account_id}/tailored_audiences/global_opt_out'
 
     @classmethod
     def create(klass, account, file_path, name, list_type):
@@ -121,9 +122,10 @@ class TailoredAudiencePermission(Resource):
 
     PROPERTIES = {}
 
-    RESOURCE_COLLECTION = '/'+API_VERSION+'/accounts/{account_id}/tailored_audiences/'
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/tailored_audiences/'
     RESOURCE_COLLECTION += '{tailored_audience_id}/permissions'
-    RESOURCE = '/'+API_VERSION+'/accounts/{account_id}/tailored_audiences/{tailored_audience_id}/permissions/{id}'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/tailored_audiences/\
+{tailored_audience_id}/permissions/{id}'
 
     @classmethod
     def all(klass, account, tailored_audience_id, **kwargs):

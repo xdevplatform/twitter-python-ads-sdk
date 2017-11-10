@@ -10,13 +10,15 @@ from time import mktime
 from twitter_ads import VERSION
 from twitter_ads.enum import GRANULARITY
 
+
 def get_version():
     """Returns a string representation of the current SDK version."""
     if isinstance(VERSION[-1], str):
         return '.'.join(map(str, VERSION[:-1])) + VERSION[-1]
     return '.'.join(map(str, VERSION))
 
-def to_time(time, granularitys):
+
+def to_time(time, granularity):
     """Returns a truncated and rounded time string based on the specified granularity."""
     if not granularity:
         return format_time(time)

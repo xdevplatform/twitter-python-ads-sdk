@@ -8,7 +8,7 @@ from twitter_ads import API_VERSION
 
 class ReachEstimate(object):
 
-    RESOURCE = '/'+API_VERSION+'/accounts/{account_id}/reach_estimate'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/reach_estimate'
 
     @classmethod
     def fetch(klass, account, product_type, objective, user_id, **kwargs):

@@ -12,7 +12,6 @@ CONSUMER_SECRET = 'your consumer secret'
 ACCESS_TOKEN = 'access token'
 ACCESS_TOKEN_SECRET = 'access token secret'
 ACCOUNT_ID = 'account id'
-API_VERSION = get_api_version()
 
 # initialize the client
 client = Client(CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
