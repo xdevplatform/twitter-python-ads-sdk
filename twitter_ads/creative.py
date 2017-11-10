@@ -7,14 +7,15 @@ from requests.exceptions import HTTPError
 from twitter_ads.enum import TRANSFORM
 from twitter_ads.resource import resource_property, Resource, Persistence, Analytics
 from twitter_ads.http import Request
+from twitter_ads import API_VERSION
 
 
 class PromotedAccount(Resource, Persistence):
 
     PROPERTIES = {}
 
-    RESOURCE_COLLECTION = '/1/accounts/{account_id}/promoted_accounts'
-    RESOURCE = '/1/accounts/{account_id}/promoted_accounts/{id}'
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/promoted_accounts'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/promoted_accounts/{id}'
 
 # promoted account properties
 # read-only
@@ -33,8 +34,8 @@ class PromotedTweet(Resource, Persistence, Analytics):
 
     PROPERTIES = {}
 
-    RESOURCE_COLLECTION = '/1/accounts/{account_id}/promoted_tweets'
-    RESOURCE = '/1/accounts/{account_id}/promoted_tweets/{id}'
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/promoted_tweets'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/promoted_tweets/{id}'
 
     def save(self):
         """
@@ -69,8 +70,8 @@ class Video(Resource, Persistence):
 
     PROPERTIES = {}
 
-    RESOURCE_COLLECTION = '/1/accounts/{account_id}/videos'
-    RESOURCE = '/1/accounts/{account_id}/videos/{id}'
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/videos'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/videos/{id}'
 
 # video properties
 # read-only
@@ -93,8 +94,8 @@ class AccountMedia(Resource, Persistence):
 
     PROPERTIES = {}
 
-    RESOURCE_COLLECTION = '/1/accounts/{account_id}/account_media'
-    RESOURCE = '/1/accounts/{account_id}/account_media/{id}'
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/account_media'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/account_media/{id}'
 
 # video properties
 # read-only
@@ -115,8 +116,8 @@ class MediaCreative(Resource, Persistence):
 
     PROPERTIES = {}
 
-    RESOURCE_COLLECTION = '/1/accounts/{account_id}/media_creatives'
-    RESOURCE = '/1/accounts/{account_id}/media_creatives/{id}'
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/media_creatives'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/media_creatives/{id}'
 
 # video properties
 # read-only
@@ -137,8 +138,8 @@ class WebsiteCard(Resource, Persistence):
 
     PROPERTIES = {}
 
-    RESOURCE_COLLECTION = '/1/accounts/{account_id}/cards/website'
-    RESOURCE = '/1/accounts/{account_id}/cards/website/{id}'
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/cards/website'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/cards/website/{id}'
 
 # website card properties
 # read-only
@@ -159,8 +160,8 @@ class LeadGenCard(Resource, Persistence):
 
     PROPERTIES = {}
 
-    RESOURCE_COLLECTION = '/1/accounts/{account_id}/cards/lead_gen'
-    RESOURCE = '/1/accounts/{account_id}/cards/lead_gen/{id}'
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/cards/lead_gen'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/cards/lead_gen/{id}'
 
 # lead gen card properties
 # read-only
@@ -189,8 +190,8 @@ class AppDownloadCard(Resource, Persistence):
 
     PROPERTIES = {}
 
-    RESOURCE_COLLECTION = '/1/accounts/{account_id}/cards/app_download'
-    RESOURCE = '/1/accounts/{account_id}/cards/app_download/{id}'
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/cards/app_download'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/cards/app_download/{id}'
 
 # app download card properties
 # read-only
@@ -217,8 +218,8 @@ class ImageAppDownloadCard(Resource, Persistence):
 
     PROPERTIES = {}
 
-    RESOURCE_COLLECTION = '/1/accounts/{account_id}/cards/image_app_download'
-    RESOURCE = '/1/accounts/{account_id}/cards/image_app_download/{id}'
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/cards/image_app_download'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/cards/image_app_download/{id}'
 
 # image app download card properties
 # read-only
@@ -244,8 +245,8 @@ class VideoAppDownloadCard(Resource, Persistence):
 
     PROPERTIES = {}
 
-    RESOURCE_COLLECTION = '/1/accounts/{account_id}/cards/video_app_download'
-    RESOURCE = '/1/accounts/{account_id}/cards/video_app_download/{id}'
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/cards/video_app_download'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/cards/video_app_download/{id}'
 
 # video app download card properties
 # read-only
@@ -274,8 +275,8 @@ class ImageConversationCard(Resource, Persistence):
 
     PROPERTIES = {}
 
-    RESOURCE_COLLECTION = '/1/accounts/{account_id}/cards/image_conversation'
-    RESOURCE = '/1/accounts/{account_id}/cards/image_conversation/{id}'
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/cards/image_conversation'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/cards/image_conversation/{id}'
 
 # image conversation card properties
 # read-only
@@ -300,8 +301,8 @@ class VideoConversationCard(Resource, Persistence):
 
     PROPERTIES = {}
 
-    RESOURCE_COLLECTION = '/1/accounts/{account_id}/cards/video_conversation'
-    RESOURCE = '/1/accounts/{account_id}/cards/video_conversation/{id}'
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/cards/video_conversation'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/cards/video_conversation/{id}'
 
 # video conversation card properties
 # read-only
