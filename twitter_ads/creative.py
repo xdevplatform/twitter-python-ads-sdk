@@ -64,7 +64,7 @@ resource_property(PromotedTweet, 'deleted', readonly=True, transform=TRANSFORM.B
 resource_property(PromotedTweet, 'paused', readonly=True, transform=TRANSFORM.BOOL)
 # writable
 resource_property(PromotedTweet, 'line_item_id')
-resource_property(PromotedTweet, 'tweet_id') #SDK limitation
+resource_property(PromotedTweet, 'tweet_id')  # SDK limitation
 
 
 class Video(Resource, Persistence):
