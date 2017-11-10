@@ -2,6 +2,8 @@ from twitter_ads.client import Client
 from twitter_ads.enum import CREATIVE_TYPE, OBJECTIVE, PRODUCT
 from twitter_ads.campaign import Campaign, LineItem
 from twitter_ads.creative import AccountMedia, Video
+from twitter_ads import API_VERSION
+
 from datetime import datetime
 
 from twython import Twython, TwythonError
@@ -62,7 +64,7 @@ line_item.save()
 
 from twitter_ads.http import Request
 
-resource = '/1/accounts/18ce54bgxky/preroll_call_to_actions'.format(account_id=account.id)
+resource = '/' + API_VERSION + '/accounts/18ce54bgxky/preroll_call_to_actions'.format(account_id=account.id)
 params = { 
     'line_item_id' : line_item.id,
     'call_to_action' : 'WATCH_NOW',
@@ -77,7 +79,7 @@ except Error as e:
     print e.details
     raise
 
-resource = '/1/batch/accounts/18ce54bgxky/targeting_criteria'.format(account_id=account.id)
+resource = '/' + API_VERSION + '/batch/accounts/18ce54bgxky/targeting_criteria'.format(account_id=account.id)
 
 params = [
   {

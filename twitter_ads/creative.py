@@ -2,37 +2,40 @@
 
 """Container for all creative management logic used by the Ads API SDK."""
 
+from requests.exceptions import HTTPError
+
+from twitter_ads import API_VERSION
 from twitter_ads.enum import TRANSFORM
-from twitter_ads.resource import resource_property, Resource, Persistence, Analytics
 from twitter_ads.http import Request
+from twitter_ads.resource import resource_property, Resource, Persistence, Analytics
 
 
 class PromotedAccount(Resource, Persistence):
 
     PROPERTIES = {}
 
-    RESOURCE_COLLECTION = '/1/accounts/{account_id}/promoted_accounts'
-    RESOURCE = '/1/accounts/{account_id}/promoted_accounts/{id}'
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/promoted_accounts'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/promoted_accounts/{id}'
 
 # promoted account properties
 # read-only
-resource_property(PromotedAccount, 'id', readonly=True)
 resource_property(PromotedAccount, 'approval_status', readonly=True)
 resource_property(PromotedAccount, 'created_at', readonly=True, transform=TRANSFORM.TIME)
-resource_property(PromotedAccount, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(PromotedAccount, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
+resource_property(PromotedAccount, 'id', readonly=True)
+resource_property(PromotedAccount, 'paused', readonly=True, transform=TRANSFORM.BOOL)
+resource_property(PromotedAccount, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
 # writable
 resource_property(PromotedAccount, 'line_item_id')
 resource_property(PromotedAccount, 'user_id')
-resource_property(PromotedAccount, 'paused', transform=TRANSFORM.BOOL)
 
 
 class PromotedTweet(Resource, Persistence, Analytics):
 
     PROPERTIES = {}
 
-    RESOURCE_COLLECTION = '/1/accounts/{account_id}/promoted_tweets'
-    RESOURCE = '/1/accounts/{account_id}/promoted_tweets/{id}'
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/promoted_tweets'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/promoted_tweets/{id}'
 
     def save(self):
         """
@@ -40,14 +43,9 @@ class PromotedTweet(Resource, Persistence, Analytics):
         presence of `object.id`.
         """
         params = self.to_params()
-        if 'tweet_id' in params:
-            params['tweet_ids'] = [params['tweet_id']]
-            del params['tweet_id']
 
         if self.id:
-            resource = self.RESOURCE.format(account_id=self.account.id, id=self.id)
-            response = Request(self.account.client, 'put', resource, params=params).perform()
-            return self.from_response(response.body['data'])
+            raise HTTPError("Method PUT not allowed.")
 
         resource = self.RESOURCE_COLLECTION.format(account_id=self.account.id)
         response = Request(self.account.client, 'post', resource, params=params).perform()
@@ -55,23 +53,24 @@ class PromotedTweet(Resource, Persistence, Analytics):
 
 # promoted tweet properties
 # read-only
-resource_property(PromotedTweet, 'id', readonly=True)
 resource_property(PromotedTweet, 'approval_status', readonly=True)
 resource_property(PromotedTweet, 'created_at', readonly=True, transform=TRANSFORM.TIME)
-resource_property(PromotedTweet, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(PromotedTweet, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
+resource_property(PromotedTweet, 'id', readonly=True)
+resource_property(PromotedTweet, 'paused', readonly=True, transform=TRANSFORM.BOOL)
+resource_property(PromotedTweet, 'tweet_id', readonly=True)
+resource_property(PromotedTweet, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
 # writable
 resource_property(PromotedTweet, 'line_item_id')
-resource_property(PromotedTweet, 'tweet_id')
-resource_property(PromotedTweet, 'paused', transform=TRANSFORM.BOOL)
+resource_property(PromotedTweet, 'tweet_ids', transform=TRANSFORM.LIST)
 
 
 class Video(Resource, Persistence):
 
     PROPERTIES = {}
 
-    RESOURCE_COLLECTION = '/1/accounts/{account_id}/videos'
-    RESOURCE = '/1/accounts/{account_id}/videos/{id}'
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/videos'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/videos/{id}'
 
 # video properties
 # read-only
@@ -94,10 +93,10 @@ class AccountMedia(Resource, Persistence):
 
     PROPERTIES = {}
 
-    RESOURCE_COLLECTION = '/1/accounts/{account_id}/account_media'
-    RESOURCE = '/1/accounts/{account_id}/account_media/{id}'
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/account_media'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/account_media/{id}'
 
-# video properties
+# account media properties
 # read-only
 resource_property(AccountMedia, 'id', readonly=True)
 resource_property(AccountMedia, 'media_url', readonly=True)
@@ -116,18 +115,16 @@ class MediaCreative(Resource, Persistence):
 
     PROPERTIES = {}
 
-    RESOURCE_COLLECTION = '/1/accounts/{account_id}/media_creatives'
-    RESOURCE = '/1/accounts/{account_id}/media_creatives/{id}'
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/media_creatives'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/media_creatives/{id}'
 
-# video properties
+# media creative properties
 # read-only
 resource_property(MediaCreative, 'id', readonly=True)
 resource_property(MediaCreative, 'created_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(MediaCreative, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(MediaCreative, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
 resource_property(MediaCreative, 'approval_status', readonly=True)
-
-
 # writable
 resource_property(MediaCreative, 'line_item_id')
 resource_property(MediaCreative, 'account_media_id')
@@ -138,8 +135,8 @@ class WebsiteCard(Resource, Persistence):
 
     PROPERTIES = {}
 
-    RESOURCE_COLLECTION = '/1/accounts/{account_id}/cards/website'
-    RESOURCE = '/1/accounts/{account_id}/cards/website/{id}'
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/cards/website'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/cards/website/{id}'
 
 # website card properties
 # read-only
@@ -160,8 +157,8 @@ class LeadGenCard(Resource, Persistence):
 
     PROPERTIES = {}
 
-    RESOURCE_COLLECTION = '/1/accounts/{account_id}/cards/lead_gen'
-    RESOURCE = '/1/accounts/{account_id}/cards/lead_gen/{id}'
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/cards/lead_gen'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/cards/lead_gen/{id}'
 
 # lead gen card properties
 # read-only
@@ -190,8 +187,8 @@ class AppDownloadCard(Resource, Persistence):
 
     PROPERTIES = {}
 
-    RESOURCE_COLLECTION = '/1/accounts/{account_id}/cards/app_download'
-    RESOURCE = '/1/accounts/{account_id}/cards/app_download/{id}'
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/cards/app_download'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/cards/app_download/{id}'
 
 # app download card properties
 # read-only
@@ -218,8 +215,8 @@ class ImageAppDownloadCard(Resource, Persistence):
 
     PROPERTIES = {}
 
-    RESOURCE_COLLECTION = '/1/accounts/{account_id}/cards/image_app_download'
-    RESOURCE = '/1/accounts/{account_id}/cards/image_app_download/{id}'
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/cards/image_app_download'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/cards/image_app_download/{id}'
 
 # image app download card properties
 # read-only
@@ -245,8 +242,8 @@ class VideoAppDownloadCard(Resource, Persistence):
 
     PROPERTIES = {}
 
-    RESOURCE_COLLECTION = '/1/accounts/{account_id}/cards/video_app_download'
-    RESOURCE = '/1/accounts/{account_id}/cards/video_app_download/{id}'
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/cards/video_app_download'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/cards/video_app_download/{id}'
 
 # video app download card properties
 # read-only
@@ -275,8 +272,8 @@ class ImageConversationCard(Resource, Persistence):
 
     PROPERTIES = {}
 
-    RESOURCE_COLLECTION = '/1/accounts/{account_id}/cards/image_conversation'
-    RESOURCE = '/1/accounts/{account_id}/cards/image_conversation/{id}'
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/cards/image_conversation'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/cards/image_conversation/{id}'
 
 # image conversation card properties
 # read-only
@@ -301,8 +298,8 @@ class VideoConversationCard(Resource, Persistence):
 
     PROPERTIES = {}
 
-    RESOURCE_COLLECTION = '/1/accounts/{account_id}/cards/video_conversation'
-    RESOURCE = '/1/accounts/{account_id}/cards/video_conversation/{id}'
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/cards/video_conversation'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/cards/video_conversation/{id}'
 
 # video conversation card properties
 # read-only
