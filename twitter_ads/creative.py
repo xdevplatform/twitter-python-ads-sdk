@@ -4,10 +4,10 @@
 
 from requests.exceptions import HTTPError
 
-from twitter_ads.enum import TRANSFORM
-from twitter_ads.resource import resource_property, Resource, Persistence, Analytics
-from twitter_ads.http import Request
 from twitter_ads import API_VERSION
+from twitter_ads.enum import TRANSFORM
+from twitter_ads.http import Request
+from twitter_ads.resource import resource_property, Resource, Persistence, Analytics
 
 
 class PromotedAccount(Resource, Persistence):
@@ -19,15 +19,15 @@ class PromotedAccount(Resource, Persistence):
 
 # promoted account properties
 # read-only
-resource_property(PromotedAccount, 'id', readonly=True)
 resource_property(PromotedAccount, 'approval_status', readonly=True)
 resource_property(PromotedAccount, 'created_at', readonly=True, transform=TRANSFORM.TIME)
-resource_property(PromotedAccount, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(PromotedAccount, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
+resource_property(PromotedAccount, 'id', readonly=True)
+resource_property(PromotedAccount, 'paused', readonly=True, transform=TRANSFORM.BOOL)
+resource_property(PromotedAccount, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
 # writable
 resource_property(PromotedAccount, 'line_item_id')
 resource_property(PromotedAccount, 'user_id')
-resource_property(PromotedAccount, 'paused', transform=TRANSFORM.BOOL)
 
 
 class PromotedTweet(Resource, Persistence, Analytics):
