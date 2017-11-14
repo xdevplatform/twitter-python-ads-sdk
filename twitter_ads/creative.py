@@ -157,6 +157,41 @@ resource_property(WebsiteCard, 'website_cta')
 resource_property(WebsiteCard, 'image_media_id')
 
 
+class VideoWebsiteCard(Resource, Persistence):
+
+    PROPERTIES = {}
+
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/cards/video_website'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/cards/video_website/{id}'
+
+# video website card properties
+# read-only
+resource_property(VideoWebsiteCard, 'account_id', readonly=True)
+resource_property(VideoWebsiteCard, 'card_type', readonly=True)
+resource_property(VideoWebsiteCard, 'card_uri', readonly=True)
+resource_property(VideoWebsiteCard, 'created_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(VideoWebsiteCard, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
+resource_property(VideoWebsiteCard, 'id', readonly=True)
+resource_property(VideoWebsiteCard, 'preview_url', readonly=True)
+resource_property(VideoWebsiteCard, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(VideoWebsiteCard, 'video_content_id', readonly=True)
+resource_property(VideoWebsiteCard, 'video_height', readonly=True)
+resource_property(VideoWebsiteCard, 'video_hls_url', readonly=True)
+resource_property(VideoWebsiteCard, 'video_owner_id', readonly=True)
+resource_property(VideoWebsiteCard, 'video_poster_height', readonly=True)
+resource_property(VideoWebsiteCard, 'video_poster_url', readonly=True)
+resource_property(VideoWebsiteCard, 'video_poster_width', readonly=True)
+resource_property(VideoWebsiteCard, 'video_url', readonly=True)
+resource_property(VideoWebsiteCard, 'video_width', readonly=True)
+resource_property(VideoWebsiteCard, 'website_dest_url', readonly=True)
+resource_property(VideoWebsiteCard, 'website_display_url', readonly=True)
+# writable
+resource_property(VideoWebsiteCard, 'name')
+resource_property(VideoWebsiteCard, 'title')
+resource_property(VideoWebsiteCard, 'video_id')
+resource_property(VideoWebsiteCard, 'website_url')
+
+
 class LeadGenCard(Resource, Persistence):
 
     PROPERTIES = {}

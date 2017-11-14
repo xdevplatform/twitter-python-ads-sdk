@@ -9,7 +9,7 @@ from twitter_ads.cursor import Cursor
 from twitter_ads import API_VERSION
 
 from twitter_ads.resource import resource_property, Resource
-from twitter_ads.creative import AccountMedia, MediaCreative, Video
+from twitter_ads.creative import AccountMedia, MediaCreative, Video, VideoWebsiteCard
 from twitter_ads.audience import TailoredAudience
 from twitter_ads.campaign import (FundingInstrument, Campaign, LineItem,
                                   AppList, PromotableUser)
@@ -135,6 +135,12 @@ class Account(Resource):
         Returns a collection of media creatives available to the current account.
         """
         return self._load_resource(MediaCreative, id, **kwargs)
+
+    def video_website_cards(self, id=None, **kwargs):
+        """
+        Returns a collection of video website cards available to the current account.
+        """
+        return self._load_resource(VideoWebsiteCard, id, **kwargs)
 
     def scoped_timeline(self, *id, **kwargs):
         """
