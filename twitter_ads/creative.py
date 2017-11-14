@@ -2,10 +2,12 @@
 
 """Container for all creative management logic used by the Ads API SDK."""
 
-from twitter_ads.enum import TRANSFORM
-from twitter_ads.resource import resource_property, Resource, Persistence, Analytics
-from twitter_ads.http import Request
+from requests.exceptions import HTTPError
+
 from twitter_ads import API_VERSION
+from twitter_ads.enum import TRANSFORM
+from twitter_ads.http import Request
+from twitter_ads.resource import resource_property, Resource, Persistence, Analytics
 
 
 class PromotedAccount(Resource, Persistence):
@@ -46,9 +48,7 @@ class PromotedTweet(Resource, Persistence, Analytics):
             del params['tweet_id']
 
         if self.id:
-            resource = self.RESOURCE.format(account_id=self.account.id, id=self.id)
-            response = Request(self.account.client, 'put', resource, params=params).perform()
-            return self.from_response(response.body['data'])
+            raise HTTPError("Method PUT not allowed.")
 
         resource = self.RESOURCE_COLLECTION.format(account_id=self.account.id)
         response = Request(self.account.client, 'post', resource, params=params).perform()
@@ -61,10 +61,10 @@ resource_property(PromotedTweet, 'approval_status', readonly=True)
 resource_property(PromotedTweet, 'created_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(PromotedTweet, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(PromotedTweet, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
+resource_property(PromotedTweet, 'paused', readonly=True, transform=TRANSFORM.BOOL)
 # writable
 resource_property(PromotedTweet, 'line_item_id')
-resource_property(PromotedTweet, 'tweet_id')
-resource_property(PromotedTweet, 'paused', transform=TRANSFORM.BOOL)
+resource_property(PromotedTweet, 'tweet_id')  # SDK limitation
 
 
 class Video(Resource, Persistence):
