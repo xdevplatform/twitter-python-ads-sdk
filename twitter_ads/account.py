@@ -12,8 +12,8 @@ from twitter_ads.resource import resource_property, Resource
 from twitter_ads.creative import (AccountMedia, MediaCreative, ScheduledTweet,
                                   Video, VideoWebsiteCard)
 from twitter_ads.audience import TailoredAudience
-from twitter_ads.campaign import (FundingInstrument, Campaign, LineItem,
-                                  AppList, PromotableUser)
+from twitter_ads.campaign import (AppList, Campaign, FundingInstrument, LineItem,
+                                  PromotableUser, ScheduledPromotedTweet)
 
 
 class Account(Resource):
@@ -142,6 +142,12 @@ class Account(Resource):
         Returns a collection of Scheduled Tweets available to the current account.
         """
         return self._load_resource(ScheduledTweet, id, **kwargs)
+
+    def scheduled_promoted_tweets(self, id=None, **kwargs):
+        """
+        Returns a collection of Scheduled Promoted Tweets available to the current account.
+        """
+        return self._load_resource(ScheduledPromotedTweet, id, **kwargs)
 
     def video_website_cards(self, id=None, **kwargs):
         """

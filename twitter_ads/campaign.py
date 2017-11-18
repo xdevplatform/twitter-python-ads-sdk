@@ -199,6 +199,25 @@ resource_property(LineItem, 'bid_type')
 resource_property(LineItem, 'to_delete', transform=TRANSFORM.BOOL)
 
 
+class ScheduledPromotedTweet(Resource, Persistence):
+
+    PROPERTIES = {}
+
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/scheduled_promoted_tweets'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/scheduled_promoted_tweets/{id}'
+
+# scheduled promoted tweets properties
+# read-only
+resource_property(ScheduledPromotedTweet, 'created_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(ScheduledPromotedTweet, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
+resource_property(ScheduledPromotedTweet, 'id', readonly=True)
+resource_property(ScheduledPromotedTweet, 'tweet_id', readonly=True)
+resource_property(ScheduledPromotedTweet, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
+# writable
+resource_property(ScheduledPromotedTweet, 'line_item_id')
+resource_property(ScheduledPromotedTweet, 'scheduled_tweet_id')
+
+
 class Tweet(object):
 
     TWEET_PREVIEW = '/' + API_VERSION + '/accounts/{account_id}/tweet/preview'
