@@ -20,3 +20,6 @@ scheduled_tweet = ScheduledTweet(account)
 scheduled_tweet.text = 'Future'
 scheduled_tweet.scheduled_at = datetime.utcnow() + timedelta(days=2)
 scheduled_tweet.save()
+
+# preview
+scheduled_tweet.preview()

@@ -368,6 +368,17 @@ class ScheduledTweet(Resource, Persistence):
 
     RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/scheduled_tweets'
     RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/scheduled_tweets/{id}'
+    PREVIEW = '/' + API_VERSION + '/accounts/{account_id}/scheduled_tweets/preview/{id}'
+
+    def preview(self):
+        """
+        Returns an HTML preview for a Scheduled Tweet.
+        """
+        if self.id:
+            resource = self.PREVIEW
+            resource = resource.format(account_id=self.account.id, id=self.id)
+            response = Request(self.account.client, 'get', resource).perform()
+            return response.body['data']
 
 # scheduled tweet properties
 # read-only
@@ -387,4 +398,3 @@ resource_property(ScheduledTweet, 'media_ids', transform=TRANSFORM.LIST)
 resource_property(ScheduledTweet, 'nullcast', transform=TRANSFORM.BOOL)
 resource_property(ScheduledTweet, 'scheduled_at', transform=TRANSFORM.TIME)
 resource_property(ScheduledTweet, 'text')
-
