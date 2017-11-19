@@ -391,7 +391,7 @@ resource_property(ScheduledTweet, 'scheduled_status', read_only=True)
 resource_property(ScheduledTweet, 'tweet_id', readonly=True)
 resource_property(ScheduledTweet, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(ScheduledTweet, 'user_id', read_only=True)
-#writable
+# writable
 resource_property(ScheduledTweet, 'as_user_id')
 resource_property(ScheduledTweet, 'card_uri')
 resource_property(ScheduledTweet, 'media_ids', transform=TRANSFORM.LIST)
