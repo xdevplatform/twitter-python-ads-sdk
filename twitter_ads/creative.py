@@ -386,7 +386,7 @@ resource_property(ScheduledTweet, 'created_at', readonly=True, transform=TRANSFO
 resource_property(ScheduledTweet, 'completed_at', read_only=True, transform=TRANSFORM.TIME)
 resource_property(ScheduledTweet, 'id', read_only=True)
 resource_property(ScheduledTweet, 'id_str', read_only=True)
-resource_property(ScheduledTweet, 'media_keys', readonly=True)
+resource_property(ScheduledTweet, 'media_keys', readonly=True, transform=TRANSFORM.LIST)
 resource_property(ScheduledTweet, 'scheduled_status', read_only=True)
 resource_property(ScheduledTweet, 'tweet_id', readonly=True)
 resource_property(ScheduledTweet, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
