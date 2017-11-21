@@ -360,3 +360,41 @@ resource_property(VideoConversationCard, 'thank_you_text')
 resource_property(VideoConversationCard, 'thank_you_url')
 resource_property(VideoConversationCard, 'image_media_id')
 resource_property(VideoConversationCard, 'video_id')
+
+
+class ScheduledTweet(Resource, Persistence):
+
+    PROPERTIES = {}
+
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/scheduled_tweets'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/scheduled_tweets/{id}'
+    PREVIEW = '/' + API_VERSION + '/accounts/{account_id}/scheduled_tweets/preview/{id}'
+
+    def preview(self):
+        """
+        Returns an HTML preview for a Scheduled Tweet.
+        """
+        if self.id:
+            resource = self.PREVIEW
+            resource = resource.format(account_id=self.account.id, id=self.id)
+            response = Request(self.account.client, 'get', resource).perform()
+            return response.body['data']
+
+# scheduled tweet properties
+# read-only
+resource_property(ScheduledTweet, 'created_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(ScheduledTweet, 'completed_at', read_only=True, transform=TRANSFORM.TIME)
+resource_property(ScheduledTweet, 'id', read_only=True)
+resource_property(ScheduledTweet, 'id_str', read_only=True)
+resource_property(ScheduledTweet, 'media_keys', readonly=True, transform=TRANSFORM.LIST)
+resource_property(ScheduledTweet, 'scheduled_status', read_only=True)
+resource_property(ScheduledTweet, 'tweet_id', readonly=True)
+resource_property(ScheduledTweet, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(ScheduledTweet, 'user_id', read_only=True)
+# writable
+resource_property(ScheduledTweet, 'as_user_id')
+resource_property(ScheduledTweet, 'card_uri')
+resource_property(ScheduledTweet, 'media_ids', transform=TRANSFORM.LIST)
+resource_property(ScheduledTweet, 'nullcast', transform=TRANSFORM.BOOL)
+resource_property(ScheduledTweet, 'scheduled_at', transform=TRANSFORM.TIME)
+resource_property(ScheduledTweet, 'text')
