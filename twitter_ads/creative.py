@@ -17,6 +17,7 @@ class PromotedAccount(Resource, Persistence):
     RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/promoted_accounts'
     RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/promoted_accounts/{id}'
 
+
 # promoted account properties
 # read-only
 resource_property(PromotedAccount, 'id', readonly=True)
@@ -54,6 +55,7 @@ class PromotedTweet(Resource, Persistence, Analytics):
         response = Request(self.account.client, 'post', resource, params=params).perform()
         return self.from_response(response.body['data'][0])
 
+
 # promoted tweet properties
 # read-only
 resource_property(PromotedTweet, 'id', readonly=True)
@@ -73,6 +75,7 @@ class Video(Resource, Persistence):
 
     RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/videos'
     RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/videos/{id}'
+
 
 # video properties
 # read-only
@@ -98,6 +101,7 @@ class AccountMedia(Resource, Persistence):
     RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/account_media'
     RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/account_media/{id}'
 
+
 # video properties
 # read-only
 resource_property(AccountMedia, 'id', readonly=True)
@@ -119,6 +123,7 @@ class MediaCreative(Resource, Persistence):
 
     RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/media_creatives'
     RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/media_creatives/{id}'
+
 
 # video properties
 # read-only
@@ -142,6 +147,7 @@ class WebsiteCard(Resource, Persistence):
     RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/cards/website'
     RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/cards/website/{id}'
 
+
 # website card properties
 # read-only
 resource_property(WebsiteCard, 'id', readonly=True)
@@ -163,6 +169,7 @@ class VideoWebsiteCard(Resource, Persistence):
 
     RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/cards/video_website'
     RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/cards/video_website/{id}'
+
 
 # video website card properties
 # read-only
@@ -199,6 +206,7 @@ class LeadGenCard(Resource, Persistence):
     RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/cards/lead_gen'
     RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/cards/lead_gen/{id}'
 
+
 # lead gen card properties
 # read-only
 resource_property(LeadGenCard, 'id', readonly=True)
@@ -229,6 +237,7 @@ class AppDownloadCard(Resource, Persistence):
     RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/cards/app_download'
     RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/cards/app_download/{id}'
 
+
 # app download card properties
 # read-only
 resource_property(AppDownloadCard, 'id', readonly=True)
@@ -257,6 +266,7 @@ class ImageAppDownloadCard(Resource, Persistence):
     RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/cards/image_app_download'
     RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/cards/image_app_download/{id}'
 
+
 # image app download card properties
 # read-only
 resource_property(ImageAppDownloadCard, 'id', readonly=True)
@@ -283,6 +293,7 @@ class VideoAppDownloadCard(Resource, Persistence):
 
     RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/cards/video_app_download'
     RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/cards/video_app_download/{id}'
+
 
 # video app download card properties
 # read-only
@@ -314,6 +325,7 @@ class ImageConversationCard(Resource, Persistence):
     RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/cards/image_conversation'
     RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/cards/image_conversation/{id}'
 
+
 # image conversation card properties
 # read-only
 resource_property(ImageConversationCard, 'id', readonly=True)
@@ -339,6 +351,7 @@ class VideoConversationCard(Resource, Persistence):
 
     RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/cards/video_conversation'
     RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/cards/video_conversation/{id}'
+
 
 # video conversation card properties
 # read-only
@@ -379,6 +392,7 @@ class ScheduledTweet(Resource, Persistence):
             resource = resource.format(account_id=self.account.id, id=self.id)
             response = Request(self.account.client, 'get', resource).perform()
             return response.body['data']
+
 
 # scheduled tweet properties
 # read-only

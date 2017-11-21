@@ -29,6 +29,7 @@ targeting_criteria'
 
         return Cursor(klass, request, init_with=[account])
 
+
 # targeting criteria properties
 # read-only
 resource_property(TargetingCriteria, 'id', readonly=True)
@@ -53,6 +54,7 @@ class FundingInstrument(Resource, Persistence):
 
     RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/funding_instruments'
     RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/funding_instruments/{id}'
+
 
 # funding instrument properties
 # read-only
@@ -82,6 +84,7 @@ class PromotableUser(Resource):
 
     RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/promotable_users'
     RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/promotable_users/{id}'
+
 
 # promotable user properties
 # read-only
@@ -115,6 +118,7 @@ class AppList(Resource, Persistence):
             self.reload()
         return self._apps
 
+
 # app list properties
 # read-only
 resource_property(AppList, 'id', readonly=True)
@@ -129,6 +133,7 @@ class Campaign(Resource, Persistence, Analytics, Batch):
     BATCH_RESOURCE_COLLECTION = '/' + API_VERSION + '/batch/accounts/{account_id}/campaigns'
     RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/campaigns'
     RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/campaigns/{id}'
+
 
 # campaign properties
 # read-only
@@ -172,6 +177,7 @@ class LineItem(Resource, Persistence, Analytics, Batch):
         else:
             return TargetingCriteria.load(self.account, id, **kwargs)
 
+
 # line item properties
 # read-only
 resource_property(LineItem, 'id', readonly=True)
@@ -206,6 +212,7 @@ class ScheduledPromotedTweet(Resource, Persistence):
 
     RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/scheduled_promoted_tweets'
     RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/scheduled_promoted_tweets/{id}'
+
 
 # scheduled promoted tweets properties
 # read-only

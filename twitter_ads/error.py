@@ -99,6 +99,7 @@ class ServiceUnavailable(ServerError):
     def retry_after(self):
         return self._retry_after
 
+
 ERRORS = {
     400: BadRequest,
     401: NotAuthorized,
