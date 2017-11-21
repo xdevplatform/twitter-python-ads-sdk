@@ -138,6 +138,7 @@ resource_property(Campaign, 'servable', readonly=True, transform=TRANSFORM.BOOL)
 resource_property(Campaign, 'created_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(Campaign, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(Campaign, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
+resource_property(Campaign, 'entity_status', readonly=True)
 # writable
 resource_property(Campaign, 'name')
 resource_property(Campaign, 'funding_instrument_id')
