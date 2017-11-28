@@ -15,6 +15,7 @@ def get_version(version_tuple):
         return '.'.join(map(str, version_tuple[:-1])) + version_tuple[-1]
     return '.'.join(map(str, version_tuple))
 
+
 init = os.path.join(os.path.dirname(__file__), 'twitter_ads', '__init__.py')
 version_line = list(filter(lambda l: l.startswith('VERSION'), open(init)))[0]
 

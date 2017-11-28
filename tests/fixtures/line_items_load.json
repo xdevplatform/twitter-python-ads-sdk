@@ -17,7 +17,7 @@
     "total_budget_amount_local_micro": null,
     "objective": "CUSTOM",
     "id": "bw2",
-    "paused": false,
+    "entity_status": "ACTIVE",
     "account_id": "2iqph",
     "optimization": "DEFAULT",
     "categories": [],

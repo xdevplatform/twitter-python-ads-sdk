@@ -29,6 +29,7 @@ targeting_criteria'
 
         return Cursor(klass, request, init_with=[account])
 
+
 # targeting criteria properties
 # read-only
 resource_property(TargetingCriteria, 'id', readonly=True)
@@ -53,6 +54,7 @@ class FundingInstrument(Resource, Persistence):
 
     RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/funding_instruments'
     RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/funding_instruments/{id}'
+
 
 # funding instrument properties
 # read-only
@@ -82,6 +84,7 @@ class PromotableUser(Resource):
 
     RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/promotable_users'
     RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/promotable_users/{id}'
+
 
 # promotable user properties
 # read-only
@@ -115,6 +118,7 @@ class AppList(Resource, Persistence):
             self.reload()
         return self._apps
 
+
 # app list properties
 # read-only
 resource_property(AppList, 'id', readonly=True)
@@ -130,6 +134,7 @@ class Campaign(Resource, Persistence, Analytics, Batch):
     RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/campaigns'
     RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/campaigns/{id}'
 
+
 # campaign properties
 # read-only
 resource_property(Campaign, 'id', readonly=True)
@@ -143,11 +148,11 @@ resource_property(Campaign, 'name')
 resource_property(Campaign, 'funding_instrument_id')
 resource_property(Campaign, 'start_time', transform=TRANSFORM.TIME)
 resource_property(Campaign, 'end_time', transform=TRANSFORM.TIME)
-resource_property(Campaign, 'paused', transform=TRANSFORM.BOOL)
 resource_property(Campaign, 'currency')
 resource_property(Campaign, 'standard_delivery')
 resource_property(Campaign, 'daily_budget_amount_local_micro')
 resource_property(Campaign, 'total_budget_amount_local_micro')
+resource_property(Campaign, 'entity_status')
 # sdk-only
 resource_property(Campaign, 'to_delete', transform=TRANSFORM.BOOL)
 
@@ -171,6 +176,7 @@ class LineItem(Resource, Persistence, Analytics, Batch):
         else:
             return TargetingCriteria.load(self.account, id, **kwargs)
 
+
 # line item properties
 # read-only
 resource_property(LineItem, 'id', readonly=True)
@@ -186,7 +192,6 @@ resource_property(LineItem, 'charge_by')
 resource_property(LineItem, 'include_sentiment')
 resource_property(LineItem, 'objective')
 resource_property(LineItem, 'optimization')
-resource_property(LineItem, 'paused', transform=TRANSFORM.BOOL)
 resource_property(LineItem, 'primary_web_event_tag')
 resource_property(LineItem, 'product_type')
 resource_property(LineItem, 'placements', transform=TRANSFORM.LIST)
@@ -195,6 +200,7 @@ resource_property(LineItem, 'automatically_select_bid', transform=TRANSFORM.BOOL
 resource_property(LineItem, 'bid_amount_local_micro')
 resource_property(LineItem, 'total_budget_amount_local_micro')
 resource_property(LineItem, 'bid_type')
+resource_property(LineItem, 'entity_status')
 # sdk-only
 resource_property(LineItem, 'to_delete', transform=TRANSFORM.BOOL)
 
@@ -205,6 +211,7 @@ class ScheduledPromotedTweet(Resource, Persistence):
 
     RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/scheduled_promoted_tweets'
     RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/scheduled_promoted_tweets/{id}'
+
 
 # scheduled promoted tweets properties
 # read-only

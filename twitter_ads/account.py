@@ -169,6 +169,7 @@ class Account(Resource):
 
         return response.body['data']
 
+
 # account properties
 resource_property(Account, 'id', readonly=True)
 resource_property(Account, 'name', readonly=True)

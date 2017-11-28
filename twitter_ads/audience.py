@@ -100,6 +100,7 @@ class TailoredAudience(Resource):
         resource = self.RESOURCE_UPDATE.format(account_id=self.account.id)
         return Request(self.account.client, 'post', resource, params=params).perform()
 
+
 # tailored audience properties
 # read-only
 resource_property(TailoredAudience, 'id', readonly=True)
@@ -170,6 +171,7 @@ class TailoredAudiencePermission(Resource):
             id=self.id)
         response = Request(self.account.client, 'delete', resource).perform()
         return self.from_response(response.body['data'])
+
 
 # tailored audience permission properties
 # read-only

@@ -6,6 +6,7 @@
 def enum(**enums):
     return type('Enum', (), enums)
 
+
 TRANSFORM = enum(
     TIME=0,
     BOOL=1,
