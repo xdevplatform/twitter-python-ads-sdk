@@ -61,8 +61,8 @@ class PromotedTweet(Resource, Persistence, Analytics):
 resource_property(PromotedTweet, 'approval_status', readonly=True)
 resource_property(PromotedTweet, 'created_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(PromotedTweet, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
+resource_property(PromotedTweet, 'entity_status', readonly=True)
 resource_property(PromotedTweet, 'id', readonly=True)
-resource_property(PromotedTweet, 'paused', readonly=True, transform=TRANSFORM.BOOL)
 resource_property(PromotedTweet, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
 # writable
 resource_property(PromotedTweet, 'line_item_id')
