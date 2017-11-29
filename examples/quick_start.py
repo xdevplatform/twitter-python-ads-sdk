@@ -2,7 +2,7 @@ from datetime import datetime
 
 from twitter_ads.client import Client
 from twitter_ads.campaign import Campaign, LineItem, TargetingCriteria
-from twitter_ads.enum import PRODUCT, PLACEMENT, OBJECTIVE
+from twitter_ads.enum import ENTITY_STATUS, OBJECTIVE, PLACEMENT, PRODUCT
 
 CONSUMER_KEY = 'your consumer key'
 CONSUMER_SECRET = 'your consumer secret'
@@ -21,7 +21,7 @@ campaign = Campaign(account)
 campaign.funding_instrument_id = account.funding_instruments().next().id
 campaign.daily_budget_amount_local_micro = 1000000
 campaign.name = 'my first campaign'
-campaign.paused = True
+campaign.entity_status = ENTITY_STATUS.PAUSED
 campaign.start_time = datetime.utcnow()
 campaign.save()
 
@@ -33,7 +33,7 @@ line_item.product_type = PRODUCT.PROMOTED_TWEETS
 line_item.placements = [PLACEMENT.ALL_ON_TWITTER]
 line_item.objective = OBJECTIVE.TWEET_ENGAGEMENTS
 line_item.bid_amount_local_micro = 10000
-line_item.paused = True
+line_item.entity_status = ENTITY_STATUS.PAUSED
 line_item.save()
 
 # add targeting criteria

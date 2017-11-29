@@ -20,15 +20,15 @@ class PromotedAccount(Resource, Persistence):
 
 # promoted account properties
 # read-only
-resource_property(PromotedAccount, 'id', readonly=True)
 resource_property(PromotedAccount, 'approval_status', readonly=True)
 resource_property(PromotedAccount, 'created_at', readonly=True, transform=TRANSFORM.TIME)
-resource_property(PromotedAccount, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(PromotedAccount, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
+resource_property(PromotedAccount, 'entity_status', readonly=True)
+resource_property(PromotedAccount, 'id', readonly=True)
+resource_property(PromotedAccount, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
 # writable
 resource_property(PromotedAccount, 'line_item_id')
 resource_property(PromotedAccount, 'user_id')
-resource_property(PromotedAccount, 'paused', transform=TRANSFORM.BOOL)
 
 
 class PromotedTweet(Resource, Persistence, Analytics):
@@ -58,12 +58,12 @@ class PromotedTweet(Resource, Persistence, Analytics):
 
 # promoted tweet properties
 # read-only
-resource_property(PromotedTweet, 'id', readonly=True)
 resource_property(PromotedTweet, 'approval_status', readonly=True)
 resource_property(PromotedTweet, 'created_at', readonly=True, transform=TRANSFORM.TIME)
-resource_property(PromotedTweet, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(PromotedTweet, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
-resource_property(PromotedTweet, 'paused', readonly=True, transform=TRANSFORM.BOOL)
+resource_property(PromotedTweet, 'entity_status', readonly=True)
+resource_property(PromotedTweet, 'id', readonly=True)
+resource_property(PromotedTweet, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
 # writable
 resource_property(PromotedTweet, 'line_item_id')
 resource_property(PromotedTweet, 'tweet_id')  # SDK limitation

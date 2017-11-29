@@ -16,6 +16,7 @@ Quick Start
 
     from twitter_ads.client import Client
     from twitter_ads.campaign import Campaign
+    from twitter_ads.enum import ENTITY_STATUS
 
     CONSUMER_KEY = 'your consumer key'
     CONSUMER_SECRET = 'your consumer secret'
@@ -33,7 +34,7 @@ Quick Start
     # load and update a specific campaign
     campaign = account.campaigns().next()
     campaign.name = 'updated campaign name'
-    campaign.paused = True
+    campaign.entity_status = ENTITY_STATUS.PAUSED
     campaign.save()
 
     # iterate through campaigns
