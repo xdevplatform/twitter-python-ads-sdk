@@ -2,7 +2,7 @@ from datetime import datetime
 
 from twitter_ads.client import Client
 from twitter_ads.campaign import Campaign, LineItem, TargetingCriteria
-from twitter_ads.enum import PRODUCT, PLACEMENT, OBJECTIVE
+from twitter_ads.enum import ENTITY_STATUS, OBJECTIVE, PLACEMENT, PRODUCT
 
 CONSUMER_KEY = 'your consumer key'
 CONSUMER_SECRET = 'your consumer secret'
@@ -21,14 +21,14 @@ campaign_1 = Campaign(account)
 campaign_1.funding_instrument_id = account.funding_instruments().next().id
 campaign_1.daily_budget_amount_local_micro = 1000000
 campaign_1.name = 'my first campaign'
-campaign_1.paused = True
+campaign_1.entity_status = ENTITY_STATUS.PAUSED
 campaign_1.start_time = datetime.utcnow()
 
 campaign_2 = Campaign(account)
 campaign_2.funding_instrument_id = account.funding_instruments().next().id
 campaign_2.daily_budget_amount_local_micro = 2000000
 campaign_2.name = 'my second campaign'
-campaign_2.paused = True
+campaign_2.entity_status = ENTITY_STATUS.PAUSED
 campaign_2.start_time = datetime.utcnow()
 
 campaigns_list = [campaign_1, campaign_2]
@@ -48,7 +48,7 @@ line_item_1.product_type = PRODUCT.PROMOTED_TWEETS
 line_item_1.placements = [PLACEMENT.ALL_ON_TWITTER]
 line_item_1.objective = OBJECTIVE.TWEET_ENGAGEMENTS
 line_item_1.bid_amount_local_micro = 10000
-line_item_1.paused = True
+line_item_1.entity_status = ENTITY_STATUS.PAUSED
 
 line_item_2 = LineItem(account)
 line_item_2.campaign_id = campaign_1.id
@@ -57,7 +57,7 @@ line_item_2.product_type = PRODUCT.PROMOTED_TWEETS
 line_item_2.placements = [PLACEMENT.ALL_ON_TWITTER]
 line_item_2.objective = OBJECTIVE.TWEET_ENGAGEMENTS
 line_item_2.bid_amount_local_micro = 20000
-line_item_2.paused = True
+line_item_2.entity_status = ENTITY_STATUS.PAUSED
 
 line_items_list = [line_item_1, line_item_2]
 LineItem.batch_save(account, line_items_list)

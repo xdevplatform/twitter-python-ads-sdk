@@ -1,5 +1,5 @@
 from twitter_ads.client import Client
-from twitter_ads.enum import CREATIVE_TYPE, OBJECTIVE, PRODUCT
+from twitter_ads.enum import CREATIVE_TYPE, ENTITY_STATUS, OBJECTIVE, PRODUCT
 from twitter_ads.campaign import Campaign, LineItem
 from twitter_ads.creative import AccountMedia, Video
 from twitter_ads import API_VERSION
@@ -44,7 +44,7 @@ campaign.name="Video tutorial test"
 # get the first funding instrument on the account
 campaign.funding_instrument_id = account.funding_instruments().first.id
 campaign.daily_budget_amount_local_micro = 1000000000
-campaign.paused = True
+campaign.entity_status = ENTITY_STATUS.PAUSED
 campaign.start_time = datetime.utcnow()
 campaign.save()
 
@@ -58,7 +58,7 @@ line_item.name = 'Video tutorial example'
 line_item.product_type = 'MEDIA'
 line_item.placements = [PLACEMENT.ALL_ON_TWITTER]
 line_item.bid_amount_local_micro = 1000000
-line_item.paused = True
+line_item.entity_status = ENTITY_STATUS.PAUSED
 line_item.categories = 'IAB1'
 line_item.save()
 
@@ -110,5 +110,5 @@ except Error as e:
     raise
 
 # unpause the campaign
-campaign.paused = False
+campaign.entity_status = ENTITY_STATUS.ACTIVE
 campaign.save()
