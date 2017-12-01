@@ -108,16 +108,16 @@ class AccountMedia(Resource, Persistence):
 
 # video properties
 # read-only
+resource_property(AccountMedia, 'created_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(AccountMedia, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
+resource_property(AccountMedia, 'duration', readonly=True)
 resource_property(AccountMedia, 'id', readonly=True)
 resource_property(AccountMedia, 'media_url', readonly=True)
-resource_property(AccountMedia, 'duration', readonly=True)
-resource_property(AccountMedia, 'created_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(AccountMedia, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
-resource_property(AccountMedia, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
 # writable
+resource_property(AccountMedia, 'creative_type')
 resource_property(AccountMedia, 'media_id')
 resource_property(AccountMedia, 'video_id')
-resource_property(AccountMedia, 'creative_type')
 
 
 class MediaCreative(Resource, Persistence):
@@ -153,13 +153,13 @@ class WebsiteCard(Resource, Persistence):
 
 # website card properties
 # read-only
+resource_property(WebsiteCard, 'card_type', readonly=True)
+resource_property(WebsiteCard, 'card_uri', readonly=True)
+resource_property(WebsiteCard, 'created_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(WebsiteCard, 'id', readonly=True)
 resource_property(WebsiteCard, 'image', readonly=True)
 resource_property(WebsiteCard, 'image_display_height', readonly=True)
 resource_property(WebsiteCard, 'image_display_width', readonly=True)
-resource_property(WebsiteCard, 'card_type', readonly=True)
-resource_property(WebsiteCard, 'card_uri', readonly=True)
-resource_property(WebsiteCard, 'created_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(WebsiteCard, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
 resource_property(WebsiteCard, 'preview_url', readonly=True)
 resource_property(WebsiteCard, 'website_dest_url', readonly=True)
@@ -217,9 +217,9 @@ class LeadGenCard(Resource, Persistence):
 
 # lead gen card properties
 # read-only
-resource_property(LeadGenCard, 'id', readonly=True)
 resource_property(LeadGenCard, 'card_uri', readonly=True)
 resource_property(LeadGenCard, 'created_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(LeadGenCard, 'id', readonly=True)
 resource_property(LeadGenCard, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(LeadGenCard, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
 # writable
@@ -282,7 +282,7 @@ resource_property(ImageAppDownloadCard, 'image_display_height', readonly=True)
 resource_property(ImageAppDownloadCard, 'image_display_width', readonly=True)
 resource_property(ImageAppDownloadCard, 'wide_app_image', readonly=True)
 resource_property(ImageAppDownloadCard, 'card_uri', readonly=True)
-resource_property(ImageAppDownloadCard, 'card_type', readonly=True)    
+resource_property(ImageAppDownloadCard, 'card_type', readonly=True)
 resource_property(ImageAppDownloadCard, 'preview_url', readonly=True)
 resource_property(ImageAppDownloadCard, 'created_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(ImageAppDownloadCard, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
@@ -310,11 +310,11 @@ class VideoAppDownloadCard(Resource, Persistence):
 
 # video app download card properties
 # read-only
-resource_property(VideoAppDownloadCard, 'id', readonly=True)
 resource_property(VideoAppDownloadCard, 'card_uri', readonly=True)
 resource_property(VideoAppDownloadCard, 'card_type', readonly=True)
 resource_property(VideoAppDownloadCard, 'created_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(VideoAppDownloadCard, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
+resource_property(VideoAppDownloadCard, 'id', readonly=True)
 resource_property(VideoAppDownloadCard, 'preview_url', readonly=True)
 resource_property(VideoAppDownloadCard, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(VideoAppDownloadCard, 'video_content_id', readonly=True)
@@ -367,7 +367,7 @@ resource_property(ImageConversationCard, 'second_cta_tweet')
 resource_property(ImageConversationCard, 'thank_you_text')
 resource_property(ImageConversationCard, 'thank_you_url')
 resource_property(ImageConversationCard, 'third_cta')
-resource_property(ImageConversationCard, 'third_cta_tweet')  
+resource_property(ImageConversationCard, 'third_cta_tweet')
 resource_property(ImageConversationCard, 'title')
 
 
@@ -405,7 +405,7 @@ resource_property(ImageConversationCard, 'second_cta_tweet')
 resource_property(ImageConversationCard, 'thank_you_text')
 resource_property(ImageConversationCard, 'thank_you_url')
 resource_property(ImageConversationCard, 'third_cta')
-resource_property(ImageConversationCard, 'third_cta_tweet')  
+resource_property(ImageConversationCard, 'third_cta_tweet')
 resource_property(ImageConversationCard, 'title')
 resource_property(ImageConversationCard, 'video_id')
 
