@@ -82,17 +82,17 @@ class Video(Resource, Persistence):
 resource_property(Video, 'aspect_ratio', readonly=True)
 resource_property(Video, 'created_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(Video, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
-resource_property(Video, 'description')
-resource_property(Video, 'duration', readonly=True)
+resource_property(Video, 'duration', readonly=True, transform=TRANSFORM.INT)
 resource_property(Video, 'id', readonly=True)
 resource_property(Video, 'media_key', readonly=True)
 resource_property(Video, 'poster_url', readonly=True)
 resource_property(Video, 'preview_url', readonly=True)
 resource_property(Video, 'ready_to_tweet', readonly=True, transform=TRANSFORM.BOOL)
-resource_property(Video, 'reasons_not_servable', readonly=True)
+resource_property(Video, 'reasons_not_servable', readonly=True, transform=TRANSFORM.LIST)
 resource_property(Video, 'tweeted', readonly=True, transform=TRANSFORM.BOOL)
 resource_property(Video, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
 # writable
+resource_property(Video, 'description')
 resource_property(Video, 'poster_image_media_id')
 resource_property(Video, 'title')
 resource_property(Video, 'video_media_id')
@@ -106,11 +106,10 @@ class AccountMedia(Resource, Persistence):
     RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/account_media/{id}'
 
 
-# video properties
+# Account Media properties
 # read-only
 resource_property(AccountMedia, 'created_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(AccountMedia, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
-resource_property(AccountMedia, 'duration', readonly=True)
 resource_property(AccountMedia, 'id', readonly=True)
 resource_property(AccountMedia, 'media_url', readonly=True)
 resource_property(AccountMedia, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
@@ -128,7 +127,7 @@ class MediaCreative(Resource, Persistence):
     RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/media_creatives/{id}'
 
 
-# video properties
+# Media Creative properties
 # read-only
 
 resource_property(MediaCreative, 'approval_status', readonly=True)
@@ -200,6 +199,8 @@ resource_property(VideoWebsiteCard, 'video_poster_url', readonly=True)
 resource_property(VideoWebsiteCard, 'video_poster_width', readonly=True)
 resource_property(VideoWebsiteCard, 'video_url', readonly=True)
 resource_property(VideoWebsiteCard, 'video_width', readonly=True)
+resource_property(VideoWebsiteCard, 'website_dest_url', readonly=True)
+resource_property(VideoWebsiteCard, 'website_display_url', readonly=True)
 # writable
 resource_property(VideoWebsiteCard, 'name')
 resource_property(VideoWebsiteCard, 'title')
