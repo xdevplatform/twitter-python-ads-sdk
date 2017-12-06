@@ -259,11 +259,11 @@ class Tweet(object):
         return response.body['data']
 
     @classmethod
-    def create(klass, account, status, **kwargs):
+    def create(klass, account, **kwargs):
         """
         Creates a "Promoted-Only" Tweet using the specialized Ads API end point.
         """
-        params = {'status': status}
+        params = {}
         params.update(kwargs)
 
         # handles array to string conversion for media IDs

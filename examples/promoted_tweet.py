@@ -29,7 +29,7 @@ promoted_tweet.save()
 
 # create request for a nullcasted tweet with a website card
 website_card = WebsiteCard.all(account).next()
-status = "Fine. There can be two. {card_url}".format(card_url=website_card.preview_url)
+text = "Fine. There can be two. {card_url}".format(card_url=website_card.preview_url)
 tweet2 = Tweet.create(account, status)
 
 # promote the tweet using our line item

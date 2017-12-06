@@ -22,17 +22,17 @@ account = client.accounts(ACCOUNT_ID)
 Tweet.preview(account, id=661845592138776576)
 
 # preview a new tweet
-Tweet.preview(account, status='Hello @AdsAPI!')
-Tweet.preview(account, status='Hello @AdsAPI!', media_ids=[634458428836962305, 634458428836962306])
+Tweet.preview(account, text='Hello @AdsAPI!')
+Tweet.preview(account, text='Hello @AdsAPI!', media_ids=[634458428836962305, 634458428836962306])
 
 # preview a new tweet with an embedded card
 website_card = WebsiteCard.all(account).next()
-Tweet.preview(account, status='Hello @AdsAPI!', card_id=website_card.id)
+Tweet.preview(account, text='Hello @AdsAPI!', card_id=website_card.id)
 
 # create a new null-casted tweet
-Tweet.create(account, status='Hello from Python @AdsAPI!')
-Tweet.create(account, status='Hello @AdsAPI!', media_ids=[634458428836962305, 634458428836962306])
+Tweet.create(account, text='Hello from Python @AdsAPI!')
+Tweet.create(account, text='Hello @AdsAPI!', media_ids=[634458428836962305, 634458428836962306])
 
 # create a new null-casted tweet with an embedded card
 website_card = WebsiteCard.all(account).next()
-Tweet.create(account, status='Hello @AdsAPI! {link}'.format(link=website_card.preview_url))
+Tweet.create(account, text='Hello @AdsAPI! {link}'.format(link=website_card.preview_url))
