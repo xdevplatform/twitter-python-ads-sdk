@@ -19,7 +19,7 @@ campaign = account.campaigns().next()
 line_item = account.line_items(None, campaign_ids=campaign.id).next()
 
 # create request for a simple nullcasted tweet
-tweet1 = Tweet.create(account, 'There can be only one...')
+tweet1 = Tweet.create(account, text='There can be only one...')
 
 # promote the tweet using our line item
 promoted_tweet = PromotedTweet(account)
@@ -30,7 +30,7 @@ promoted_tweet.save()
 # create request for a nullcasted tweet with a website card
 website_card = WebsiteCard.all(account).next()
 text = "Fine. There can be two. {card_url}".format(card_url=website_card.preview_url)
-tweet2 = Tweet.create(account, status)
+tweet2 = Tweet.create(account, text)
 
 # promote the tweet using our line item
 promoted_tweet = PromotedTweet(account)
