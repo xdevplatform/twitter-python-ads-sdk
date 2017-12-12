@@ -163,7 +163,6 @@ resource_property(WebsiteCard, 'deleted', readonly=True, transform=TRANSFORM.BOO
 resource_property(WebsiteCard, 'preview_url', readonly=True)
 resource_property(WebsiteCard, 'website_dest_url', readonly=True)
 resource_property(WebsiteCard, 'website_display_url', readonly=True)
-resource_property(WebsiteCard, 'website_title', readonly=True)
 resource_property(WebsiteCard, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
 # writable
 resource_property(WebsiteCard, 'image_media_id')
@@ -206,66 +205,6 @@ resource_property(VideoWebsiteCard, 'name')
 resource_property(VideoWebsiteCard, 'title')
 resource_property(VideoWebsiteCard, 'video_id')
 resource_property(VideoWebsiteCard, 'website_url')
-
-
-class LeadGenCard(Resource, Persistence):
-
-    PROPERTIES = {}
-
-    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/cards/lead_gen'
-    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/cards/lead_gen/{id}'
-
-
-# lead gen card properties
-# read-only
-resource_property(LeadGenCard, 'card_uri', readonly=True)
-resource_property(LeadGenCard, 'created_at', readonly=True, transform=TRANSFORM.TIME)
-resource_property(LeadGenCard, 'id', readonly=True)
-resource_property(LeadGenCard, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
-resource_property(LeadGenCard, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
-# writable
-resource_property(LeadGenCard, 'name')
-resource_property(LeadGenCard, 'image_media_id')
-resource_property(LeadGenCard, 'cta')
-resource_property(LeadGenCard, 'fallback_url')
-resource_property(LeadGenCard, 'privacy_policy_url')
-resource_property(LeadGenCard, 'title')
-resource_property(LeadGenCard, 'submit_url')
-resource_property(LeadGenCard, 'submit_method')
-resource_property(LeadGenCard, 'custom_destination_url')
-resource_property(LeadGenCard, 'custom_destination_text')
-resource_property(LeadGenCard, 'custom_key_screen_name')
-resource_property(LeadGenCard, 'custom_key_name')
-resource_property(LeadGenCard, 'custom_key_email')
-
-
-class AppDownloadCard(Resource, Persistence):
-
-    PROPERTIES = {}
-
-    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/cards/app_download'
-    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/cards/app_download/{id}'
-
-
-# app download card properties
-# read-only
-resource_property(AppDownloadCard, 'id', readonly=True)
-resource_property(AppDownloadCard, 'card_uri', readonly=True)
-resource_property(AppDownloadCard, 'created_at', readonly=True, transform=TRANSFORM.TIME)
-resource_property(AppDownloadCard, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
-resource_property(AppDownloadCard, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
-# writable
-resource_property(AppDownloadCard, 'name')
-resource_property(AppDownloadCard, 'app_country_code')
-resource_property(AppDownloadCard, 'iphone_app_id')
-resource_property(AppDownloadCard, 'iphone_deep_link')
-resource_property(AppDownloadCard, 'ipad_app_id')
-resource_property(AppDownloadCard, 'ipad_deep_link')
-resource_property(AppDownloadCard, 'googleplay_app_id')
-resource_property(AppDownloadCard, 'googleplay_deep_link')
-resource_property(AppDownloadCard, 'app_cta')
-resource_property(AppDownloadCard, 'custom_icon_media_id')
-resource_property(AppDownloadCard, 'custom_app_description')
 
 
 class ImageAppDownloadCard(Resource, Persistence):
