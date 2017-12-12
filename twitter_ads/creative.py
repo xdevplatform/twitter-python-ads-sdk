@@ -207,35 +207,6 @@ resource_property(VideoWebsiteCard, 'video_id')
 resource_property(VideoWebsiteCard, 'website_url')
 
 
-class AppDownloadCard(Resource, Persistence):
-
-    PROPERTIES = {}
-
-    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/cards/app_download'
-    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/cards/app_download/{id}'
-
-
-# app download card properties
-# read-only
-resource_property(AppDownloadCard, 'id', readonly=True)
-resource_property(AppDownloadCard, 'card_uri', readonly=True)
-resource_property(AppDownloadCard, 'created_at', readonly=True, transform=TRANSFORM.TIME)
-resource_property(AppDownloadCard, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
-resource_property(AppDownloadCard, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
-# writable
-resource_property(AppDownloadCard, 'name')
-resource_property(AppDownloadCard, 'app_country_code')
-resource_property(AppDownloadCard, 'iphone_app_id')
-resource_property(AppDownloadCard, 'iphone_deep_link')
-resource_property(AppDownloadCard, 'ipad_app_id')
-resource_property(AppDownloadCard, 'ipad_deep_link')
-resource_property(AppDownloadCard, 'googleplay_app_id')
-resource_property(AppDownloadCard, 'googleplay_deep_link')
-resource_property(AppDownloadCard, 'app_cta')
-resource_property(AppDownloadCard, 'custom_icon_media_id')
-resource_property(AppDownloadCard, 'custom_app_description')
-
-
 class ImageAppDownloadCard(Resource, Persistence):
 
     PROPERTIES = {}
