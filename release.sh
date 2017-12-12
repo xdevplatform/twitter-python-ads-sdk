@@ -18,5 +18,11 @@ git commit -m "\"[update] docs refresh for $RELEASE\""
 git push origin HEAD:gh-pages
 git checkout master
 
-# push to pypi
-python setup.py sdist upload --sign --identity="Twitter Ads API <twitterdev-ads@twitter.com>"
+# push to pypi (deprecated)
+# python setup.py sdist upload --sign --identity="Twitter Ads API <twitterdev-ads@twitter.com>"
+
+# push using twine
+# build
+python setup.py sdist bdist_wheel
+# upload
+twine upload dist/* --sign --identity="Twitter Ads API <twitterdev-ads@twitter.com>"
