@@ -138,6 +138,7 @@ class Campaign(Resource, Persistence, Analytics, Batch):
 # campaign properties
 # read-only
 resource_property(Campaign, 'created_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(Campaign, 'currency', readonly=True)
 resource_property(Campaign, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
 resource_property(Campaign, 'id', readonly=True)
 resource_property(Campaign, 'reasons_not_servable', readonly=True)
