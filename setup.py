@@ -54,8 +54,8 @@ if sys.version_info[0] != 3:
 setup(
     name='twitter-ads',
     version=VERSION,
-    author='Brandon Black, Jacob Petrie',
-    author_email='bblack@twitter.com, jpetrie@twitter.com',
+    author='John Babich, Tushar Bhushan, Juan Shishido',
+    author_email='jbabich@twitter.com, tbhushan@twitter.com, jshishido@twitter.com',
     url=URL,
     download_url=DOWNLOAD_URL,
     license='MIT',
