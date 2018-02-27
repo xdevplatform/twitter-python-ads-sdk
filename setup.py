@@ -39,9 +39,14 @@ CLASSIFIERS = [
 ]
 
 extra_opts = {
-    'setup_requires': ['pytest-runner'],
+    'setup_requires': [],
     'tests_require': ['pytest', 'responses', 'mock']
 }
+
+if sys.version_info[:2] == (3, 3):
+    extra_opts['setup_requires'].append('pytest-runner<=3.0.1')
+else:
+    extra_opts['setup_requires'].append('pytest-runner')
 
 if sys.version_info[0] != 3:
     extra_opts['setup_requires'].append('flake8<=2.6.2')
@@ -49,8 +54,8 @@ if sys.version_info[0] != 3:
 setup(
     name='twitter-ads',
     version=VERSION,
-    author='Brandon Black, Jacob Petrie',
-    author_email='bblack@twitter.com, jpetrie@twitter.com',
+    author='John Babich, Tushar Bhushan, Juan Shishido',
+    author_email='jbabich@twitter.com, tbhushan@twitter.com, jshishido@twitter.com',
     url=URL,
     download_url=DOWNLOAD_URL,
     license='MIT',
