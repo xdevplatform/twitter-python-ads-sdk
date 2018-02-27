@@ -387,3 +387,34 @@ resource_property(ScheduledTweet, 'media_ids', transform=TRANSFORM.LIST)
 resource_property(ScheduledTweet, 'nullcast', transform=TRANSFORM.BOOL)
 resource_property(ScheduledTweet, 'scheduled_at', transform=TRANSFORM.TIME)
 resource_property(ScheduledTweet, 'text')
+
+
+class MediaLibrary(Resource, Persistence):
+
+    PROPERTIES = {}
+
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/media_library'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/media_library/{id}'
+
+
+# media library properties
+# read-only
+resource_property(MediaLibrary, 'aspect_ratio', readonly=True)
+resource_property(MediaLibrary, 'created_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(MediaLibrary, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
+resource_property(MediaLibrary, 'duration', readonly=True)
+resource_property(MediaLibrary, 'media_status', readonly=True)
+resource_property(MediaLibrary, 'media_type', readonly=True)
+resource_property(MediaLibrary, 'media_url', readonly=True)
+resource_property(MediaLibrary, 'tweeted', readonly=True, transform=TRANSFORM.BOOL)
+resource_property(MediaLibrary, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
+# writable
+resource_property(MediaLibrary, 'media_category')
+resource_property(MediaLibrary, 'media_id')
+resource_property(MediaLibrary, 'media_key')
+resource_property(MediaLibrary, 'description')
+resource_property(MediaLibrary, 'file_name')
+resource_property(MediaLibrary, 'name')
+resource_property(MediaLibrary, 'poster_image_media_id')
+resource_property(MediaLibrary, 'poster_image_media_key')
+resource_property(MediaLibrary, 'title')
