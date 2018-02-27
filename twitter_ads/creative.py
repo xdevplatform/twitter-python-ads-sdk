@@ -396,6 +396,34 @@ class MediaLibrary(Resource, Persistence):
     RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/media_library'
     RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/media_library/{id}'
 
+    def reload(self, **kwargs):
+        if not self.media_key:
+            return self
+
+        resource = self.RESOURCE.format(account_id=self.account.id, id=self.media_key)
+        response = Request(self.account.client, 'get', resource, params=kwargs).perform()
+
+        return self.from_response(response.body['data'])
+
+    def save(self):
+        if self.media_key:
+            method = 'put'
+            resource = self.RESOURCE.format(account_id=self.account.id, id=self.media_key)
+        else:
+            method = 'post'
+            resource = self.RESOURCE_COLLECTION.format(account_id=self.account.id)
+
+        response = Request(
+            self.account.client, method,
+            resource, params=self.to_params()).perform()
+
+        return self.from_response(response.body['data'])
+
+    def delete(self):
+        resource = self.RESOURCE.format(account_id=self.account.id, id=self.media_key)
+        response = Request(self.account.client, 'delete', resource).perform()
+        self.from_response(response.body['data'])
+
 
 # media library properties
 # read-only
