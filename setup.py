@@ -43,7 +43,7 @@ extra_opts = {
     'tests_require': ['pytest', 'responses', 'mock']
 }
 
-if sys.version_info[:2] == (3,3):
+if sys.version_info[:2] == (3, 3):
     extra_opts['setup_requires'].append('pytest-runner<=3.0.1')
 else:
     extra_opts['setup_requires'].append('pytest-runner')
