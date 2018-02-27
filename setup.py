@@ -39,9 +39,14 @@ CLASSIFIERS = [
 ]
 
 extra_opts = {
-    'setup_requires': ['pytest-runner'],
+    'setup_requires': [],
     'tests_require': ['pytest', 'responses', 'mock']
 }
+
+if sys.version_info[:2] == (3,3):
+    extra_ops['setup_requires'].append('pytest-runner<=3.0.1')
+else:
+    extra_ops['setup_requires'].append('pytest-runner')
 
 if sys.version_info[0] != 3:
     extra_opts['setup_requires'].append('flake8<=2.6.2')
