@@ -430,7 +430,7 @@ class MediaLibrary(Resource, Persistence):
 resource_property(MediaLibrary, 'aspect_ratio', readonly=True)
 resource_property(MediaLibrary, 'created_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(MediaLibrary, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
-resource_property(MediaLibrary, 'duration', readonly=True)
+resource_property(MediaLibrary, 'duration', readonly=True, transform=TRANSFORM.INT)
 resource_property(MediaLibrary, 'media_status', readonly=True)
 resource_property(MediaLibrary, 'media_type', readonly=True)
 resource_property(MediaLibrary, 'media_url', readonly=True)
