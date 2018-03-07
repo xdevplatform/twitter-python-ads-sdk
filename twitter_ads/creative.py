@@ -142,6 +142,47 @@ resource_property(MediaCreative, 'landing_url')
 resource_property(MediaCreative, 'line_item_id')
 
 
+class CardsFetch(Resource, Persistence):
+
+    PROPERTIES = {}
+
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/cards'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/cards/all/{id}'
+
+
+# card fetch properties
+# read-only
+
+resource_property(CardsFetch, 'account_id', readonly=True)
+resource_property(CardsFetch, 'card_type', readonly=True)
+resource_property(CardsFetch, 'card_uri', readonly=True)
+resource_property(CardsFetch, 'content_duration_seconds', readonly=True)
+resource_property(CardsFetch, 'created_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(CardsFetch, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
+resource_property(CardsFetch, 'id', readonly=True)
+resource_property(CardsFetch, 'image', readonly=True)
+resource_property(CardsFetch, 'image_display_height', readonly=True)
+resource_property(CardsFetch, 'image_display_width', readonly=True)
+resource_property(CardsFetch, 'name', readonly=True)
+resource_property(CardsFetch, 'preview_url', readonly=True)
+resource_property(CardsFetch, 'title', readonly=True)
+resource_property(CardsFetch, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(CardsFetch, 'video_content_id', readonly=True)
+resource_property(CardsFetch, 'video_height', readonly=True)
+resource_property(CardsFetch, 'video_hls_url', readonly=True)
+resource_property(CardsFetch, 'video_owner_id', readonly=True)
+resource_property(CardsFetch, 'video_poster_height', readonly=True)
+resource_property(CardsFetch, 'video_poster_url', readonly=True)
+resource_property(CardsFetch, 'video_poster_width', readonly=True)
+resource_property(CardsFetch, 'video_width', readonly=True)
+resource_property(CardsFetch, 'video_url', readonly=True)
+resource_property(CardsFetch, 'website_dest_url', readonly=True)
+resource_property(CardsFetch, 'website_display_url', readonly=True)
+resource_property(CardsFetch, 'website_shortened_url', readonly=True)
+resource_property(CardsFetch, 'website_title', readonly=True)
+resource_property(CardsFetch, 'website_url', readonly=True)
+
+
 class WebsiteCard(Resource, Persistence):
 
     PROPERTIES = {}
