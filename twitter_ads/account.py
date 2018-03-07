@@ -100,17 +100,6 @@ class Account(Resource):
         """
         return self._load_resource(Campaign, id, **kwargs)
 
-    def cards(self):
-        """
-        Returns a collection of cards available to the current account.
-        """
-        self._validate_loaded()
-
-        resource = self.CARDS.format(id=self.id)
-        response = Request(self.client, 'get', resource).perform()
-
-        return response.body['data']
-
     def line_items(self, id=None, **kwargs):
         """
         Returns a collection of line items available to the current account.
