@@ -10,7 +10,7 @@ from twitter_ads import API_VERSION
 
 from twitter_ads.resource import resource_property, Resource
 from twitter_ads.creative import (AccountMedia, MediaCreative, ScheduledTweet,
-                                  Video, VideoWebsiteCard, Cards)
+                                  Video, VideoWebsiteCard)
 from twitter_ads.audience import TailoredAudience
 from twitter_ads.campaign import (AppList, Campaign, FundingInstrument, LineItem,
                                   PromotableUser, ScheduledPromotedTweet)
