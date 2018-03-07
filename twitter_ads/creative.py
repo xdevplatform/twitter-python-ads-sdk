@@ -149,6 +149,13 @@ class CardsFetch(Resource, Persistence):
     RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/cards'
     RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/cards/all/{id}'
 
+    self._validate_loaded()
+
+    resource = self.CardsFetch.format(id=self.id)
+    response = Request(self.client, 'get', resource).perform()
+
+    return response.body['data']
+
 
 # card fetch properties
 # read-only
