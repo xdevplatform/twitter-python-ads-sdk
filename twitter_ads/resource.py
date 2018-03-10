@@ -22,7 +22,7 @@ def resource_property(klass, name, **kwargs):
     klass.PROPERTIES[name] = kwargs
 
     def getter(self):
-        return getattr(self, '_%s' % name, kwargs.get('default', False))
+        return getattr(self, '_%s' % name, kwargs.get('default', None))
 
     if kwargs.get('readonly', False):
         setattr(klass, name, property(getter))
