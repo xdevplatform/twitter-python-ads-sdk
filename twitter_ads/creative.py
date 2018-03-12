@@ -499,7 +499,8 @@ class CardsFetch(Resource):
         raise AttributeError("'CardsFetch' object has no attribute 'all'")
 
     def load(klass, account, card_uri=None, card_id=None, with_deleted=None):
-        if all([card_uri, card_id]):
+        # check whether both are specified or neither are specified
+        if all([card_uri, card_id]) or not any([card_uri, card_id]):
             raise ValueError('card_uri and card_id are exclusive parameters. ' +
                              'Please supply one or the other, but not both.')
         params = {}
