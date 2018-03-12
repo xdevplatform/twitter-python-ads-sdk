@@ -446,3 +446,43 @@ resource_property(MediaLibrary, 'name')
 resource_property(MediaLibrary, 'poster_image_media_id')
 resource_property(MediaLibrary, 'poster_image_media_key')
 resource_property(MediaLibrary, 'title')
+
+
+class PollCard(Resource, Persistence):
+
+    PROPERTIES = {}
+
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/cards/poll'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/cards/poll/{id}'
+
+
+# poll card properties
+# read-only
+resource_property(PollCard, 'card_type', readonly=True)
+resource_property(PollCard, 'card_uri', readonly=True)
+resource_property(PollCard, 'content_duration_seconds', readonly=True)
+resource_property(PollCard, 'created_at', readonly=True)
+resource_property(PollCard, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
+resource_property(PollCard, 'end_time', readonly=True)
+resource_property(PollCard, 'id', readonly=True)
+resource_property(PollCard, 'image', readonly=True)
+resource_property(PollCard, 'image_display_height', readonly=True)
+resource_property(PollCard, 'image_display_width', readonly=True)
+resource_property(PollCard, 'preview_url', readonly=True)
+resource_property(PollCard, 'start_time', readonly=True)
+resource_property(PollCard, 'updated_at', readonly=True)
+resource_property(PollCard, 'video_height', readonly=True)
+resource_property(PollCard, 'video_hls_url', readonly=True)
+resource_property(PollCard, 'video_poster_height', readonly=True)
+resource_property(PollCard, 'video_poster_url', readonly=True)
+resource_property(PollCard, 'video_poster_width', readonly=True)
+resource_property(PollCard, 'video_url', readonly=True)
+resource_property(PollCard, 'video_width', readonly=True)
+# writable
+resource_property(PollCard, 'duration_in_minutes')
+resource_property(PollCard, 'first_choice')
+resource_property(PollCard, 'fourth_choice')
+resource_property(PollCard, 'media_key')
+resource_property(PollCard, 'name')
+resource_property(PollCard, 'second_choice')
+resource_property(PollCard, 'third_choice')
