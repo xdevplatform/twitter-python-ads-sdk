@@ -486,3 +486,96 @@ resource_property(PollCard, 'media_key')
 resource_property(PollCard, 'name')
 resource_property(PollCard, 'second_choice')
 resource_property(PollCard, 'third_choice')
+
+
+class CardsFetch(Resource):
+
+    PROPERTIES = {}
+
+    FETCH_URI = '/' + API_VERSION + '/accounts/{account_id}/cards'
+    FETCH_ID = '/' + API_VERSION + '/accounts/{account_id}/cards/all/{id}'
+
+    def all(klass):
+        raise AttributeError("'CardsFetch' object has no attribute 'all'")
+
+    def load(klass, account, card_uri=None, card_id=None, with_deleted=None):
+        # check whether both are specified or neither are specified
+        if all([card_uri, card_id]) or not any([card_uri, card_id]):
+            raise ValueError('card_uri and card_id are exclusive parameters. ' +
+                             'Please supply one or the other, but not both.')
+        params = {}
+        if card_uri:
+            params['card_uri'] = card_uri
+            resource = klass.FETCH_URI.format(account_id=account.id)
+        else:
+            resource = klass.FETCH_ID.format(account_id=account.id, id=card_id)
+        if with_deleted:
+            params['with_deleted'] = 'true'
+        response = Request(account.client, 'get', resource, params=params).perform()
+        return klass.from_response(response.body['data'])
+
+    def reload(self):
+        if self.id:
+            self.load(self.account, card_id=self.id)
+
+
+# card properties
+# read-only
+resource_property(CardsFetch, 'app_country_code', readonly=True)
+resource_property(CardsFetch, 'app_cta', readonly=True)
+resource_property(CardsFetch, 'card_type', readonly=True)
+resource_property(CardsFetch, 'card_uri', readonly=True)
+resource_property(CardsFetch, 'content_duration_seconds', readonly=True)
+resource_property(CardsFetch, 'created_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(CardsFetch, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
+resource_property(CardsFetch, 'duration_in_minutes', readonly=True)
+resource_property(CardsFetch, 'end_time', readonly=True, transform=TRANSFORM.TIME)
+resource_property(CardsFetch, 'first_choice', readonly=True)
+resource_property(CardsFetch, 'first_cta', readonly=True)
+resource_property(CardsFetch, 'first_cta_tweet', readonly=True)
+resource_property(CardsFetch, 'first_cta_welcome_message_id', readonly=True)
+resource_property(CardsFetch, 'fouth_choice', readonly=True)
+resource_property(CardsFetch, 'fouth_cta', readonly=True)
+resource_property(CardsFetch, 'fouth_cta_tweet', readonly=True)
+resource_property(CardsFetch, 'fourth_cta_welcome_message_id', readonly=True)
+resource_property(CardsFetch, 'googleplay_app_id', readonly=True)
+resource_property(CardsFetch, 'googleplay_deep_link', readonly=True)
+resource_property(CardsFetch, 'id', readonly=True)
+resource_property(CardsFetch, 'image', readonly=True)
+resource_property(CardsFetch, 'image_display_height', readonly=True)
+resource_property(CardsFetch, 'image_display_width', readonly=True)
+resource_property(CardsFetch, 'ipad_app_id', readonly=True)
+resource_property(CardsFetch, 'ipad_deep_link', readonly=True)
+resource_property(CardsFetch, 'iphone_app_id', readonly=True)
+resource_property(CardsFetch, 'iphone_deep_link', readonly=True)
+resource_property(CardsFetch, 'name', readonly=True)
+resource_property(CardsFetch, 'preview_url', readonly=True)
+resource_property(CardsFetch, 'recipient_user_id', readonly=True)
+resource_property(CardsFetch, 'second_choice', readonly=True)
+resource_property(CardsFetch, 'second_cta', readonly=True)
+resource_property(CardsFetch, 'second_cta_tweet', readonly=True)
+resource_property(CardsFetch, 'second_cta_welcome_message_id', readonly=True)
+resource_property(CardsFetch, 'start_time', readonly=True, transform=TRANSFORM.TIME)
+resource_property(CardsFetch, 'thank_you_text', readonly=True)
+resource_property(CardsFetch, 'thank_you_url', readonly=True)
+resource_property(CardsFetch, 'third_choice', readonly=True)
+resource_property(CardsFetch, 'third_cta', readonly=True)
+resource_property(CardsFetch, 'third_cta_tweet', readonly=True)
+resource_property(CardsFetch, 'third_cta_welcome_message_id', readonly=True)
+resource_property(CardsFetch, 'title', readonly=True)
+resource_property(CardsFetch, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(CardsFetch, 'video_content_id', readonly=True)
+resource_property(CardsFetch, 'video_height', readonly=True)
+resource_property(CardsFetch, 'video_hls_url', readonly=True)
+resource_property(CardsFetch, 'video_owner_id', readonly=True)
+resource_property(CardsFetch, 'video_poster_height', readonly=True)
+resource_property(CardsFetch, 'video_poster_url', readonly=True)
+resource_property(CardsFetch, 'video_poster_width', readonly=True)
+resource_property(CardsFetch, 'video_width', readonly=True)
+resource_property(CardsFetch, 'video_url', readonly=True)
+resource_property(CardsFetch, 'website_dest_url', readonly=True)
+resource_property(CardsFetch, 'website_display_url', readonly=True)
+resource_property(CardsFetch, 'website_shortened_url', readonly=True)
+resource_property(CardsFetch, 'website_title', readonly=True)
+resource_property(CardsFetch, 'website_url', readonly=True)
+resource_property(CardsFetch, 'wide_app_image', readonly=True)
