@@ -1,15 +1,12 @@
-import os, sys
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 from twitter_ads.client import Client
 from twitter_ads.audience import AudienceIntelligence
 from twitter_ads.enum import CONVERSATION_TYPE, AUDIENCE_DEFINITION
 
-CONSUMER_KEY = 'DRbmz6DzIBzwXot02nWBUpDkM'
-CONSUMER_SECRET = 'E3XmUgr0iQQ3EzmYyEp5BmLBS0GhAVedmvdYPA5NV30yDYcgA4'
-ACCESS_TOKEN = '3271358660-vOzJJdYufT8ERqJFRqZVbrqkiUW0QENkMnowRl8'
-ACCESS_TOKEN_SECRET = 'J0IEj4ZxdhPcJ0CVqZ4NLmRwv3mViWl3jjp4T50wnLBPJ'
-ACCOUNT_ID = '18ce54bgxky'
+CONSUMER_KEY = 'your consumer key'
+CONSUMER_SECRET = 'your consumer secret'
+ACCESS_TOKEN = 'access token'
+ACCESS_TOKEN_SECRET = 'access token secret'
+ACCOUNT_ID = 'account id'
 
 # initialize the client
 client = Client(CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
