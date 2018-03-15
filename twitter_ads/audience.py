@@ -191,7 +191,7 @@ class AudienceIntelligence(Resource):
 
     PROPERTIES = {}
 
-    RESOURCE_BASE = '/3/accounts/{account_id}/audience_intelligence/'
+    RESOURCE_BASE = '/' + API_VERSION + '/accounts/{account_id}/audience_intelligence/'
     RESOURCE_CONVERSATIONS = RESOURCE_BASE + 'conversations'
     RESOURCE_DEMOGRAPHICS = RESOURCE_BASE + 'demographics'
     METHOD = 'post'
