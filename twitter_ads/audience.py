@@ -194,7 +194,7 @@ class AudienceIntelligence(Resource):
     RESOURCE_CONVERSATIONS = RESOURCE_BASE + 'conversations'
     RESOURCE_DEMOGRAPHICS = RESOURCE_BASE + 'demographics'
     METHOD = 'post'
-    HEADERS = { 'Content-Type' : 'application/json' }
+    HEADERS = {'Content-Type':'application/json'}
 
     @classmethod
     def __get(klass, account, client, params):
@@ -202,14 +202,13 @@ class AudienceIntelligence(Resource):
         Helper function to get the conversation data
         Returns a Cursor instance
         """
-        resource = klass.RESOURCE_CONVERSATIONS.format(account_id=account.id)        
+        resource = klass.RESOURCE_CONVERSATIONS.format(account_id=account.id)
 
         request = Request(
             account.client, klass.METHOD,
             resource, headers=klass.HEADERS, body=params)
         return Cursor(klass, request, init_with=[account])
         
-
     def conversations(self):
         """
         Get the conversation topics for an input targeting criteria
