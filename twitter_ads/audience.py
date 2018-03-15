@@ -11,6 +11,7 @@ from twitter_ads import API_VERSION
 
 import json
 
+
 class TailoredAudience(Resource):
 
     PROPERTIES = {}
@@ -194,7 +195,7 @@ class AudienceIntelligence(Resource):
     RESOURCE_CONVERSATIONS = RESOURCE_BASE + 'conversations'
     RESOURCE_DEMOGRAPHICS = RESOURCE_BASE + 'demographics'
     METHOD = 'post'
-    HEADERS = {'Content-Type':'application/json'}
+    HEADERS = {'Content-Type': 'application/json'}
 
     @classmethod
     def __get(klass, account, client, params):
@@ -208,7 +209,7 @@ class AudienceIntelligence(Resource):
             account.client, klass.METHOD,
             resource, headers=klass.HEADERS, body=params)
         return Cursor(klass, request, init_with=[account])
-        
+
     def conversations(self):
         """
         Get the conversation topics for an input targeting criteria
