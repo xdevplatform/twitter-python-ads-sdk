@@ -9,6 +9,8 @@ from twitter_ads.error import BadRequest
 from twitter_ads.cursor import Cursor
 from twitter_ads import API_VERSION
 
+import json
+
 
 class TailoredAudience(Resource):
 
@@ -183,3 +185,67 @@ resource_property(TailoredAudiencePermission, 'deleted', readonly=True, transfor
 resource_property(TailoredAudiencePermission, 'tailored_audience_id')
 resource_property(TailoredAudiencePermission, 'granted_account_id')
 resource_property(TailoredAudiencePermission, 'permission_level')
+
+
+class AudienceIntelligence(Resource):
+
+    PROPERTIES = {}
+
+    RESOURCE_BASE = '/' + API_VERSION + '/accounts/{account_id}/audience_intelligence/'
+    RESOURCE_CONVERSATIONS = RESOURCE_BASE + 'conversations'
+    RESOURCE_DEMOGRAPHICS = RESOURCE_BASE + 'demographics'
+    METHOD = 'post'
+    HEADERS = {'Content-Type': 'application/json'}
+
+    @classmethod
+    def __get(klass, account, client, params):
+        """
+        Helper function to get the conversation data
+        Returns a Cursor instance
+        """
+        resource = klass.RESOURCE_CONVERSATIONS.format(account_id=account.id)
+
+        request = Request(
+            account.client, klass.METHOD,
+            resource, headers=klass.HEADERS, body=params)
+        return Cursor(klass, request, init_with=[account])
+
+    def conversations(self):
+        """
+        Get the conversation topics for an input targeting criteria
+        """
+        body = {
+            "conversation_type": self.conversation_type,
+            "audience_definition": self.audience_definition,
+            "targeting_inputs": self.targeting_inputs
+        }
+        return self.__get(account=self.account, client=self.account.client, params=json.dumps(body))
+
+    def demographics(self):
+        """
+        Get the demographic breakdown for an input targeting criteria
+        """
+        body = {
+            "audience_definition": self.audience_definition,
+            "targeting_inputs": self.targeting_inputs
+        }
+        resource = self.RESOURCE_DEMOGRAPHICS.format(account_id=self.account.id)
+        response = Request(
+            self.account.client, self.METHOD,
+            resource, headers=self.HEADERS, body=json.dumps(body)).perform()
+        return response.body['data']
+
+
+# tailored audience permission properties
+# read-only
+resource_property(AudienceIntelligence, 'operator_type', readonly=True)
+resource_property(AudienceIntelligence, 'targeting_type', readonly=True)
+resource_property(AudienceIntelligence, 'targeting_value', readonly=True)
+resource_property(AudienceIntelligence, 'localized', readonly=True)
+# writable
+resource_property(AudienceIntelligence, 'conversation_type')
+resource_property(AudienceIntelligence, 'targeting_inputs')
+resource_property(AudienceIntelligence, 'audience_definition')
+# demographics only
+resource_property(AudienceIntelligence, 'start_time', transform=TRANSFORM.TIME)
+resource_property(AudienceIntelligence, 'end_time', transform=TRANSFORM.TIME)
