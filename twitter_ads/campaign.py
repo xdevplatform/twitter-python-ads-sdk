@@ -17,6 +17,7 @@ class TargetingCriteria(Resource, Persistence, Batch):
 targeting_criteria'
     RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/targeting_criteria'
     RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/targeting_criteria/{id}'
+    RESOURCE_OPTIONS = '/' + API_VERSION + '/targeting_criteria/'
 
     @classmethod
     def all(klass, account, line_item_id, **kwargs):
@@ -28,6 +29,97 @@ targeting_criteria'
         request = Request(account.client, 'get', resource, params=params)
 
         return Cursor(klass, request, init_with=[account])
+
+    @classmethod
+    def app_store_categories(klass, account, **kwargs):
+        """Returns a list of supported app store categories"""
+        resource = klass.RESOURCE_OPTIONS + 'app_store_categories'
+        request = Request(account.client, 'get', resource, params=kwargs)
+        return Cursor(None, request)
+
+    @classmethod
+    def behavior_taxonomies(klass, account, **kwargs):
+        """Returns a list of supported behavior taxonomies"""
+        resource = klass.RESOURCE_OPTIONS + 'behavior_taxonomies'
+        request = Request(account.client, 'get', resource, params=kwargs)
+        return Cursor(None, request)
+
+    @classmethod
+    def behaviors(klass, account, **kwargs):
+        """Returns a list of supported behaviors"""
+        resource = klass.RESOURCE_OPTIONS + 'behaviors'
+        request = Request(account.client, 'get', resource, params=kwargs)
+        return Cursor(None, request)
+
+    @classmethod
+    def devices(klass, account, **kwargs):
+        """Returns a list of supported devices"""
+        resource = klass.RESOURCE_OPTIONS + 'devices'
+        request = Request(account.client, 'get', resource, params=kwargs)
+        return Cursor(None, request)
+
+    @classmethod
+    def events(klass, account, **kwargs):
+        """Returns a list of supported events"""
+        resource = klass.RESOURCE_OPTIONS + 'events'
+        request = Request(account.client, 'get', resource, params=kwargs)
+        return Cursor(None, request)
+
+    @classmethod
+    def interests(klass, account, **kwargs):
+        """Returns a list of supported interests"""
+        resource = klass.RESOURCE_OPTIONS + 'interests'
+        request = Request(account.client, 'get', resource, params=kwargs)
+        return Cursor(None, request)
+
+    @classmethod
+    def languages(klass, account, **kwargs):
+        """Returns a list of supported languages"""
+        resource = klass.RESOURCE_OPTIONS + 'languages'
+        request = Request(account.client, 'get', resource, params=kwargs)
+        return Cursor(None, request)
+
+    @classmethod
+    def locations(klass, account, **kwargs):
+        """Returns a list of supported locations"""
+        resource = klass.RESOURCE_OPTIONS + 'locations'
+        request = Request(account.client, 'get', resource, params=kwargs)
+        return Cursor(None, request)
+
+    @classmethod
+    def network_operators(klass, account, **kwargs):
+        """Returns a list of supported network operators"""
+        resource = klass.RESOURCE_OPTIONS + 'network_operators'
+        request = Request(account.client, 'get', resource, params=kwargs)
+        return Cursor(None, request)
+
+    @classmethod
+    def platforms(klass, account, **kwargs):
+        """Returns a list of supported platforms"""
+        resource = klass.RESOURCE_OPTIONS + 'platforms'
+        request = Request(account.client, 'get', resource, params=kwargs)
+        return Cursor(None, request)
+
+    @classmethod
+    def platform_versions(klass, account, **kwargs):
+        """Returns a list of supported platform versions"""
+        resource = klass.RESOURCE_OPTIONS + 'platform_versions'
+        request = Request(account.client, 'get', resource, params=kwargs)
+        return Cursor(None, request)
+
+    @classmethod
+    def tv_markets(klass, account, **kwargs):
+        """Returns a list of supported TV markets"""
+        resource = klass.RESOURCE_OPTIONS + 'tv_markets'
+        request = Request(account.client, 'get', resource, params=kwargs)
+        return Cursor(None, request)
+
+    @classmethod
+    def tv_shows(klass, account, **kwargs):
+        """Returns a list of supported TV shows"""
+        resource = klass.RESOURCE_OPTIONS + 'tv_shows'
+        request = Request(account.client, 'get', resource, params=kwargs)
+        return Cursor(None, request)
 
 
 # targeting criteria properties
