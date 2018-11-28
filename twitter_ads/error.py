@@ -41,7 +41,7 @@ class Error(Exception):
     @staticmethod
     def from_response(response):
         """Returns the correct error type from a ::class::`Response` object."""
-        if response.code:
+        if response.code and response.code in ERRORS:
             return ERRORS[response.code](response)
         else:
             return Error(response)
@@ -65,6 +65,10 @@ class Forbidden(ClientError):
 
 class NotFound(ClientError):
     """Forbidden (404)."""
+
+
+class LengthRequired(ClientError):
+    """Length Required (411)."""
 
 
 class RateLimit(ClientError):
@@ -105,6 +109,7 @@ ERRORS = {
     401: NotAuthorized,
     403: Forbidden,
     404: NotFound,
+    411: LengthRequired,
     429: RateLimit,
     500: ServerError,
     503: ServiceUnavailable
