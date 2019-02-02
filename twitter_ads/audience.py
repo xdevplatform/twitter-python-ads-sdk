@@ -45,10 +45,10 @@ class TailoredAudience(Resource):
         resource = self.RESOURCE_USERS.format(account_id=self.account.id, id=self.id)
         headers = {'Content-Type': 'application/json'}
         response = Request(self.account.client,
-            'post',
-            resource,
-            headers=headers,
-            body=json.dumps(params)).perform()
+                   'post',
+                   resource,
+                   headers=headers,
+                   body=json.dumps(params)).perform()
         success_count = response.body['data']['success_count']
         total_count = response.body['data']['total_count']
         return (success_count, total_count)
