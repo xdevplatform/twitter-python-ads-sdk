@@ -119,12 +119,6 @@ class Account(Resource):
         """
         return self._load_resource(TailoredAudience, id, **kwargs)
 
-    def videos(self, id=None, **kwargs):
-        """
-        Returns a collection of videos available to the current account.
-        """
-        return self._load_resource(Video, id, **kwargs)
-
     def account_media(self, id=None, **kwargs):
         """
         Returns a collection of account media available to the current account.

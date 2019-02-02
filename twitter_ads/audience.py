@@ -38,16 +38,16 @@ class TailoredAudience(Resource):
     def users(self, params):
         """
         This is a private API and requires whitelisting from Twitter.
-        This endpoint will allow partners to add, update and remove users from a given 
-        tailored_audience_id.
+        This endpoint will allow partners to add, update and remove users from a given
+            tailored_audience_id.
         The endpoint will also accept multiple user identifier types per user as well.
         """
         resource = self.RESOURCE_USERS.format(account_id=self.account.id, id=self.id)
         headers = {'Content-Type': 'application/json'}
-        response = Request(self.account.client, 
-            'post', 
-            resource, 
-            headers=headers, 
+        response = Request(self.account.client,
+            'post',
+            resource,
+            headers=headers,
             body=json.dumps(params)).perform()
         success_count = response.body['data']['success_count']
         total_count = response.body['data']['total_count']
