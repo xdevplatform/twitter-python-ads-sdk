@@ -367,6 +367,7 @@ class Tweet(object):
         response = Request(account.client, 'post', resource, params=params).perform()
         return response.body['data']
 
+
 class UserSettings(Resource, Persistence):
 
     PROPERTIES = {}
@@ -381,6 +382,7 @@ resource_property(UserSettings, 'contact_phone')
 resource_property(UserSettings, 'contact_phone_extension')
 resource_property(UserSettings, 'subscribed_email_types')
 resource_property(UserSettings, 'user_id')
+
 
 class TaxSettings(Resource, Persistence):
 

@@ -2,9 +2,9 @@
 
 """Container for all audience management logic used by the Ads API SDK."""
 
-from twitter_ads.enum import TA_OPERATIONS, TRANSFORM
+from twitter_ads.enum import TRANSFORM
 from twitter_ads.resource import resource_property, Resource
-from twitter_ads.http import TONUpload, Request
+from twitter_ads.http import Request
 from twitter_ads.error import BadRequest
 from twitter_ads.cursor import Cursor
 from twitter_ads import API_VERSION
@@ -38,12 +38,17 @@ class TailoredAudience(Resource):
     def users(self, params):
         """
         This is a private API and requires whitelisting from Twitter.
-        This endpoint will allow partners to add, update and remove users from a given tailored_audience_id.
+        This endpoint will allow partners to add, update and remove users from a given 
+        tailored_audience_id.
         The endpoint will also accept multiple user identifier types per user as well.
         """
         resource = self.RESOURCE_USERS.format(account_id=self.account.id, id=self.id)
-        headers = { 'Content-Type': 'application/json' }
-        response = Request(self.account.client, 'post', resource, headers=headers, body=json.dumps(params)).perform()
+        headers = {'Content-Type': 'application/json'}
+        response = Request(self.account.client, 
+            'post', 
+            resource, 
+            headers=headers, 
+            body=json.dumps(params)).perform()
         success_count = response.body['data']['success_count']
         total_count = response.body['data']['total_count']
         return (success_count, total_count)
