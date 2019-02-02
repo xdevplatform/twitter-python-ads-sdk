@@ -186,3 +186,6 @@ resource_property(Account, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
 resource_property(Account, 'timezone_switch_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(Account, 'created_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(Account, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
+# writable
+resource_property(Account, 'account_name')
+resource_property(Account, 'industry_type')
