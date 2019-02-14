@@ -20,8 +20,8 @@
         <br/><br/>
         <p>
           <a href="https://github.com/twitterdev/twitter-python-ads-sdk/tree/master/examples">Examples &amp; Guides</a><br/>
-          <a href="http://twitterdev.github.io/twitter-python-ads-sdk/reference/index.html">Twitter Ads SDK Documentation</a><br/>
-          <a href="https://dev.twitter.com/ads">Twitter Ads API Documentation</a><br/>
+          <a href="https://twitterdev.github.io/twitter-python-ads-sdk/reference/index.html">Twitter Ads SDK Documentation</a><br/>
+          <a href="https://developer.twitter.com/en/docs/ads/general/overview">Twitter Ads API Documentation</a><br/>
           <a href="https://twittercommunity.com/c/advertiser-api">Twitter Community (Ads API)</a><br/>
         </p>
         <ul>
@@ -45,7 +45,9 @@ pip install twitter-ads
 <a id="quick-start" class="anchor" href="#quick-start" aria-hidden="true"><span class="octicon octicon-link"></span></a>Quick Start</h2>
 
 <pre lang="sourceCode"><code>from twitter_ads.client import Client
+from twitter_ads.client import Client
 from twitter_ads.campaign import Campaign
+from twitter_ads.enum import ENTITY_STATUS
 
 CONSUMER_KEY = 'your consumer key'
 CONSUMER_SECRET = 'your consumer secret'
@@ -57,12 +59,12 @@ ACCOUNT_ID = 'account id'
 client = Client(CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
 
 # load the advertiser account instance
-account = client.accounts(id=ACCOUNT_ID)
+account = client.accounts(ACCOUNT_ID)
 
 # load and update a specific campaign
 campaign = account.campaigns().next()
 campaign.name = 'updated campaign name'
-campaign.paused = True
+campaign.entity_status = ENTITY_STATUS.PAUSED
 campaign.save()
 
 # iterate through campaigns
