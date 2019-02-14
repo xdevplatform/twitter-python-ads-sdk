@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>utils &mdash; Twitter Ads API SDK for Python 0.2.1 documentation</title>
+    <title>utils &mdash; Twitter Ads API SDK for Python 1.0.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.2.1',
+        VERSION:     '1.0.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,9 +23,10 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Twitter Ads API SDK for Python 0.2.1 documentation" href="../index.html" />
+    <link rel="top" title="Twitter Ads API SDK for Python 1.0.0 documentation" href="../index.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
@@ -40,7 +41,12 @@
             
   <div class="section" id="module-utils">
 <span id="utils"></span><h1><a class="reference internal" href="#module-utils" title="utils"><code class="xref py py-mod docutils literal"><span class="pre">utils</span></code></a><a class="headerlink" href="#module-utils" title="Permalink to this headline">¶</a></h1>
-<p>Container for all helpers and utilities used throughout the Ads API SDK.</p>
+<dl class="function">
+<dt id="utils.format_date">
+<code class="descclassname">utils.</code><code class="descname">format_date</code><span class="sig-paren">(</span><em>time</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/utils.html#format_date"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.format_date" title="Permalink to this definition">¶</a></dt>
+<dd><p>Formats a datetime as an ISO 8601 compliant string, dropping time.</p>
+</dd></dl>
+
 <dl class="function">
 <dt id="utils.format_time">
 <code class="descclassname">utils.</code><code class="descname">format_time</code><span class="sig-paren">(</span><em>time</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/utils.html#format_time"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.format_time" title="Permalink to this definition">¶</a></dt>
@@ -57,6 +63,12 @@
 <dt id="utils.http_time">
 <code class="descclassname">utils.</code><code class="descname">http_time</code><span class="sig-paren">(</span><em>time</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/utils.html#http_time"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.http_time" title="Permalink to this definition">¶</a></dt>
 <dd><p>Formats a datetime as an RFC 1123 compliant string.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="utils.size">
+<code class="descclassname">utils.</code><code class="descname">size</code><span class="sig-paren">(</span><em>default_chunk_size</em>, <em>response_time_max</em>, <em>response_time_actual</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/utils.html#size"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines the chunk size based on response times.</p>
 </dd></dl>
 
 <dl class="function">
@@ -89,14 +101,11 @@
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -107,8 +116,8 @@
       &copy;2015, Twitter, Inc.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
       
       |
       <a href="../_sources/twitter_ads/utils.txt"

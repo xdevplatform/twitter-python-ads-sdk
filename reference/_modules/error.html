@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>error &mdash; Twitter Ads API SDK for Python 0.2.1 documentation</title>
+    <title>error &mdash; Twitter Ads API SDK for Python 1.0.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.2.1',
+        VERSION:     '1.0.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,10 +23,11 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Twitter Ads API SDK for Python 0.2.1 documentation" href="../index.html" />
+    <link rel="top" title="Twitter Ads API SDK for Python 1.0.0 documentation" href="../index.html" />
     <link rel="up" title="Module code" href="index.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
@@ -55,7 +56,7 @@
         <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span> <span class="ow">and</span> <span class="s1">&#39;errors&#39;</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_details</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;details&#39;</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;errors&#39;</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_details</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_details</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">response</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -70,7 +71,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_details</span>
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s1">&#39;&lt;{name} object at {mem} code={code} details={details}&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="k">return</span> <span class="s1">&#39;&lt;</span><span class="si">{name}</span><span class="s1"> object at </span><span class="si">{mem}</span><span class="s1"> code=</span><span class="si">{code}</span><span class="s1"> details=</span><span class="si">{details}</span><span class="s1">&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
             <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span>
             <span class="n">mem</span><span class="o">=</span><span class="nb">hex</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)),</span>
             <span class="n">code</span><span class="o">=</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;code&#39;</span><span class="p">),</span>
@@ -86,36 +87,36 @@
         <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">code</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">ERRORS</span><span class="p">[</span><span class="n">response</span><span class="o">.</span><span class="n">code</span><span class="p">](</span><span class="n">response</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">Error</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Error</span><span class="p">(</span><span class="n">response</span><span class="p">)</span></div></div>
 
-</div></div>
+
 <div class="viewcode-block" id="ClientError"><a class="viewcode-back" href="../twitter_ads/error.html#error.ClientError">[docs]</a><span class="k">class</span> <span class="nc">ClientError</span><span class="p">(</span><span class="n">Error</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Parent class for preventable client errors.&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Parent class for preventable client errors.&quot;&quot;&quot;</span></div>
 
-</div>
+
 <div class="viewcode-block" id="BadRequest"><a class="viewcode-back" href="../twitter_ads/error.html#error.BadRequest">[docs]</a><span class="k">class</span> <span class="nc">BadRequest</span><span class="p">(</span><span class="n">ClientError</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Bad Request (400).&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Bad Request (400).&quot;&quot;&quot;</span></div>
 
-</div>
+
 <div class="viewcode-block" id="NotAuthorized"><a class="viewcode-back" href="../twitter_ads/error.html#error.NotAuthorized">[docs]</a><span class="k">class</span> <span class="nc">NotAuthorized</span><span class="p">(</span><span class="n">ClientError</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Not Authorized (401).&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Not Authorized (401).&quot;&quot;&quot;</span></div>
 
-</div>
+
 <div class="viewcode-block" id="Forbidden"><a class="viewcode-back" href="../twitter_ads/error.html#error.Forbidden">[docs]</a><span class="k">class</span> <span class="nc">Forbidden</span><span class="p">(</span><span class="n">ClientError</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Forbidden (403).&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Forbidden (403).&quot;&quot;&quot;</span></div>
 
-</div>
+
 <div class="viewcode-block" id="NotFound"><a class="viewcode-back" href="../twitter_ads/error.html#error.NotFound">[docs]</a><span class="k">class</span> <span class="nc">NotFound</span><span class="p">(</span><span class="n">ClientError</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Forbidden (404).&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Forbidden (404).&quot;&quot;&quot;</span></div>
 
-</div>
+
 <div class="viewcode-block" id="RateLimit"><a class="viewcode-back" href="../twitter_ads/error.html#error.RateLimit">[docs]</a><span class="k">class</span> <span class="nc">RateLimit</span><span class="p">(</span><span class="n">ClientError</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Rate Limit (429).&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_retry_after</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;retry-after&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_reset_at</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;rate_limit_reset&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">RateLimit</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_retry_after</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;retry-after&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_reset_at</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;rate_limit_reset&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">reset_at</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -123,24 +124,25 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">retry_after</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_retry_after</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_retry_after</span></div>
 
-</div>
+
 <div class="viewcode-block" id="ServerError"><a class="viewcode-back" href="../twitter_ads/error.html#error.ServerError">[docs]</a><span class="k">class</span> <span class="nc">ServerError</span><span class="p">(</span><span class="n">Error</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Server Error (500).&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Server Error (500).&quot;&quot;&quot;</span></div>
 
-</div>
+
 <div class="viewcode-block" id="ServiceUnavailable"><a class="viewcode-back" href="../twitter_ads/error.html#error.ServiceUnavailable">[docs]</a><span class="k">class</span> <span class="nc">ServiceUnavailable</span><span class="p">(</span><span class="n">ServerError</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Service Unavailable (503).&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_retry_after</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;retry-after&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ServiceUnavailable</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_retry_after</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;retry-after&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">retry_after</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_retry_after</span>
-</div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_retry_after</span></div>
+
+
 <span class="n">ERRORS</span> <span class="o">=</span> <span class="p">{</span>
     <span class="mi">400</span><span class="p">:</span> <span class="n">BadRequest</span><span class="p">,</span>
     <span class="mi">401</span><span class="p">:</span> <span class="n">NotAuthorized</span><span class="p">,</span>
@@ -168,14 +170,11 @@
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -186,8 +185,8 @@
       &copy;2015, Twitter, Inc.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
       
     </div>
 

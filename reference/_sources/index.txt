@@ -30,6 +30,7 @@ Quick Start
 
     from twitter_ads.client import Client
     from twitter_ads.campaign import Campaign
+    from twitter_ads.enum import ENTITY_STATUS
 
     # initialize the client
     client = Client(CONSUMER_KEY,
@@ -43,7 +44,7 @@ Quick Start
     # load and update a specific campaign
     campaign = list(account.campaigns())[0]
     campaign.name = 'updated campaign name'
-    campaign.paused = True
+    campaign.entity_status = ENTITY_STATUS.PAUSED
     campaign.save()
 
     # iterate through campaigns
@@ -70,13 +71,13 @@ This project is designed to work with Python 2.7 or greater. While it
 may work on other version of Python, below are the platform and runtime
 versions we officially support and regularly test against.
 
-+------------+----------------------+
-| Platform   | Versions             |
-+============+======================+
-| CPython    | 2.7, 3.2, 3.3, 3.4   |
-+------------+----------------------+
-| PyPy       | 2.x, 4.x             |
-+------------+----------------------+
++------------+-------------------------+
+| Platform   | Versions                |
++============+=========================+
+| CPython    | 2.7, 3.3, 3.4, 3.5      |
++------------+-------------------------+
+| PyPy       | 2.x, 4.x                |
++------------+-------------------------+
 
 All releases adhere to strict `semantic versioning`_. For Example,
 major.minor.patch-pre (aka. stick.carrot.oops-peek).

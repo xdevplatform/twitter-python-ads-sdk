@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>client &mdash; Twitter Ads API SDK for Python 0.2.1 documentation</title>
+    <title>client &mdash; Twitter Ads API SDK for Python 1.0.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.2.1',
+        VERSION:     '1.0.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,10 +23,11 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Twitter Ads API SDK for Python 0.2.1 documentation" href="../index.html" />
+    <link rel="top" title="Twitter Ads API SDK for Python 1.0.0 documentation" href="../index.html" />
     <link rel="up" title="Module code" href="index.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
@@ -46,7 +47,7 @@
 <span class="sd">A Twitter supported and maintained Ads API SDK for Python.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">twitter_ads.account</span> <span class="kn">import</span> <span class="n">Account</span>
+<span class="kn">from</span> <span class="nn">twitter_ads.account</span> <span class="k">import</span> <span class="n">Account</span>
 
 
 <div class="viewcode-block" id="Client"><a class="viewcode-back" href="../twitter_ads/client.html#client.Client">[docs]</a><span class="k">class</span> <span class="nc">Client</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -73,7 +74,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_options</span> <span class="o">=</span> <span class="n">kwargs</span>
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s1">&#39;&lt;{name} object at {mem} consumer_key={key}&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="k">return</span> <span class="s1">&#39;&lt;</span><span class="si">{name}</span><span class="s1"> object at </span><span class="si">{mem}</span><span class="s1"> consumer_key=</span><span class="si">{key}</span><span class="s1">&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
             <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span>
             <span class="n">mem</span><span class="o">=</span><span class="nb">hex</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)),</span>
             <span class="n">key</span><span class="o">=</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;consumer_key&#39;</span><span class="p">)</span>
@@ -102,7 +103,7 @@
     <span class="k">def</span> <span class="nf">sandbox</span><span class="p">():</span>
         <span class="sd">&quot;&quot;&quot;Enables and disables sandbox mode.&quot;&quot;&quot;</span>
         <span class="k">def</span> <span class="nf">fget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;sandbox&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;sandbox&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
         <span class="k">def</span> <span class="nf">fset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;sandbox&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
@@ -114,7 +115,7 @@
     <span class="k">def</span> <span class="nf">trace</span><span class="p">():</span>
         <span class="sd">&quot;&quot;&quot;Enables and disables request tracing.&quot;&quot;&quot;</span>
         <span class="k">def</span> <span class="nf">fget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;trace&#39;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;trace&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
         <span class="k">def</span> <span class="nf">fset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_options</span><span class="p">[</span><span class="s1">&#39;trace&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
@@ -123,7 +124,7 @@
 
     <span class="n">trace</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="o">**</span><span class="n">trace</span><span class="p">())</span>
 
-<div class="viewcode-block" id="Client.accounts"><a class="viewcode-back" href="../twitter_ads/client.html#client.Client.accounts">[docs]</a>    <span class="k">def</span> <span class="nf">accounts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Client.accounts"><a class="viewcode-back" href="../twitter_ads/client.html#client.Client.accounts">[docs]</a>    <span class="k">def</span> <span class="nf">accounts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a collection of advertiser :class:`Accounts` available to</span>
 <span class="sd">        the current access token.</span>
@@ -147,14 +148,11 @@
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -165,8 +163,8 @@
       &copy;2015, Twitter, Inc.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
       
     </div>
 
