@@ -366,3 +366,56 @@ class Tweet(object):
         resource = klass.TWEET_CREATE.format(account_id=account.id)
         response = Request(account.client, 'post', resource, params=params).perform()
         return response.body['data']
+
+
+class UserSettings(Resource, Persistence):
+
+    PROPERTIES = {}
+
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/user_settings/{id}'
+
+
+# user settings properties
+# writable
+resource_property(UserSettings, 'notification_email')
+resource_property(UserSettings, 'contact_phone')
+resource_property(UserSettings, 'contact_phone_extension')
+resource_property(UserSettings, 'subscribed_email_types')
+resource_property(UserSettings, 'user_id')
+
+
+class TaxSettings(Resource, Persistence):
+
+    PROPERTIES = {}
+
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/tax_settings/{id}'
+
+
+# tax settings properties
+# writable
+resource_property(TaxSettings, 'address_city')
+resource_property(TaxSettings, 'address_country')
+resource_property(TaxSettings, 'address_email')
+resource_property(TaxSettings, 'address_first_name')
+resource_property(TaxSettings, 'address_last_name')
+resource_property(TaxSettings, 'address_name')
+resource_property(TaxSettings, 'address_postal_code')
+resource_property(TaxSettings, 'address_region')
+resource_property(TaxSettings, 'address_street1')
+resource_property(TaxSettings, 'address_street2')
+resource_property(TaxSettings, 'bill_to')
+resource_property(TaxSettings, 'business_relationship')
+resource_property(TaxSettings, 'client_address_city')
+resource_property(TaxSettings, 'client_address_country')
+resource_property(TaxSettings, 'client_address_email')
+resource_property(TaxSettings, 'client_address_first_name')
+resource_property(TaxSettings, 'client_address_last_name')
+resource_property(TaxSettings, 'client_address_name')
+resource_property(TaxSettings, 'client_address_postal_code')
+resource_property(TaxSettings, 'client_address_region')
+resource_property(TaxSettings, 'client_address_street1')
+resource_property(TaxSettings, 'client_address_street2')
+resource_property(TaxSettings, 'invoice_jurisdiction')
+resource_property(TaxSettings, 'tax_category')
+resource_property(TaxSettings, 'tax_exemption_id')
+resource_property(TaxSettings, 'tax_id')

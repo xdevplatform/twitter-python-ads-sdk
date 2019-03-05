@@ -69,35 +69,6 @@ resource_property(PromotedTweet, 'line_item_id')
 resource_property(PromotedTweet, 'tweet_id')  # SDK limitation
 
 
-class Video(Resource, Persistence):
-
-    PROPERTIES = {}
-
-    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/videos'
-    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/videos/{id}'
-
-
-# video properties
-# read-only
-resource_property(Video, 'aspect_ratio', readonly=True)
-resource_property(Video, 'created_at', readonly=True, transform=TRANSFORM.TIME)
-resource_property(Video, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
-resource_property(Video, 'duration', readonly=True, transform=TRANSFORM.INT)
-resource_property(Video, 'id', readonly=True)
-resource_property(Video, 'media_key', readonly=True)
-resource_property(Video, 'poster_url', readonly=True)
-resource_property(Video, 'preview_url', readonly=True)
-resource_property(Video, 'ready_to_tweet', readonly=True, transform=TRANSFORM.BOOL)
-resource_property(Video, 'reasons_not_servable', readonly=True, transform=TRANSFORM.LIST)
-resource_property(Video, 'tweeted', readonly=True, transform=TRANSFORM.BOOL)
-resource_property(Video, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
-# writable
-resource_property(Video, 'description')
-resource_property(Video, 'poster_image_media_id')
-resource_property(Video, 'title')
-resource_property(Video, 'video_media_id')
-
-
 class AccountMedia(Resource, Persistence):
 
     PROPERTIES = {}
@@ -228,7 +199,7 @@ resource_property(ImageAppDownloadCard, 'created_at', readonly=True, transform=T
 resource_property(ImageAppDownloadCard, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(ImageAppDownloadCard, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
 # writable
-resource_property(ImageAppDownloadCard, 'app_country_code')
+resource_property(ImageAppDownloadCard, 'country_code')
 resource_property(ImageAppDownloadCard, 'app_cta')
 resource_property(ImageAppDownloadCard, 'iphone_app_id')
 resource_property(ImageAppDownloadCard, 'iphone_deep_link')
@@ -263,7 +234,7 @@ resource_property(VideoAppDownloadCard, 'video_owner_id', readonly=True)
 resource_property(VideoAppDownloadCard, 'video_poster_url', readonly=True)
 resource_property(VideoAppDownloadCard, 'video_url', readonly=True)
 # writable
-resource_property(VideoAppDownloadCard, 'app_country_code')
+resource_property(VideoAppDownloadCard, 'country_code')
 resource_property(VideoAppDownloadCard, 'app_cta')
 resource_property(VideoAppDownloadCard, 'image_media_id')
 resource_property(VideoAppDownloadCard, 'ipad_app_id')
@@ -521,7 +492,7 @@ class CardsFetch(Resource):
 
 # card properties
 # read-only
-resource_property(CardsFetch, 'app_country_code', readonly=True)
+resource_property(CardsFetch, 'country_code', readonly=True)
 resource_property(CardsFetch, 'app_cta', readonly=True)
 resource_property(CardsFetch, 'card_type', readonly=True)
 resource_property(CardsFetch, 'card_uri', readonly=True)
