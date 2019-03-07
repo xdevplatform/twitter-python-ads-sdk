@@ -218,6 +218,7 @@ class Analytics(object):
     """
     ANALYTICS_MAP = {
         'Campaign': ENTITY.CAMPAIGN,
+        'FundingInstrument': ENTITY.FUNDING_INSTRUMENT,
         'LineItem': ENTITY.LINE_ITEM,
         'OrganicTweet': ENTITY.ORGANIC_TWEET,
         'PromotedTweet': ENTITY.PROMOTED_TWEET

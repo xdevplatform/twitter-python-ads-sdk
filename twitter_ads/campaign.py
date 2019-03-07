@@ -140,7 +140,7 @@ resource_property(TargetingCriteria, 'tailored_audience_type')
 resource_property(TargetingCriteria, 'to_delete', transform=TRANSFORM.BOOL)
 
 
-class FundingInstrument(Resource, Persistence):
+class FundingInstrument(Resource, Persistence, Analytics):
 
     PROPERTIES = {}
 
