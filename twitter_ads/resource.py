@@ -317,6 +317,8 @@ class Analytics(object):
         if entity_type == 'OrganicTweet':
             raise ValueError("'OrganicTweet' not support with 'active_entities'")
 
+        # TODO: It's important that the start end end times be expressed in
+        # whole hours. That is, they should *not* include minutes and seconds.
         params = {
             'entity': klass.ANALYTICS_MAP[entity_type],
             'start_time': to_time(start_time, None),
