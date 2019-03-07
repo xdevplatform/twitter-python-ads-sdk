@@ -3,7 +3,9 @@ from __future__ import division
 
 """Container for all helpers and utilities used throughout the Ads API SDK."""
 
+import datetime
 from datetime import timedelta
+import dateutil.parser
 from email.utils import formatdate
 from time import mktime
 
@@ -21,7 +23,10 @@ def get_version():
 def to_time(time, granularity):
     """Returns a truncated and rounded time string based on the specified granularity."""
     if not granularity:
-        return format_time(time)
+        if type(time) is datetime.date:
+            return format_date(time)
+        else:
+            return format_time(time)
     if granularity == GRANULARITY.HOUR:
         return format_time(time - timedelta(
             minutes=time.minute, seconds=time.second, microseconds=time.microsecond))
@@ -55,3 +60,13 @@ def size(default_chunk_size, response_time_max, response_time_actual):
     scale = 1 / (response_time_actual / response_time_max)
     size = int(default_chunk_size * scale)
     return min(max(size, 1), default_chunk_size)
+
+
+def entity_ids(data):
+    return [d['entity_id'] for d in data]
+
+
+def date_range(data):
+    starts = [dateutil.parser.parse(d['activity_start_time']) for d in data]
+    ends = [dateutil.parser.parse(d['activity_end_time']) for d in data]
+    return min(starts), max(ends) + timedelta(days=1)

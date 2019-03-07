@@ -225,6 +225,7 @@ class Analytics(object):
 
     RESOURCE_SYNC = '/' + API_VERSION + '/stats/accounts/{account_id}'
     RESOURCE_ASYNC = '/' + API_VERSION + '/stats/jobs/accounts/{account_id}'
+    RESOURCE_ACTIVE_ENTITIES = '/5/stats/accounts/{account_id}/active_entities'
 
     def stats(self, metrics, **kwargs):  # noqa
         """
@@ -307,3 +308,19 @@ class Analytics(object):
                            raw_body=True, stream=True).perform()
 
         return response.body
+
+    @classmethod
+    def active_entities(klass, account, start_time, end_time, **kwargs):
+        entity_type = klass.__name__
+        if entity_type == 'OrganicTweet':
+            raise ValueError("'OrganicTweet' not support with 'active_entities'")
+
+        params = {
+            'entity': klass.ANALYTICS_MAP[entity_type],
+            'start_time': to_time(start_time, None),
+            'end_time': to_time(end_time, None)
+        }
+
+        resource = klass.RESOURCE_ACTIVE_ENTITIES.format(account_id=account.id)
+        response = Request(account.client, 'get', resource, params=params).perform()
+        return response.body['data']
