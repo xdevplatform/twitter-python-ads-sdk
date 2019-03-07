@@ -90,7 +90,7 @@ resource_property(AccountMedia, 'media_id')
 resource_property(AccountMedia, 'video_id')
 
 
-class MediaCreative(Resource, Persistence):
+class MediaCreative(Resource, Persistence, Analytics):
 
     PROPERTIES = {}
 

@@ -220,6 +220,7 @@ class Analytics(object):
         'Campaign': ENTITY.CAMPAIGN,
         'FundingInstrument': ENTITY.FUNDING_INSTRUMENT,
         'LineItem': ENTITY.LINE_ITEM,
+        'MediaCreative': ENTITY.MEDIA_CREATIVE,
         'OrganicTweet': ENTITY.ORGANIC_TWEET,
         'PromotedTweet': ENTITY.PROMOTED_TWEET
     }
