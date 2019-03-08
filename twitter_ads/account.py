@@ -8,7 +8,6 @@ from twitter_ads.http import Request
 from twitter_ads.cursor import Cursor
 from twitter_ads import API_VERSION
 
-from twitter_ads.active_entities import ActiveEntities
 from twitter_ads.resource import resource_property, Resource
 from twitter_ads.creative import (AccountMedia, MediaCreative, ScheduledTweet,
                                   VideoWebsiteCard, PromotedTweet)
@@ -169,12 +168,6 @@ class Account(Resource):
         response = Request(self.client, 'get', resource, params=params).perform()
 
         return response.body['data']
-
-    def active_entities(self, **kwargs):
-        """
-        Returns details about which entities' analytics metrics have changed in a given time period.
-        """
-        return self._load_resource(ActiveEntities, None, **kwargs)
 
 
 # account properties
