@@ -69,11 +69,6 @@ def size(default_chunk_size, response_time_max, response_time_actual):
     return min(max(size, 1), default_chunk_size)
 
 
-def entity_ids(data):
-    """Returns the entity IDs from the active entities response."""
-    return [d['entity_id'] for d in data]
-
-
 def date_range(data, fetch_frequency):
     """Returns the minimum activity start time and the maximum activity end time
     from the active entities response. These are the dates that should be used

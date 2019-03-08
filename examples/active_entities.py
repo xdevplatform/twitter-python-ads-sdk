@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from twitter_ads.campaign import LineItem
 from twitter_ads.client import Client
 from twitter_ads.enum import GRANULARITY, METRIC_GROUP, PLACEMENT
-from twitter_ads.utils import date_range, entity_ids
+from twitter_ads.utils import date_range
 
 
 CONSUMER_KEY = ''
@@ -33,7 +33,7 @@ active_entities = LineItem.active_entities(account, start_time, end_time)
 # Entity IDs to fetch analytics data for
 # Note: analytics endpoints support a
 # maximum of 20 entity IDs per request
-ids = entity_ids(active_entities)
+ids = [d['entity_id'] for d in active_entities]
 
 # Date range for analytics request
 start, end = date_range(active_entities, fetch_frequency='DAY')
