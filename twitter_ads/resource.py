@@ -227,7 +227,7 @@ class Analytics(object):
 
     RESOURCE_SYNC = '/' + API_VERSION + '/stats/accounts/{account_id}'
     RESOURCE_ASYNC = '/' + API_VERSION + '/stats/jobs/accounts/{account_id}'
-    RESOURCE_ACTIVE_ENTITIES = '/5/stats/accounts/{account_id}/active_entities'
+    RESOURCE_ACTIVE_ENTITIES = '/' + API_VERSION + '/stats/accounts/{account_id}/active_entities'
 
     def stats(self, metrics, **kwargs):  # noqa
         """
