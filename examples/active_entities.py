@@ -4,7 +4,7 @@ from dateutil.parser import parse
 from twitter_ads.campaign import LineItem
 from twitter_ads.client import Client
 from twitter_ads.enum import GRANULARITY, METRIC_GROUP, PLACEMENT
-from twitter_ads.utils import remove_hours
+from twitter_ads.utils import remove_minutes
 
 
 CONSUMER_KEY = ''
@@ -21,7 +21,7 @@ account = client.accounts(ACCOUNT_ID)
 
 # analytics request parameters
 metric_groups = [METRIC_GROUP.ENGAGEMENT]
-granularity = GRANULARITY.DAY
+granularity = GRANULARITY.HOUR
 placement = PLACEMENT.ALL_ON_TWITTER
 
 # For checking the active entities endpoint for the last day
@@ -42,22 +42,26 @@ def date_range(data):
     """Returns the minimum activity start time and the maximum activity end time
     from the active entities response.
 
-    This function assumes that the subsequent analytics request will use `DAY`
-    granularity. Thus, hours (and minutes and so on) are removed from the start
-    and end times and a *day* is added to the end time.
+    This function assumes that the subsequent analytics request will use `HOUR`
+    granularity. Thus, minutes (and seconds and so on) are removed from the
+    start and end times and an *hour* is added to the end time.
 
     These are the dates that should be used in the subsequent analytics request.
     """
     start = min([parse(d['activity_start_time']) for d in data])
     end = max([parse(d['activity_end_time']) for d in data])
-    start = remove_hours(start)
-    end = remove_hours(end) + timedelta(days=1)
+    start = remove_minutes(start)
+    end = remove_minutes(end) + timedelta(hours=1)
     return start, end
 
 # Date range for analytics request
 start, end = date_range(active_entities)
 
 # Analytics request for specific Line Item IDs
+# Granularity is set to `HOUR`
+# Based on the activity start and end times
+# only one hour of data is being requested
+# which is why the arrays have a single element
 LineItem.all_stats(account, ids, metric_groups, granularity=granularity, placement=placement, start_time=start, end_time=end)
 """
 [
