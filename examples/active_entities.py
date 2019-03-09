@@ -1,9 +1,10 @@
 from datetime import datetime, timedelta
+from dateutil.parser import parse
 
 from twitter_ads.campaign import LineItem
 from twitter_ads.client import Client
 from twitter_ads.enum import GRANULARITY, METRIC_GROUP, PLACEMENT
-from twitter_ads.utils import date_range
+from twitter_ads.utils import remove_hours
 
 
 CONSUMER_KEY = ''
@@ -35,8 +36,26 @@ active_entities = LineItem.active_entities(account, start_time, end_time)
 # maximum of 20 entity IDs per request
 ids = [d['entity_id'] for d in active_entities]
 
+# Function for determining the start and end time
+# to be used in the subsequent analytics request
+def date_range(data):
+    """Returns the minimum activity start time and the maximum activity end time
+    from the active entities response.
+
+    This function assumes that the subsequent analytics request will use `DAY`
+    granularity. Thus, hours (and minutes and so on) are removed from the start
+    and end times and a *day* is added to the end time.
+
+    These are the dates that should be used in the subsequent analytics request.
+    """
+    start = min([parse(d['activity_start_time']) for d in data])
+    end = max([parse(d['activity_end_time']) for d in data])
+    start = remove_hours(start)
+    end = remove_hours(end) + timedelta(days=1)
+    return start, end
+
 # Date range for analytics request
-start, end = date_range(active_entities, fetch_frequency='DAY')
+start, end = date_range(active_entities)
 
 # Analytics request for specific Line Item IDs
 LineItem.all_stats(account, ids, metric_groups, granularity=granularity, placement=placement, start_time=start, end_time=end)

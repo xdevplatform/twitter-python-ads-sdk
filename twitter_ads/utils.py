@@ -67,21 +67,3 @@ def size(default_chunk_size, response_time_max, response_time_actual):
     scale = 1 / (response_time_actual / response_time_max)
     size = int(default_chunk_size * scale)
     return min(max(size, 1), default_chunk_size)
-
-
-def date_range(data, fetch_frequency):
-    """Returns the minimum activity start time and the maximum activity end time
-    from the active entities response. These are the dates that should be used
-    in the subsequent analytics request. The max time is modified
-    """
-    start = min([dateutil.parser.parse(d['activity_start_time']) for d in data])
-    end = max([dateutil.parser.parse(d['activity_end_time']) for d in data])
-    if fetch_frequency == 'HOUR':
-        start = remove_minutes(start)
-        end = remove_minutes(end) + timedelta(hours=1)
-    elif fetch_frequency == 'DAY':
-        start = remove_hours(start)
-        end = remove_hours(end) + timedelta(days=1)
-    else:
-        raise ValueError("Only 'HOUR' or 'DAY' values are accepted.")
-    return start, end
