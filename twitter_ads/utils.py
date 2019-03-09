@@ -4,8 +4,6 @@ from __future__ import division
 """Container for all helpers and utilities used throughout the Ads API SDK."""
 
 import datetime
-from datetime import timedelta
-import dateutil.parser
 from email.utils import formatdate
 from time import mktime
 
@@ -67,3 +65,12 @@ def size(default_chunk_size, response_time_max, response_time_actual):
     scale = 1 / (response_time_actual / response_time_max)
     size = int(default_chunk_size * scale)
     return min(max(size, 1), default_chunk_size)
+
+
+def validate_whole_hours(time):
+    if type(time) is datetime.date:
+        pass
+    else:
+        # Times must be expressed in whole hours
+        if time.minute > 0 or time.second > 0:
+            raise ValueError("'start_time' and 'end_time' must be expressed in whole hours.")

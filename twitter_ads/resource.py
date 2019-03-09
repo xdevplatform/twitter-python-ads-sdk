@@ -10,7 +10,7 @@ except ImportError:
     from urlparse import urlparse
 import json
 
-from twitter_ads.utils import format_time, to_time
+from twitter_ads.utils import format_time, to_time, validate_whole_hours
 from twitter_ads.enum import ENTITY, GRANULARITY, PLACEMENT, TRANSFORM
 from twitter_ads.http import Request
 from twitter_ads.cursor import Cursor
@@ -317,8 +317,10 @@ class Analytics(object):
         if entity_type == 'OrganicTweet':
             raise ValueError("'OrganicTweet' not support with 'active_entities'")
 
-        # TODO: It's important that the start end end times be expressed in
-        # whole hours. That is, they should *not* include minutes and seconds.
+        # The start and end times must be expressed in whole hours
+        validate_whole_hours(start_time)
+        validate_whole_hours(end_time)
+
         params = {
             'entity': klass.ANALYTICS_MAP[entity_type],
             'start_time': to_time(start_time, None),
