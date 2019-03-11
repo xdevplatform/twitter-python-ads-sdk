@@ -133,7 +133,7 @@ class Response(object):
             # Content-Type: application/json
             # instead it returns:
             # Content-Type: application/gzip
-            raw_response_body = zlib.decompress(self._raw_body, 16 + zlib.MAX_WBITS).decode()
+            raw_response_body = zlib.decompress(self._raw_body, 16 + zlib.MAX_WBITS).decode('utf-8')
         else:
             raw_response_body = self._raw_body
 
