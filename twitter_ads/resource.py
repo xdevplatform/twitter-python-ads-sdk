@@ -10,7 +10,7 @@ except ImportError:
     from urlparse import urlparse
 import json
 
-from twitter_ads.utils import format_time, to_time
+from twitter_ads.utils import format_time, to_time, validate_whole_hours
 from twitter_ads.enum import ENTITY, GRANULARITY, PLACEMENT, TRANSFORM
 from twitter_ads.http import Request
 from twitter_ads.cursor import Cursor
@@ -218,13 +218,16 @@ class Analytics(object):
     """
     ANALYTICS_MAP = {
         'Campaign': ENTITY.CAMPAIGN,
+        'FundingInstrument': ENTITY.FUNDING_INSTRUMENT,
         'LineItem': ENTITY.LINE_ITEM,
+        'MediaCreative': ENTITY.MEDIA_CREATIVE,
         'OrganicTweet': ENTITY.ORGANIC_TWEET,
         'PromotedTweet': ENTITY.PROMOTED_TWEET
     }
 
     RESOURCE_SYNC = '/' + API_VERSION + '/stats/accounts/{account_id}'
     RESOURCE_ASYNC = '/' + API_VERSION + '/stats/jobs/accounts/{account_id}'
+    RESOURCE_ACTIVE_ENTITIES = '/' + API_VERSION + '/stats/accounts/{account_id}/active_entities'
 
     def stats(self, metrics, **kwargs):  # noqa
         """
@@ -307,3 +310,23 @@ class Analytics(object):
                            raw_body=True, stream=True).perform()
 
         return response.body
+
+    @classmethod
+    def active_entities(klass, account, start_time, end_time, **kwargs):
+        entity_type = klass.__name__
+        if entity_type == 'OrganicTweet':
+            raise ValueError("'OrganicTweet' not support with 'active_entities'")
+
+        # The start and end times must be expressed in whole hours
+        validate_whole_hours(start_time)
+        validate_whole_hours(end_time)
+
+        params = {
+            'entity': klass.ANALYTICS_MAP[entity_type],
+            'start_time': to_time(start_time, None),
+            'end_time': to_time(end_time, None)
+        }
+
+        resource = klass.RESOURCE_ACTIVE_ENTITIES.format(account_id=account.id)
+        response = Request(account.client, 'get', resource, params=params).perform()
+        return response.body['data']

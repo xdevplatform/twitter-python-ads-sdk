@@ -3,7 +3,7 @@ from __future__ import division
 
 """Container for all helpers and utilities used throughout the Ads API SDK."""
 
-from datetime import timedelta
+import datetime
 from email.utils import formatdate
 from time import mktime
 
@@ -18,17 +18,27 @@ def get_version():
     return '.'.join(map(str, VERSION))
 
 
+def remove_minutes(time):
+    """Sets the minutes, seconds, and microseconds to zero."""
+    return time.replace(minute=0, second=0, microsecond=0)
+
+
+def remove_hours(time):
+    """Sets the hours, minutes, seconds, and microseconds to zero."""
+    return time.replace(hour=0, minute=0, second=0, microsecond=0)
+
+
 def to_time(time, granularity):
     """Returns a truncated and rounded time string based on the specified granularity."""
     if not granularity:
-        return format_time(time)
+        if type(time) is datetime.date:
+            return format_date(time)
+        else:
+            return format_time(time)
     if granularity == GRANULARITY.HOUR:
-        return format_time(time - timedelta(
-            minutes=time.minute, seconds=time.second, microseconds=time.microsecond))
+        return format_time(remove_minutes(time))
     elif granularity == GRANULARITY.DAY:
-        return format_date(time - timedelta(
-            hours=time.hour, minutes=time.minute,
-            seconds=time.second, microseconds=time.microsecond))
+        return format_date(remove_hours(time))
     else:
         return format_time(time)
 
@@ -55,3 +65,12 @@ def size(default_chunk_size, response_time_max, response_time_actual):
     scale = 1 / (response_time_actual / response_time_max)
     size = int(default_chunk_size * scale)
     return min(max(size, 1), default_chunk_size)
+
+
+def validate_whole_hours(time):
+    if type(time) is datetime.date:
+        pass
+    else:
+        # Times must be expressed in whole hours
+        if time.minute > 0 or time.second > 0:
+            raise ValueError("'start_time' and 'end_time' must be expressed in whole hours.")
