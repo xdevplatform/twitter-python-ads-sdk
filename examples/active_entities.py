@@ -24,20 +24,21 @@ metric_groups = [METRIC_GROUP.ENGAGEMENT]
 granularity = GRANULARITY.HOUR
 placement = PLACEMENT.ALL_ON_TWITTER
 
-# For checking the active entities endpoint for the last day
+# for checking the active entities endpoint for the last day
 end_time = datetime.utcnow().date()
 start_time = end_time - timedelta(days=1)
 
-# Active Entities for Line Items
+# active entities for line items
 active_entities = LineItem.active_entities(account, start_time, end_time)
 
-# Entity IDs to fetch analytics data for
-# Note: analytics endpoints support a
+# entity IDs to fetch analytics data for
+# note: analytics endpoints support a
 # maximum of 20 entity IDs per request
 ids = [d['entity_id'] for d in active_entities]
 
-# Function for determining the start and end time
+# function for determining the start and end time
 # to be used in the subsequent analytics request
+# note: if `active_entities` is empty, `date_range` will error
 def date_range(data):
     """Returns the minimum activity start time and the maximum activity end time
     from the active entities response. These dates are modified in the following
@@ -51,12 +52,12 @@ def date_range(data):
     end = remove_hours(end) + timedelta(days=1)
     return start, end
 
-# Date range for analytics request
+# date range for analytics request
 start, end = date_range(active_entities)
 
-# The analytics request for specific Line Item IDs
+# the analytics request for specific line item IDs
 # using the derived start and end times
-# from the Active Entities response with
+# from the active entities response with
 # granularity is set to `HOUR`
 LineItem.all_stats(account, ids, metric_groups, granularity=granularity, placement=placement, start_time=start, end_time=end)
 """
