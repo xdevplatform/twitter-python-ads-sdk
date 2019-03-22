@@ -20,9 +20,9 @@ targeting_criteria'
     RESOURCE_OPTIONS = '/' + API_VERSION + '/targeting_criteria/'
 
     @classmethod
-    def all(klass, account, line_item_id, **kwargs):
+    def all(klass, account, line_item_ids, **kwargs):
         """Returns a Cursor instance for a given resource."""
-        params = {'line_item_id': line_item_id}
+        params = {'line_item_ids': ','.join(line_item_ids)}
         params.update(kwargs)
 
         resource = klass.RESOURCE_COLLECTION.format(account_id=account.id)
