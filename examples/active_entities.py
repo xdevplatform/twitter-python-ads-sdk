@@ -4,7 +4,7 @@ from dateutil.parser import parse
 from twitter_ads.campaign import LineItem
 from twitter_ads.client import Client
 from twitter_ads.enum import GRANULARITY, METRIC_GROUP, PLACEMENT
-from twitter_ads.utils import remove_minutes
+from twitter_ads.utils import remove_hours
 
 
 CONSUMER_KEY = ''
@@ -24,49 +24,46 @@ metric_groups = [METRIC_GROUP.ENGAGEMENT]
 granularity = GRANULARITY.HOUR
 placement = PLACEMENT.ALL_ON_TWITTER
 
-# For checking the active entities endpoint for the last day
+# for checking the active entities endpoint for the last day
 end_time = datetime.utcnow().date()
 start_time = end_time - timedelta(days=1)
 
-# Active Entities for Line Items
+# active entities for line items
 active_entities = LineItem.active_entities(account, start_time, end_time)
 
-# Entity IDs to fetch analytics data for
-# Note: analytics endpoints support a
+# entity IDs to fetch analytics data for
+# note: analytics endpoints support a
 # maximum of 20 entity IDs per request
 ids = [d['entity_id'] for d in active_entities]
 
-# Function for determining the start and end time
+# function for determining the start and end time
 # to be used in the subsequent analytics request
+# note: if `active_entities` is empty, `date_range` will error
 def date_range(data):
     """Returns the minimum activity start time and the maximum activity end time
-    from the active entities response.
-
-    This function assumes that the subsequent analytics request will use `HOUR`
-    granularity. Thus, minutes (and seconds and so on) are removed from the
-    start and end times and an *hour* is added to the end time.
-
-    These are the dates that should be used in the subsequent analytics request.
+    from the active entities response. These dates are modified in the following
+    way. The hours (and minutes and so on) are removed from the start and end
+    times and a *day* is added to the end time. These are the dates that should
+    be used in the subsequent analytics request.
     """
     start = min([parse(d['activity_start_time']) for d in data])
     end = max([parse(d['activity_end_time']) for d in data])
-    start = remove_minutes(start)
-    end = remove_minutes(end) + timedelta(hours=1)
+    start = remove_hours(start)
+    end = remove_hours(end) + timedelta(days=1)
     return start, end
 
-# Date range for analytics request
+# date range for analytics request
 start, end = date_range(active_entities)
 
-# Analytics request for specific Line Item IDs
-# Granularity is set to `HOUR`
-# Based on the activity start and end times
-# only one hour of data is being requested
-# which is why the arrays have a single element
+# the analytics request for specific line item IDs
+# using the derived start and end times
+# from the active entities response with
+# granularity is set to `HOUR`
 LineItem.all_stats(account, ids, metric_groups, granularity=granularity, placement=placement, start_time=start, end_time=end)
 """
 [
   {
-    "id": "eeukx",
+    "id": "du549",
     "id_data": [
       {
         "metrics": {
@@ -74,32 +71,26 @@ LineItem.all_stats(account, ids, metric_groups, granularity=granularity, placeme
           "card_engagements": None,
           "carousel_swipes": None,
           "clicks": [
-            71
+            0,32,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
           ],
           "engagements": [
-            141
+            0,79,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
           ],
-          "follows": [
-            2
-          ],
+          "follows": None,
           "impressions": [
-            3613
+            0,2195,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
           ],
           "likes": [
-            14
+            0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
           ],
           "poll_card_vote": None,
           "qualified_impressions": None,
-          "replies": [
-            1
-          ],
+          "replies": None,
           "retweets": None,
-          "tweets_send": [
-            1
-          ],
+          "tweets_send": None,
           "unfollows": None,
           "url_clicks": [
-            1
+            0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
           ]
         },
         "segment": None
@@ -107,7 +98,7 @@ LineItem.all_stats(account, ids, metric_groups, granularity=granularity, placeme
     ]
   },
   {
-    "id": "eeulb",
+    "id": "du5o5",
     "id_data": [
       {
         "metrics": {
@@ -115,29 +106,25 @@ LineItem.all_stats(account, ids, metric_groups, granularity=granularity, placeme
           "card_engagements": None,
           "carousel_swipes": None,
           "clicks": [
-            75
+            0,1,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
           ],
           "engagements": [
-            297
+            0,2,29,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
           ],
           "follows": None,
           "impressions": [
-            2020
+            0,14,538,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
           ],
           "likes": [
-            16
+            0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
           ],
           "poll_card_vote": None,
           "qualified_impressions": None,
           "replies": None,
-          "retweets": [
-            2
-          ],
+          "retweets": None,
           "tweets_send": None,
           "unfollows": None,
-          "url_clicks": [
-            2
-          ]
+          "url_clicks": None
         },
         "segment": None
       }
