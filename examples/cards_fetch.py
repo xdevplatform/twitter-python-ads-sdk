@@ -24,12 +24,12 @@ response = Request(client, 'get', resource, domain=domain, params=params).perfor
 card_uri = response.body['card_uri'] # Tweet must include a card_uri card
 
 # fetch by card_uri
-cf = CardsFetch(account)
-card = cf.load(account, card_uri=card_uri)
-card.card_type # 'VIDEO_POLLS'
-card.id # '5g83p'
+card = CardsFetch.load(account, card_uris=[card_uri]).first
+print card
+print card.card_type
+print card.id
 
 # fetch by card id
-same_card = cf.load(account, card_id=card.id)
-same_card.card_type # 'VIDEO_POLLS'
-same_card.card_uri # 'card://973002559269974016'
+same_card = CardsFetch.load(account, card_id=card.id)
+print same_card.card_type
+print same_card.card_uri

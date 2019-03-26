@@ -5,6 +5,7 @@
 from requests.exceptions import HTTPError
 
 from twitter_ads import API_VERSION
+from twitter_ads.cursor import Cursor
 from twitter_ads.enum import TRANSFORM
 from twitter_ads.http import Request
 from twitter_ads.resource import resource_property, Resource, Persistence, Analytics
@@ -131,7 +132,6 @@ resource_property(WebsiteCard, 'image', readonly=True)
 resource_property(WebsiteCard, 'image_display_height', readonly=True)
 resource_property(WebsiteCard, 'image_display_width', readonly=True)
 resource_property(WebsiteCard, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
-resource_property(WebsiteCard, 'preview_url', readonly=True)
 resource_property(WebsiteCard, 'website_dest_url', readonly=True)
 resource_property(WebsiteCard, 'website_display_url', readonly=True)
 resource_property(WebsiteCard, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
@@ -158,7 +158,6 @@ resource_property(VideoWebsiteCard, 'card_uri', readonly=True)
 resource_property(VideoWebsiteCard, 'created_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(VideoWebsiteCard, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
 resource_property(VideoWebsiteCard, 'id', readonly=True)
-resource_property(VideoWebsiteCard, 'preview_url', readonly=True)
 resource_property(VideoWebsiteCard, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(VideoWebsiteCard, 'video_content_id', readonly=True)
 resource_property(VideoWebsiteCard, 'video_height', readonly=True)
@@ -194,7 +193,6 @@ resource_property(ImageAppDownloadCard, 'image_display_width', readonly=True)
 resource_property(ImageAppDownloadCard, 'wide_app_image', readonly=True)
 resource_property(ImageAppDownloadCard, 'card_uri', readonly=True)
 resource_property(ImageAppDownloadCard, 'card_type', readonly=True)
-resource_property(ImageAppDownloadCard, 'preview_url', readonly=True)
 resource_property(ImageAppDownloadCard, 'created_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(ImageAppDownloadCard, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(ImageAppDownloadCard, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
@@ -226,7 +224,6 @@ resource_property(VideoAppDownloadCard, 'card_type', readonly=True)
 resource_property(VideoAppDownloadCard, 'created_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(VideoAppDownloadCard, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
 resource_property(VideoAppDownloadCard, 'id', readonly=True)
-resource_property(VideoAppDownloadCard, 'preview_url', readonly=True)
 resource_property(VideoAppDownloadCard, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(VideoAppDownloadCard, 'video_content_id', readonly=True)
 resource_property(VideoAppDownloadCard, 'video_hls_url', readonly=True)
@@ -263,7 +260,6 @@ resource_property(ImageConversationCard, 'created_at', readonly=True, transform=
 resource_property(ImageConversationCard, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
 resource_property(ImageConversationCard, 'id', readonly=True)
 resource_property(ImageConversationCard, 'image', readonly=True)
-resource_property(ImageConversationCard, 'preview_url', readonly=True)
 resource_property(ImageConversationCard, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
 # writable
 resource_property(ImageConversationCard, 'cover_image_id')
@@ -298,7 +294,6 @@ resource_property(VideoConversationCard, 'card_type', readonly=True)
 resource_property(VideoConversationCard, 'created_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(VideoConversationCard, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
 resource_property(VideoConversationCard, 'id', readonly=True)
-resource_property(VideoConversationCard, 'preview_url', readonly=True)
 resource_property(VideoConversationCard, 'video_url', readonly=True)
 resource_property(VideoConversationCard, 'video_poster_url', readonly=True)
 resource_property(VideoConversationCard, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
@@ -439,7 +434,6 @@ resource_property(PollCard, 'id', readonly=True)
 resource_property(PollCard, 'image', readonly=True)
 resource_property(PollCard, 'image_display_height', readonly=True)
 resource_property(PollCard, 'image_display_width', readonly=True)
-resource_property(PollCard, 'preview_url', readonly=True)
 resource_property(PollCard, 'start_time', readonly=True)
 resource_property(PollCard, 'updated_at', readonly=True)
 resource_property(PollCard, 'video_height', readonly=True)
@@ -463,27 +457,32 @@ class CardsFetch(Resource):
 
     PROPERTIES = {}
 
-    FETCH_URI = '/' + API_VERSION + '/accounts/{account_id}/cards'
+    FETCH_URI = '/' + API_VERSION + '/accounts/{account_id}/cards/all'
     FETCH_ID = '/' + API_VERSION + '/accounts/{account_id}/cards/all/{id}'
 
     def all(klass):
         raise AttributeError("'CardsFetch' object has no attribute 'all'")
 
-    def load(klass, account, card_uri=None, card_id=None, with_deleted=None):
+    @classmethod
+    def load(klass, account, card_uris=None, card_id=None, with_deleted=None):
         # check whether both are specified or neither are specified
-        if all([card_uri, card_id]) or not any([card_uri, card_id]):
-            raise ValueError('card_uri and card_id are exclusive parameters. ' +
+        if all([card_uris, card_id]) or not any([card_uris, card_id]):
+            raise ValueError('card_uris and card_id are exclusive parameters. ' +
                              'Please supply one or the other, but not both.')
         params = {}
-        if card_uri:
-            params['card_uri'] = card_uri
-            resource = klass.FETCH_URI.format(account_id=account.id)
-        else:
-            resource = klass.FETCH_ID.format(account_id=account.id, id=card_id)
         if with_deleted:
             params['with_deleted'] = 'true'
-        response = Request(account.client, 'get', resource, params=params).perform()
-        return klass.from_response(response.body['data'])
+
+        if card_uris:
+            params['card_uris'] = ','.join(card_uris)
+            resource = klass.FETCH_URI.format(account_id=account.id)
+            request = Request(account.client, 'get', resource, params=params)
+            return Cursor(klass, request, init_with=[account])
+        else:
+            params['card_id'] = card_id
+            resource = klass.FETCH_ID.format(account_id=account.id, id=card_id)
+            response = Request(account.client, 'get', resource, params=params).perform()
+            return klass(account).from_response(response.body['data'])
 
     def reload(self):
         if self.id:
@@ -520,7 +519,6 @@ resource_property(CardsFetch, 'ipad_deep_link', readonly=True)
 resource_property(CardsFetch, 'iphone_app_id', readonly=True)
 resource_property(CardsFetch, 'iphone_deep_link', readonly=True)
 resource_property(CardsFetch, 'name', readonly=True)
-resource_property(CardsFetch, 'preview_url', readonly=True)
 resource_property(CardsFetch, 'recipient_user_id', readonly=True)
 resource_property(CardsFetch, 'second_choice', readonly=True)
 resource_property(CardsFetch, 'second_cta', readonly=True)
