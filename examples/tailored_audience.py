@@ -1,6 +1,6 @@
+import hashlib
 from twitter_ads.client import Client
 from twitter_ads.audience import TailoredAudience
-from twitter_ads.enum import TA_LIST_TYPES, TA_OPERATIONS
 
 CONSUMER_KEY = 'your consumer key'
 CONSUMER_SECRET = 'your consumer secret'
@@ -15,17 +15,25 @@ client = Client(CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET
 account = client.accounts(ACCOUNT_ID)
 
 # create a new tailored audience
-audience = TailoredAudience.create(account, '/path/to/file', 'my list', TA_LIST_TYPES.EMAIL)
+audience = TailoredAudience.create(account, 'test TA')
 
-# check the processing status
-audience.status()
+# sample user
+# all values musth be sha256 hashed
+email_hash = hashlib.sha256("test-email@test.com").hexdigest()
+
+# create payload
+user = [{
+    "operation_type": "Update",
+    "params": {
+        "users": [{
+            "email": [
+                email_hash
+            ]
+        }]
+    }
+}]
 
 # update the tailored audience
-audience.update('/path/to/file', TA_LIST_TYPES.TWITTER_ID, TA_OPERATIONS.REMOVE)
-audience.update('/path/to/file', TA_LIST_TYPES.PHONE_NUMBER, TA_OPERATIONS.ADD)
-
-# delete the tailored audience
-audience.delete()
-
-# add users to the account's global opt-out list
-TailoredAudience.opt_out(account, '/path/to/file', TA_OPERATIONS.HANDLE)
+success_count, total_count = audience.users(user)
+if success_count == total_count:
+    print "Successfully added {total_count} users".format(total_count=total_count)
