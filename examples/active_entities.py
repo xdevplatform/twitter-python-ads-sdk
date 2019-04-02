@@ -7,11 +7,11 @@ from twitter_ads.enum import GRANULARITY, METRIC_GROUP, PLACEMENT
 from twitter_ads.utils import remove_hours
 
 
-CONSUMER_KEY = ''
-CONSUMER_SECRET = ''
-ACCESS_TOKEN = ''
-ACCESS_TOKEN_SECRET = ''
-ACCOUNT_ID = ''
+CONSUMER_KEY = 'your consumer key'
+CONSUMER_SECRET = 'your consumer secret'
+ACCESS_TOKEN = 'access token'
+ACCESS_TOKEN_SECRET = 'access token secret'
+ACCOUNT_ID = 'account id'
 
 # initialize the client
 client = Client(CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
