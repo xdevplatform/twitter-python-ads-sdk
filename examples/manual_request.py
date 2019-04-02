@@ -1,5 +1,6 @@
 # Copyright (C) 2015 Twitter, Inc.
 
+from twitter_ads import API_VERSION
 from twitter_ads.client import Client
 from twitter_ads.cursor import Cursor
 from twitter_ads.http import Request
@@ -20,7 +21,7 @@ account = client.accounts(ADS_ACCOUNT)
 # using the Request object you can manually request any
 # twitter ads api resource that you want.
 
-resource = '/0/accounts/{account_id}/features'.format(account_id=account.id)
+resource = '/' + API_VERSION + '/accounts/{account_id}/features'.format(account_id=account.id)
 params = {'feature_keys': 'AGE_TARGETING,CPI_CHARGING'}
 
 # try, build and execute the request with error handling
@@ -35,8 +36,8 @@ except Error as e:
 # you can also manually construct requests to be
 # used in Cursor objects.
 
-resource = '/0/targeting_criteria/locations'
-params = {'location_type': 'CITY', 'q': 'port'}
+resource = '/' + API_VERSION + '/targeting_criteria/locations'
+params = {'location_type': 'CITIES', 'q': 'port'}
 request = Request(client, 'get', resource, params=params)
 cursor = Cursor(None, request)
 
