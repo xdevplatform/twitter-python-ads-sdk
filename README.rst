@@ -88,7 +88,14 @@ by following the examples below.
     cd twitter-python-ads-sdk
 
     # install dependencies
-    pip install -r requirements.txt
+    pip install pipenv
+    pipenv install
+
+    # active environment
+    pipenv shell
+
+    # run example
+    pipenv run python examples/manual_request.py
 
     # installing a local unsigned release
     pip install -e .
