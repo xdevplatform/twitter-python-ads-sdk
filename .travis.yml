@@ -22,4 +22,5 @@ matrix:
       script: pip install setuptools_scm && python setup.py test 
 
 install:
-  - pip install pipenv && pipenv install
+  - pip install pipenv
+  - pipenv sync
