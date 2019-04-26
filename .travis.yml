@@ -20,3 +20,6 @@ matrix:
       script: python setup.py flake8 && python setup.py test
     - python: pypy3
       script: pip install setuptools_scm && python setup.py test 
+
+install:
+  - pip install pipenv && pipenv install
