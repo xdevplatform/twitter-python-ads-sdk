@@ -2,7 +2,6 @@
 
 """Container for all HTTP request and response logic for the SDK."""
 
-import os
 import sys
 import platform
 import logging
@@ -15,11 +14,9 @@ else:
     import http.client as httplib
 
 import dateutil.parser
-from datetime import datetime, timedelta
-
+from datetime import datetime
 from requests_oauthlib import OAuth1Session
-
-from twitter_ads.utils import get_version, http_time, size
+from twitter_ads.utils import get_version
 from twitter_ads.error import Error
 
 
@@ -186,4 +183,3 @@ class Response(object):
     @property
     def error(self):
         return True if (self._code >= 400 and self._code <= 599) else False
-
