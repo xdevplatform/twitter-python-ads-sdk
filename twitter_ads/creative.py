@@ -548,3 +548,26 @@ resource_property(CardsFetch, 'website_shortened_url', readonly=True)
 resource_property(CardsFetch, 'website_title', readonly=True)
 resource_property(CardsFetch, 'website_url', readonly=True)
 resource_property(CardsFetch, 'wide_app_image', readonly=True)
+
+
+class TweetPreview(Resource):
+
+    PROPERTIES = {}
+
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/tweet_previews'
+
+    @classmethod
+    def load(klass, account, tweet_ids=None, tweet_type=None):
+        params = {}
+
+        params['tweet_ids'] = ','.join(map(str, tweet_ids))
+        params['tweet_type'] = tweet_type
+        resource = klass.RESOURCE_COLLECTION.format(account_id=account.id)
+        request = Request(account.client, 'get', resource, params=params)
+        return Cursor(klass, request, init_with=[account])
+
+
+# tweet preview properties
+# read-only
+resource_property(TweetPreview, 'preview', readonly=True)
+resource_property(TweetPreview, 'tweet_id', readonly=True)
