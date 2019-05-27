@@ -1,7 +1,6 @@
 # Copyright (C) 2015 Twitter, Inc.
 
 import os
-import sys
 from setuptools import setup, find_packages
 
 DESCRIPTION = 'A Twitter supported and maintained Ads API SDK for Python.'
@@ -39,7 +38,7 @@ CLASSIFIERS = [
 ]
 
 extra_opts = {
-    'setup_requires': ['pytest-runner'],
+    'setup_requires': ['flake8', 'pytest-runner'],
     'tests_require': ['pytest', 'responses', 'mock']
 }
 
