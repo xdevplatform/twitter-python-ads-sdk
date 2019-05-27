@@ -58,15 +58,6 @@ def http_time(time):
     return formatdate(timeval=mktime(time.timetuple()), localtime=False, usegmt=True)
 
 
-def size(default_chunk_size, response_time_max, response_time_actual):
-    """Determines the chunk size based on response times."""
-    if response_time_actual == 0:
-        response_time_actual = 1
-    scale = 1 / (response_time_actual / response_time_max)
-    size = int(default_chunk_size * scale)
-    return min(max(size, 1), default_chunk_size)
-
-
 def validate_whole_hours(time):
     if type(time) is datetime.date:
         pass
