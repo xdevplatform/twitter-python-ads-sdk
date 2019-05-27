@@ -2,6 +2,14 @@ from twitter_ads.client import Client
 from twitter_ads.campaign import Tweet
 from twitter_ads.creative import WebsiteCard
 
+"""
+"Tweet.preview()" will no longer be available on August 20, 2019.
+ https://twittercommunity.com/t/announcement-new-and-improved-tweet-previews/126064
+
+Please use "TweetPreview.load()" instead. See examples/tweet_previews.py for reference.
+"""
+
+
 CONSUMER_KEY = 'your consumer key'
 CONSUMER_SECRET = 'your consumer secret'
 ACCESS_TOKEN = 'access token'
