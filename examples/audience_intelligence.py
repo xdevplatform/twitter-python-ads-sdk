@@ -28,9 +28,9 @@ ai.audience_definition = AUDIENCE_DEFINITION.TARGETING_CRITERIA
 response = ai.conversations()
 for i in range(0, response.count):
 	ai = response.next()
-	print ai.localized['targeting_type']
-	print ai.localized['targeting_value']
-	print "\n"
+	print(ai.localized['targeting_type'])
+	print(ai.localized['targeting_value'])
+	print("\n")
 
 # create a new instance of AI to get demographics
 ai = AudienceIntelligence(account)
@@ -38,10 +38,10 @@ ai.targeting_inputs =  [{
     "targeting_type": 'BROAD_MATCH_KEYWORD',
     "targeting_value": 'womensmarch2018',
     "start_time": '2017-12-31'
-	}]
+    }]
 ai.audience_definition = AUDIENCE_DEFINITION.KEYWORD_AUDIENCE
 response = ai.demographics()
 for key in response.keys():
-	print key
-	print response[key]
-	print "\n"
+	print(key)
+	print(response[key])
+	print("\n")

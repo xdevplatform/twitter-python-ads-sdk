@@ -23,7 +23,7 @@ account = client.accounts(ACCOUNT_ID)
 line_item_id = account.line_items().first.id
 
 # retrive the `id` of the media creative associated with a line item
-print account.media_creatives().first.id
+print(account.media_creatives().first.id)
 
 # retrieve the `id` of the first account media associated with the account
 account_media_id = account.account_media().first.id

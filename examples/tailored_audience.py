@@ -36,4 +36,4 @@ user = [{
 # update the tailored audience
 success_count, total_count = audience.users(user)
 if success_count == total_count:
-    print "Successfully added {total_count} users".format(total_count=total_count)
+    print(("Successfully added {total_count} users").format(total_count=total_count))
