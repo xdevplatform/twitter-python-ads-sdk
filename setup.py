@@ -65,7 +65,7 @@ setup(
     platforms=['any'],
     classifiers=CLASSIFIERS,
     scripts=['bin/twitter-ads'],
-    install_requires=['pyyaml', 'requests-oauthlib', 'python-dateutil'],
+    install_requires=['pyyaml', 'requests-oauthlib', 'python-dateutil', 'pipenv'],
     packages=find_packages(exclude=['docs', 'tests']),
     **extra_opts
 )
