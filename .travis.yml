@@ -15,5 +15,7 @@ matrix:
       script: python setup.py flake8 && python setup.py test
     - python: 3.7
       script: python setup.py flake8 && python setup.py test
+    - python: pypy
+      script: python setup.py flake8 && python setup.py test
     - python: pypy3
       script: python setup.py flake8 && python setup.py test
