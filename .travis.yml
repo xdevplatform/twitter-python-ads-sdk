@@ -1,3 +1,4 @@
+dist: xenial
 language: python
 
 branches:
@@ -10,13 +11,13 @@ matrix:
   include:
     - python: 2.7
       script: python setup.py flake8 && python setup.py test
-    - python: 3.3
-      script: python setup.py test
-    - python: 3.4
-      script: python setup.py test
     - python: 3.5
-      script: python setup.py test
+      script: python setup.py flake8 && python setup.py test
+    - python: 3.6
+      script: python setup.py flake8 && python setup.py test
+    - python: 3.7
+      script: python setup.py flake8 && python setup.py test
     - python: pypy
       script: python setup.py flake8 && python setup.py test
     - python: pypy3
-      script: pip install setuptools_scm && python setup.py test 
+      script: python setup.py flake8 && python setup.py test 

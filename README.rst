@@ -66,9 +66,9 @@ versions we officially support and regularly test against.
 +------------+-------------------------+
 | Platform   | Versions                |
 +============+=========================+
-| CPython    | 2.7, 3.3, 3.4, 3.5      |
+| CPython    | 2.7, 3.5, 3.6, 3.7      |
 +------------+-------------------------+
-| PyPy       | 2.x, 4.x                |
+| PyPy       | 7.x                     |
 +------------+-------------------------+
 
 All releases adhere to strict `semantic versioning`_. For Example,

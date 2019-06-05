@@ -10,7 +10,7 @@ from twitter_ads import API_VERSION
 
 from twitter_ads.resource import resource_property, Resource
 from twitter_ads.creative import (AccountMedia, MediaCreative, ScheduledTweet,
-                                  Video, VideoWebsiteCard)
+                                  VideoWebsiteCard, PromotedTweet)
 from twitter_ads.audience import TailoredAudience
 from twitter_ads.campaign import (AppList, Campaign, FundingInstrument, LineItem,
                                   PromotableUser, ScheduledPromotedTweet)
@@ -119,12 +119,6 @@ class Account(Resource):
         """
         return self._load_resource(TailoredAudience, id, **kwargs)
 
-    def videos(self, id=None, **kwargs):
-        """
-        Returns a collection of videos available to the current account.
-        """
-        return self._load_resource(Video, id, **kwargs)
-
     def account_media(self, id=None, **kwargs):
         """
         Returns a collection of account media available to the current account.
@@ -142,6 +136,12 @@ class Account(Resource):
         Returns a collection of Scheduled Tweets available to the current account.
         """
         return self._load_resource(ScheduledTweet, id, **kwargs)
+
+    def promoted_tweets(self, id=None, **kwargs):
+        """
+        Returns a collection of promoted tweets available to the current account.
+        """
+        return self._load_resource(PromotedTweet, id, **kwargs)
 
     def scheduled_promoted_tweets(self, id=None, **kwargs):
         """
@@ -180,3 +180,6 @@ resource_property(Account, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
 resource_property(Account, 'timezone_switch_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(Account, 'created_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(Account, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
+# writable
+resource_property(Account, 'account_name')
+resource_property(Account, 'industry_type')

@@ -2,7 +2,6 @@
 
 """Container for all HTTP request and response logic for the SDK."""
 
-import os
 import sys
 import platform
 import logging
@@ -15,11 +14,9 @@ else:
     import http.client as httplib
 
 import dateutil.parser
-from datetime import datetime, timedelta
-
+from datetime import datetime
 from requests_oauthlib import OAuth1Session
-
-from twitter_ads.utils import get_version, http_time, size
+from twitter_ads.utils import get_version
 from twitter_ads.error import Error
 
 
@@ -133,7 +130,7 @@ class Response(object):
             # Content-Type: application/json
             # instead it returns:
             # Content-Type: application/gzip
-            raw_response_body = zlib.decompress(self._raw_body, 16 + zlib.MAX_WBITS).decode()
+            raw_response_body = zlib.decompress(self._raw_body, 16 + zlib.MAX_WBITS).decode('utf-8')
         else:
             raw_response_body = self._raw_body
 
@@ -186,137 +183,3 @@ class Response(object):
     @property
     def error(self):
         return True if (self._code >= 400 and self._code <= 599) else False
-
-
-class TONUpload(object):
-    """Specialized request class for TON API uploads."""
-
-    _DEFAULT_DOMAIN = 'https://ton.twitter.com'
-    _DEFAULT_RESOURCE = '/1.1/ton/bucket/'
-    _DEFAULT_BUCKET = 'ta_partner'
-    _DEFAULT_EXPIRE = datetime.now() + timedelta(days=10)
-    _DEFAULT_CHUNK_SIZE = 64
-    _SINGLE_UPLOAD_MAX = 1024 * 1024 * _DEFAULT_CHUNK_SIZE
-    _RESPONSE_TIME_MAX = 5000
-
-    def __init__(self, client, file_path, **kwargs):
-        if not os.path.isfile(file_path):
-            msg = "Error! The specified file does not exist. ({0})".format(file_path)
-            raise ValueError(msg)
-
-        self._file_path = os.path.abspath(file_path)
-        self._file_size = os.path.getsize(self._file_path)
-        self._client = client
-        self._options = kwargs.copy()
-        self._bucket = self._options.pop('bucket', self._DEFAULT_BUCKET)
-
-    @property
-    def options(self):
-        return self._options
-
-    @property
-    def client(self):
-        return self._client
-
-    @property
-    def bucket(self):
-        return self._bucket
-
-    @property
-    def content_type(self):
-        """Returns the content-type value determined by file extension."""
-
-        if hasattr(self, '_content_type'):
-            return self._content_type
-
-        filename, extension = os.path.splitext(self._file_path)
-        if extension == '.csv':
-            self._content_type = 'text/csv'
-        elif extension == '.tsv':
-            self._content_type = 'text/tab-separated-values'
-        else:
-            self._content_type = 'text/plain'
-
-        return self._content_type
-
-    def perform(self):
-        """Executes the current TONUpload object."""
-
-        if self._file_size < self._SINGLE_UPLOAD_MAX:
-            resource = "{0}{1}".format(self._DEFAULT_RESOURCE, self.bucket)
-            response = self.__upload(resource, open(self._file_path, 'rb').read())
-            return response.headers['location']
-        else:
-            response = self.__init_chunked_upload()
-            min_chunk_size = int(response.headers['x-ton-min-chunk-size'])
-            chunk_size = min_chunk_size * self._DEFAULT_CHUNK_SIZE
-            location = response.headers['location']
-
-            f = open(self._file_path, 'rb')
-            bytes_read = 0
-            while True:
-                bytes = f.read(chunk_size)
-                if not bytes:
-                    break
-                bytes_start = bytes_read
-                bytes_read += len(bytes)
-                response = self.__upload_chunk(location, chunk_size, bytes, bytes_start, bytes_read)
-                response_time = int(response.headers['x-response-time'])
-                chunk_size = min_chunk_size * size(self._DEFAULT_CHUNK_SIZE,
-                                                   self._RESPONSE_TIME_MAX,
-                                                   response_time)
-            f.close()
-
-            return location.split("?")[0]
-
-    def __repr__(self):
-        return '<{name} object at {mem} bucket={bucket} file={file}>'.format(
-            name=self.__class__.__name__,
-            mem=hex(id(self)),
-            bucket=self.bucket,
-            file=self._file_path
-        )
-
-    def __upload(self, resource, bytes):
-        """Performs a single chunk upload."""
-
-        # note: string conversion required here due to open encoding bug in requests-oauthlib.
-        headers = {
-            'x-ton-expires': http_time(self.options.get('x-ton-expires', self._DEFAULT_EXPIRE)),
-            'content-length': str(self._file_size),
-            'content-type': self.content_type
-        }
-
-        return Request(self._client, 'post', resource,
-                       domain=self._DEFAULT_DOMAIN, headers=headers, body=bytes).perform()
-
-    def __init_chunked_upload(self):
-        """Initialization for a multi-chunk upload."""
-
-        # note: string conversion required here due to open encoding bug in requests-oauthlib.
-        headers = {
-            'x-ton-content-type': self.content_type,
-            'x-ton-content-length': str(self._file_size),
-            'x-ton-expires': http_time(self.options.get('x-ton-expires', self._DEFAULT_EXPIRE)),
-            'content-length': str(0),
-            'content-type': self.content_type
-        }
-
-        resource = "{0}{1}?resumable=true".format(self._DEFAULT_RESOURCE, self._DEFAULT_BUCKET)
-
-        return Request(self._client, 'post', resource,
-                       domain=self._DEFAULT_DOMAIN, headers=headers).perform()
-
-    def __upload_chunk(self, resource, chunk_size, bytes, bytes_start, bytes_read):
-        """Uploads a single chunk of a multi-chunk upload."""
-
-        # note: string conversion required here due to open encoding bug in requests-oauthlib.
-        headers = {
-            'content-type': self.content_type,
-            'content-length': str(min([chunk_size, self._file_size - bytes_read])),
-            'content-range': "bytes {0}-{1}/{2}".format(
-                bytes_start, bytes_read - 1, self._file_size)
-        }
-
-        return Request(self._client, 'put', resource,
-                       domain=self._DEFAULT_DOMAIN, headers=headers, body=bytes).perform()

@@ -1,7 +1,6 @@
 # Copyright (C) 2015 Twitter, Inc.
 
 import os
-import sys
 from setuptools import setup, find_packages
 
 DESCRIPTION = 'A Twitter supported and maintained Ads API SDK for Python.'
@@ -29,8 +28,9 @@ CLASSIFIERS = [
     'Programming Language :: Python',
     'Programming Language :: Python :: 2.7',
     'Programming Language :: Python :: 3',
-    'Programming Language :: Python :: 3.3',
-    'Programming Language :: Python :: 3.4',
+    'Programming Language :: Python :: 3.5',
+    'Programming Language :: Python :: 3.6',
+    'Programming Language :: Python :: 3.7',
     'Programming Language :: Python :: Implementation :: CPython',
     'Programming Language :: Python :: Implementation :: PyPy',
     'Topic :: Internet',
@@ -39,18 +39,15 @@ CLASSIFIERS = [
 ]
 
 extra_opts = {
-    'setup_requires': ['pytest-runner'],
+    'setup_requires': ['flake8==3.7.7', 'pytest-runner'],
     'tests_require': ['pytest', 'responses', 'mock']
 }
-
-if sys.version_info[0] != 3:
-    extra_opts['setup_requires'].append('flake8<=2.6.2')
 
 setup(
     name='twitter-ads',
     version=VERSION,
-    author='Brandon Black, Jacob Petrie',
-    author_email='bblack@twitter.com, jpetrie@twitter.com',
+    author='John Babich, Tushar Bhushan, Juan Shishido',
+    author_email='jbabich@twitter.com, tbhushan@twitter.com, jshishido@twitter.com',
     url=URL,
     download_url=DOWNLOAD_URL,
     license='MIT',
