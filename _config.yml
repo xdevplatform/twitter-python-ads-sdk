@@ -1,0 +1,4 @@
+include:
+  - reference/_modules
+  - reference/_sources
+  - reference/_static
