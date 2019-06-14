@@ -1,123 +1,121 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>http &#8212; Twitter Ads API SDK for Python 4.0.0 documentation</title>
-    
+    <meta charset="utf-8" />
+    <title>http &#8212; Twitter Ads API SDK for Python 5.1.1 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '4.0.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="top" title="Twitter Ads API SDK for Python 4.0.0 documentation" href="../index.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head>
-  <body role="document">
+  </head><body>
   
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <div class="section" id="module-http">
-<span id="http"></span><h1><a class="reference internal" href="#module-http" title="http"><code class="xref py py-mod docutils literal"><span class="pre">http</span></code></a><a class="headerlink" href="#module-http" title="Permalink to this headline">¶</a></h1>
-<p>Container for all HTTP request and response logic for the SDK.</p>
+<span id="http"></span><h1><a class="reference internal" href="#module-http" title="http"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http</span></code></a><a class="headerlink" href="#module-http" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
-<dt id="http.Request">
-<em class="property">class </em><code class="descclassname">http.</code><code class="descname">Request</code><span class="sig-paren">(</span><em>client</em>, <em>method</em>, <em>resource</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/http.html#Request"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#http.Request" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generic container for all API requests.</p>
-</dd></dl>
-
-<dl class="class">
-<dt id="http.Response">
-<em class="property">class </em><code class="descclassname">http.</code><code class="descname">Response</code><span class="sig-paren">(</span><em>code</em>, <em>headers</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/http.html#Response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#http.Response" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generic container for API responses.</p>
-</dd></dl>
-
-<dl class="class">
-<dt id="http.TONUpload">
-<em class="property">class </em><code class="descclassname">http.</code><code class="descname">TONUpload</code><span class="sig-paren">(</span><em>client</em>, <em>file_path</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/http.html#TONUpload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#http.TONUpload" title="Permalink to this definition">¶</a></dt>
-<dd><p>Specialized request class for TON API uploads.</p>
-<dl class="attribute">
-<dt id="http.TONUpload.content_type">
-<code class="descname">content_type</code><a class="headerlink" href="#http.TONUpload.content_type" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the content-type value determined by file extension.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="http.TONUpload.perform">
-<code class="descname">perform</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/http.html#TONUpload.perform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#http.TONUpload.perform" title="Permalink to this definition">¶</a></dt>
-<dd><p>Executes the current TONUpload object.</p>
-</dd></dl>
-
+<dt id="http.HTTPStatus">
+<em class="property">class </em><code class="sig-prename descclassname">http.</code><code class="sig-name descname">HTTPStatus</code><a class="reference internal" href="../_modules/http.html#HTTPStatus"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#http.HTTPStatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>HTTP status codes and reason phrases</p>
+<p>Status codes from the following RFCs are all observed:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>RFC 7231: Hypertext Transfer Protocol (HTTP/1.1), obsoletes 2616</p></li>
+<li><p>RFC 6585: Additional HTTP Status Codes</p></li>
+<li><p>RFC 3229: Delta encoding in HTTP</p></li>
+<li><p>RFC 4918: HTTP Extensions for WebDAV, obsoletes 2518</p></li>
+<li><p>RFC 5842: Binding Extensions to WebDAV</p></li>
+<li><p>RFC 7238: Permanent Redirect</p></li>
+<li><p>RFC 2295: Transparent Content Negotiation in HTTP</p></li>
+<li><p>RFC 2774: An HTTP Extension Framework</p></li>
+<li><p>RFC 7540: Hypertext Transfer Protocol Version 2 (HTTP/2)</p></li>
+</ul>
+</div></blockquote>
 </dd></dl>
 
 </div>
 
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="relations">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Twitter Ads API SDK for Python</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">twitter_ads</span></code> – Base module for the Twitter Ads SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="account.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">account</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="audience.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">audience</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="error.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">error</span></code></a></li>
+</ul>
+
+<div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
   </ul></li>
 </ul>
 </div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="../_sources/twitter_ads/http.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
         </div>
       </div>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2015, Twitter, Inc.
+      &copy;2019, Twitter, Inc.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.8</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="../_sources/twitter_ads/http.txt"
+      <a href="../_sources/twitter_ads/http.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

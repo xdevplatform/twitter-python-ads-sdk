@@ -1,45 +1,33 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>resource &#8212; Twitter Ads API SDK for Python 4.0.0 documentation</title>
-    
+    <meta charset="utf-8" />
+    <title>resource &#8212; Twitter Ads API SDK for Python 5.1.1 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '4.0.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="top" title="Twitter Ads API SDK for Python 4.0.0 documentation" href="../index.html" />
-    <link rel="up" title="Module code" href="index.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head>
-  <body role="document">
+  </head><body>
   
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <h1>Source code for resource</h1><div class="highlight"><pre>
@@ -55,7 +43,7 @@
     <span class="kn">from</span> <span class="nn">urlparse</span> <span class="k">import</span> <span class="n">urlparse</span>
 <span class="kn">import</span> <span class="nn">json</span>
 
-<span class="kn">from</span> <span class="nn">twitter_ads.utils</span> <span class="k">import</span> <span class="n">format_time</span><span class="p">,</span> <span class="n">to_time</span>
+<span class="kn">from</span> <span class="nn">twitter_ads.utils</span> <span class="k">import</span> <span class="n">format_time</span><span class="p">,</span> <span class="n">to_time</span><span class="p">,</span> <span class="n">validate_whole_hours</span>
 <span class="kn">from</span> <span class="nn">twitter_ads.enum</span> <span class="k">import</span> <span class="n">ENTITY</span><span class="p">,</span> <span class="n">GRANULARITY</span><span class="p">,</span> <span class="n">PLACEMENT</span><span class="p">,</span> <span class="n">TRANSFORM</span>
 <span class="kn">from</span> <span class="nn">twitter_ads.http</span> <span class="k">import</span> <span class="n">Request</span>
 <span class="kn">from</span> <span class="nn">twitter_ads.cursor</span> <span class="k">import</span> <span class="n">Cursor</span>
@@ -131,15 +119,15 @@
 
         <span class="k">return</span> <span class="n">params</span></div>
 
-    <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="Resource.all"><a class="viewcode-back" href="../twitter_ads/resource.html#resource.Resource.all">[docs]</a>    <span class="k">def</span> <span class="nf">all</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="n">account</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="Resource.all"><a class="viewcode-back" href="../twitter_ads/resource.html#resource.Resource.all">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">all</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="n">account</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns a Cursor instance for a given resource.&quot;&quot;&quot;</span>
         <span class="n">resource</span> <span class="o">=</span> <span class="n">klass</span><span class="o">.</span><span class="n">RESOURCE_COLLECTION</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">account_id</span><span class="o">=</span><span class="n">account</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
         <span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="n">account</span><span class="o">.</span><span class="n">client</span><span class="p">,</span> <span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">Cursor</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">init_with</span><span class="o">=</span><span class="p">[</span><span class="n">account</span><span class="p">])</span></div>
 
-    <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="Resource.load"><a class="viewcode-back" href="../twitter_ads/resource.html#resource.Resource.load">[docs]</a>    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="n">account</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="Resource.load"><a class="viewcode-back" href="../twitter_ads/resource.html#resource.Resource.load">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="n">account</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns an object instance for a given resource.&quot;&quot;&quot;</span>
         <span class="n">resource</span> <span class="o">=</span> <span class="n">klass</span><span class="o">.</span><span class="n">RESOURCE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">account_id</span><span class="o">=</span><span class="n">account</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="nb">id</span><span class="p">)</span>
         <span class="n">response</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="n">account</span><span class="o">.</span><span class="n">client</span><span class="p">,</span> <span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">kwargs</span><span class="p">)</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
@@ -160,7 +148,7 @@
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s1">&#39;&lt;</span><span class="si">{name}</span><span class="s1"> resource at </span><span class="si">{mem}</span><span class="s1"> id=</span><span class="si">{id}</span><span class="s1">&gt;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-            <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
             <span class="n">mem</span><span class="o">=</span><span class="nb">hex</span><span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)),</span>
             <span class="nb">id</span><span class="o">=</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="p">)</span>
@@ -170,7 +158,7 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">            Error! </span><span class="si">{klass}</span><span class="s2"> object not yet initialized,</span>
 <span class="s2">            call </span><span class="si">{klass}</span><span class="s2">.load first.</span>
-<span class="s2">            &quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">klass</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="p">)</span>
+<span class="s2">            &quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">klass</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_load_resource</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">klass</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_validate_loaded</span><span class="p">()</span>
@@ -199,7 +187,7 @@
         <span class="n">json_body</span> <span class="o">=</span> <span class="p">[]</span>
 
         <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">objs</span><span class="p">:</span>
-            <span class="n">entity_type</span> <span class="o">=</span> <span class="n">klass</span><span class="o">.</span><span class="n">_ENTITY_MAP</span><span class="p">[</span><span class="n">klass</span><span class="o">.</span><span class="n">__name__</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+            <span class="n">entity_type</span> <span class="o">=</span> <span class="n">klass</span><span class="o">.</span><span class="n">_ENTITY_MAP</span><span class="p">[</span><span class="n">klass</span><span class="o">.</span><span class="vm">__name__</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
             <span class="n">obj_json</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="n">obj</span><span class="o">.</span><span class="n">to_params</span><span class="p">()}</span>
 
             <span class="k">if</span> <span class="n">obj</span><span class="o">.</span><span class="n">id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -263,19 +251,22 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">ANALYTICS_MAP</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s1">&#39;Campaign&#39;</span><span class="p">:</span> <span class="n">ENTITY</span><span class="o">.</span><span class="n">CAMPAIGN</span><span class="p">,</span>
+        <span class="s1">&#39;FundingInstrument&#39;</span><span class="p">:</span> <span class="n">ENTITY</span><span class="o">.</span><span class="n">FUNDING_INSTRUMENT</span><span class="p">,</span>
         <span class="s1">&#39;LineItem&#39;</span><span class="p">:</span> <span class="n">ENTITY</span><span class="o">.</span><span class="n">LINE_ITEM</span><span class="p">,</span>
+        <span class="s1">&#39;MediaCreative&#39;</span><span class="p">:</span> <span class="n">ENTITY</span><span class="o">.</span><span class="n">MEDIA_CREATIVE</span><span class="p">,</span>
         <span class="s1">&#39;OrganicTweet&#39;</span><span class="p">:</span> <span class="n">ENTITY</span><span class="o">.</span><span class="n">ORGANIC_TWEET</span><span class="p">,</span>
         <span class="s1">&#39;PromotedTweet&#39;</span><span class="p">:</span> <span class="n">ENTITY</span><span class="o">.</span><span class="n">PROMOTED_TWEET</span>
     <span class="p">}</span>
 
     <span class="n">RESOURCE_SYNC</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">API_VERSION</span> <span class="o">+</span> <span class="s1">&#39;/stats/accounts/</span><span class="si">{account_id}</span><span class="s1">&#39;</span>
     <span class="n">RESOURCE_ASYNC</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">API_VERSION</span> <span class="o">+</span> <span class="s1">&#39;/stats/jobs/accounts/</span><span class="si">{account_id}</span><span class="s1">&#39;</span>
+    <span class="n">RESOURCE_ACTIVE_ENTITIES</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">API_VERSION</span> <span class="o">+</span> <span class="s1">&#39;/stats/accounts/</span><span class="si">{account_id}</span><span class="s1">/active_entities&#39;</span>
 
 <div class="viewcode-block" id="Analytics.stats"><a class="viewcode-back" href="../twitter_ads/resource.html#resource.Analytics.stats">[docs]</a>    <span class="k">def</span> <span class="nf">stats</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metrics</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>  <span class="c1"># noqa</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Pulls a list of metrics for the current object instance.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">all_stats</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">account</span><span class="p">,</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">],</span> <span class="n">metrics</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">all_stats</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">account</span><span class="p">,</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">],</span> <span class="n">metrics</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
     <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">_standard_params</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="n">ids</span><span class="p">,</span> <span class="n">metric_groups</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -292,7 +283,7 @@
             <span class="s1">&#39;start_time&#39;</span><span class="p">:</span> <span class="n">to_time</span><span class="p">(</span><span class="n">start_time</span><span class="p">,</span> <span class="n">granularity</span><span class="p">),</span>
             <span class="s1">&#39;end_time&#39;</span><span class="p">:</span> <span class="n">to_time</span><span class="p">(</span><span class="n">end_time</span><span class="p">,</span> <span class="n">granularity</span><span class="p">),</span>
             <span class="s1">&#39;granularity&#39;</span><span class="p">:</span> <span class="n">granularity</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span>
-            <span class="s1">&#39;entity&#39;</span><span class="p">:</span> <span class="n">klass</span><span class="o">.</span><span class="n">ANALYTICS_MAP</span><span class="p">[</span><span class="n">klass</span><span class="o">.</span><span class="n">__name__</span><span class="p">],</span>
+            <span class="s1">&#39;entity&#39;</span><span class="p">:</span> <span class="n">klass</span><span class="o">.</span><span class="n">ANALYTICS_MAP</span><span class="p">[</span><span class="n">klass</span><span class="o">.</span><span class="vm">__name__</span><span class="p">],</span>
             <span class="s1">&#39;placement&#39;</span><span class="p">:</span> <span class="n">placement</span>
         <span class="p">}</span>
 
@@ -300,8 +291,8 @@
 
         <span class="k">return</span> <span class="n">params</span>
 
-    <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="Analytics.all_stats"><a class="viewcode-back" href="../twitter_ads/resource.html#resource.Analytics.all_stats">[docs]</a>    <span class="k">def</span> <span class="nf">all_stats</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="n">account</span><span class="p">,</span> <span class="n">ids</span><span class="p">,</span> <span class="n">metric_groups</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="Analytics.all_stats"><a class="viewcode-back" href="../twitter_ads/resource.html#resource.Analytics.all_stats">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">all_stats</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="n">account</span><span class="p">,</span> <span class="n">ids</span><span class="p">,</span> <span class="n">metric_groups</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Pulls a list of metrics for a specified set of object IDs.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -311,8 +302,8 @@
         <span class="n">response</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="n">account</span><span class="o">.</span><span class="n">client</span><span class="p">,</span> <span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span></div>
 
-    <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="Analytics.queue_async_stats_job"><a class="viewcode-back" href="../twitter_ads/resource.html#resource.Analytics.queue_async_stats_job">[docs]</a>    <span class="k">def</span> <span class="nf">queue_async_stats_job</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="n">account</span><span class="p">,</span> <span class="n">ids</span><span class="p">,</span> <span class="n">metric_groups</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="Analytics.queue_async_stats_job"><a class="viewcode-back" href="../twitter_ads/resource.html#resource.Analytics.queue_async_stats_job">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">queue_async_stats_job</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="n">account</span><span class="p">,</span> <span class="n">ids</span><span class="p">,</span> <span class="n">metric_groups</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Queues a list of metrics for a specified set of object IDs asynchronously</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -326,8 +317,8 @@
         <span class="n">response</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="n">account</span><span class="o">.</span><span class="n">client</span><span class="p">,</span> <span class="s1">&#39;post&#39;</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span></div>
 
-    <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="Analytics.async_stats_job_result"><a class="viewcode-back" href="../twitter_ads/resource.html#resource.Analytics.async_stats_job_result">[docs]</a>    <span class="k">def</span> <span class="nf">async_stats_job_result</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="n">account</span><span class="p">,</span> <span class="n">job_id</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="Analytics.async_stats_job_result"><a class="viewcode-back" href="../twitter_ads/resource.html#resource.Analytics.async_stats_job_result">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">async_stats_job_result</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="n">account</span><span class="p">,</span> <span class="n">job_id</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the results of the specified async job IDs</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -340,8 +331,8 @@
 
         <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span></div>
 
-    <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="Analytics.async_stats_job_data"><a class="viewcode-back" href="../twitter_ads/resource.html#resource.Analytics.async_stats_job_data">[docs]</a>    <span class="k">def</span> <span class="nf">async_stats_job_data</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="n">account</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="Analytics.async_stats_job_data"><a class="viewcode-back" href="../twitter_ads/resource.html#resource.Analytics.async_stats_job_data">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">async_stats_job_data</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="n">account</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the results of the specified async job IDs</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -351,14 +342,53 @@
         <span class="n">response</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="n">account</span><span class="o">.</span><span class="n">client</span><span class="p">,</span> <span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="n">resource</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">domain</span><span class="p">,</span>
                            <span class="n">raw_body</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
 
-        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span></div></div>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span></div>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">active_entities</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="n">account</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">entity_type</span> <span class="o">=</span> <span class="n">klass</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="k">if</span> <span class="n">entity_type</span> <span class="o">==</span> <span class="s1">&#39;OrganicTweet&#39;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;OrganicTweet&#39; not support with &#39;active_entities&#39;&quot;</span><span class="p">)</span>
+
+        <span class="c1"># The start and end times must be expressed in whole hours</span>
+        <span class="n">validate_whole_hours</span><span class="p">(</span><span class="n">start_time</span><span class="p">)</span>
+        <span class="n">validate_whole_hours</span><span class="p">(</span><span class="n">end_time</span><span class="p">)</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;entity&#39;</span><span class="p">:</span> <span class="n">klass</span><span class="o">.</span><span class="n">ANALYTICS_MAP</span><span class="p">[</span><span class="n">entity_type</span><span class="p">],</span>
+            <span class="s1">&#39;start_time&#39;</span><span class="p">:</span> <span class="n">to_time</span><span class="p">(</span><span class="n">start_time</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+            <span class="s1">&#39;end_time&#39;</span><span class="p">:</span> <span class="n">to_time</span><span class="p">(</span><span class="n">end_time</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="p">}</span>
+
+        <span class="n">resource</span> <span class="o">=</span> <span class="n">klass</span><span class="o">.</span><span class="n">RESOURCE_ACTIVE_ENTITIES</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">account_id</span><span class="o">=</span><span class="n">account</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="n">account</span><span class="o">.</span><span class="n">client</span><span class="p">,</span> <span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span></div>
 </pre></div>
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="relations">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Twitter Ads API SDK for Python</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../twitter_ads/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">twitter_ads</span></code> – Base module for the Twitter Ads SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../twitter_ads/account.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">account</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../twitter_ads/audience.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">audience</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../twitter_ads/error.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">error</span></code></a></li>
+</ul>
+
+<div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
@@ -368,25 +398,33 @@
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
         </div>
       </div>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2015, Twitter, Inc.
+      &copy;2019, Twitter, Inc.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.8</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>
 

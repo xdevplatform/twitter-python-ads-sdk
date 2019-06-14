@@ -1,0 +1,326 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>audience &#8212; Twitter Ads API SDK for Python 5.1.1 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for audience</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (C) 2015 Twitter, Inc.</span>
+
+<span class="sd">&quot;&quot;&quot;Container for all audience management logic used by the Ads API SDK.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">twitter_ads.enum</span> <span class="k">import</span> <span class="n">TRANSFORM</span>
+<span class="kn">from</span> <span class="nn">twitter_ads.resource</span> <span class="k">import</span> <span class="n">resource_property</span><span class="p">,</span> <span class="n">Resource</span>
+<span class="kn">from</span> <span class="nn">twitter_ads.http</span> <span class="k">import</span> <span class="n">Request</span>
+<span class="kn">from</span> <span class="nn">twitter_ads.error</span> <span class="k">import</span> <span class="n">BadRequest</span>
+<span class="kn">from</span> <span class="nn">twitter_ads.cursor</span> <span class="k">import</span> <span class="n">Cursor</span>
+<span class="kn">from</span> <span class="nn">twitter_ads</span> <span class="k">import</span> <span class="n">API_VERSION</span>
+
+<span class="kn">import</span> <span class="nn">json</span>
+
+
+<div class="viewcode-block" id="TailoredAudience"><a class="viewcode-back" href="../twitter_ads/audience.html#audience.TailoredAudience">[docs]</a><span class="k">class</span> <span class="nc">TailoredAudience</span><span class="p">(</span><span class="n">Resource</span><span class="p">):</span>
+
+    <span class="n">PROPERTIES</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">RESOURCE_COLLECTION</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">API_VERSION</span> <span class="o">+</span> <span class="s1">&#39;/accounts/</span><span class="si">{account_id}</span><span class="s1">/tailored_audiences&#39;</span>
+    <span class="n">RESOURCE</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">API_VERSION</span> <span class="o">+</span> <span class="s1">&#39;/accounts/</span><span class="si">{account_id}</span><span class="s1">/tailored_audiences/</span><span class="si">{id}</span><span class="s1">&#39;</span>
+    <span class="n">RESOURCE_USERS</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">API_VERSION</span> <span class="o">+</span> <span class="s1">&#39;/accounts/</span><span class="si">{account_id}</span><span class="s1">/tailored_audiences/</span><span class="se">\</span>
+<span class="si">{id}</span><span class="s1">/users&#39;</span>
+    <span class="n">RESOURCE_PERMISSIONS</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">API_VERSION</span> <span class="o">+</span> <span class="s1">&#39;/accounts/</span><span class="si">{account_id}</span><span class="s1">/tailored_audiences/</span><span class="se">\</span>
+<span class="si">{id}</span><span class="s1">/permissions&#39;</span>
+
+<div class="viewcode-block" id="TailoredAudience.create"><a class="viewcode-back" href="../twitter_ads/audience.html#audience.TailoredAudience.create">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="n">account</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Creates a new tailored audience.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">audience</span> <span class="o">=</span> <span class="n">klass</span><span class="p">(</span><span class="n">account</span><span class="p">)</span>
+        <span class="nb">getattr</span><span class="p">(</span><span class="n">audience</span><span class="p">,</span> <span class="s1">&#39;__create_audience__&#39;</span><span class="p">)(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">audience</span><span class="o">.</span><span class="n">reload</span><span class="p">()</span>
+        <span class="k">except</span> <span class="n">BadRequest</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">audience</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+            <span class="k">raise</span> <span class="n">e</span></div>
+
+<div class="viewcode-block" id="TailoredAudience.users"><a class="viewcode-back" href="../twitter_ads/audience.html#audience.TailoredAudience.users">[docs]</a>    <span class="k">def</span> <span class="nf">users</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This is a private API and requires whitelisting from Twitter.</span>
+<span class="sd">        This endpoint will allow partners to add, update and remove users from a given</span>
+<span class="sd">            tailored_audience_id.</span>
+<span class="sd">        The endpoint will also accept multiple user identifier types per user as well.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">RESOURCE_USERS</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">account_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">account</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">}</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">account</span><span class="o">.</span><span class="n">client</span><span class="p">,</span>
+                           <span class="s1">&#39;post&#39;</span><span class="p">,</span>
+                           <span class="n">resource</span><span class="p">,</span>
+                           <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span>
+                           <span class="n">body</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">params</span><span class="p">))</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
+        <span class="n">success_count</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;success_count&#39;</span><span class="p">]</span>
+        <span class="n">total_count</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;total_count&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">success_count</span><span class="p">,</span> <span class="n">total_count</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TailoredAudience.delete"><a class="viewcode-back" href="../twitter_ads/audience.html#audience.TailoredAudience.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Deletes the current tailored audience instance.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">RESOURCE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">account_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">account</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">account</span><span class="o">.</span><span class="n">client</span><span class="p">,</span> <span class="s1">&#39;delete&#39;</span><span class="p">,</span> <span class="n">resource</span><span class="p">)</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">from_response</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="TailoredAudience.permissions"><a class="viewcode-back" href="../twitter_ads/audience.html#audience.TailoredAudience.permissions">[docs]</a>    <span class="k">def</span> <span class="nf">permissions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a collection of permissions for the curent tailored audience.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validate_loaded</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">TailoredAudiencePermission</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">account</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">__create_audience__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">}</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">RESOURCE_COLLECTION</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">account_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">account</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">account</span><span class="o">.</span><span class="n">client</span><span class="p">,</span> <span class="s1">&#39;post&#39;</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">from_response</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">])</span></div>
+
+
+<span class="c1"># tailored audience properties</span>
+<span class="c1"># read-only</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">TailoredAudience</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">TailoredAudience</span><span class="p">,</span> <span class="s1">&#39;created_at&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">TailoredAudience</span><span class="p">,</span> <span class="s1">&#39;updated_at&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">TailoredAudience</span><span class="p">,</span> <span class="s1">&#39;deleted&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">BOOL</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">TailoredAudience</span><span class="p">,</span> <span class="s1">&#39;audience_size&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">TailoredAudience</span><span class="p">,</span> <span class="s1">&#39;audience_type&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">TailoredAudience</span><span class="p">,</span> <span class="s1">&#39;metadata&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">TailoredAudience</span><span class="p">,</span> <span class="s1">&#39;partner_source&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">TailoredAudience</span><span class="p">,</span> <span class="s1">&#39;reasons_not_targetable&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">TailoredAudience</span><span class="p">,</span> <span class="s1">&#39;targetable&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">TailoredAudience</span><span class="p">,</span> <span class="s1">&#39;targetable_types&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1"># writable</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">TailoredAudience</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">TailoredAudience</span><span class="p">,</span> <span class="s1">&#39;list_type&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="TailoredAudiencePermission"><a class="viewcode-back" href="../twitter_ads/audience.html#audience.TailoredAudiencePermission">[docs]</a><span class="k">class</span> <span class="nc">TailoredAudiencePermission</span><span class="p">(</span><span class="n">Resource</span><span class="p">):</span>
+
+    <span class="n">PROPERTIES</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="n">RESOURCE_COLLECTION</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">API_VERSION</span> <span class="o">+</span> <span class="s1">&#39;/accounts/</span><span class="si">{account_id}</span><span class="s1">/tailored_audiences/&#39;</span>
+    <span class="n">RESOURCE_COLLECTION</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="si">{tailored_audience_id}</span><span class="s1">/permissions&#39;</span>
+    <span class="n">RESOURCE</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">API_VERSION</span> <span class="o">+</span> <span class="s1">&#39;/accounts/</span><span class="si">{account_id}</span><span class="s1">/tailored_audiences/</span><span class="se">\</span>
+<span class="si">{tailored_audience_id}</span><span class="s1">/permissions/</span><span class="si">{id}</span><span class="s1">&#39;</span>
+
+<div class="viewcode-block" id="TailoredAudiencePermission.all"><a class="viewcode-back" href="../twitter_ads/audience.html#audience.TailoredAudiencePermission.all">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">all</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="n">account</span><span class="p">,</span> <span class="n">tailored_audience_id</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a Cursor instance for the given tailored audience permission resource.&quot;&quot;&quot;</span>
+
+        <span class="n">resource</span> <span class="o">=</span> <span class="n">klass</span><span class="o">.</span><span class="n">RESOURCE_COLLECTION</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">account_id</span><span class="o">=</span><span class="n">account</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+            <span class="n">tailored_audience_id</span><span class="o">=</span><span class="n">tailored_audience_id</span><span class="p">)</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="n">account</span><span class="o">.</span><span class="n">client</span><span class="p">,</span> <span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">Cursor</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">init_with</span><span class="o">=</span><span class="p">[</span><span class="n">account</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="TailoredAudiencePermission.save"><a class="viewcode-back" href="../twitter_ads/audience.html#audience.TailoredAudiencePermission.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Saves or updates the current tailored audience permission.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
+            <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;put&#39;</span>
+            <span class="n">resource</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">RESOURCE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">account_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">account</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                <span class="n">tailored_audience_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tailored_audience_id</span><span class="p">,</span>
+                <span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;post&#39;</span>
+            <span class="n">resource</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">RESOURCE_COLLECTION</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">account_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">account</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                <span class="n">tailored_audience_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tailored_audience_id</span><span class="p">)</span>
+
+        <span class="n">response</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">account</span><span class="o">.</span><span class="n">client</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span>
+            <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">to_params</span><span class="p">())</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">from_response</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="TailoredAudiencePermission.delete"><a class="viewcode-back" href="../twitter_ads/audience.html#audience.TailoredAudiencePermission.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Deletes the current tailored audience permission.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">RESOURCE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">account_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">account</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+            <span class="n">tailored_audience_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tailored_audience_id</span><span class="p">,</span>
+            <span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">account</span><span class="o">.</span><span class="n">client</span><span class="p">,</span> <span class="s1">&#39;delete&#39;</span><span class="p">,</span> <span class="n">resource</span><span class="p">)</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">from_response</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">])</span></div></div>
+
+
+<span class="c1"># tailored audience permission properties</span>
+<span class="c1"># read-only</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">TailoredAudiencePermission</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">TailoredAudiencePermission</span><span class="p">,</span> <span class="s1">&#39;created_at&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">TailoredAudiencePermission</span><span class="p">,</span> <span class="s1">&#39;updated_at&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">TailoredAudiencePermission</span><span class="p">,</span> <span class="s1">&#39;deleted&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">BOOL</span><span class="p">)</span>
+<span class="c1"># writable</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">TailoredAudiencePermission</span><span class="p">,</span> <span class="s1">&#39;tailored_audience_id&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">TailoredAudiencePermission</span><span class="p">,</span> <span class="s1">&#39;granted_account_id&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">TailoredAudiencePermission</span><span class="p">,</span> <span class="s1">&#39;permission_level&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="AudienceIntelligence"><a class="viewcode-back" href="../twitter_ads/audience.html#audience.AudienceIntelligence">[docs]</a><span class="k">class</span> <span class="nc">AudienceIntelligence</span><span class="p">(</span><span class="n">Resource</span><span class="p">):</span>
+
+    <span class="n">PROPERTIES</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="n">RESOURCE_BASE</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">API_VERSION</span> <span class="o">+</span> <span class="s1">&#39;/accounts/</span><span class="si">{account_id}</span><span class="s1">/audience_intelligence/&#39;</span>
+    <span class="n">RESOURCE_CONVERSATIONS</span> <span class="o">=</span> <span class="n">RESOURCE_BASE</span> <span class="o">+</span> <span class="s1">&#39;conversations&#39;</span>
+    <span class="n">RESOURCE_DEMOGRAPHICS</span> <span class="o">=</span> <span class="n">RESOURCE_BASE</span> <span class="o">+</span> <span class="s1">&#39;demographics&#39;</span>
+    <span class="n">METHOD</span> <span class="o">=</span> <span class="s1">&#39;post&#39;</span>
+    <span class="n">HEADERS</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">}</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">__get</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="n">account</span><span class="p">,</span> <span class="n">client</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Helper function to get the conversation data</span>
+<span class="sd">        Returns a Cursor instance</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="n">klass</span><span class="o">.</span><span class="n">RESOURCE_CONVERSATIONS</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">account_id</span><span class="o">=</span><span class="n">account</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+
+        <span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span>
+            <span class="n">account</span><span class="o">.</span><span class="n">client</span><span class="p">,</span> <span class="n">klass</span><span class="o">.</span><span class="n">METHOD</span><span class="p">,</span>
+            <span class="n">resource</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">klass</span><span class="o">.</span><span class="n">HEADERS</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Cursor</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">init_with</span><span class="o">=</span><span class="p">[</span><span class="n">account</span><span class="p">])</span>
+
+<div class="viewcode-block" id="AudienceIntelligence.conversations"><a class="viewcode-back" href="../twitter_ads/audience.html#audience.AudienceIntelligence.conversations">[docs]</a>    <span class="k">def</span> <span class="nf">conversations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the conversation topics for an input targeting criteria</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">body</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;conversation_type&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">conversation_type</span><span class="p">,</span>
+            <span class="s2">&quot;audience_definition&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">audience_definition</span><span class="p">,</span>
+            <span class="s2">&quot;targeting_inputs&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">targeting_inputs</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get</span><span class="p">(</span><span class="n">account</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">account</span><span class="p">,</span> <span class="n">client</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">account</span><span class="o">.</span><span class="n">client</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">body</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="AudienceIntelligence.demographics"><a class="viewcode-back" href="../twitter_ads/audience.html#audience.AudienceIntelligence.demographics">[docs]</a>    <span class="k">def</span> <span class="nf">demographics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the demographic breakdown for an input targeting criteria</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">body</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;audience_definition&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">audience_definition</span><span class="p">,</span>
+            <span class="s2">&quot;targeting_inputs&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">targeting_inputs</span>
+        <span class="p">}</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">RESOURCE_DEMOGRAPHICS</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">account_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">account</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">account</span><span class="o">.</span><span class="n">client</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">METHOD</span><span class="p">,</span>
+            <span class="n">resource</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">HEADERS</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">body</span><span class="p">))</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span></div></div>
+
+
+<span class="c1"># tailored audience permission properties</span>
+<span class="c1"># read-only</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">AudienceIntelligence</span><span class="p">,</span> <span class="s1">&#39;operator_type&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">AudienceIntelligence</span><span class="p">,</span> <span class="s1">&#39;targeting_type&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">AudienceIntelligence</span><span class="p">,</span> <span class="s1">&#39;targeting_value&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">AudienceIntelligence</span><span class="p">,</span> <span class="s1">&#39;localized&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1"># writable</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">AudienceIntelligence</span><span class="p">,</span> <span class="s1">&#39;conversation_type&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">AudienceIntelligence</span><span class="p">,</span> <span class="s1">&#39;targeting_inputs&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">AudienceIntelligence</span><span class="p">,</span> <span class="s1">&#39;audience_definition&#39;</span><span class="p">)</span>
+<span class="c1"># demographics only</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">AudienceIntelligence</span><span class="p">,</span> <span class="s1">&#39;start_time&#39;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">AudienceIntelligence</span><span class="p">,</span> <span class="s1">&#39;end_time&#39;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Twitter Ads API SDK for Python</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../twitter_ads/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">twitter_ads</span></code> – Base module for the Twitter Ads SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../twitter_ads/account.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">account</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../twitter_ads/audience.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">audience</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../twitter_ads/error.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">error</span></code></a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Twitter, Inc.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

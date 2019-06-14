@@ -1,31 +1,19 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>account &#8212; Twitter Ads API SDK for Python 4.0.0 documentation</title>
-    
+    <meta charset="utf-8" />
+    <title>account &#8212; Twitter Ads API SDK for Python 5.1.1 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '4.0.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="top" title="Twitter Ads API SDK for Python 4.0.0 documentation" href="../index.html" />
     <link rel="next" title="audience" href="audience.html" />
     <link rel="prev" title="twitter_ads – Base module for the Twitter Ads SDK" href="index.html" />
    
@@ -34,125 +22,126 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head>
-  <body role="document">
+  </head><body>
   
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <div class="section" id="module-account">
-<span id="account"></span><h1><a class="reference internal" href="#module-account" title="account"><code class="xref py py-mod docutils literal"><span class="pre">account</span></code></a><a class="headerlink" href="#module-account" title="Permalink to this headline">¶</a></h1>
+<span id="account"></span><h1><a class="reference internal" href="#module-account" title="account"><code class="xref py py-mod docutils literal notranslate"><span class="pre">account</span></code></a><a class="headerlink" href="#module-account" title="Permalink to this headline">¶</a></h1>
 <p>A Twitter supported and maintained Ads API SDK for Python.</p>
 <dl class="class">
 <dt id="account.Account">
-<em class="property">class </em><code class="descclassname">account.</code><code class="descname">Account</code><span class="sig-paren">(</span><em>client</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/account.html#Account"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#account.Account" title="Permalink to this definition">¶</a></dt>
-<dd><p>The Ads API <a class="reference internal" href="#account.Account" title="account.Account"><code class="xref py py-class docutils literal"><span class="pre">Account</span></code></a> class which functions as a context container
+<em class="property">class </em><code class="sig-prename descclassname">account.</code><code class="sig-name descname">Account</code><span class="sig-paren">(</span><em class="sig-param">client</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/account.html#Account"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#account.Account" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Ads API <a class="reference internal" href="#account.Account" title="account.Account"><code class="xref py py-class docutils literal notranslate"><span class="pre">Account</span></code></a> class which functions as a context container
 for the advertiser and nearly all interactions with the API.</p>
 <dl class="method">
 <dt id="account.Account.account_media">
-<code class="descname">account_media</code><span class="sig-paren">(</span><em>id=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/account.html#Account.account_media"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#account.Account.account_media" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">account_media</code><span class="sig-paren">(</span><em class="sig-param">id=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/account.html#Account.account_media"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#account.Account.account_media" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a collection of account media available to the current account.</p>
 </dd></dl>
 
-<dl class="classmethod">
+<dl class="method">
 <dt id="account.Account.all">
-<em class="property">classmethod </em><code class="descname">all</code><span class="sig-paren">(</span><em>klass</em>, <em>client</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/account.html#Account.all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#account.Account.all" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="sig-name descname">all</code><span class="sig-paren">(</span><em class="sig-param">client</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/account.html#Account.all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#account.Account.all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a Cursor instance for a given resource.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="account.Account.app_lists">
-<code class="descname">app_lists</code><span class="sig-paren">(</span><em>id=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/account.html#Account.app_lists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#account.Account.app_lists" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">app_lists</code><span class="sig-paren">(</span><em class="sig-param">id=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/account.html#Account.app_lists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#account.Account.app_lists" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a collection of app lists available to the current account.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="account.Account.campaigns">
-<code class="descname">campaigns</code><span class="sig-paren">(</span><em>id=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/account.html#Account.campaigns"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#account.Account.campaigns" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">campaigns</code><span class="sig-paren">(</span><em class="sig-param">id=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/account.html#Account.campaigns"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#account.Account.campaigns" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a collection of campaigns available to the current account.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="account.Account.features">
-<code class="descname">features</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/account.html#Account.features"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#account.Account.features" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">features</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/account.html#Account.features"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#account.Account.features" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a collection of features available to the current account.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="account.Account.funding_instruments">
-<code class="descname">funding_instruments</code><span class="sig-paren">(</span><em>id=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/account.html#Account.funding_instruments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#account.Account.funding_instruments" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">funding_instruments</code><span class="sig-paren">(</span><em class="sig-param">id=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/account.html#Account.funding_instruments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#account.Account.funding_instruments" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a collection of funding instruments available to
 the current account.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="account.Account.line_items">
-<code class="descname">line_items</code><span class="sig-paren">(</span><em>id=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/account.html#Account.line_items"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#account.Account.line_items" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">line_items</code><span class="sig-paren">(</span><em class="sig-param">id=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/account.html#Account.line_items"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#account.Account.line_items" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a collection of line items available to the current account.</p>
 </dd></dl>
 
-<dl class="classmethod">
+<dl class="method">
 <dt id="account.Account.load">
-<em class="property">classmethod </em><code class="descname">load</code><span class="sig-paren">(</span><em>klass</em>, <em>client</em>, <em>id</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/account.html#Account.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#account.Account.load" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="sig-name descname">load</code><span class="sig-paren">(</span><em class="sig-param">client</em>, <em class="sig-param">id</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/account.html#Account.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#account.Account.load" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns an object instance for a given resource.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="account.Account.media_creatives">
-<code class="descname">media_creatives</code><span class="sig-paren">(</span><em>id=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/account.html#Account.media_creatives"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#account.Account.media_creatives" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">media_creatives</code><span class="sig-paren">(</span><em class="sig-param">id=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/account.html#Account.media_creatives"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#account.Account.media_creatives" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a collection of media creatives available to the current account.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="account.Account.promotable_users">
-<code class="descname">promotable_users</code><span class="sig-paren">(</span><em>id=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/account.html#Account.promotable_users"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#account.Account.promotable_users" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">promotable_users</code><span class="sig-paren">(</span><em class="sig-param">id=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/account.html#Account.promotable_users"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#account.Account.promotable_users" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a collection of promotable users available to the
 current account.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="account.Account.promoted_tweets">
-<code class="descname">promoted_tweets</code><span class="sig-paren">(</span><em>id=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/account.html#Account.promoted_tweets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#account.Account.promoted_tweets" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">promoted_tweets</code><span class="sig-paren">(</span><em class="sig-param">id=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/account.html#Account.promoted_tweets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#account.Account.promoted_tweets" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a collection of promoted tweets available to the current account.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="account.Account.reload">
-<code class="descname">reload</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/account.html#Account.reload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#account.Account.reload" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">reload</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/account.html#Account.reload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#account.Account.reload" title="Permalink to this definition">¶</a></dt>
 <dd><p>Reloads all attributes for the current object instance from the API.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="account.Account.scheduled_promoted_tweets">
-<code class="descname">scheduled_promoted_tweets</code><span class="sig-paren">(</span><em>id=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/account.html#Account.scheduled_promoted_tweets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#account.Account.scheduled_promoted_tweets" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">scheduled_promoted_tweets</code><span class="sig-paren">(</span><em class="sig-param">id=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/account.html#Account.scheduled_promoted_tweets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#account.Account.scheduled_promoted_tweets" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a collection of Scheduled Promoted Tweets available to the current account.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="account.Account.scheduled_tweets">
-<code class="descname">scheduled_tweets</code><span class="sig-paren">(</span><em>id=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/account.html#Account.scheduled_tweets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#account.Account.scheduled_tweets" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">scheduled_tweets</code><span class="sig-paren">(</span><em class="sig-param">id=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/account.html#Account.scheduled_tweets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#account.Account.scheduled_tweets" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a collection of Scheduled Tweets available to the current account.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="account.Account.scoped_timeline">
-<code class="descname">scoped_timeline</code><span class="sig-paren">(</span><em>*id</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/account.html#Account.scoped_timeline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#account.Account.scoped_timeline" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">scoped_timeline</code><span class="sig-paren">(</span><em class="sig-param">*id</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/account.html#Account.scoped_timeline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#account.Account.scoped_timeline" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the most recent promotable Tweets created by the specified Twitter user.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="account.Account.tailored_audiences">
-<code class="descname">tailored_audiences</code><span class="sig-paren">(</span><em>id=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/account.html#Account.tailored_audiences"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#account.Account.tailored_audiences" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">tailored_audiences</code><span class="sig-paren">(</span><em class="sig-param">id=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/account.html#Account.tailored_audiences"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#account.Account.tailored_audiences" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a collection of tailored audiences available to the
 current account.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="account.Account.video_website_cards">
-<code class="descname">video_website_cards</code><span class="sig-paren">(</span><em>id=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/account.html#Account.video_website_cards"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#account.Account.video_website_cards" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">video_website_cards</code><span class="sig-paren">(</span><em class="sig-param">id=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/account.html#Account.video_website_cards"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#account.Account.video_website_cards" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a collection of video website cards available to the current account.</p>
 </dd></dl>
 
@@ -162,48 +151,68 @@ current account.</p>
 
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="relations">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Twitter Ads API SDK for Python</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">twitter_ads</span></code> – Base module for the Twitter Ads SDK</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">account</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="audience.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">audience</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="error.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">error</span></code></a></li>
+</ul>
+
+<div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="index.html" title="previous chapter"><code class="docutils literal"><span class="pre">twitter_ads</span></code> &#8211; Base module for the Twitter Ads SDK</a></li>
-      <li>Next: <a href="audience.html" title="next chapter"><code class="docutils literal"><span class="pre">audience</span></code></a></li>
+      <li>Previous: <a href="index.html" title="previous chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">twitter_ads</span></code> – Base module for the Twitter Ads SDK</a></li>
+      <li>Next: <a href="audience.html" title="next chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">audience</span></code></a></li>
   </ul></li>
 </ul>
 </div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="../_sources/twitter_ads/account.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
         </div>
       </div>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2015, Twitter, Inc.
+      &copy;2019, Twitter, Inc.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.8</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="../_sources/twitter_ads/account.txt"
+      <a href="../_sources/twitter_ads/account.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

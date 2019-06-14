@@ -1,93 +1,234 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>creative &#8212; Twitter Ads API SDK for Python 4.0.0 documentation</title>
-    
+    <meta charset="utf-8" />
+    <title>creative &#8212; Twitter Ads API SDK for Python 5.1.1 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '4.0.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="top" title="Twitter Ads API SDK for Python 4.0.0 documentation" href="../index.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head>
-  <body role="document">
+  </head><body>
   
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <div class="section" id="module-creative">
-<span id="creative"></span><h1><a class="reference internal" href="#module-creative" title="creative"><code class="xref py py-mod docutils literal"><span class="pre">creative</span></code></a><a class="headerlink" href="#module-creative" title="Permalink to this headline">¶</a></h1>
+<span id="creative"></span><h1><a class="reference internal" href="#module-creative" title="creative"><code class="xref py py-mod docutils literal notranslate"><span class="pre">creative</span></code></a><a class="headerlink" href="#module-creative" title="Permalink to this headline">¶</a></h1>
 <p>Container for all creative management logic used by the Ads API SDK.</p>
+<dl class="class">
+<dt id="creative.AccountMedia">
+<em class="property">class </em><code class="sig-prename descclassname">creative.</code><code class="sig-name descname">AccountMedia</code><span class="sig-paren">(</span><em class="sig-param">account</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/creative.html#AccountMedia"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#creative.AccountMedia" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="creative.CardsFetch">
+<em class="property">class </em><code class="sig-prename descclassname">creative.</code><code class="sig-name descname">CardsFetch</code><span class="sig-paren">(</span><em class="sig-param">account</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/creative.html#CardsFetch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#creative.CardsFetch" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="creative.CardsFetch.all">
+<code class="sig-name descname">all</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/creative.html#CardsFetch.all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#creative.CardsFetch.all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a Cursor instance for a given resource.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="creative.CardsFetch.load">
+<em class="property">classmethod </em><code class="sig-name descname">load</code><span class="sig-paren">(</span><em class="sig-param">account</em>, <em class="sig-param">card_uris=None</em>, <em class="sig-param">card_id=None</em>, <em class="sig-param">with_deleted=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/creative.html#CardsFetch.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#creative.CardsFetch.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an object instance for a given resource.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="creative.CardsFetch.reload">
+<code class="sig-name descname">reload</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/creative.html#CardsFetch.reload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#creative.CardsFetch.reload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reloads all attributes for the current object instance from the API.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="creative.ImageAppDownloadCard">
+<em class="property">class </em><code class="sig-prename descclassname">creative.</code><code class="sig-name descname">ImageAppDownloadCard</code><span class="sig-paren">(</span><em class="sig-param">account</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/creative.html#ImageAppDownloadCard"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#creative.ImageAppDownloadCard" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="creative.ImageConversationCard">
+<em class="property">class </em><code class="sig-prename descclassname">creative.</code><code class="sig-name descname">ImageConversationCard</code><span class="sig-paren">(</span><em class="sig-param">account</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/creative.html#ImageConversationCard"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#creative.ImageConversationCard" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="creative.MediaCreative">
+<em class="property">class </em><code class="sig-prename descclassname">creative.</code><code class="sig-name descname">MediaCreative</code><span class="sig-paren">(</span><em class="sig-param">account</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/creative.html#MediaCreative"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#creative.MediaCreative" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="creative.MediaLibrary">
+<em class="property">class </em><code class="sig-prename descclassname">creative.</code><code class="sig-name descname">MediaLibrary</code><span class="sig-paren">(</span><em class="sig-param">account</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/creative.html#MediaLibrary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#creative.MediaLibrary" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="creative.MediaLibrary.delete">
+<code class="sig-name descname">delete</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/creative.html#MediaLibrary.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#creative.MediaLibrary.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deletes the current object instance depending on the
+presence of <cite>object.id</cite>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="creative.MediaLibrary.reload">
+<code class="sig-name descname">reload</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/creative.html#MediaLibrary.reload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#creative.MediaLibrary.reload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reloads all attributes for the current object instance from the API.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="creative.MediaLibrary.save">
+<code class="sig-name descname">save</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/creative.html#MediaLibrary.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#creative.MediaLibrary.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves or updates the current object instance depending on the
+presence of <cite>object.id</cite>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="creative.PollCard">
+<em class="property">class </em><code class="sig-prename descclassname">creative.</code><code class="sig-name descname">PollCard</code><span class="sig-paren">(</span><em class="sig-param">account</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/creative.html#PollCard"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#creative.PollCard" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="creative.PromotedAccount">
+<em class="property">class </em><code class="sig-prename descclassname">creative.</code><code class="sig-name descname">PromotedAccount</code><span class="sig-paren">(</span><em class="sig-param">account</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/creative.html#PromotedAccount"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#creative.PromotedAccount" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="creative.PromotedTweet">
+<em class="property">class </em><code class="sig-prename descclassname">creative.</code><code class="sig-name descname">PromotedTweet</code><span class="sig-paren">(</span><em class="sig-param">account</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/creative.html#PromotedTweet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#creative.PromotedTweet" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="creative.PromotedTweet.save">
+<code class="sig-name descname">save</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/creative.html#PromotedTweet.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#creative.PromotedTweet.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves or updates the current object instance depending on the
+presence of <cite>object.id</cite>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="creative.ScheduledTweet">
+<em class="property">class </em><code class="sig-prename descclassname">creative.</code><code class="sig-name descname">ScheduledTweet</code><span class="sig-paren">(</span><em class="sig-param">account</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/creative.html#ScheduledTweet"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#creative.ScheduledTweet" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="creative.ScheduledTweet.preview">
+<code class="sig-name descname">preview</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/creative.html#ScheduledTweet.preview"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#creative.ScheduledTweet.preview" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an HTML preview for a Scheduled Tweet.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="creative.TweetPreview">
+<em class="property">class </em><code class="sig-prename descclassname">creative.</code><code class="sig-name descname">TweetPreview</code><span class="sig-paren">(</span><em class="sig-param">account</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/creative.html#TweetPreview"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#creative.TweetPreview" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="creative.TweetPreview.load">
+<em class="property">classmethod </em><code class="sig-name descname">load</code><span class="sig-paren">(</span><em class="sig-param">account</em>, <em class="sig-param">tweet_ids=None</em>, <em class="sig-param">tweet_type=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/creative.html#TweetPreview.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#creative.TweetPreview.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an object instance for a given resource.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="creative.VideoAppDownloadCard">
+<em class="property">class </em><code class="sig-prename descclassname">creative.</code><code class="sig-name descname">VideoAppDownloadCard</code><span class="sig-paren">(</span><em class="sig-param">account</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/creative.html#VideoAppDownloadCard"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#creative.VideoAppDownloadCard" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="creative.VideoConversationCard">
+<em class="property">class </em><code class="sig-prename descclassname">creative.</code><code class="sig-name descname">VideoConversationCard</code><span class="sig-paren">(</span><em class="sig-param">account</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/creative.html#VideoConversationCard"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#creative.VideoConversationCard" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="creative.VideoWebsiteCard">
+<em class="property">class </em><code class="sig-prename descclassname">creative.</code><code class="sig-name descname">VideoWebsiteCard</code><span class="sig-paren">(</span><em class="sig-param">account</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/creative.html#VideoWebsiteCard"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#creative.VideoWebsiteCard" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="creative.WebsiteCard">
+<em class="property">class </em><code class="sig-prename descclassname">creative.</code><code class="sig-name descname">WebsiteCard</code><span class="sig-paren">(</span><em class="sig-param">account</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/creative.html#WebsiteCard"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#creative.WebsiteCard" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
 
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="relations">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Twitter Ads API SDK for Python</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">twitter_ads</span></code> – Base module for the Twitter Ads SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="account.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">account</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="audience.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">audience</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="error.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">error</span></code></a></li>
+</ul>
+
+<div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
   </ul></li>
 </ul>
 </div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="../_sources/twitter_ads/creative.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
         </div>
       </div>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2015, Twitter, Inc.
+      &copy;2019, Twitter, Inc.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.8</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="../_sources/twitter_ads/creative.txt"
+      <a href="../_sources/twitter_ads/creative.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

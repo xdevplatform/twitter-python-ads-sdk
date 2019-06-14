@@ -1,0 +1,676 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>creative &#8212; Twitter Ads API SDK for Python 5.1.1 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for creative</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (C) 2015 Twitter, Inc.</span>
+
+<span class="sd">&quot;&quot;&quot;Container for all creative management logic used by the Ads API SDK.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">requests.exceptions</span> <span class="k">import</span> <span class="n">HTTPError</span>
+
+<span class="kn">from</span> <span class="nn">twitter_ads</span> <span class="k">import</span> <span class="n">API_VERSION</span>
+<span class="kn">from</span> <span class="nn">twitter_ads.cursor</span> <span class="k">import</span> <span class="n">Cursor</span>
+<span class="kn">from</span> <span class="nn">twitter_ads.enum</span> <span class="k">import</span> <span class="n">TRANSFORM</span>
+<span class="kn">from</span> <span class="nn">twitter_ads.http</span> <span class="k">import</span> <span class="n">Request</span>
+<span class="kn">from</span> <span class="nn">twitter_ads.resource</span> <span class="k">import</span> <span class="n">resource_property</span><span class="p">,</span> <span class="n">Resource</span><span class="p">,</span> <span class="n">Persistence</span><span class="p">,</span> <span class="n">Analytics</span>
+
+
+<div class="viewcode-block" id="PromotedAccount"><a class="viewcode-back" href="../twitter_ads/creative.html#creative.PromotedAccount">[docs]</a><span class="k">class</span> <span class="nc">PromotedAccount</span><span class="p">(</span><span class="n">Resource</span><span class="p">,</span> <span class="n">Persistence</span><span class="p">):</span>
+
+    <span class="n">PROPERTIES</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="n">RESOURCE_COLLECTION</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">API_VERSION</span> <span class="o">+</span> <span class="s1">&#39;/accounts/</span><span class="si">{account_id}</span><span class="s1">/promoted_accounts&#39;</span>
+    <span class="n">RESOURCE</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">API_VERSION</span> <span class="o">+</span> <span class="s1">&#39;/accounts/</span><span class="si">{account_id}</span><span class="s1">/promoted_accounts/</span><span class="si">{id}</span><span class="s1">&#39;</span></div>
+
+
+<span class="c1"># promoted account properties</span>
+<span class="c1"># read-only</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">PromotedAccount</span><span class="p">,</span> <span class="s1">&#39;approval_status&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">PromotedAccount</span><span class="p">,</span> <span class="s1">&#39;created_at&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">PromotedAccount</span><span class="p">,</span> <span class="s1">&#39;deleted&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">BOOL</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">PromotedAccount</span><span class="p">,</span> <span class="s1">&#39;entity_status&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">PromotedAccount</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">PromotedAccount</span><span class="p">,</span> <span class="s1">&#39;updated_at&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span>
+<span class="c1"># writable</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">PromotedAccount</span><span class="p">,</span> <span class="s1">&#39;line_item_id&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">PromotedAccount</span><span class="p">,</span> <span class="s1">&#39;user_id&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="PromotedTweet"><a class="viewcode-back" href="../twitter_ads/creative.html#creative.PromotedTweet">[docs]</a><span class="k">class</span> <span class="nc">PromotedTweet</span><span class="p">(</span><span class="n">Resource</span><span class="p">,</span> <span class="n">Persistence</span><span class="p">,</span> <span class="n">Analytics</span><span class="p">):</span>
+
+    <span class="n">PROPERTIES</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="n">RESOURCE_COLLECTION</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">API_VERSION</span> <span class="o">+</span> <span class="s1">&#39;/accounts/</span><span class="si">{account_id}</span><span class="s1">/promoted_tweets&#39;</span>
+    <span class="n">RESOURCE</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">API_VERSION</span> <span class="o">+</span> <span class="s1">&#39;/accounts/</span><span class="si">{account_id}</span><span class="s1">/promoted_tweets/</span><span class="si">{id}</span><span class="s1">&#39;</span>
+
+<div class="viewcode-block" id="PromotedTweet.save"><a class="viewcode-back" href="../twitter_ads/creative.html#creative.PromotedTweet.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Saves or updates the current object instance depending on the</span>
+<span class="sd">        presence of `object.id`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_params</span><span class="p">()</span>
+        <span class="k">if</span> <span class="s1">&#39;tweet_id&#39;</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s1">&#39;tweet_ids&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;tweet_id&#39;</span><span class="p">]]</span>
+            <span class="k">del</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;tweet_id&#39;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">HTTPError</span><span class="p">(</span><span class="s2">&quot;Method PUT not allowed.&quot;</span><span class="p">)</span>
+
+        <span class="n">resource</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">RESOURCE_COLLECTION</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">account_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">account</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">account</span><span class="o">.</span><span class="n">client</span><span class="p">,</span> <span class="s1">&#39;post&#39;</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">from_response</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span></div></div>
+
+
+<span class="c1"># promoted tweet properties</span>
+<span class="c1"># read-only</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">PromotedTweet</span><span class="p">,</span> <span class="s1">&#39;approval_status&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">PromotedTweet</span><span class="p">,</span> <span class="s1">&#39;created_at&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">PromotedTweet</span><span class="p">,</span> <span class="s1">&#39;deleted&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">BOOL</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">PromotedTweet</span><span class="p">,</span> <span class="s1">&#39;entity_status&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">PromotedTweet</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">PromotedTweet</span><span class="p">,</span> <span class="s1">&#39;updated_at&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span>
+<span class="c1"># writable</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">PromotedTweet</span><span class="p">,</span> <span class="s1">&#39;line_item_id&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">PromotedTweet</span><span class="p">,</span> <span class="s1">&#39;tweet_id&#39;</span><span class="p">)</span>  <span class="c1"># SDK limitation</span>
+
+
+<div class="viewcode-block" id="AccountMedia"><a class="viewcode-back" href="../twitter_ads/creative.html#creative.AccountMedia">[docs]</a><span class="k">class</span> <span class="nc">AccountMedia</span><span class="p">(</span><span class="n">Resource</span><span class="p">,</span> <span class="n">Persistence</span><span class="p">):</span>
+
+    <span class="n">PROPERTIES</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="n">RESOURCE_COLLECTION</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">API_VERSION</span> <span class="o">+</span> <span class="s1">&#39;/accounts/</span><span class="si">{account_id}</span><span class="s1">/account_media&#39;</span>
+    <span class="n">RESOURCE</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">API_VERSION</span> <span class="o">+</span> <span class="s1">&#39;/accounts/</span><span class="si">{account_id}</span><span class="s1">/account_media/</span><span class="si">{id}</span><span class="s1">&#39;</span></div>
+
+
+<span class="c1"># Account Media properties</span>
+<span class="c1"># read-only</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">AccountMedia</span><span class="p">,</span> <span class="s1">&#39;created_at&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">AccountMedia</span><span class="p">,</span> <span class="s1">&#39;deleted&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">BOOL</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">AccountMedia</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">AccountMedia</span><span class="p">,</span> <span class="s1">&#39;media_url&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">AccountMedia</span><span class="p">,</span> <span class="s1">&#39;updated_at&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span>
+<span class="c1"># writable</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">AccountMedia</span><span class="p">,</span> <span class="s1">&#39;creative_type&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">AccountMedia</span><span class="p">,</span> <span class="s1">&#39;media_id&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">AccountMedia</span><span class="p">,</span> <span class="s1">&#39;video_id&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="MediaCreative"><a class="viewcode-back" href="../twitter_ads/creative.html#creative.MediaCreative">[docs]</a><span class="k">class</span> <span class="nc">MediaCreative</span><span class="p">(</span><span class="n">Resource</span><span class="p">,</span> <span class="n">Persistence</span><span class="p">,</span> <span class="n">Analytics</span><span class="p">):</span>
+
+    <span class="n">PROPERTIES</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="n">RESOURCE_COLLECTION</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">API_VERSION</span> <span class="o">+</span> <span class="s1">&#39;/accounts/</span><span class="si">{account_id}</span><span class="s1">/media_creatives&#39;</span>
+    <span class="n">RESOURCE</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">API_VERSION</span> <span class="o">+</span> <span class="s1">&#39;/accounts/</span><span class="si">{account_id}</span><span class="s1">/media_creatives/</span><span class="si">{id}</span><span class="s1">&#39;</span></div>
+
+
+<span class="c1"># Media Creative properties</span>
+<span class="c1"># read-only</span>
+
+<span class="n">resource_property</span><span class="p">(</span><span class="n">MediaCreative</span><span class="p">,</span> <span class="s1">&#39;approval_status&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">MediaCreative</span><span class="p">,</span> <span class="s1">&#39;created_at&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">MediaCreative</span><span class="p">,</span> <span class="s1">&#39;deleted&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">BOOL</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">MediaCreative</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">MediaCreative</span><span class="p">,</span> <span class="s1">&#39;serving_status&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">MediaCreative</span><span class="p">,</span> <span class="s1">&#39;updated_at&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span>
+<span class="c1"># writable</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">MediaCreative</span><span class="p">,</span> <span class="s1">&#39;account_media_id&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">MediaCreative</span><span class="p">,</span> <span class="s1">&#39;landing_url&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">MediaCreative</span><span class="p">,</span> <span class="s1">&#39;line_item_id&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="WebsiteCard"><a class="viewcode-back" href="../twitter_ads/creative.html#creative.WebsiteCard">[docs]</a><span class="k">class</span> <span class="nc">WebsiteCard</span><span class="p">(</span><span class="n">Resource</span><span class="p">,</span> <span class="n">Persistence</span><span class="p">):</span>
+
+    <span class="n">PROPERTIES</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="n">RESOURCE_COLLECTION</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">API_VERSION</span> <span class="o">+</span> <span class="s1">&#39;/accounts/</span><span class="si">{account_id}</span><span class="s1">/cards/website&#39;</span>
+    <span class="n">RESOURCE</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">API_VERSION</span> <span class="o">+</span> <span class="s1">&#39;/accounts/</span><span class="si">{account_id}</span><span class="s1">/cards/website/</span><span class="si">{id}</span><span class="s1">&#39;</span></div>
+
+
+<span class="c1"># website card properties</span>
+<span class="c1"># read-only</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">WebsiteCard</span><span class="p">,</span> <span class="s1">&#39;card_type&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">WebsiteCard</span><span class="p">,</span> <span class="s1">&#39;card_uri&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">WebsiteCard</span><span class="p">,</span> <span class="s1">&#39;created_at&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">WebsiteCard</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">WebsiteCard</span><span class="p">,</span> <span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">WebsiteCard</span><span class="p">,</span> <span class="s1">&#39;image_display_height&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">WebsiteCard</span><span class="p">,</span> <span class="s1">&#39;image_display_width&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">WebsiteCard</span><span class="p">,</span> <span class="s1">&#39;deleted&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">BOOL</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">WebsiteCard</span><span class="p">,</span> <span class="s1">&#39;website_dest_url&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">WebsiteCard</span><span class="p">,</span> <span class="s1">&#39;website_display_url&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">WebsiteCard</span><span class="p">,</span> <span class="s1">&#39;updated_at&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span>
+<span class="c1"># writable</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">WebsiteCard</span><span class="p">,</span> <span class="s1">&#39;image_media_id&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">WebsiteCard</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">WebsiteCard</span><span class="p">,</span> <span class="s1">&#39;website_title&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">WebsiteCard</span><span class="p">,</span> <span class="s1">&#39;website_url&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="VideoWebsiteCard"><a class="viewcode-back" href="../twitter_ads/creative.html#creative.VideoWebsiteCard">[docs]</a><span class="k">class</span> <span class="nc">VideoWebsiteCard</span><span class="p">(</span><span class="n">Resource</span><span class="p">,</span> <span class="n">Persistence</span><span class="p">):</span>
+
+    <span class="n">PROPERTIES</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="n">RESOURCE_COLLECTION</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">API_VERSION</span> <span class="o">+</span> <span class="s1">&#39;/accounts/</span><span class="si">{account_id}</span><span class="s1">/cards/video_website&#39;</span>
+    <span class="n">RESOURCE</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">API_VERSION</span> <span class="o">+</span> <span class="s1">&#39;/accounts/</span><span class="si">{account_id}</span><span class="s1">/cards/video_website/</span><span class="si">{id}</span><span class="s1">&#39;</span></div>
+
+
+<span class="c1"># video website card properties</span>
+<span class="c1"># read-only</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoWebsiteCard</span><span class="p">,</span> <span class="s1">&#39;account_id&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoWebsiteCard</span><span class="p">,</span> <span class="s1">&#39;card_type&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoWebsiteCard</span><span class="p">,</span> <span class="s1">&#39;card_uri&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoWebsiteCard</span><span class="p">,</span> <span class="s1">&#39;created_at&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoWebsiteCard</span><span class="p">,</span> <span class="s1">&#39;deleted&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">BOOL</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoWebsiteCard</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoWebsiteCard</span><span class="p">,</span> <span class="s1">&#39;updated_at&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoWebsiteCard</span><span class="p">,</span> <span class="s1">&#39;video_content_id&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoWebsiteCard</span><span class="p">,</span> <span class="s1">&#39;video_height&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoWebsiteCard</span><span class="p">,</span> <span class="s1">&#39;video_hls_url&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoWebsiteCard</span><span class="p">,</span> <span class="s1">&#39;video_owner_id&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoWebsiteCard</span><span class="p">,</span> <span class="s1">&#39;video_poster_height&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoWebsiteCard</span><span class="p">,</span> <span class="s1">&#39;video_poster_url&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoWebsiteCard</span><span class="p">,</span> <span class="s1">&#39;video_poster_width&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoWebsiteCard</span><span class="p">,</span> <span class="s1">&#39;video_url&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoWebsiteCard</span><span class="p">,</span> <span class="s1">&#39;video_width&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoWebsiteCard</span><span class="p">,</span> <span class="s1">&#39;website_dest_url&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoWebsiteCard</span><span class="p">,</span> <span class="s1">&#39;website_display_url&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1"># writable</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoWebsiteCard</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoWebsiteCard</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoWebsiteCard</span><span class="p">,</span> <span class="s1">&#39;video_id&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoWebsiteCard</span><span class="p">,</span> <span class="s1">&#39;website_url&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="ImageAppDownloadCard"><a class="viewcode-back" href="../twitter_ads/creative.html#creative.ImageAppDownloadCard">[docs]</a><span class="k">class</span> <span class="nc">ImageAppDownloadCard</span><span class="p">(</span><span class="n">Resource</span><span class="p">,</span> <span class="n">Persistence</span><span class="p">):</span>
+
+    <span class="n">PROPERTIES</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="n">RESOURCE_COLLECTION</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">API_VERSION</span> <span class="o">+</span> <span class="s1">&#39;/accounts/</span><span class="si">{account_id}</span><span class="s1">/cards/image_app_download&#39;</span>
+    <span class="n">RESOURCE</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">API_VERSION</span> <span class="o">+</span> <span class="s1">&#39;/accounts/</span><span class="si">{account_id}</span><span class="s1">/cards/image_app_download/</span><span class="si">{id}</span><span class="s1">&#39;</span></div>
+
+
+<span class="c1"># image app download card properties</span>
+<span class="c1"># read-only</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageAppDownloadCard</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageAppDownloadCard</span><span class="p">,</span> <span class="s1">&#39;image_display_height&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageAppDownloadCard</span><span class="p">,</span> <span class="s1">&#39;image_display_width&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageAppDownloadCard</span><span class="p">,</span> <span class="s1">&#39;wide_app_image&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageAppDownloadCard</span><span class="p">,</span> <span class="s1">&#39;card_uri&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageAppDownloadCard</span><span class="p">,</span> <span class="s1">&#39;card_type&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageAppDownloadCard</span><span class="p">,</span> <span class="s1">&#39;created_at&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageAppDownloadCard</span><span class="p">,</span> <span class="s1">&#39;updated_at&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageAppDownloadCard</span><span class="p">,</span> <span class="s1">&#39;deleted&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">BOOL</span><span class="p">)</span>
+<span class="c1"># writable</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageAppDownloadCard</span><span class="p">,</span> <span class="s1">&#39;country_code&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageAppDownloadCard</span><span class="p">,</span> <span class="s1">&#39;app_cta&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageAppDownloadCard</span><span class="p">,</span> <span class="s1">&#39;iphone_app_id&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageAppDownloadCard</span><span class="p">,</span> <span class="s1">&#39;iphone_deep_link&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageAppDownloadCard</span><span class="p">,</span> <span class="s1">&#39;ipad_app_id&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageAppDownloadCard</span><span class="p">,</span> <span class="s1">&#39;ipad_deep_link&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageAppDownloadCard</span><span class="p">,</span> <span class="s1">&#39;googleplay_app_id&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageAppDownloadCard</span><span class="p">,</span> <span class="s1">&#39;googleplay_deep_link&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageAppDownloadCard</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageAppDownloadCard</span><span class="p">,</span> <span class="s1">&#39;wide_app_image_media_id&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="VideoAppDownloadCard"><a class="viewcode-back" href="../twitter_ads/creative.html#creative.VideoAppDownloadCard">[docs]</a><span class="k">class</span> <span class="nc">VideoAppDownloadCard</span><span class="p">(</span><span class="n">Resource</span><span class="p">,</span> <span class="n">Persistence</span><span class="p">):</span>
+
+    <span class="n">PROPERTIES</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="n">RESOURCE_COLLECTION</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">API_VERSION</span> <span class="o">+</span> <span class="s1">&#39;/accounts/</span><span class="si">{account_id}</span><span class="s1">/cards/video_app_download&#39;</span>
+    <span class="n">RESOURCE</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">API_VERSION</span> <span class="o">+</span> <span class="s1">&#39;/accounts/</span><span class="si">{account_id}</span><span class="s1">/cards/video_app_download/</span><span class="si">{id}</span><span class="s1">&#39;</span></div>
+
+
+<span class="c1"># video app download card properties</span>
+<span class="c1"># read-only</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoAppDownloadCard</span><span class="p">,</span> <span class="s1">&#39;card_uri&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoAppDownloadCard</span><span class="p">,</span> <span class="s1">&#39;card_type&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoAppDownloadCard</span><span class="p">,</span> <span class="s1">&#39;created_at&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoAppDownloadCard</span><span class="p">,</span> <span class="s1">&#39;deleted&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">BOOL</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoAppDownloadCard</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoAppDownloadCard</span><span class="p">,</span> <span class="s1">&#39;updated_at&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoAppDownloadCard</span><span class="p">,</span> <span class="s1">&#39;video_content_id&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoAppDownloadCard</span><span class="p">,</span> <span class="s1">&#39;video_hls_url&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoAppDownloadCard</span><span class="p">,</span> <span class="s1">&#39;video_owner_id&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoAppDownloadCard</span><span class="p">,</span> <span class="s1">&#39;video_poster_url&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoAppDownloadCard</span><span class="p">,</span> <span class="s1">&#39;video_url&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1"># writable</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoAppDownloadCard</span><span class="p">,</span> <span class="s1">&#39;country_code&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoAppDownloadCard</span><span class="p">,</span> <span class="s1">&#39;app_cta&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoAppDownloadCard</span><span class="p">,</span> <span class="s1">&#39;image_media_id&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoAppDownloadCard</span><span class="p">,</span> <span class="s1">&#39;ipad_app_id&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoAppDownloadCard</span><span class="p">,</span> <span class="s1">&#39;ipad_deep_link&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoAppDownloadCard</span><span class="p">,</span> <span class="s1">&#39;iphone_app_id&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoAppDownloadCard</span><span class="p">,</span> <span class="s1">&#39;iphone_deep_link&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoAppDownloadCard</span><span class="p">,</span> <span class="s1">&#39;googleplay_app_id&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoAppDownloadCard</span><span class="p">,</span> <span class="s1">&#39;googleplay_deep_link&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoAppDownloadCard</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoAppDownloadCard</span><span class="p">,</span> <span class="s1">&#39;video_id&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="ImageConversationCard"><a class="viewcode-back" href="../twitter_ads/creative.html#creative.ImageConversationCard">[docs]</a><span class="k">class</span> <span class="nc">ImageConversationCard</span><span class="p">(</span><span class="n">Resource</span><span class="p">,</span> <span class="n">Persistence</span><span class="p">):</span>
+
+    <span class="n">PROPERTIES</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="n">RESOURCE_COLLECTION</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">API_VERSION</span> <span class="o">+</span> <span class="s1">&#39;/accounts/</span><span class="si">{account_id}</span><span class="s1">/cards/image_conversation&#39;</span>
+    <span class="n">RESOURCE</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">API_VERSION</span> <span class="o">+</span> <span class="s1">&#39;/accounts/</span><span class="si">{account_id}</span><span class="s1">/cards/image_conversation/</span><span class="si">{id}</span><span class="s1">&#39;</span></div>
+
+
+<span class="c1"># image conversation card properties</span>
+<span class="c1"># read-only</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageConversationCard</span><span class="p">,</span> <span class="s1">&#39;card_type&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageConversationCard</span><span class="p">,</span> <span class="s1">&#39;card_uri&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageConversationCard</span><span class="p">,</span> <span class="s1">&#39;created_at&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageConversationCard</span><span class="p">,</span> <span class="s1">&#39;deleted&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">BOOL</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageConversationCard</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageConversationCard</span><span class="p">,</span> <span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageConversationCard</span><span class="p">,</span> <span class="s1">&#39;updated_at&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span>
+<span class="c1"># writable</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageConversationCard</span><span class="p">,</span> <span class="s1">&#39;cover_image_id&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageConversationCard</span><span class="p">,</span> <span class="s1">&#39;fouth_cta&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageConversationCard</span><span class="p">,</span> <span class="s1">&#39;fouth_cta_tweet&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageConversationCard</span><span class="p">,</span> <span class="s1">&#39;image_media_id&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageConversationCard</span><span class="p">,</span> <span class="s1">&#39;first_cta&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageConversationCard</span><span class="p">,</span> <span class="s1">&#39;first_cta_tweet&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageConversationCard</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageConversationCard</span><span class="p">,</span> <span class="s1">&#39;second_cta&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageConversationCard</span><span class="p">,</span> <span class="s1">&#39;second_cta_tweet&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageConversationCard</span><span class="p">,</span> <span class="s1">&#39;thank_you_text&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageConversationCard</span><span class="p">,</span> <span class="s1">&#39;thank_you_url&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageConversationCard</span><span class="p">,</span> <span class="s1">&#39;third_cta&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageConversationCard</span><span class="p">,</span> <span class="s1">&#39;third_cta_tweet&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageConversationCard</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="VideoConversationCard"><a class="viewcode-back" href="../twitter_ads/creative.html#creative.VideoConversationCard">[docs]</a><span class="k">class</span> <span class="nc">VideoConversationCard</span><span class="p">(</span><span class="n">Resource</span><span class="p">,</span> <span class="n">Persistence</span><span class="p">):</span>
+
+    <span class="n">PROPERTIES</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="n">RESOURCE_COLLECTION</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">API_VERSION</span> <span class="o">+</span> <span class="s1">&#39;/accounts/</span><span class="si">{account_id}</span><span class="s1">/cards/video_conversation&#39;</span>
+    <span class="n">RESOURCE</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">API_VERSION</span> <span class="o">+</span> <span class="s1">&#39;/accounts/</span><span class="si">{account_id}</span><span class="s1">/cards/video_conversation/</span><span class="si">{id}</span><span class="s1">&#39;</span></div>
+
+
+<span class="c1"># video conversation card properties</span>
+<span class="c1"># read-only</span>
+
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoConversationCard</span><span class="p">,</span> <span class="s1">&#39;card_uri&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoConversationCard</span><span class="p">,</span> <span class="s1">&#39;card_type&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoConversationCard</span><span class="p">,</span> <span class="s1">&#39;created_at&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoConversationCard</span><span class="p">,</span> <span class="s1">&#39;deleted&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">BOOL</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoConversationCard</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoConversationCard</span><span class="p">,</span> <span class="s1">&#39;video_url&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoConversationCard</span><span class="p">,</span> <span class="s1">&#39;video_poster_url&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">VideoConversationCard</span><span class="p">,</span> <span class="s1">&#39;updated_at&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span>
+<span class="c1"># writable</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageConversationCard</span><span class="p">,</span> <span class="s1">&#39;cover_image_id&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageConversationCard</span><span class="p">,</span> <span class="s1">&#39;cover_video_id&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageConversationCard</span><span class="p">,</span> <span class="s1">&#39;fouth_cta&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageConversationCard</span><span class="p">,</span> <span class="s1">&#39;fouth_cta_tweet&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageConversationCard</span><span class="p">,</span> <span class="s1">&#39;image_media_id&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageConversationCard</span><span class="p">,</span> <span class="s1">&#39;first_cta&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageConversationCard</span><span class="p">,</span> <span class="s1">&#39;first_cta_tweet&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageConversationCard</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageConversationCard</span><span class="p">,</span> <span class="s1">&#39;second_cta&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageConversationCard</span><span class="p">,</span> <span class="s1">&#39;second_cta_tweet&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageConversationCard</span><span class="p">,</span> <span class="s1">&#39;thank_you_text&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageConversationCard</span><span class="p">,</span> <span class="s1">&#39;thank_you_url&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageConversationCard</span><span class="p">,</span> <span class="s1">&#39;third_cta&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageConversationCard</span><span class="p">,</span> <span class="s1">&#39;third_cta_tweet&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageConversationCard</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ImageConversationCard</span><span class="p">,</span> <span class="s1">&#39;video_id&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="ScheduledTweet"><a class="viewcode-back" href="../twitter_ads/creative.html#creative.ScheduledTweet">[docs]</a><span class="k">class</span> <span class="nc">ScheduledTweet</span><span class="p">(</span><span class="n">Resource</span><span class="p">,</span> <span class="n">Persistence</span><span class="p">):</span>
+
+    <span class="n">PROPERTIES</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="n">RESOURCE_COLLECTION</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">API_VERSION</span> <span class="o">+</span> <span class="s1">&#39;/accounts/</span><span class="si">{account_id}</span><span class="s1">/scheduled_tweets&#39;</span>
+    <span class="n">RESOURCE</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">API_VERSION</span> <span class="o">+</span> <span class="s1">&#39;/accounts/</span><span class="si">{account_id}</span><span class="s1">/scheduled_tweets/</span><span class="si">{id}</span><span class="s1">&#39;</span>
+    <span class="n">PREVIEW</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">API_VERSION</span> <span class="o">+</span> <span class="s1">&#39;/accounts/</span><span class="si">{account_id}</span><span class="s1">/scheduled_tweets/preview/</span><span class="si">{id}</span><span class="s1">&#39;</span>
+
+<div class="viewcode-block" id="ScheduledTweet.preview"><a class="viewcode-back" href="../twitter_ads/creative.html#creative.ScheduledTweet.preview">[docs]</a>    <span class="k">def</span> <span class="nf">preview</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns an HTML preview for a Scheduled Tweet.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
+            <span class="n">resource</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">PREVIEW</span>
+            <span class="n">resource</span> <span class="o">=</span> <span class="n">resource</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">account_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">account</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">account</span><span class="o">.</span><span class="n">client</span><span class="p">,</span> <span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="n">resource</span><span class="p">)</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span></div></div>
+
+
+<span class="c1"># scheduled tweet properties</span>
+<span class="c1"># read-only</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ScheduledTweet</span><span class="p">,</span> <span class="s1">&#39;created_at&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ScheduledTweet</span><span class="p">,</span> <span class="s1">&#39;completed_at&#39;</span><span class="p">,</span> <span class="n">read_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ScheduledTweet</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">read_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ScheduledTweet</span><span class="p">,</span> <span class="s1">&#39;id_str&#39;</span><span class="p">,</span> <span class="n">read_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ScheduledTweet</span><span class="p">,</span> <span class="s1">&#39;media_keys&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">LIST</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ScheduledTweet</span><span class="p">,</span> <span class="s1">&#39;scheduled_status&#39;</span><span class="p">,</span> <span class="n">read_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ScheduledTweet</span><span class="p">,</span> <span class="s1">&#39;tweet_id&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ScheduledTweet</span><span class="p">,</span> <span class="s1">&#39;updated_at&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ScheduledTweet</span><span class="p">,</span> <span class="s1">&#39;user_id&#39;</span><span class="p">,</span> <span class="n">read_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1"># writable</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ScheduledTweet</span><span class="p">,</span> <span class="s1">&#39;as_user_id&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ScheduledTweet</span><span class="p">,</span> <span class="s1">&#39;card_uri&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ScheduledTweet</span><span class="p">,</span> <span class="s1">&#39;media_ids&#39;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">LIST</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ScheduledTweet</span><span class="p">,</span> <span class="s1">&#39;nullcast&#39;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">BOOL</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ScheduledTweet</span><span class="p">,</span> <span class="s1">&#39;scheduled_at&#39;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">ScheduledTweet</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="MediaLibrary"><a class="viewcode-back" href="../twitter_ads/creative.html#creative.MediaLibrary">[docs]</a><span class="k">class</span> <span class="nc">MediaLibrary</span><span class="p">(</span><span class="n">Resource</span><span class="p">,</span> <span class="n">Persistence</span><span class="p">):</span>
+
+    <span class="n">PROPERTIES</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="n">RESOURCE_COLLECTION</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">API_VERSION</span> <span class="o">+</span> <span class="s1">&#39;/accounts/</span><span class="si">{account_id}</span><span class="s1">/media_library&#39;</span>
+    <span class="n">RESOURCE</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">API_VERSION</span> <span class="o">+</span> <span class="s1">&#39;/accounts/</span><span class="si">{account_id}</span><span class="s1">/media_library/</span><span class="si">{id}</span><span class="s1">&#39;</span>
+
+<div class="viewcode-block" id="MediaLibrary.reload"><a class="viewcode-back" href="../twitter_ads/creative.html#creative.MediaLibrary.reload">[docs]</a>    <span class="k">def</span> <span class="nf">reload</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">media_key</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span>
+
+        <span class="n">resource</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">RESOURCE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">account_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">account</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">media_key</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">account</span><span class="o">.</span><span class="n">client</span><span class="p">,</span> <span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">kwargs</span><span class="p">)</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">from_response</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="MediaLibrary.save"><a class="viewcode-back" href="../twitter_ads/creative.html#creative.MediaLibrary.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">media_key</span><span class="p">:</span>
+            <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;put&#39;</span>
+            <span class="n">resource</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">RESOURCE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">account_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">account</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">media_key</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;post&#39;</span>
+            <span class="n">resource</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">RESOURCE_COLLECTION</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">account_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">account</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+
+        <span class="n">response</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">account</span><span class="o">.</span><span class="n">client</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span>
+            <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">to_params</span><span class="p">())</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">from_response</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="MediaLibrary.delete"><a class="viewcode-back" href="../twitter_ads/creative.html#creative.MediaLibrary.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">RESOURCE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">account_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">account</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">media_key</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">account</span><span class="o">.</span><span class="n">client</span><span class="p">,</span> <span class="s1">&#39;delete&#39;</span><span class="p">,</span> <span class="n">resource</span><span class="p">)</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">from_response</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">])</span></div></div>
+
+
+<span class="c1"># media library properties</span>
+<span class="c1"># read-only</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">MediaLibrary</span><span class="p">,</span> <span class="s1">&#39;aspect_ratio&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">MediaLibrary</span><span class="p">,</span> <span class="s1">&#39;created_at&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">MediaLibrary</span><span class="p">,</span> <span class="s1">&#39;deleted&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">BOOL</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">MediaLibrary</span><span class="p">,</span> <span class="s1">&#39;duration&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">INT</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">MediaLibrary</span><span class="p">,</span> <span class="s1">&#39;media_status&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">MediaLibrary</span><span class="p">,</span> <span class="s1">&#39;media_type&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">MediaLibrary</span><span class="p">,</span> <span class="s1">&#39;media_url&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">MediaLibrary</span><span class="p">,</span> <span class="s1">&#39;tweeted&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">BOOL</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">MediaLibrary</span><span class="p">,</span> <span class="s1">&#39;updated_at&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span>
+<span class="c1"># writable</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">MediaLibrary</span><span class="p">,</span> <span class="s1">&#39;media_category&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">MediaLibrary</span><span class="p">,</span> <span class="s1">&#39;media_id&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">MediaLibrary</span><span class="p">,</span> <span class="s1">&#39;media_key&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">MediaLibrary</span><span class="p">,</span> <span class="s1">&#39;description&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">MediaLibrary</span><span class="p">,</span> <span class="s1">&#39;file_name&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">MediaLibrary</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">MediaLibrary</span><span class="p">,</span> <span class="s1">&#39;poster_image_media_id&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">MediaLibrary</span><span class="p">,</span> <span class="s1">&#39;poster_image_media_key&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">MediaLibrary</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="PollCard"><a class="viewcode-back" href="../twitter_ads/creative.html#creative.PollCard">[docs]</a><span class="k">class</span> <span class="nc">PollCard</span><span class="p">(</span><span class="n">Resource</span><span class="p">,</span> <span class="n">Persistence</span><span class="p">):</span>
+
+    <span class="n">PROPERTIES</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="n">RESOURCE_COLLECTION</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">API_VERSION</span> <span class="o">+</span> <span class="s1">&#39;/accounts/</span><span class="si">{account_id}</span><span class="s1">/cards/poll&#39;</span>
+    <span class="n">RESOURCE</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">API_VERSION</span> <span class="o">+</span> <span class="s1">&#39;/accounts/</span><span class="si">{account_id}</span><span class="s1">/cards/poll/</span><span class="si">{id}</span><span class="s1">&#39;</span></div>
+
+
+<span class="c1"># poll card properties</span>
+<span class="c1"># read-only</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">PollCard</span><span class="p">,</span> <span class="s1">&#39;card_type&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">PollCard</span><span class="p">,</span> <span class="s1">&#39;card_uri&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">PollCard</span><span class="p">,</span> <span class="s1">&#39;content_duration_seconds&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">PollCard</span><span class="p">,</span> <span class="s1">&#39;created_at&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">PollCard</span><span class="p">,</span> <span class="s1">&#39;deleted&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">BOOL</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">PollCard</span><span class="p">,</span> <span class="s1">&#39;end_time&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">PollCard</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">PollCard</span><span class="p">,</span> <span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">PollCard</span><span class="p">,</span> <span class="s1">&#39;image_display_height&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">PollCard</span><span class="p">,</span> <span class="s1">&#39;image_display_width&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">PollCard</span><span class="p">,</span> <span class="s1">&#39;start_time&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">PollCard</span><span class="p">,</span> <span class="s1">&#39;updated_at&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">PollCard</span><span class="p">,</span> <span class="s1">&#39;video_height&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">PollCard</span><span class="p">,</span> <span class="s1">&#39;video_hls_url&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">PollCard</span><span class="p">,</span> <span class="s1">&#39;video_poster_height&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">PollCard</span><span class="p">,</span> <span class="s1">&#39;video_poster_url&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">PollCard</span><span class="p">,</span> <span class="s1">&#39;video_poster_width&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">PollCard</span><span class="p">,</span> <span class="s1">&#39;video_url&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">PollCard</span><span class="p">,</span> <span class="s1">&#39;video_width&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1"># writable</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">PollCard</span><span class="p">,</span> <span class="s1">&#39;duration_in_minutes&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">PollCard</span><span class="p">,</span> <span class="s1">&#39;first_choice&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">PollCard</span><span class="p">,</span> <span class="s1">&#39;fourth_choice&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">PollCard</span><span class="p">,</span> <span class="s1">&#39;media_key&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">PollCard</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">PollCard</span><span class="p">,</span> <span class="s1">&#39;second_choice&#39;</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">PollCard</span><span class="p">,</span> <span class="s1">&#39;third_choice&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="CardsFetch"><a class="viewcode-back" href="../twitter_ads/creative.html#creative.CardsFetch">[docs]</a><span class="k">class</span> <span class="nc">CardsFetch</span><span class="p">(</span><span class="n">Resource</span><span class="p">):</span>
+
+    <span class="n">PROPERTIES</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="n">FETCH_URI</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">API_VERSION</span> <span class="o">+</span> <span class="s1">&#39;/accounts/</span><span class="si">{account_id}</span><span class="s1">/cards/all&#39;</span>
+    <span class="n">FETCH_ID</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">API_VERSION</span> <span class="o">+</span> <span class="s1">&#39;/accounts/</span><span class="si">{account_id}</span><span class="s1">/cards/all/</span><span class="si">{id}</span><span class="s1">&#39;</span>
+
+<div class="viewcode-block" id="CardsFetch.all"><a class="viewcode-back" href="../twitter_ads/creative.html#creative.CardsFetch.all">[docs]</a>    <span class="k">def</span> <span class="nf">all</span><span class="p">(</span><span class="n">klass</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s2">&quot;&#39;CardsFetch&#39; object has no attribute &#39;all&#39;&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CardsFetch.load"><a class="viewcode-back" href="../twitter_ads/creative.html#creative.CardsFetch.load">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="n">account</span><span class="p">,</span> <span class="n">card_uris</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">card_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">with_deleted</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="c1"># check whether both are specified or neither are specified</span>
+        <span class="k">if</span> <span class="nb">all</span><span class="p">([</span><span class="n">card_uris</span><span class="p">,</span> <span class="n">card_id</span><span class="p">])</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">([</span><span class="n">card_uris</span><span class="p">,</span> <span class="n">card_id</span><span class="p">]):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;card_uris and card_id are exclusive parameters. &#39;</span> <span class="o">+</span>
+                             <span class="s1">&#39;Please supply one or the other, but not both.&#39;</span><span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">with_deleted</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s1">&#39;with_deleted&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;true&#39;</span>
+
+        <span class="k">if</span> <span class="n">card_uris</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s1">&#39;card_uris&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">card_uris</span><span class="p">)</span>
+            <span class="n">resource</span> <span class="o">=</span> <span class="n">klass</span><span class="o">.</span><span class="n">FETCH_URI</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">account_id</span><span class="o">=</span><span class="n">account</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+            <span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="n">account</span><span class="o">.</span><span class="n">client</span><span class="p">,</span> <span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Cursor</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">init_with</span><span class="o">=</span><span class="p">[</span><span class="n">account</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s1">&#39;card_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">card_id</span>
+            <span class="n">resource</span> <span class="o">=</span> <span class="n">klass</span><span class="o">.</span><span class="n">FETCH_ID</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">account_id</span><span class="o">=</span><span class="n">account</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="n">card_id</span><span class="p">)</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="n">account</span><span class="o">.</span><span class="n">client</span><span class="p">,</span> <span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">klass</span><span class="p">(</span><span class="n">account</span><span class="p">)</span><span class="o">.</span><span class="n">from_response</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="CardsFetch.reload"><a class="viewcode-back" href="../twitter_ads/creative.html#creative.CardsFetch.reload">[docs]</a>    <span class="k">def</span> <span class="nf">reload</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">account</span><span class="p">,</span> <span class="n">card_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span></div></div>
+
+
+<span class="c1"># card properties</span>
+<span class="c1"># read-only</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;country_code&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;app_cta&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;card_type&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;card_uri&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;content_duration_seconds&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;created_at&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;deleted&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">BOOL</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;duration_in_minutes&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;end_time&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;first_choice&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;first_cta&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;first_cta_tweet&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;first_cta_welcome_message_id&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;fouth_choice&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;fouth_cta&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;fouth_cta_tweet&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;fourth_cta_welcome_message_id&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;googleplay_app_id&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;googleplay_deep_link&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;image&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;image_display_height&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;image_display_width&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;ipad_app_id&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;ipad_deep_link&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;iphone_app_id&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;iphone_deep_link&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;recipient_user_id&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;second_choice&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;second_cta&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;second_cta_tweet&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;second_cta_welcome_message_id&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;start_time&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;thank_you_text&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;thank_you_url&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;third_choice&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;third_cta&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;third_cta_tweet&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;third_cta_welcome_message_id&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;updated_at&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;video_content_id&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;video_height&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;video_hls_url&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;video_owner_id&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;video_poster_height&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;video_poster_url&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;video_poster_width&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;video_width&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;video_url&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;website_dest_url&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;website_display_url&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;website_shortened_url&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;website_title&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;website_url&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">CardsFetch</span><span class="p">,</span> <span class="s1">&#39;wide_app_image&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="TweetPreview"><a class="viewcode-back" href="../twitter_ads/creative.html#creative.TweetPreview">[docs]</a><span class="k">class</span> <span class="nc">TweetPreview</span><span class="p">(</span><span class="n">Resource</span><span class="p">):</span>
+
+    <span class="n">PROPERTIES</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="n">RESOURCE_COLLECTION</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">API_VERSION</span> <span class="o">+</span> <span class="s1">&#39;/accounts/</span><span class="si">{account_id}</span><span class="s1">/tweet_previews&#39;</span>
+
+<div class="viewcode-block" id="TweetPreview.load"><a class="viewcode-back" href="../twitter_ads/creative.html#creative.TweetPreview.load">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="n">account</span><span class="p">,</span> <span class="n">tweet_ids</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tweet_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="n">params</span><span class="p">[</span><span class="s1">&#39;tweet_ids&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">tweet_ids</span><span class="p">))</span>
+        <span class="n">params</span><span class="p">[</span><span class="s1">&#39;tweet_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tweet_type</span>
+        <span class="n">resource</span> <span class="o">=</span> <span class="n">klass</span><span class="o">.</span><span class="n">RESOURCE_COLLECTION</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">account_id</span><span class="o">=</span><span class="n">account</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="n">account</span><span class="o">.</span><span class="n">client</span><span class="p">,</span> <span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Cursor</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">init_with</span><span class="o">=</span><span class="p">[</span><span class="n">account</span><span class="p">])</span></div></div>
+
+
+<span class="c1"># tweet preview properties</span>
+<span class="c1"># read-only</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">TweetPreview</span><span class="p">,</span> <span class="s1">&#39;preview&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">TweetPreview</span><span class="p">,</span> <span class="s1">&#39;tweet_id&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Twitter Ads API SDK for Python</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../twitter_ads/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">twitter_ads</span></code> – Base module for the Twitter Ads SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../twitter_ads/account.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">account</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../twitter_ads/audience.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">audience</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../twitter_ads/error.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">error</span></code></a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Twitter, Inc.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

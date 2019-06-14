@@ -1,82 +1,71 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>client &#8212; Twitter Ads API SDK for Python 4.0.0 documentation</title>
-    
+    <meta charset="utf-8" />
+    <title>client &#8212; Twitter Ads API SDK for Python 5.1.1 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '../',
-        VERSION:     '4.0.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="top" title="Twitter Ads API SDK for Python 4.0.0 documentation" href="../index.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head>
-  <body role="document">
+  </head><body>
   
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <div class="section" id="module-client">
-<span id="client"></span><h1><a class="reference internal" href="#module-client" title="client"><code class="xref py py-mod docutils literal"><span class="pre">client</span></code></a><a class="headerlink" href="#module-client" title="Permalink to this headline">¶</a></h1>
+<span id="client"></span><h1><a class="reference internal" href="#module-client" title="client"><code class="xref py py-mod docutils literal notranslate"><span class="pre">client</span></code></a><a class="headerlink" href="#module-client" title="Permalink to this headline">¶</a></h1>
 <p>A Twitter supported and maintained Ads API SDK for Python.</p>
 <dl class="class">
 <dt id="client.Client">
-<em class="property">class </em><code class="descclassname">client.</code><code class="descname">Client</code><span class="sig-paren">(</span><em>consumer_key</em>, <em>consumer_secret</em>, <em>access_token</em>, <em>access_token_secret</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/client.html#Client"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#client.Client" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">client.</code><code class="sig-name descname">Client</code><span class="sig-paren">(</span><em class="sig-param">consumer_key</em>, <em class="sig-param">consumer_secret</em>, <em class="sig-param">access_token</em>, <em class="sig-param">access_token_secret</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/client.html#Client"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#client.Client" title="Permalink to this definition">¶</a></dt>
 <dd><p>The Ads API Client class which functions as a container for basic
 API consumer information.</p>
-<dl class="attribute">
+<dl class="method">
 <dt id="client.Client.access_token">
-<code class="descname">access_token</code><a class="headerlink" href="#client.Client.access_token" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">access_token</code><a class="headerlink" href="#client.Client.access_token" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the access_token value.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="client.Client.access_token_secret">
-<code class="descname">access_token_secret</code><a class="headerlink" href="#client.Client.access_token_secret" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">access_token_secret</code><a class="headerlink" href="#client.Client.access_token_secret" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the access_token_secret value.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="client.Client.accounts">
-<code class="descname">accounts</code><span class="sig-paren">(</span><em>id=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/client.html#Client.accounts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#client.Client.accounts" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a collection of advertiser <code class="xref py py-class docutils literal"><span class="pre">Accounts</span></code> available to
+<code class="sig-name descname">accounts</code><span class="sig-paren">(</span><em class="sig-param">id=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/client.html#Client.accounts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#client.Client.accounts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a collection of advertiser <code class="xref py py-class docutils literal notranslate"><span class="pre">Accounts</span></code> available to
 the current access token.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="client.Client.consumer_key">
-<code class="descname">consumer_key</code><a class="headerlink" href="#client.Client.consumer_key" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">consumer_key</code><a class="headerlink" href="#client.Client.consumer_key" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the consumer_key value.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="client.Client.consumer_secret">
-<code class="descname">consumer_secret</code><a class="headerlink" href="#client.Client.consumer_secret" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">consumer_secret</code><a class="headerlink" href="#client.Client.consumer_secret" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the consumer_secret value.</p>
 </dd></dl>
 
@@ -86,46 +75,66 @@ the current access token.</p>
 
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="relations">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Twitter Ads API SDK for Python</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">twitter_ads</span></code> – Base module for the Twitter Ads SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="account.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">account</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="audience.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">audience</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="error.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">error</span></code></a></li>
+</ul>
+
+<div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
   </ul></li>
 </ul>
 </div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="../_sources/twitter_ads/client.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
         </div>
       </div>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2015, Twitter, Inc.
+      &copy;2019, Twitter, Inc.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.8</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="../_sources/twitter_ads/client.txt"
+      <a href="../_sources/twitter_ads/client.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

@@ -1,31 +1,19 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    
-    <title>Getting Started &#8212; Twitter Ads API SDK for Python 4.0.0 documentation</title>
-    
+    <meta charset="utf-8" />
+    <title>Getting Started &#8212; Twitter Ads API SDK for Python 5.1.1 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    './',
-        VERSION:     '4.0.0',
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
-      };
-    </script>
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="top" title="Twitter Ads API SDK for Python 4.0.0 documentation" href="#" />
     <link rel="next" title="twitter_ads – Base module for the Twitter Ads SDK" href="twitter_ads/index.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -33,19 +21,20 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
-  </head>
-  <body role="document">
+  </head><body>
   
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
+          
+
           <div class="body" role="main">
             
   <ul class="simple">
-<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
-<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
-<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
 </ul>
 <div class="toctree-wrapper compound">
 </div>
@@ -54,16 +43,16 @@
 <p><a class="reference external" href="https://travis-ci.org/twitterdev/twitter-python-ads-sdk"><img alt="Build Status" src="https://travis-ci.org/twitterdev/twitter-python-ads-sdk.svg?branch=master" /></a> <a class="reference external" href="https://codeclimate.com/github/twitterdev/twitter-python-ads-sdk"><img alt="Code Climate" src="https://codeclimate.com/github/twitterdev/twitter-python-ads-sdk/badges/gpa.svg" /></a> <a class="reference external" href="http://badge.fury.io/py/twitter-ads"><img alt="PyPy Version" src="https://badge.fury.io/py/twitter-ads.svg" /></a></p>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
-<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="c1"># installing the latest signed release</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="n">twitter</span><span class="o">-</span><span class="n">ads</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># installing the latest signed release</span>
+pip install twitter-ads
 </pre></div>
 </div>
 </div>
 <div class="section" id="quick-start">
 <h2>Quick Start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h2>
-<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">twitter_ads.client</span> <span class="k">import</span> <span class="n">Client</span>
-<span class="kn">from</span> <span class="nn">twitter_ads.campaign</span> <span class="k">import</span> <span class="n">Campaign</span>
-<span class="kn">from</span> <span class="nn">twitter_ads.enum</span> <span class="k">import</span> <span class="n">ENTITY_STATUS</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">twitter_ads.client</span> <span class="kn">import</span> <span class="n">Client</span>
+<span class="kn">from</span> <span class="nn">twitter_ads.campaign</span> <span class="kn">import</span> <span class="n">Campaign</span>
+<span class="kn">from</span> <span class="nn">twitter_ads.enum</span> <span class="kn">import</span> <span class="n">ENTITY_STATUS</span>
 
 <span class="c1"># initialize the client</span>
 <span class="n">client</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">CONSUMER_KEY</span><span class="p">,</span>
@@ -82,14 +71,14 @@
 
 <span class="c1"># iterate through campaigns</span>
 <span class="k">for</span> <span class="n">campaign</span> <span class="ow">in</span> <span class="n">account</span><span class="o">.</span><span class="n">campaigns</span><span class="p">():</span>
-    <span class="nb">print</span> <span class="n">campaign</span><span class="o">.</span><span class="n">id</span>
+    <span class="k">print</span> <span class="n">campaign</span><span class="o">.</span><span class="n">id</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="command-line-helper">
 <h2>Command Line Helper<a class="headerlink" href="#command-line-helper" title="Permalink to this headline">¶</a></h2>
-<div class="code bash highlight-default"><div class="highlight"><pre><span></span># The twitter-ads command launches an interactive session for testing purposes
-# with a client instance automatically loaded from your .twurlrc file.
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># The twitter-ads command launches an interactive session for testing purposes</span>
+<span class="c1"># with a client instance automatically loaded from your .twurlrc file.</span>
 
 ~ ❯ twitter-ads
 </pre></div>
@@ -103,22 +92,22 @@
 <p>This project is designed to work with Python 2.7 or greater. While it
 may work on other version of Python, below are the platform and runtime
 versions we officially support and regularly test against.</p>
-<table border="1" class="docutils">
+<table class="docutils align-default">
 <colgroup>
-<col width="32%" />
-<col width="68%" />
+<col style="width: 32%" />
+<col style="width: 68%" />
 </colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Platform</th>
-<th class="head">Versions</th>
+<thead>
+<tr class="row-odd"><th class="head"><p>Platform</p></th>
+<th class="head"><p>Versions</p></th>
 </tr>
 </thead>
-<tbody valign="top">
-<tr class="row-even"><td>CPython</td>
-<td>2.7, 3.3, 3.4, 3.5</td>
+<tbody>
+<tr class="row-even"><td><p>CPython</p></td>
+<td><p>2.7, 3.3, 3.4, 3.5</p></td>
 </tr>
-<tr class="row-odd"><td>PyPy</td>
-<td>2.x, 4.x</td>
+<tr class="row-odd"><td><p>PyPy</p></td>
+<td><p>2.x, 4.x</p></td>
 </tr>
 </tbody>
 </table>
@@ -130,15 +119,15 @@ major.minor.patch-pre (aka. stick.carrot.oops-peek).</p>
 <p>If you’d like to contribute to the project or try an unreleased
 development version of this project locally, you can do so quite easily
 by following the examples below.</p>
-<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="c1"># clone the repository</span>
-<span class="n">git</span> <span class="n">clone</span> <span class="n">git</span><span class="nd">@github</span><span class="o">.</span><span class="n">com</span><span class="p">:</span><span class="n">twitterdev</span><span class="o">/</span><span class="n">twitter</span><span class="o">-</span><span class="n">python</span><span class="o">-</span><span class="n">ads</span><span class="o">-</span><span class="n">sdk</span><span class="o">.</span><span class="n">git</span>
-<span class="n">cd</span> <span class="n">twitter</span><span class="o">-</span><span class="n">python</span><span class="o">-</span><span class="n">ads</span><span class="o">-</span><span class="n">sdk</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># clone the repository</span>
+git clone git@github.com:twitterdev/twitter-python-ads-sdk.git
+<span class="nb">cd</span> twitter-python-ads-sdk
 
 <span class="c1"># install dependencies</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
+pip install -r requirements.txt
 
 <span class="c1"># installing a local unsigned release</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="o">.</span>
+pip install -e .
 </pre></div>
 </div>
 <p>We love community contributions! If you’re planning to send us a pull
@@ -155,14 +144,14 @@ feature? Come chat with us in the <a class="reference external" href="https://tw
 <p>The MIT License (MIT)</p>
 <p>Copyright (C) 2015 Twitter, Inc.</p>
 <p>Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the &#8220;Software&#8221;), to deal
+of this software and associated documentation files (the “Software”), to deal
 in the Software without restriction, including without limitation the rights
 to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:</p>
 <p>The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.</p>
-<p>THE SOFTWARE IS PROVIDED &#8220;AS IS&#8221;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+<p>THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
@@ -175,61 +164,67 @@ SOFTWARE.</p>
 
 
           </div>
+          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="#">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Getting Started</a><ul>
-<li><a class="reference internal" href="#installation">Installation</a></li>
-<li><a class="reference internal" href="#quick-start">Quick Start</a></li>
-<li><a class="reference internal" href="#command-line-helper">Command Line Helper</a></li>
+<h1 class="logo"><a href="#">Twitter Ads API SDK for Python</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="twitter_ads/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">twitter_ads</span></code> – Base module for the Twitter Ads SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="twitter_ads/account.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">account</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="twitter_ads/audience.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">audience</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="twitter_ads/error.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">error</span></code></a></li>
 </ul>
-</li>
-<li><a class="reference internal" href="#compatibility-versioning">Compatibility &amp; Versioning</a></li>
-<li><a class="reference internal" href="#development">Development</a></li>
-<li><a class="reference internal" href="#feedback-and-bug-reports">Feedback and Bug Reports</a></li>
-<li><a class="reference internal" href="#license">License</a></li>
-</ul>
+
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="#">Documentation overview</a><ul>
-      <li>Next: <a href="twitter_ads/index.html" title="next chapter"><code class="docutils literal"><span class="pre">twitter_ads</span></code> &#8211; Base module for the Twitter Ads SDK</a></li>
+      <li>Next: <a href="twitter_ads/index.html" title="next chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">twitter_ads</span></code> – Base module for the Twitter Ads SDK</a></li>
   </ul></li>
 </ul>
 </div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/index.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <div><input type="text" name="q" /></div>
-      <div><input type="submit" value="Go" /></div>
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
     </form>
+    </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
         </div>
       </div>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2015, Twitter, Inc.
+      &copy;2019, Twitter, Inc.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.8</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="_sources/index.txt"
+      <a href="_sources/index.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 
