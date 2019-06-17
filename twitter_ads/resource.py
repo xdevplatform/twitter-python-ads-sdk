@@ -313,6 +313,10 @@ class Analytics(object):
 
     @classmethod
     def active_entities(klass, account, start_time, end_time, **kwargs):
+        """
+        Returns the details about which entities' analytics metrics
+        have changed in a given time period.
+        """
         entity_type = klass.__name__
         if entity_type == 'OrganicTweet':
             raise ValueError("'OrganicTweet' not support with 'active_entities'")
