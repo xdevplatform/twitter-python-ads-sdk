@@ -6,10 +6,18 @@
    :hidden:
 
    twitter_ads/index
-   twitter_ads/code
    twitter_ads/account
    twitter_ads/audience
+   twitter_ads/campaign
+   twitter_ads/client
+   twitter_ads/creative
+   twitter_ads/cursor
+   twitter_ads/enum
    twitter_ads/error
+   twitter_ads/http
+   twitter_ads/resource
+   twitter_ads/targeting
+   twitter_ads/utils
 
 Getting Started
 ---------------
@@ -74,9 +82,9 @@ versions we officially support and regularly test against.
 +------------+-------------------------+
 | Platform   | Versions                |
 +============+=========================+
-| CPython    | 2.7, 3.3, 3.4, 3.5      |
+| CPython    | 2.7, 3.5, 3.6, 3.7      |
 +------------+-------------------------+
-| PyPy       | 2.x, 4.x                |
+| PyPy       | 7.x                     |
 +------------+-------------------------+
 
 All releases adhere to strict `semantic versioning`_. For Example,
@@ -116,7 +124,7 @@ License
 
 The MIT License (MIT)
 
-Copyright (C) 2015 Twitter, Inc.
+Copyright (C) 2019 Twitter, Inc.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

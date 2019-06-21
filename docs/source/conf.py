@@ -53,8 +53,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Twitter Ads API SDK for Python'
-copyright = u'2015, Twitter, Inc'
-author = u'Brandon Black'
+copyright = u'2019, Twitter, Inc'
+author = u'jbabich@twitter.com, tbhushan@twitter.com, jshishido@twitter.com'
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
 from twitter_ads.utils import get_version
@@ -226,7 +226,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
   (master_doc, 'TwitterAdsAPISDKforPython.tex', u'Twitter Ads API SDK for Python Documentation',
-   u'Brandon Black', 'manual'),
+   u'jbabich@twitter.com, tbhushan@twitter.com, jshishido@twitter.com', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
