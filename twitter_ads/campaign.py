@@ -132,6 +132,7 @@ targeting_criteria'
 # targeting criteria properties
 # read-only
 resource_property(TargetingCriteria, 'id', readonly=True)
+resource_property(TargetingCriteria, 'name', readonly=True)
 resource_property(TargetingCriteria, 'localized_name', readonly=True)
 resource_property(TargetingCriteria, 'created_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(TargetingCriteria, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
