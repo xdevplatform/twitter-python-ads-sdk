@@ -52,6 +52,13 @@ targeting_criteria'
         return Cursor(None, request)
 
     @classmethod
+    def conversations(klass, account, **kwargs):
+        """Returns a list of supported conversations"""
+        resource = klass.RESOURCE_OPTIONS + 'conversations'
+        request = Request(account.client, 'get', resource, params=kwargs)
+        return Cursor(None, request)
+
+    @classmethod
     def devices(klass, account, **kwargs):
         """Returns a list of supported devices"""
         resource = klass.RESOURCE_OPTIONS + 'devices'
@@ -125,6 +132,7 @@ targeting_criteria'
 # targeting criteria properties
 # read-only
 resource_property(TargetingCriteria, 'id', readonly=True)
+resource_property(TargetingCriteria, 'name', readonly=True)
 resource_property(TargetingCriteria, 'localized_name', readonly=True)
 resource_property(TargetingCriteria, 'created_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(TargetingCriteria, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
@@ -388,7 +396,26 @@ class TaxSettings(Resource, Persistence):
 
     PROPERTIES = {}
 
-    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/tax_settings/{id}'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/tax_settings'
+
+    @classmethod
+    def load(self, account):
+        """
+        Returns an object instance for a given account.
+        """
+        resource = self.RESOURCE.format(account_id=account.id)
+        response = Request(account.client, 'get', resource).perform()
+        return self(account).from_response(response.body['data'])
+
+    def save(self):
+        """
+        Update the current object instance.
+        """
+        resource = self.RESOURCE.format(account_id=self.account.id)
+        response = Request(
+            self.account.client, 'put',
+            resource, params=self.to_params()).perform()
+        return self.from_response(response.body['data'])
 
 
 # tax settings properties
