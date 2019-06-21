@@ -52,6 +52,13 @@ targeting_criteria'
         return Cursor(None, request)
 
     @classmethod
+    def conversations(klass, account, **kwargs):
+        """Returns a list of supported conversations"""
+        resource = klass.RESOURCE_OPTIONS + 'conversations'
+        request = Request(account.client, 'get', resource, params=kwargs)
+        return Cursor(None, request)
+
+    @classmethod
     def devices(klass, account, **kwargs):
         """Returns a list of supported devices"""
         resource = klass.RESOURCE_OPTIONS + 'devices'
