@@ -1,0 +1,23 @@
+{
+  "data_type": "tweet_previews",
+  "request": {
+    "params": {
+      "tweet_ids": [
+        "1130942781109596160",
+        "1101254234031370240"
+      ],
+      "tweet_type": "PUBLISHED",
+      "account_id": "2iqph"
+    }
+  },
+  "data": [
+    {
+      "tweet_id": "1130942781109596160",
+      "preview": "<iframe class='tweet-preview' src='https://ton.smf1.twitter.com/ads-manager/tweet-preview/index.html?data=c29tZSByYW5kb20gYmFzZTY0IHN0cmluZ3MgaGVyZS4uLg=='>"
+    },
+    {
+      "tweet_id": "1101254234031370240",
+      "preview": "<iframe class='tweet-preview' src='https://ton.smf1.twitter.com/ads-manager/tweet-preview/index.html?data=c29tZSByYW5kb20gYmFzZTY0IHN0cmluZ3MgaGVyZS4uLg=='>"
+    }
+  ]
+}
