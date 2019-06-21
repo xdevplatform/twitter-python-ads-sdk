@@ -395,7 +395,26 @@ class TaxSettings(Resource, Persistence):
 
     PROPERTIES = {}
 
-    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/tax_settings/{id}'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/tax_settings'
+
+    @classmethod
+    def load(self, account):
+        """
+        Returns an object instance for a given account.
+        """
+        resource = self.RESOURCE.format(account_id=account.id)
+        response = Request(account.client, 'get', resource).perform()
+        return self(account).from_response(response.body['data'])
+
+    def save(self):
+        """
+        Update the current object instance.
+        """
+        resource = self.RESOURCE.format(account_id=self.account.id)
+        response = Request(
+            self.account.client, 'put',
+            resource, params=self.to_params()).perform()
+        return self.from_response(response.body['data'])
 
 
 # tax settings properties
