@@ -355,6 +355,45 @@ resource_property(ScheduledTweet, 'scheduled_at', transform=TRANSFORM.TIME)
 resource_property(ScheduledTweet, 'text')
 
 
+class DraftTweet(Resource, Persistence):
+
+    PROPERTIES = {}
+
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/draft_tweets'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/draft_tweets/{id}'
+    PREVIEW = '/' + API_VERSION + '/accounts/{account_id}/draft_tweets/preview/{id}'
+
+    def preview(self, draft_tweet_id=None):
+        """
+        Preview a Draft Tweet on a mobile device.
+        """
+        if not (draft_tweet_id is None):
+            resource = self.PREVIEW.format(account_id=self.account.id, id=draft_tweet_id)
+        elif self.id:
+            resource = self.PREVIEW.format(account_id=self.account.id, id=self.id)
+        else:
+            raise AttributeError("object has no 'draft_tweet_id' to preview")
+
+        response = Request(self.account.client, 'post', resource).perform()
+        return response.body
+
+
+# draft tweet properties
+# read-only
+resource_property(DraftTweet, 'id', read_only=True)
+resource_property(DraftTweet, 'id_str', read_only=True)
+resource_property(DraftTweet, 'media_keys', readonly=True, transform=TRANSFORM.LIST)
+resource_property(DraftTweet, 'created_at', read_only=True, transform=TRANSFORM.TIME)
+resource_property(DraftTweet, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(DraftTweet, 'user_id', read_only=True)
+# writable
+resource_property(DraftTweet, 'as_user_id')
+resource_property(DraftTweet, 'card_uri')
+resource_property(DraftTweet, 'media_ids', transform=TRANSFORM.LIST)
+resource_property(DraftTweet, 'nullcast', transform=TRANSFORM.BOOL)
+resource_property(DraftTweet, 'text')
+
+
 class MediaLibrary(Resource, Persistence):
 
     PROPERTIES = {}
