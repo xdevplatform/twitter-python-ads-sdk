@@ -44,7 +44,7 @@ extra_opts = {
     'tests_require': ['pytest', 'responses', 'mock']
 }
 
-if sys.version_info[0] == 3:
+if sys.version_info[0] > 2:
     extra_opts['setup_requires'].append('sphinx==2.1.1')
 
 setup(
