@@ -123,12 +123,9 @@ class Response(object):
         self._raw_body = kwargs.get('raw_body', None)
 
         if headers.get('content-type') == 'application/gzip':
-            # hack because Twitter TON API doesn't return headers as it should
-            # and instead returns a gzipp'd file rather than a gzipp encoded response
-            # Content-Encoding: gzip
-            # Content-Type: application/json
-            # instead it returns:
-            # Content-Type: application/gzip
+            # Async analytics data arrives as a gzipped file so decompress it on-the-fly.
+            # Note: might need to consider using zlib.decompressobj() instead
+            # in case data streams gets large enough (data size doesn't fit into memory at once)
             raw_response_body = zlib.decompress(self._raw_body, 16 + zlib.MAX_WBITS).decode('utf-8')
         else:
             raw_response_body = self._raw_body
