@@ -13,7 +13,6 @@ if sys.version_info[0] != 3:
 else:
     import http.client as httplib
 
-import dateutil.parser
 from datetime import datetime
 from requests_oauthlib import OAuth1Session
 from twitter_ads.utils import get_version
@@ -143,10 +142,6 @@ class Response(object):
             self._rate_limit = int(headers['x-rate-limit-limit'])
             self._rate_limit_remaining = int(headers['x-rate-limit-remaining'])
             self._rate_limit_reset = datetime.fromtimestamp(int(headers['x-rate-limit-reset']))
-        elif 'x-cost-rate-limit-reset' in headers:
-            self._rate_limit = int(headers['x-cost-rate-limit-limit'])
-            self._rate_limit_remaining = int(headers['x-cost-rate-limit-remaining'])
-            self._rate_limit_reset = dateutil.parser.parse(headers['x-cost-rate-limit-reset'].first)
         else:
             self._rate_limit = None
             self._rate_limit_remaining = None
