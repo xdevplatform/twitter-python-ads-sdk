@@ -42,12 +42,29 @@ class Resource(object):
     def account(self):
         return self._account
 
-    def from_response(self, response):
+    def from_response(self, response, headers=None):
         """
         Populates a given objects attributes from a parsed JSON API response.
         This helper handles all necessary type coercions as it assigns
         attribute values.
         """
+        if headers is not None:
+            if 'x-rate-limit-reset' in headers:
+                setattr(self, 'rate_limit',
+                        headers['x-rate-limit-limit'])
+                setattr(self, 'rate_limit_remaining',
+                        headers['x-rate-limit-remaining'])
+                setattr(self, 'rate_limit_reset',
+                        headers['x-rate-limit-reset'])
+
+            if 'x-account-rate-limit-reset' in headers:
+                setattr(self, 'account_rate_limit',
+                        headers['x-account-rate-limit-limit'])
+                setattr(self, 'account_rate_limit_remaining',
+                        headers['x-account-rate-limit-remaining'])
+                setattr(self, 'account_rate_limit_reset',
+                        headers['x-account-rate-limit-reset'])
+
         for name in self.PROPERTIES:
             attr = '_{0}'.format(name)
             transform = self.PROPERTIES[name].get('transform', None)

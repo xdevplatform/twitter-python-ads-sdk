@@ -13,7 +13,6 @@ if sys.version_info[0] != 3:
 else:
     import http.client as httplib
 
-from datetime import datetime
 from requests_oauthlib import OAuth1Session
 from twitter_ads.utils import get_version
 from twitter_ads.error import Error
@@ -135,15 +134,6 @@ class Response(object):
         except ValueError:
             self._body = raw_response_body
 
-        if 'x-rate-limit-reset' in headers:
-            self._rate_limit = int(headers['x-rate-limit-limit'])
-            self._rate_limit_remaining = int(headers['x-rate-limit-remaining'])
-            self._rate_limit_reset = datetime.fromtimestamp(int(headers['x-rate-limit-reset']))
-        else:
-            self._rate_limit = None
-            self._rate_limit_remaining = None
-            self._rate_limit_reset = None
-
     @property
     def code(self):
         return self._code
@@ -159,18 +149,6 @@ class Response(object):
     @property
     def raw_body(self):
         return self._raw_body
-
-    @property
-    def rate_limit(self):
-        return self._rate_limit
-
-    @property
-    def rate_limit_remaining(self):
-        return self._rate_limit_remaining
-
-    @property
-    def rate_limit_reset(self):
-        return self._rate_limit_reset
 
     @property
     def error(self):
