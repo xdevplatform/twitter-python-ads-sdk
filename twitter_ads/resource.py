@@ -332,6 +332,12 @@ class Analytics(object):
             'end_time': to_time(end_time, None)
         }
 
+        for k in kwargs:
+            if isinstance(kwargs[k], list):
+                params[k] = ','.join(map(str, kwargs[k]))
+            else:
+                params[k] = kwargs[k]
+
         resource = klass.RESOURCE_ACTIVE_ENTITIES.format(account_id=account.id)
         response = Request(account.client, 'get', resource, params=params).perform()
         return response.body['data']
