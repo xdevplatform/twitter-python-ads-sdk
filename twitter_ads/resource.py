@@ -15,6 +15,7 @@ from twitter_ads.enum import ENTITY, GRANULARITY, PLACEMENT, TRANSFORM
 from twitter_ads.http import Request
 from twitter_ads.cursor import Cursor
 from twitter_ads import API_VERSION
+from twitter_ads.utils import extract_rate_limit
 
 
 def resource_property(klass, name, **kwargs):
@@ -49,21 +50,9 @@ class Resource(object):
         attribute values.
         """
         if headers is not None:
-            if 'x-rate-limit-reset' in headers:
-                setattr(self, 'rate_limit',
-                        headers['x-rate-limit-limit'])
-                setattr(self, 'rate_limit_remaining',
-                        headers['x-rate-limit-remaining'])
-                setattr(self, 'rate_limit_reset',
-                        headers['x-rate-limit-reset'])
-
-            if 'x-account-rate-limit-reset' in headers:
-                setattr(self, 'account_rate_limit',
-                        headers['x-account-rate-limit-limit'])
-                setattr(self, 'account_rate_limit_remaining',
-                        headers['x-account-rate-limit-remaining'])
-                setattr(self, 'account_rate_limit_reset',
-                        headers['x-account-rate-limit-reset'])
+            limits = extract_rate_limit(headers)
+            for k in limits:
+                setattr(self, k, limits[k])
 
         for name in self.PROPERTIES:
             attr = '_{0}'.format(name)

@@ -65,3 +65,18 @@ def validate_whole_hours(time):
         # Times must be expressed in whole hours
         if time.minute > 0 or time.second > 0:
             raise ValueError("'start_time' and 'end_time' must be expressed in whole hours.")
+
+
+def extract_rate_limit(headers):
+    limits = {}
+    if 'x-rate-limit-reset' in headers:
+        limits['rate_limit'] = headers['x-rate-limit-limit']
+        limits['rate_limit_remaining'] = headers['x-rate-limit-remaining']
+        limits['rate_limit_reset'] = headers['x-rate-limit-reset']
+
+    if 'x-account-rate-limit-reset' in headers:
+        limits['account_rate_limit'] = headers['x-account-rate-limit-limit']
+        limits['account_rate_limit_remaining'] = headers['x-account-rate-limit-remaining']
+        limits['account_rate_limit_reset'] = headers['x-account-rate-limit-reset']
+
+    return limits

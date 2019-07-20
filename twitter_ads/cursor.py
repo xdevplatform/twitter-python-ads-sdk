@@ -4,6 +4,7 @@
 
 # from twitter_ads import *
 from twitter_ads.http import Request
+from twitter_ads.utils import extract_rate_limit
 
 
 class Cursor(object):
@@ -93,21 +94,9 @@ class Cursor(object):
         if 'total_count' in response.body:
             self._total_count = int(response.body['total_count'])
 
-        if 'x-rate-limit-reset' in response.headers:
-            setattr(self, 'rate_limit',
-                    response.headers['x-rate-limit-limit'])
-            setattr(self, 'rate_limit_remaining',
-                    response.headers['x-rate-limit-remaining'])
-            setattr(self, 'rate_limit_reset',
-                    response.headers['x-rate-limit-reset'])
-
-        if 'x-account-rate-limit-reset' in response.headers:
-            setattr(self, 'account_rate_limit',
-                    response.headers['x-account-rate-limit-limit'])
-            setattr(self, 'account_rate_limit_remaining',
-                    response.headers['x-account-rate-limit-remaining'])
-            setattr(self, 'account_rate_limit_reset',
-                    response.headers['x-account-rate-limit-reset'])
+        limits = extract_rate_limit(response.headers)
+        for k in limits:
+            setattr(self, k, limits[k])
 
         for item in response.body['data']:
             if 'from_response' in dir(self._klass):
