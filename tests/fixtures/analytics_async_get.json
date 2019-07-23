@@ -1,0 +1,36 @@
+{
+  "request": {
+    "params": {
+      "job_ids": [
+        111111111111111111
+      ]
+    }
+  },
+  "next_cursor": null,
+  "data": [
+    {
+      "start_time": "2019-01-01T00:00:00Z",
+      "segmentation_type": null,
+      "url": "https://ton.twimg.com/advertiser-api-async-analytics/stats.json.gz",
+      "id_str": "111111111111111111",
+      "entity_ids": [
+        "aaaa"
+      ],
+      "end_time": "2019-01-02T00:00:00Z",
+      "country": null,
+      "placement": "ALL_ON_TWITTER",
+      "id": 111111111111111111,
+      "expires_at": null,
+      "account_id": "2iqph",
+      "status": "SUCCESS",
+      "granularity": "TOTAL",
+      "entity": "CAMPAIGN",
+      "created_at": "2019-01-03T00:00:00Z",
+      "platform": null,
+      "updated_at": "2019-01-03T00:30:00Z",
+      "metric_groups": [
+        "ENGAGEMENT"
+      ]
+    }
+  ]
+}
