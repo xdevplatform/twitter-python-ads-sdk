@@ -297,7 +297,7 @@ class Analytics(object):
         resource = klass.RESOURCE_ASYNC.format(account_id=account.id)
         request = Request(account.client, 'get', resource, params=params)
 
-        return Cursor(klass, request, init_with=[account])
+        return Cursor(None, request, init_with=[account])
 
     @classmethod
     def async_stats_job_data(klass, account, url, **kwargs):
