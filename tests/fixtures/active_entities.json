@@ -1,0 +1,47 @@
+{
+  "data_type": "active_entities",
+  "request": {
+    "params": {
+      "account_id": "2iqph",
+      "entity": "CAMPAIGN",
+      "start_time": "2019-02-28T08:00:00Z",
+      "end_time": "2019-03-01T08:00:00Z"
+    }
+  },
+  "data": [
+    {
+      "entity_id": "2mvb28",
+      "activity_start_time": "2019-02-28T01:30:07Z",
+      "activity_end_time": "2019-03-01T07:42:55Z",
+      "placements": [
+        "ALL_ON_TWITTER"
+      ]
+    },
+    {
+      "entity_id": "2mvb29",
+      "activity_start_time": "2019-02-27T11:30:07Z",
+      "activity_end_time": "2019-03-01T07:42:50Z",
+      "placements": [
+        "ALL_ON_TWITTER",
+        "PUBLISHER_NETWORK"
+      ]
+    },
+    {
+      "entity_id": "2mvfan",
+      "activity_start_time": "2019-02-27T09:00:05Z",
+      "activity_end_time": "2019-03-01T06:06:36Z",
+      "placements": [
+        "PUBLISHER_NETWORK"
+      ]
+    },
+    {
+      "entity_id": "2n17dx",
+      "activity_start_time": "2019-02-28T02:02:26Z",
+      "activity_end_time": "2019-03-01T07:52:44Z",
+      "placements": [
+        "ALL_ON_TWITTER",
+        "PUBLISHER_NETWORK"
+      ]
+    }
+  ]
+}

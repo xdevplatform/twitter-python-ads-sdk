@@ -285,18 +285,19 @@ class Analytics(object):
         return response.body['data']
 
     @classmethod
-    def async_stats_job_result(klass, account, job_id, **kwargs):
+    def async_stats_job_result(klass, account, job_ids=None, **kwargs):
         """
         Returns the results of the specified async job IDs
         """
-        params = {
-            'job_ids': job_id
-        }
+        params = {}
+        params.update(kwargs)
+        if isinstance(job_ids, list):
+            params['job_ids'] = ','.join(map(str, job_ids))
 
         resource = klass.RESOURCE_ASYNC.format(account_id=account.id)
-        response = Request(account.client, 'get', resource, params=params).perform()
+        request = Request(account.client, 'get', resource, params=params)
 
-        return response.body['data'][0]
+        return Cursor(None, request, init_with=[account])
 
     @classmethod
     def async_stats_job_data(klass, account, url, **kwargs):
@@ -313,6 +314,10 @@ class Analytics(object):
 
     @classmethod
     def active_entities(klass, account, start_time, end_time, **kwargs):
+        """
+        Returns the details about which entities' analytics metrics
+        have changed in a given time period.
+        """
         entity_type = klass.__name__
         if entity_type == 'OrganicTweet':
             raise ValueError("'OrganicTweet' not support with 'active_entities'")
@@ -326,6 +331,12 @@ class Analytics(object):
             'start_time': to_time(start_time, None),
             'end_time': to_time(end_time, None)
         }
+
+        for k in kwargs:
+            if isinstance(kwargs[k], list):
+                params[k] = ','.join(map(str, kwargs[k]))
+            else:
+                params[k] = kwargs[k]
 
         resource = klass.RESOURCE_ACTIVE_ENTITIES.format(account_id=account.id)
         response = Request(account.client, 'get', resource, params=params).perform()

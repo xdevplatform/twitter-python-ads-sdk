@@ -39,7 +39,7 @@ class TailoredAudience(Resource):
         """
         This is a private API and requires whitelisting from Twitter.
         This endpoint will allow partners to add, update and remove users from a given
-            tailored_audience_id.
+        tailored_audience_id.
         The endpoint will also accept multiple user identifier types per user as well.
         """
         resource = self.RESOURCE_USERS.format(account_id=self.account.id, id=self.id)
@@ -117,20 +117,12 @@ class TailoredAudiencePermission(Resource):
         """
         Saves or updates the current tailored audience permission.
         """
-        if self.id:
-            method = 'put'
-            resource = self.RESOURCE.format(
-                account_id=self.account.id,
-                tailored_audience_id=self.tailored_audience_id,
-                id=self.id)
-        else:
-            method = 'post'
-            resource = self.RESOURCE_COLLECTION.format(
-                account_id=self.account.id,
-                tailored_audience_id=self.tailored_audience_id)
+        resource = self.RESOURCE_COLLECTION.format(
+            account_id=self.account.id,
+            tailored_audience_id=self.tailored_audience_id)
 
         response = Request(
-            self.account.client, method,
+            self.account.client, 'post',
             resource, params=self.to_params()).perform()
 
         return self.from_response(response.body['data'])
