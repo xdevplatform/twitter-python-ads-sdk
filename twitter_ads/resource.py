@@ -78,6 +78,8 @@ class Resource(object):
             if isinstance(value, datetime):
                 params[name] = format_time(value)
             elif isinstance(value, list):
+                if not value:
+                    continue
                 params[name] = ','.join(map(str, value))
             elif isinstance(value, bool):
                 params[name] = str(value).lower()
