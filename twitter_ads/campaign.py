@@ -22,7 +22,7 @@ targeting_criteria'
     @classmethod
     def all(klass, account, line_item_ids, **kwargs):
         """Returns a Cursor instance for a given resource."""
-        params = {'line_item_ids': ','.join(line_item_ids)}
+        params = {'line_item_ids': ','.join(map(str, line_item_ids))}
         params.update(kwargs)
 
         resource = klass.RESOURCE_COLLECTION.format(account_id=account.id)

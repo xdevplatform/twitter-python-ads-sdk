@@ -246,7 +246,7 @@ class Analytics(object):
         placement = kwargs.get('placement', PLACEMENT.ALL_ON_TWITTER)
 
         params = {
-            'metric_groups': ','.join(metric_groups),
+            'metric_groups': ','.join(map(str, metric_groups)),
             'start_time': to_time(start_time, granularity),
             'end_time': to_time(end_time, granularity),
             'granularity': granularity.upper(),
@@ -254,7 +254,7 @@ class Analytics(object):
             'placement': placement
         }
 
-        params['entity_ids'] = ','.join(ids)
+        params['entity_ids'] = ','.join(map(str, ids))
 
         return params
 
