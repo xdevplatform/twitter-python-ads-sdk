@@ -2,8 +2,6 @@
 
 """Container for all creative management logic used by the Ads API SDK."""
 
-from requests.exceptions import HTTPError
-
 from twitter_ads import API_VERSION
 from twitter_ads.cursor import Cursor
 from twitter_ads.enum import TRANSFORM
@@ -39,22 +37,18 @@ class PromotedTweet(Resource, Persistence, Analytics):
     RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/promoted_tweets'
     RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/promoted_tweets/{id}'
 
-    def save(self):
+    @classmethod
+    def attach(klass, account, line_item_id=None, tweet_ids=None):
         """
-        Saves or updates the current object instance depending on the
-        presence of `object.id`.
+        Associate one or more Tweets with the specified line item.
         """
-        params = self.to_params()
-        if 'tweet_id' in params:
-            params['tweet_ids'] = [params['tweet_id']]
-            del params['tweet_id']
+        params = {}
+        params['line_item_id'] = line_item_id
+        params['tweet_ids'] = ",".join(map(str, tweet_ids))
 
-        if self.id:
-            raise HTTPError("Method PUT not allowed.")
-
-        resource = self.RESOURCE_COLLECTION.format(account_id=self.account.id)
-        response = Request(self.account.client, 'post', resource, params=params).perform()
-        return self.from_response(response.body['data'][0])
+        resource = klass.RESOURCE_COLLECTION.format(account_id=account.id)
+        request = Request(account.client, 'post', resource, params=params)
+        return Cursor(klass, request, init_with=[account])
 
 
 # promoted tweet properties
@@ -65,9 +59,8 @@ resource_property(PromotedTweet, 'deleted', readonly=True, transform=TRANSFORM.B
 resource_property(PromotedTweet, 'entity_status', readonly=True)
 resource_property(PromotedTweet, 'id', readonly=True)
 resource_property(PromotedTweet, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
-# writable
-resource_property(PromotedTweet, 'line_item_id')
-resource_property(PromotedTweet, 'tweet_id')  # SDK limitation
+resource_property(PromotedTweet, 'tweet_id', readonly=True)
+resource_property(PromotedTweet, 'line_item_id', readonly=True)
 
 
 class AccountMedia(Resource, Persistence):
