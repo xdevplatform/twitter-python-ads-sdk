@@ -32,7 +32,7 @@ resource_property(PromotedAccount, 'line_item_id')
 resource_property(PromotedAccount, 'user_id')
 
 
-class PromotedTweet(Resource, Persistence, Analytics):
+class PromotedTweet(Analytics, Resource, Persistence):
 
     PROPERTIES = {}
 
@@ -91,7 +91,7 @@ resource_property(AccountMedia, 'media_id')
 resource_property(AccountMedia, 'video_id')
 
 
-class MediaCreative(Resource, Persistence, Analytics):
+class MediaCreative(Analytics, Resource, Persistence):
 
     PROPERTIES = {}
 
