@@ -15,6 +15,7 @@ from twitter_ads.enum import ENTITY, GRANULARITY, PLACEMENT, TRANSFORM
 from twitter_ads.http import Request
 from twitter_ads.cursor import Cursor
 from twitter_ads import API_VERSION
+from twitter_ads.utils import extract_response_headers
 
 
 def resource_property(klass, name, **kwargs):
@@ -42,12 +43,17 @@ class Resource(object):
     def account(self):
         return self._account
 
-    def from_response(self, response):
+    def from_response(self, response, headers=None):
         """
         Populates a given objects attributes from a parsed JSON API response.
         This helper handles all necessary type coercions as it assigns
         attribute values.
         """
+        if headers is not None:
+            limits = extract_response_headers(headers)
+            for k in limits:
+                setattr(self, k, limits[k])
+
         for name in self.PROPERTIES:
             attr = '_{0}'.format(name)
             transform = self.PROPERTIES[name].get('transform', None)

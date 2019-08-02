@@ -4,6 +4,7 @@
 
 # from twitter_ads import *
 from twitter_ads.http import Request
+from twitter_ads.utils import extract_response_headers
 
 
 class Cursor(object):
@@ -92,6 +93,10 @@ class Cursor(object):
         self._next_cursor = response.body.get('next_cursor', None)
         if 'total_count' in response.body:
             self._total_count = int(response.body['total_count'])
+
+        limits = extract_response_headers(response.headers)
+        for k in limits:
+            setattr(self, k, limits[k])
 
         for item in response.body['data']:
             if 'from_response' in dir(self._klass):
