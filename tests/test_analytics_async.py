@@ -58,8 +58,8 @@ def test_analytics_async():
         [job_id]).first
 
     assert job_result is not None
-    assert isinstance(job_result, dict)
-    assert job_result['url'] == 'https://ton.twimg.com/advertiser-api-async-analytics/stats.json.gz'
+    assert isinstance(job_result, Analytics)
+    assert job_result.url == 'https://ton.twimg.com/advertiser-api-async-analytics/stats.json.gz'
 
     # call async_stats_job_result() from Analytics class directly
     job_result = Analytics.async_stats_job_result(
@@ -67,5 +67,5 @@ def test_analytics_async():
         [job_id]).first
 
     assert job_result is not None
-    assert isinstance(job_result, dict)
-    assert job_result['url'] == 'https://ton.twimg.com/advertiser-api-async-analytics/stats.json.gz'
+    assert isinstance(job_result, Analytics)
+    assert job_result.url == 'https://ton.twimg.com/advertiser-api-async-analytics/stats.json.gz'

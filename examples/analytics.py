@@ -56,6 +56,6 @@ time.sleep(seconds)
 
 async_stats_job_result = LineItem.async_stats_job_result(account, [job_id]).first
 
-async_data = LineItem.async_stats_job_data(account, async_stats_job_result['url'])
+async_data = LineItem.async_stats_job_data(account, async_stats_job_result.url)
 
 print(async_data)

@@ -13,8 +13,6 @@ if sys.version_info[0] != 3:
 else:
     import http.client as httplib
 
-import dateutil.parser
-from datetime import datetime
 from requests_oauthlib import OAuth1Session
 from twitter_ads.utils import get_version
 from twitter_ads.error import Error
@@ -124,12 +122,9 @@ class Response(object):
         self._raw_body = kwargs.get('raw_body', None)
 
         if headers.get('content-type') == 'application/gzip':
-            # hack because Twitter TON API doesn't return headers as it should
-            # and instead returns a gzipp'd file rather than a gzipp encoded response
-            # Content-Encoding: gzip
-            # Content-Type: application/json
-            # instead it returns:
-            # Content-Type: application/gzip
+            # Async analytics data arrives as a gzipped file so decompress it on-the-fly.
+            # Note: might need to consider using zlib.decompressobj() instead
+            # in case data streams gets large enough (data size doesn't fit into memory at once)
             raw_response_body = zlib.decompress(self._raw_body, 16 + zlib.MAX_WBITS).decode('utf-8')
         else:
             raw_response_body = self._raw_body
@@ -138,19 +133,6 @@ class Response(object):
             self._body = json.loads(raw_response_body)
         except ValueError:
             self._body = raw_response_body
-
-        if 'x-rate-limit-reset' in headers:
-            self._rate_limit = int(headers['x-rate-limit-limit'])
-            self._rate_limit_remaining = int(headers['x-rate-limit-remaining'])
-            self._rate_limit_reset = datetime.fromtimestamp(int(headers['x-rate-limit-reset']))
-        elif 'x-cost-rate-limit-reset' in headers:
-            self._rate_limit = int(headers['x-cost-rate-limit-limit'])
-            self._rate_limit_remaining = int(headers['x-cost-rate-limit-remaining'])
-            self._rate_limit_reset = dateutil.parser.parse(headers['x-cost-rate-limit-reset'].first)
-        else:
-            self._rate_limit = None
-            self._rate_limit_remaining = None
-            self._rate_limit_reset = None
 
     @property
     def code(self):
@@ -167,18 +149,6 @@ class Response(object):
     @property
     def raw_body(self):
         return self._raw_body
-
-    @property
-    def rate_limit(self):
-        return self._rate_limit
-
-    @property
-    def rate_limit_remaining(self):
-        return self._rate_limit_remaining
-
-    @property
-    def rate_limit_reset(self):
-        return self._rate_limit_reset
 
     @property
     def error(self):

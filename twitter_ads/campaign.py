@@ -148,7 +148,7 @@ resource_property(TargetingCriteria, 'tailored_audience_type')
 resource_property(TargetingCriteria, 'to_delete', transform=TRANSFORM.BOOL)
 
 
-class FundingInstrument(Resource, Persistence, Analytics):
+class FundingInstrument(Analytics, Resource, Persistence):
 
     PROPERTIES = {}
 
@@ -226,7 +226,7 @@ resource_property(AppList, 'name', readonly=True)
 resource_property(AppList, 'apps', readonly=True)
 
 
-class Campaign(Resource, Persistence, Analytics, Batch):
+class Campaign(Analytics, Resource, Persistence, Batch):
 
     PROPERTIES = {}
 
@@ -259,7 +259,7 @@ resource_property(Campaign, 'total_budget_amount_local_micro')
 resource_property(Campaign, 'to_delete', transform=TRANSFORM.BOOL)
 
 
-class LineItem(Resource, Persistence, Analytics, Batch):
+class LineItem(Analytics, Resource, Persistence, Batch):
 
     PROPERTIES = {}
 
