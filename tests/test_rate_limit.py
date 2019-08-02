@@ -41,6 +41,7 @@ def test_rate_limit_cursor_class_access():
     cursor = Campaign.all(account)
     assert cursor is not None
     assert isinstance(cursor, Cursor)
+    assert cursor.rate_limit is None
     assert cursor.account_rate_limit == '10000'
     assert cursor.account_rate_limit_remaining == '9999'
     assert cursor.account_rate_limit_reset == '1546300800'
@@ -86,6 +87,7 @@ def test_rate_limit_resource_class_access():
     assert isinstance(data, Resource)
     assert data.id == '2wap7'
     assert data.entity_status == 'ACTIVE'
+    assert data.rate_limit is None
     assert data.account_rate_limit == '10000'
     assert data.account_rate_limit_remaining == '9999'
     assert data.account_rate_limit_reset == '1546300800'

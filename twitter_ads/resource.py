@@ -15,7 +15,7 @@ from twitter_ads.enum import ENTITY, GRANULARITY, PLACEMENT, TRANSFORM
 from twitter_ads.http import Request
 from twitter_ads.cursor import Cursor
 from twitter_ads import API_VERSION
-from twitter_ads.utils import extract_rate_limit
+from twitter_ads.utils import extract_response_headers
 
 
 def resource_property(klass, name, **kwargs):
@@ -50,7 +50,7 @@ class Resource(object):
         attribute values.
         """
         if headers is not None:
-            limits = extract_rate_limit(headers)
+            limits = extract_response_headers(headers)
             for k in limits:
                 setattr(self, k, limits[k])
 
