@@ -513,7 +513,7 @@ class CardsFetch(Resource):
             params['with_deleted'] = 'true'
 
         if card_uris:
-            params['card_uris'] = ','.join(card_uris)
+            params['card_uris'] = ','.join(map(str, card_uris))
             resource = klass.FETCH_URI.format(account_id=account.id)
             request = Request(account.client, 'get', resource, params=params)
             return Cursor(klass, request, init_with=[account])
