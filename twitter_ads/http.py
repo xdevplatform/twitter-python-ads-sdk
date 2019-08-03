@@ -5,8 +5,10 @@
 import sys
 import platform
 import logging
+logger = logging.getLogger(__name__)
 import json
 import zlib
+import time
 
 if sys.version_info[0] != 3:
     import httplib
@@ -77,6 +79,14 @@ class Request(object):
         files = self.options.get('files', None)
         stream = self.options.get('stream', False)
 
+        handle_rate_limit = self._client.options.get('handle_rate_limit', False)
+        limit_test = self._client.options.get('limit_test', False)  # internal-only
+        retry_max = self._client.options.get('retry_max', 0)
+        retry_delay = self._client.options.get('retry_delay', 1500)
+        retry_on_status = self._client.options.get('retry_on_status', [500, 503])
+        retry_count = 0
+        retry_after = None
+
         consumer = OAuth1Session(
             self._client.consumer_key,
             client_secret=self._client.consumer_secret,
@@ -86,8 +96,37 @@ class Request(object):
         url = self.__domain() + self._resource
         method = getattr(consumer, self._method)
 
-        response = method(url, headers=headers, data=data, params=params,
-                          files=files, stream=stream)
+        while (retry_count <= retry_max):
+            response = method(url, headers=headers, data=data, params=params,
+                              files=files, stream=stream)
+            # do not retry on 2XX status code
+            if 200 <= response.status_code < 300:
+                break
+
+            if handle_rate_limit and retry_after is None:
+                account_rate_limit_reset = response.headers.get('x-account-rate-limit-reset')
+                rate_limit_reset = response.headers.get('x-rate-limit-reset')
+
+                if account_rate_limit_reset is not None:
+                    rate_limit_reset = int(account_rate_limit_reset)
+                else:
+                    rate_limit_reset = int(rate_limit_reset)
+
+                if response.status_code == 429:
+                    retry_after = rate_limit_reset - int(time.time())
+                    logger.warning("Request reached Rate Limit: resume in %d seconds"
+                                   % retry_after)
+                    if not limit_test:
+                        time.sleep(retry_after + 5)
+                    continue
+
+            if retry_max > 0:
+                if response.status_code not in retry_on_status:
+                    break
+                if not limit_test:
+                    time.sleep(int(retry_delay) / 1000)
+
+            retry_count += 1
 
         raw_response_body = response.raw.read() if stream else response.text
 
