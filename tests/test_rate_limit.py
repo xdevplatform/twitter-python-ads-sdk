@@ -15,7 +15,143 @@ from twitter_ads.error import RateLimit
 
 
 @responses.activate
-def test_rate_limit_retry():
+def test_rate_limit_handle_with_retry_success_1():
+    # scenario:
+    #  - 500 (retry) -> 429 (handle rate limit) -> 200 (end)
+    responses.add(responses.GET,
+                  with_resource('/' + API_VERSION + '/accounts/2iqph'),
+                  body=with_fixture('accounts_load'),
+                  content_type='application/json')
+
+    responses.add(responses.GET,
+                  with_resource('/' + API_VERSION + '/accounts/2iqph/campaigns'),
+                  status=500,
+                  body=with_fixture('campaigns_all'),
+                  content_type='application/json',
+                  headers={
+                      'x-account-rate-limit-limit': '10000',
+                      'x-account-rate-limit-remaining': '0',
+                      'x-account-rate-limit-reset': '1546300800'
+                  })
+
+    responses.add(responses.GET,
+                  with_resource('/' + API_VERSION + '/accounts/2iqph/campaigns'),
+                  status=429,
+                  body=with_fixture('campaigns_all'),
+                  content_type='application/json',
+                  headers={
+                      'x-account-rate-limit-limit': '10000',
+                      'x-account-rate-limit-remaining': '0',
+                      'x-account-rate-limit-reset': str(int(time.time()) + 5)
+                  })
+
+    responses.add(responses.GET,
+                  with_resource('/' + API_VERSION + '/accounts/2iqph/campaigns'),
+                  status=200,
+                  body=with_fixture('campaigns_all'),
+                  content_type='application/json',
+                  headers={
+                      'x-account-rate-limit-limit': '10000',
+                      'x-account-rate-limit-remaining': '9999',
+                      'x-account-rate-limit-reset': '1546300800'
+                  })
+
+    client = Client(
+        characters(40),
+        characters(40),
+        characters(40),
+        characters(40),
+        options={
+            'handle_rate_limit': True,
+            'retry_max': 1,
+            'retry_delay': 3000,
+            'retry_on_status': [500],
+            'limit_test': True
+        }
+    )
+
+    account = Account.load(client, '2iqph')
+
+    cursor = Campaign.all(account)
+    assert len(responses.calls) == 4
+    assert cursor is not None
+    assert isinstance(cursor, Cursor)
+    assert cursor.rate_limit is None
+    assert cursor.account_rate_limit == '10000'
+    assert cursor.account_rate_limit_remaining == '9999'
+    assert cursor.account_rate_limit_reset == '1546300800'
+
+
+@responses.activate
+def test_rate_limit_handle_with_retry_success_2():
+    # scenario:
+    #  - 429 (handle rate limit) -> 500 (retry) -> 200 (end)
+    responses.add(responses.GET,
+                  with_resource('/' + API_VERSION + '/accounts/2iqph'),
+                  body=with_fixture('accounts_load'),
+                  content_type='application/json')
+
+    responses.add(responses.GET,
+                  with_resource('/' + API_VERSION + '/accounts/2iqph/campaigns'),
+                  status=429,
+                  body=with_fixture('campaigns_all'),
+                  content_type='application/json',
+                  headers={
+                      'x-account-rate-limit-limit': '10000',
+                      'x-account-rate-limit-remaining': '0',
+                      'x-account-rate-limit-reset': '1546300800'
+                  })
+
+    responses.add(responses.GET,
+                  with_resource('/' + API_VERSION + '/accounts/2iqph/campaigns'),
+                  status=500,
+                  body=with_fixture('campaigns_all'),
+                  content_type='application/json',
+                  headers={
+                      'x-account-rate-limit-limit': '10000',
+                      'x-account-rate-limit-remaining': '0',
+                      'x-account-rate-limit-reset': str(int(time.time()) + 5)
+                  })
+
+    responses.add(responses.GET,
+                  with_resource('/' + API_VERSION + '/accounts/2iqph/campaigns'),
+                  status=200,
+                  body=with_fixture('campaigns_all'),
+                  content_type='application/json',
+                  headers={
+                      'x-account-rate-limit-limit': '10000',
+                      'x-account-rate-limit-remaining': '9999',
+                      'x-account-rate-limit-reset': '1546300800'
+                  })
+
+    client = Client(
+        characters(40),
+        characters(40),
+        characters(40),
+        characters(40),
+        options={
+            'handle_rate_limit': True,
+            'retry_max': 1,
+            'retry_delay': 3000,
+            'retry_on_status': [500],
+            'limit_test': True
+        }
+    )
+
+    account = Account.load(client, '2iqph')
+
+    cursor = Campaign.all(account)
+    assert len(responses.calls) == 4
+    assert cursor is not None
+    assert isinstance(cursor, Cursor)
+    assert cursor.rate_limit is None
+    assert cursor.account_rate_limit == '10000'
+    assert cursor.account_rate_limit_remaining == '9999'
+    assert cursor.account_rate_limit_reset == '1546300800'
+
+
+@responses.activate
+def test_rate_limit_handle_success():
     responses.add(responses.GET,
                   with_resource('/' + API_VERSION + '/accounts/2iqph'),
                   body=with_fixture('accounts_load'),
@@ -67,7 +203,7 @@ def test_rate_limit_retry():
 
 
 @responses.activate
-def test_rate_limit_retry_error():
+def test_rate_limit_handle_error():
     responses.add(responses.GET,
                   with_resource('/' + API_VERSION + '/accounts/2iqph'),
                   body=with_fixture('accounts_load'),
