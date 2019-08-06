@@ -2,6 +2,7 @@
 
 """Container for all creative management logic used by the Ads API SDK."""
 
+from requests.exceptions import HTTPError
 from twitter_ads import API_VERSION
 from twitter_ads.cursor import Cursor
 from twitter_ads.enum import TRANSFORM
@@ -38,6 +39,26 @@ class PromotedTweet(Analytics, Resource, Persistence):
     RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/promoted_tweets'
     RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/promoted_tweets/{id}'
 
+    @Deprecated('This method has been deprecated and will no longer be available '
+                'in the next major version update. Please use PromotedTweet.attach() '
+                'method instead.')
+    def save(self):
+        """
+        Saves or updates the current object instance depending on the
+        presence of `object.id`.
+        """
+        params = self.to_params()
+        if 'tweet_id' in params:
+            params['tweet_ids'] = [params['tweet_id']]
+            del params['tweet_id']
+
+        if self.id:
+            raise HTTPError("Method PUT not allowed.")
+
+        resource = self.RESOURCE_COLLECTION.format(account_id=self.account.id)
+        response = Request(self.account.client, 'post', resource, params=params).perform()
+        return self.from_response(response.body['data'][0])
+
     @classmethod
     def attach(klass, account, line_item_id=None, tweet_ids=None):
         """
@@ -60,8 +81,8 @@ resource_property(PromotedTweet, 'deleted', readonly=True, transform=TRANSFORM.B
 resource_property(PromotedTweet, 'entity_status', readonly=True)
 resource_property(PromotedTweet, 'id', readonly=True)
 resource_property(PromotedTweet, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
-resource_property(PromotedTweet, 'tweet_id', readonly=True)
-resource_property(PromotedTweet, 'line_item_id', readonly=True)
+resource_property(PromotedTweet, 'tweet_id')
+resource_property(PromotedTweet, 'line_item_id')
 
 
 class AccountMedia(Resource, Persistence):
