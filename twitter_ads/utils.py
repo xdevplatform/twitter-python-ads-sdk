@@ -89,7 +89,7 @@ class Deprecated(object):
 
     def __call__(self, decorated, *args, **kwargs):
         def wrapper(*args, **kwargs):
-            method = str(decorated.__qualname__)
+            method = "{}.{}".format(str(args[0].__name__), str(decorated.__name__))
             warnings.warn(
                 "{} => {}".format(method, self._message),
                 DeprecationWarning,
