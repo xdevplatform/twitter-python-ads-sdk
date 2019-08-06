@@ -15,6 +15,7 @@ from twitter_ads.enum import ENTITY, GRANULARITY, PLACEMENT, TRANSFORM
 from twitter_ads.http import Request
 from twitter_ads.cursor import Cursor
 from twitter_ads import API_VERSION
+from twitter_ads.utils import extract_response_headers
 
 
 def resource_property(klass, name, **kwargs):
@@ -42,12 +43,17 @@ class Resource(object):
     def account(self):
         return self._account
 
-    def from_response(self, response):
+    def from_response(self, response, headers=None):
         """
         Populates a given objects attributes from a parsed JSON API response.
         This helper handles all necessary type coercions as it assigns
         attribute values.
         """
+        if headers is not None:
+            limits = extract_response_headers(headers)
+            for k in limits:
+                setattr(self, k, limits[k])
+
         for name in self.PROPERTIES:
             attr = '_{0}'.format(name)
             transform = self.PROPERTIES[name].get('transform', None)
@@ -212,10 +218,12 @@ class Persistence(object):
         self.from_response(response.body['data'])
 
 
-class Analytics(object):
+class Analytics(Resource):
     """
     Container for all analytics related logic used by API resource objects.
     """
+    PROPERTIES = {}
+
     ANALYTICS_MAP = {
         'Campaign': ENTITY.CAMPAIGN,
         'FundingInstrument': ENTITY.FUNDING_INSTRUMENT,
@@ -246,7 +254,7 @@ class Analytics(object):
         placement = kwargs.get('placement', PLACEMENT.ALL_ON_TWITTER)
 
         params = {
-            'metric_groups': ','.join(metric_groups),
+            'metric_groups': ','.join(map(str, metric_groups)),
             'start_time': to_time(start_time, granularity),
             'end_time': to_time(end_time, granularity),
             'granularity': granularity.upper(),
@@ -254,7 +262,7 @@ class Analytics(object):
             'placement': placement
         }
 
-        params['entity_ids'] = ','.join(ids)
+        params['entity_ids'] = ','.join(map(str, ids))
 
         return params
 
@@ -297,7 +305,7 @@ class Analytics(object):
         resource = klass.RESOURCE_ASYNC.format(account_id=account.id)
         request = Request(account.client, 'get', resource, params=params)
 
-        return Cursor(None, request, init_with=[account])
+        return Cursor(Analytics, request, init_with=[account])
 
     @classmethod
     def async_stats_job_data(klass, account, url, **kwargs):
@@ -341,3 +349,14 @@ class Analytics(object):
         resource = klass.RESOURCE_ACTIVE_ENTITIES.format(account_id=account.id)
         response = Request(account.client, 'get', resource, params=params).perform()
         return response.body['data']
+
+
+# async_stats_job_result() properties
+# read-only
+resource_property(Analytics, 'id', readonly=True)
+resource_property(Analytics, 'id_str', readonly=True)
+resource_property(Analytics, 'status', readonly=True)
+resource_property(Analytics, 'url', readonly=True)
+resource_property(Analytics, 'created_at', readonly=True)
+resource_property(Analytics, 'expires_at', readonly=True)
+resource_property(Analytics, 'updated_at', readonly=True)

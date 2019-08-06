@@ -4,6 +4,8 @@ from __future__ import division
 """Container for all helpers and utilities used throughout the Ads API SDK."""
 
 import datetime
+import warnings
+warnings.simplefilter('default', DeprecationWarning)
 from email.utils import formatdate
 from time import mktime
 
@@ -65,3 +67,33 @@ def validate_whole_hours(time):
         # Times must be expressed in whole hours
         if time.minute > 0 or time.second > 0:
             raise ValueError("'start_time' and 'end_time' must be expressed in whole hours.")
+
+
+def extract_response_headers(headers):
+    values = {}
+
+    values['rate_limit'] = headers.get('x-rate-limit-limit')
+    values['rate_limit_remaining'] = headers.get('x-rate-limit-remaining')
+    values['rate_limit_reset'] = headers.get('x-rate-limit-reset')
+
+    values['account_rate_limit'] = headers.get('x-account-rate-limit-limit')
+    values['account_rate_limit_remaining'] = headers.get('x-account-rate-limit-remaining')
+    values['account_rate_limit_reset'] = headers.get('x-account-rate-limit-reset')
+
+    return values
+
+
+class Deprecated(object):
+    def __init__(self, message):
+        self._message = message
+
+    def __call__(self, decorated, *args, **kwargs):
+        def wrapper(*args, **kwargs):
+            method = "{}.{}".format(str(args[0].__name__), str(decorated.__name__))
+            warnings.warn(
+                "{} => {}".format(method, self._message),
+                DeprecationWarning,
+                stacklevel=2
+            )
+            return decorated(*args, **kwargs)
+        return wrapper

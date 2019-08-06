@@ -7,6 +7,7 @@
 # https://dev.twitter.com/ads/analytics/metrics-and-segmentation
 # https://dev.twitter.com/ads/analytics/metrics-derived
 
+import sys
 import time
 
 from twitter_ads.client import Client
@@ -25,8 +26,8 @@ client = Client(CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET
 # load the advertiser account instance
 account = client.accounts(ACCOUNT_ID)
 
-# limit request count and grab the first 10 line items from Cursor
-line_items = list(account.line_items(None, count=10))[:10]
+# grab the first 10 line items from Cursor
+line_items = list(account.line_items(None))[:10]
 
 # the list of metrics we want to fetch, for a full list of possible metrics
 # see: https://dev.twitter.com/ads/analytics/metrics-and-segmentation
@@ -36,7 +37,11 @@ metric_groups = [METRIC_GROUP.BILLING]
 line_items[0].stats(metric_groups)
 
 # fetching stats for multiple line items
-ids = map(lambda x: x.id, line_items)
+ids = list(map(lambda x: x.id, line_items))
+if not ids:
+    print('Error: A minimum of 1 items must be provided for entity_ids')
+    sys.exit()
+
 LineItem.all_stats(account, ids, metric_groups)
 
 # fetching async stats on the instance
@@ -51,4 +56,6 @@ time.sleep(seconds)
 
 async_stats_job_result = LineItem.async_stats_job_result(account, [job_id]).first
 
-async_data = LineItem.async_stats_job_data(account, async_stats_job_result['url'])
+async_data = LineItem.async_stats_job_data(account, async_stats_job_result.url)
+
+print(async_data)

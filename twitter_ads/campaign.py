@@ -7,6 +7,7 @@ from twitter_ads.resource import resource_property, Resource, Persistence, Batch
 from twitter_ads.http import Request
 from twitter_ads.cursor import Cursor
 from twitter_ads import API_VERSION
+from twitter_ads.utils import Deprecated
 
 
 class TargetingCriteria(Resource, Persistence, Batch):
@@ -22,7 +23,7 @@ targeting_criteria'
     @classmethod
     def all(klass, account, line_item_ids, **kwargs):
         """Returns a Cursor instance for a given resource."""
-        params = {'line_item_ids': ','.join(line_item_ids)}
+        params = {'line_item_ids': ','.join(map(str, line_item_ids))}
         params.update(kwargs)
 
         resource = klass.RESOURCE_COLLECTION.format(account_id=account.id)
@@ -148,7 +149,7 @@ resource_property(TargetingCriteria, 'tailored_audience_type')
 resource_property(TargetingCriteria, 'to_delete', transform=TRANSFORM.BOOL)
 
 
-class FundingInstrument(Resource, Persistence, Analytics):
+class FundingInstrument(Analytics, Resource, Persistence):
 
     PROPERTIES = {}
 
@@ -226,7 +227,7 @@ resource_property(AppList, 'name', readonly=True)
 resource_property(AppList, 'apps', readonly=True)
 
 
-class Campaign(Resource, Persistence, Analytics, Batch):
+class Campaign(Analytics, Resource, Persistence, Batch):
 
     PROPERTIES = {}
 
@@ -259,7 +260,7 @@ resource_property(Campaign, 'total_budget_amount_local_micro')
 resource_property(Campaign, 'to_delete', transform=TRANSFORM.BOOL)
 
 
-class LineItem(Resource, Persistence, Analytics, Batch):
+class LineItem(Analytics, Resource, Persistence, Batch):
 
     PROPERTIES = {}
 
@@ -343,6 +344,8 @@ class Tweet(object):
             'Error! {name} cannot be instantiated.'.format(name=self.__class__.__name__))
 
     @classmethod
+    @Deprecated('This endpoint has been deprecated and will no longer be available '
+                'as of 2019-08-20')
     def preview(klass, account, **kwargs):
         """
         Returns an HTML preview of a tweet, either new or existing.
