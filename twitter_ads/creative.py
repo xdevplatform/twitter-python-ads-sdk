@@ -3,7 +3,6 @@
 """Container for all creative management logic used by the Ads API SDK."""
 
 from requests.exceptions import HTTPError
-
 from twitter_ads import API_VERSION
 from twitter_ads.cursor import Cursor
 from twitter_ads.enum import TRANSFORM
@@ -40,6 +39,9 @@ class PromotedTweet(Analytics, Resource, Persistence):
     RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/promoted_tweets'
     RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/promoted_tweets/{id}'
 
+    @Deprecated('This method has been deprecated and will no longer be available '
+                'in the next major version update. Please use PromotedTweet.attach() '
+                'method instead.')
     def save(self):
         """
         Saves or updates the current object instance depending on the
@@ -57,6 +59,19 @@ class PromotedTweet(Analytics, Resource, Persistence):
         response = Request(self.account.client, 'post', resource, params=params).perform()
         return self.from_response(response.body['data'][0])
 
+    @classmethod
+    def attach(klass, account, line_item_id=None, tweet_ids=None):
+        """
+        Associate one or more Tweets with the specified line item.
+        """
+        params = {}
+        params['line_item_id'] = line_item_id
+        params['tweet_ids'] = ",".join(map(str, tweet_ids))
+
+        resource = klass.RESOURCE_COLLECTION.format(account_id=account.id)
+        request = Request(account.client, 'post', resource, params=params)
+        return Cursor(klass, request, init_with=[account])
+
 
 # promoted tweet properties
 # read-only
@@ -66,9 +81,8 @@ resource_property(PromotedTweet, 'deleted', readonly=True, transform=TRANSFORM.B
 resource_property(PromotedTweet, 'entity_status', readonly=True)
 resource_property(PromotedTweet, 'id', readonly=True)
 resource_property(PromotedTweet, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
-# writable
+resource_property(PromotedTweet, 'tweet_id')
 resource_property(PromotedTweet, 'line_item_id')
-resource_property(PromotedTweet, 'tweet_id')  # SDK limitation
 
 
 class AccountMedia(Resource, Persistence):
