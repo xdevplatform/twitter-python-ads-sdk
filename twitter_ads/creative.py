@@ -9,6 +9,7 @@ from twitter_ads.cursor import Cursor
 from twitter_ads.enum import TRANSFORM
 from twitter_ads.http import Request
 from twitter_ads.resource import resource_property, Resource, Persistence, Analytics
+from twitter_ads.utils import Deprecated
 
 
 class PromotedAccount(Resource, Persistence):
@@ -324,6 +325,8 @@ class ScheduledTweet(Resource, Persistence):
     RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/scheduled_tweets/{id}'
     PREVIEW = '/' + API_VERSION + '/accounts/{account_id}/scheduled_tweets/preview/{id}'
 
+    @Deprecated('This endpoint has been deprecated and will no longer be available '
+                'as of 2019-08-20')
     def preview(self):
         """
         Returns an HTML preview for a Scheduled Tweet.
@@ -363,6 +366,8 @@ class DraftTweet(Resource, Persistence):
     RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/draft_tweets/{id}'
     PREVIEW = '/' + API_VERSION + '/accounts/{account_id}/draft_tweets/preview/{id}'
 
+    @Deprecated('This endpoint has been deprecated and will no longer be available '
+                'as of 2019-08-20')
     def preview(self, draft_tweet_id=None):
         """
         Preview a Draft Tweet on a mobile device.
