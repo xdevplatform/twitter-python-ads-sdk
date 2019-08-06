@@ -7,6 +7,7 @@ from twitter_ads.resource import resource_property, Resource, Persistence, Batch
 from twitter_ads.http import Request
 from twitter_ads.cursor import Cursor
 from twitter_ads import API_VERSION
+from twitter_ads.utils import Deprecated
 
 
 class TargetingCriteria(Resource, Persistence, Batch):
@@ -343,6 +344,8 @@ class Tweet(object):
             'Error! {name} cannot be instantiated.'.format(name=self.__class__.__name__))
 
     @classmethod
+    @Deprecated('This endpoint has been deprecated and will no longer be available '
+                'as of 2019-08-20')
     def preview(klass, account, **kwargs):
         """
         Returns an HTML preview of a tweet, either new or existing.
