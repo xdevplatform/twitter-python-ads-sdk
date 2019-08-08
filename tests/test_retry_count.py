@@ -13,7 +13,9 @@ from twitter_ads.error import NotFound
 
 
 @responses.activate
-def test_retry_count_success():
+def test_retry_count_success(monkeypatch):
+    monkeypatch.setattr(time, 'sleep', lambda s: None)
+
     responses.add(responses.GET,
                   with_resource('/' + API_VERSION + '/accounts/2iqph'),
                   body=with_fixture('accounts_load'),
@@ -49,8 +51,7 @@ def test_retry_count_success():
         options={
             'retry_max': 1,
             'retry_delay': 3000,
-            'retry_on_status': [404, 500, 503],
-            'limit_test': True
+            'retry_on_status': [404, 500, 503]
         }
     )
 
@@ -67,7 +68,9 @@ def test_retry_count_success():
 
 
 @responses.activate
-def test_retry_count_error():
+def test_retry_count_error(monkeypatch):
+    monkeypatch.setattr(time, 'sleep', lambda s: None)
+
     responses.add(responses.GET,
                   with_resource('/' + API_VERSION + '/accounts/2iqph'),
                   body=with_fixture('accounts_load'),
@@ -103,8 +106,7 @@ def test_retry_count_error():
         options={
             'retry_max': 1,
             'retry_delay': 3000,
-            'retry_on_status': [404, 500, 503],
-            'limit_test': True
+            'retry_on_status': [404, 500, 503]
         }
     )
 

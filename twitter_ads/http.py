@@ -80,7 +80,6 @@ class Request(object):
         stream = self.options.get('stream', False)
 
         handle_rate_limit = self._client.options.get('handle_rate_limit', False)
-        limit_test = self._client.options.get('limit_test', False)  # internal-only
         retry_max = self._client.options.get('retry_max', 0)
         retry_delay = self._client.options.get('retry_delay', 1500)
         retry_on_status = self._client.options.get('retry_on_status', [500, 503])
@@ -116,15 +115,13 @@ class Request(object):
                     retry_after = rate_limit_reset - int(time.time())
                     logger.warning("Request reached Rate Limit: resume in %d seconds"
                                    % retry_after)
-                    if not limit_test:
-                        time.sleep(retry_after + 5)
+                    time.sleep(retry_after + 5)
                     continue
 
             if retry_max > 0:
                 if response.status_code not in retry_on_status:
                     break
-                if not limit_test:
-                    time.sleep(int(retry_delay) / 1000)
+                time.sleep(int(retry_delay) / 1000)
 
             retry_count += 1
 

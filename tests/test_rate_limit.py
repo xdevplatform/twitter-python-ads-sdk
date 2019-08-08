@@ -15,9 +15,11 @@ from twitter_ads.error import RateLimit
 
 
 @responses.activate
-def test_rate_limit_handle_with_retry_success_1():
+def test_rate_limit_handle_with_retry_success_1(monkeypatch):
     # scenario:
     #  - 500 (retry) -> 429 (handle rate limit) -> 200 (end)
+    monkeypatch.setattr(time, 'sleep', lambda s: None)
+
     responses.add(responses.GET,
                   with_resource('/' + API_VERSION + '/accounts/2iqph'),
                   body=with_fixture('accounts_load'),
@@ -65,8 +67,7 @@ def test_rate_limit_handle_with_retry_success_1():
             'handle_rate_limit': True,
             'retry_max': 1,
             'retry_delay': 3000,
-            'retry_on_status': [500],
-            'limit_test': True
+            'retry_on_status': [500]
         }
     )
 
@@ -83,9 +84,11 @@ def test_rate_limit_handle_with_retry_success_1():
 
 
 @responses.activate
-def test_rate_limit_handle_with_retry_success_2():
+def test_rate_limit_handle_with_retry_success_2(monkeypatch):
     # scenario:
     #  - 429 (handle rate limit) -> 500 (retry) -> 200 (end)
+    monkeypatch.setattr(time, 'sleep', lambda s: None)
+
     responses.add(responses.GET,
                   with_resource('/' + API_VERSION + '/accounts/2iqph'),
                   body=with_fixture('accounts_load'),
@@ -133,8 +136,7 @@ def test_rate_limit_handle_with_retry_success_2():
             'handle_rate_limit': True,
             'retry_max': 1,
             'retry_delay': 3000,
-            'retry_on_status': [500],
-            'limit_test': True
+            'retry_on_status': [500]
         }
     )
 
@@ -151,7 +153,9 @@ def test_rate_limit_handle_with_retry_success_2():
 
 
 @responses.activate
-def test_rate_limit_handle_success():
+def test_rate_limit_handle_success(monkeypatch):
+    monkeypatch.setattr(time, 'sleep', lambda s: None)
+
     responses.add(responses.GET,
                   with_resource('/' + API_VERSION + '/accounts/2iqph'),
                   body=with_fixture('accounts_load'),
@@ -185,8 +189,7 @@ def test_rate_limit_handle_success():
         characters(40),
         characters(40),
         options={
-            'handle_rate_limit': True,
-            'limit_test': True
+            'handle_rate_limit': True
         }
     )
 
@@ -203,7 +206,9 @@ def test_rate_limit_handle_success():
 
 
 @responses.activate
-def test_rate_limit_handle_error():
+def test_rate_limit_handle_error(monkeypatch):
+    monkeypatch.setattr(time, 'sleep', lambda s: None)
+
     responses.add(responses.GET,
                   with_resource('/' + API_VERSION + '/accounts/2iqph'),
                   body=with_fixture('accounts_load'),
@@ -237,8 +242,7 @@ def test_rate_limit_handle_error():
         characters(40),
         characters(40),
         options={
-            'handle_rate_limit': True,
-            'limit_test': True
+            'handle_rate_limit': True
         }
     )
 
