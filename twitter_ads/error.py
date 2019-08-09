@@ -72,13 +72,8 @@ class RateLimit(ClientError):
 
     def __init__(self, response, **kwargs):
         super(RateLimit, self).__init__(response, **kwargs)
-        account_rate_limit_reset = response.headers.get('x-account-rate-limit-reset')
-        rate_limit_reset = response.headers.get('x-rate-limit-reset')
-
-        if account_rate_limit_reset is not None:
-            self._reset_at = account_rate_limit_reset
-        else:
-            self._reset_at = rate_limit_reset
+        self._reset_at = response.headers.get('x-account-rate-limit-reset')\
+            or response.headers.get('x-rate-limit-reset')
 
     @property
     def reset_at(self):

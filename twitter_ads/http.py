@@ -103,16 +103,11 @@ class Request(object):
                 break
 
             if handle_rate_limit and retry_after is None:
-                account_rate_limit_reset = response.headers.get('x-account-rate-limit-reset')
-                rate_limit_reset = response.headers.get('x-rate-limit-reset')
-
-                if account_rate_limit_reset is not None:
-                    rate_limit_reset = int(account_rate_limit_reset)
-                else:
-                    rate_limit_reset = int(rate_limit_reset)
+                rate_limit_reset = response.headers.get('x-account-rate-limit-reset') \
+                    or response.headers.get('x-rate-limit-reset')
 
                 if response.status_code == 429:
-                    retry_after = rate_limit_reset - int(time.time())
+                    retry_after = int(rate_limit_reset) - int(time.time())
                     logger.warning("Request reached Rate Limit: resume in %d seconds"
                                    % retry_after)
                     time.sleep(retry_after + 5)
