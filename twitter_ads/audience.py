@@ -8,6 +8,7 @@ from twitter_ads.http import Request
 from twitter_ads.error import BadRequest
 from twitter_ads.cursor import Cursor
 from twitter_ads import API_VERSION
+from twitter_ads.utils import Deprecated
 
 import json
 
@@ -174,6 +175,8 @@ class AudienceIntelligence(Resource):
             resource, headers=klass.HEADERS, body=params)
         return Cursor(klass, request, init_with=[account])
 
+    @Deprecated('This endpoint has been deprecated and will no longer be available '
+                'as of 2019-08-28')
     def conversations(self):
         """
         Get the conversation topics for an input targeting criteria
@@ -185,6 +188,8 @@ class AudienceIntelligence(Resource):
         }
         return self.__get(account=self.account, client=self.account.client, params=json.dumps(body))
 
+    @Deprecated('This endpoint has been deprecated and will no longer be available '
+                'as of 2019-08-28')
     def demographics(self):
         """
         Get the demographic breakdown for an input targeting criteria
