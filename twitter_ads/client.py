@@ -28,7 +28,7 @@ class Client(object):
         self._consumer_secret = consumer_secret
         self._access_token = access_token
         self._access_token_secret = access_token_secret
-        self._options = kwargs
+        self._options = kwargs.get('options', {})
 
     def __repr__(self):
         return '<{name} object at {mem} consumer_key={key}>'.format(
@@ -36,6 +36,11 @@ class Client(object):
             mem=hex(id(self)),
             key=getattr(self, 'consumer_key')
         )
+
+    @property
+    def options(self):
+        """Returns the options value."""
+        return self._options
 
     @property
     def consumer_key(self):
