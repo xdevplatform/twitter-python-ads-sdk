@@ -40,11 +40,6 @@ draft_tweet = draft_tweet.save()
 print(draft_tweet.id_str)
 print(draft_tweet.text)
 
-# preview draft tweet of current instance (send notification)
-draft_tweet.preview()
-# or, specify any draft_tweet_id
-# draft_tweet.preview(draft_tweet_id='1142020720651673600')
-
 # create a nullcasted tweet using draft tweet metadata
 tweet = Tweet.create(account, text=draft_tweet.text)
 print(tweet)

@@ -22,9 +22,6 @@ scheduled_tweet.text = 'Future'
 scheduled_tweet.scheduled_at = datetime.utcnow() + timedelta(days=2)
 scheduled_tweet.save()
 
-# preview
-scheduled_tweet.preview()
-
 # associate with a line item
 account.line_items().next().id
 scheduled_promoted_tweet = ScheduledPromotedTweet(account)
