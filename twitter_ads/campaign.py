@@ -7,7 +7,6 @@ from twitter_ads.resource import resource_property, Resource, Persistence, Batch
 from twitter_ads.http import Request
 from twitter_ads.cursor import Cursor
 from twitter_ads import API_VERSION
-from twitter_ads.utils import Deprecated
 
 
 class TargetingCriteria(Resource, Persistence, Batch):
@@ -335,32 +334,11 @@ resource_property(ScheduledPromotedTweet, 'scheduled_tweet_id')
 
 class Tweet(object):
 
-    TWEET_PREVIEW = '/' + API_VERSION + '/accounts/{account_id}/tweet/preview'
-    TWEET_ID_PREVIEW = '/' + API_VERSION + '/accounts/{account_id}/tweet/preview/{id}'
     TWEET_CREATE = '/' + API_VERSION + '/accounts/{account_id}/tweet'
 
     def __init__(self):
         raise NotImplementedError(
             'Error! {name} cannot be instantiated.'.format(name=self.__class__.__name__))
-
-    @classmethod
-    @Deprecated('This endpoint has been deprecated and will no longer be available '
-                'as of 2019-08-20')
-    def preview(klass, account, **kwargs):
-        """
-        Returns an HTML preview of a tweet, either new or existing.
-        """
-        params = {}
-        params.update(kwargs)
-
-        # handles array to string conversion for media IDs
-        if 'media_ids' in params and isinstance(params['media_ids'], list):
-            params['media_ids'] = ','.join(map(str, params['media_ids']))
-
-        resource = klass.TWEET_ID_PREVIEW if params.get('id') else klass.TWEET_PREVIEW
-        resource = resource.format(account_id=account.id, id=params.get('id'))
-        response = Request(account.client, 'get', resource, params=params).perform()
-        return response.body['data']
 
     @classmethod
     def create(klass, account, **kwargs):

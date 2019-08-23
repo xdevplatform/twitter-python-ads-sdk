@@ -337,19 +337,6 @@ class ScheduledTweet(Resource, Persistence):
 
     RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/scheduled_tweets'
     RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/scheduled_tweets/{id}'
-    PREVIEW = '/' + API_VERSION + '/accounts/{account_id}/scheduled_tweets/preview/{id}'
-
-    @Deprecated('This endpoint has been deprecated and will no longer be available '
-                'as of 2019-08-20')
-    def preview(self):
-        """
-        Returns an HTML preview for a Scheduled Tweet.
-        """
-        if self.id:
-            resource = self.PREVIEW
-            resource = resource.format(account_id=self.account.id, id=self.id)
-            response = Request(self.account.client, 'get', resource).perform()
-            return response.body['data']
 
 
 # scheduled tweet properties
@@ -378,23 +365,6 @@ class DraftTweet(Resource, Persistence):
 
     RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/draft_tweets'
     RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/draft_tweets/{id}'
-    PREVIEW = '/' + API_VERSION + '/accounts/{account_id}/draft_tweets/preview/{id}'
-
-    @Deprecated('This endpoint has been deprecated and will no longer be available '
-                'as of 2019-08-20')
-    def preview(self, draft_tweet_id=None):
-        """
-        Preview a Draft Tweet on a mobile device.
-        """
-        if not (draft_tweet_id is None):
-            resource = self.PREVIEW.format(account_id=self.account.id, id=draft_tweet_id)
-        elif self.id:
-            resource = self.PREVIEW.format(account_id=self.account.id, id=self.id)
-        else:
-            raise AttributeError("object has no 'draft_tweet_id' to preview")
-
-        response = Request(self.account.client, 'post', resource).perform()
-        return response.body
 
 
 # draft tweet properties
