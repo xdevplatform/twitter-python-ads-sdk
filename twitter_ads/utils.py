@@ -4,6 +4,7 @@ from __future__ import division
 """Container for all helpers and utilities used throughout the Ads API SDK."""
 
 import datetime
+import re
 import warnings
 warnings.simplefilter('default', DeprecationWarning)
 from email.utils import formatdate
@@ -71,14 +72,11 @@ def validate_whole_hours(time):
 
 def extract_response_headers(headers):
     values = {}
-
-    values['rate_limit'] = headers.get('x-rate-limit-limit')
-    values['rate_limit_remaining'] = headers.get('x-rate-limit-remaining')
-    values['rate_limit_reset'] = headers.get('x-rate-limit-reset')
-
-    values['account_rate_limit'] = headers.get('x-account-rate-limit-limit')
-    values['account_rate_limit_remaining'] = headers.get('x-account-rate-limit-remaining')
-    values['account_rate_limit_reset'] = headers.get('x-account-rate-limit-reset')
+    # only get "X-${name}" custom response headers
+    reg = re.compile(r"^x-", re.IGNORECASE)
+    for i in headers:
+        if reg.match(i):
+            values[i.lstrip('x-').replace('-', '_')] = headers[i]
 
     return values
 

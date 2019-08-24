@@ -252,13 +252,14 @@ class Analytics(Resource):
         start_time = kwargs.get('start_time', end_time - timedelta(seconds=604800))
         granularity = kwargs.get('granularity', GRANULARITY.HOUR)
         placement = kwargs.get('placement', PLACEMENT.ALL_ON_TWITTER)
+        entity = kwargs.get('entity', None)
 
         params = {
             'metric_groups': ','.join(map(str, metric_groups)),
             'start_time': to_time(start_time, granularity),
             'end_time': to_time(end_time, granularity),
             'granularity': granularity.upper(),
-            'entity': klass.ANALYTICS_MAP[klass.__name__],
+            'entity': entity or klass.ANALYTICS_MAP[klass.__name__],
             'placement': placement
         }
 
@@ -290,7 +291,7 @@ class Analytics(Resource):
 
         resource = klass.RESOURCE_ASYNC.format(account_id=account.id)
         response = Request(account.client, 'post', resource, params=params).perform()
-        return response.body['data']
+        return Analytics(account).from_response(response.body['data'], headers=response.headers)
 
     @classmethod
     def async_stats_job_result(klass, account, job_ids=None, **kwargs):
@@ -351,12 +352,20 @@ class Analytics(Resource):
         return response.body['data']
 
 
-# async_stats_job_result() properties
+# Analytics properties
 # read-only
 resource_property(Analytics, 'id', readonly=True)
 resource_property(Analytics, 'id_str', readonly=True)
 resource_property(Analytics, 'status', readonly=True)
 resource_property(Analytics, 'url', readonly=True)
-resource_property(Analytics, 'created_at', readonly=True)
-resource_property(Analytics, 'expires_at', readonly=True)
-resource_property(Analytics, 'updated_at', readonly=True)
+resource_property(Analytics, 'created_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(Analytics, 'expires_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(Analytics, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
+
+resource_property(Analytics, 'start_time', readonly=True, transform=TRANSFORM.TIME)
+resource_property(Analytics, 'end_time', readonly=True, transform=TRANSFORM.TIME)
+resource_property(Analytics, 'entity', readonly=True)
+resource_property(Analytics, 'entity_ids', readonly=True)
+resource_property(Analytics, 'placement', readonly=True)
+resource_property(Analytics, 'granularity', readonly=True)
+resource_property(Analytics, 'metric_groups', readonly=True)

@@ -6,7 +6,7 @@ from twitter_ads.account import Account
 from twitter_ads.client import Client
 from twitter_ads.campaign import Campaign
 from twitter_ads.resource import Analytics
-from twitter_ads.enum import METRIC_GROUP, GRANULARITY
+from twitter_ads.enum import ENTITY, METRIC_GROUP, GRANULARITY
 from twitter_ads import API_VERSION
 
 
@@ -20,7 +20,11 @@ def test_analytics_async():
     responses.add(responses.POST,
                   with_resource('/' + API_VERSION + '/stats/jobs/accounts/2iqph'),
                   body=with_fixture('analytics_async_post'),
-                  content_type='application/json')
+                  content_type='application/json',
+                  headers={
+                      'x-concurrent-job-limit': '100',
+                      'x-concurrent-job-limit-remaining': '99'
+                  })
 
     responses.add(responses.GET,
                   with_resource('/' + API_VERSION + '/stats/jobs/accounts/2iqph'),
@@ -45,14 +49,30 @@ def test_analytics_async():
         granularity=GRANULARITY.TOTAL
     )
 
-    # test POST request response - queue_async_stats_job()
+    # call queue_async_stats_job() through Campaign class (inheritance)
     assert 'granularity=TOTAL' in responses.calls[1].request.url
     assert stats is not None
-    assert isinstance(stats, dict)
-    assert stats['entity_ids'] == ids
+    assert isinstance(stats, Analytics)
+    assert stats.entity_ids == ids
+    assert stats.concurrent_job_limit == '100'
+
+    stats2 = Analytics.queue_async_stats_job(
+        account,
+        ids,
+        metric_groups,
+        granularity=GRANULARITY.TOTAL,
+        entity=ENTITY.CAMPAIGN
+    )
+
+    # call queue_async_stats_job() from Analytics class directly
+    assert 'entity=CAMPAIGN' in responses.calls[1].request.url
+    assert stats2 is not None
+    assert isinstance(stats2, Analytics)
+    assert stats2.entity_ids == ids
+    assert stats2.concurrent_job_limit == '100'
 
     # call async_stats_job_result() through Campaign class (inheritance)
-    job_id = stats['id_str']
+    job_id = stats.id_str
     job_result = Campaign.async_stats_job_result(
         account,
         [job_id]).first
