@@ -230,7 +230,8 @@ class Analytics(Resource):
         'LineItem': ENTITY.LINE_ITEM,
         'MediaCreative': ENTITY.MEDIA_CREATIVE,
         'OrganicTweet': ENTITY.ORGANIC_TWEET,
-        'PromotedTweet': ENTITY.PROMOTED_TWEET
+        'PromotedTweet': ENTITY.PROMOTED_TWEET,
+        'PromotedAccount': ENTITY.PROMOTED_ACCOUNT
     }
 
     RESOURCE_SYNC = '/' + API_VERSION + '/stats/accounts/{account_id}'

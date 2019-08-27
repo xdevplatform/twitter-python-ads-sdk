@@ -11,7 +11,7 @@ from twitter_ads.resource import resource_property, Resource, Persistence, Analy
 from twitter_ads.utils import Deprecated
 
 
-class PromotedAccount(Resource, Persistence):
+class PromotedAccount(Analytics, Resource, Persistence):
 
     PROPERTIES = {}
 
