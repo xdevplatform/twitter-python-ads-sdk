@@ -348,8 +348,8 @@ class Tweet(object):
         params.update(kwargs)
 
         # handles array to string conversion for media IDs
-        if 'media_ids' in params and isinstance(params['media_ids'], list):
-            params['media_ids'] = ','.join(map(str, params['media_ids']))
+        if 'media_keys' in params and isinstance(params['media_keys'], list):
+            params['media_keys'] = ','.join(map(str, params['media_keys']))
 
         resource = klass.TWEET_CREATE.format(account_id=account.id)
         response = Request(account.client, 'post', resource, params=params).perform()
