@@ -347,7 +347,7 @@ class Tweet(object):
         params = {}
         params.update(kwargs)
 
-        # handles array to string conversion for media IDs
+        # handles array to string conversion for media keys
         if 'media_keys' in params and isinstance(params['media_keys'], list):
             params['media_keys'] = ','.join(map(str, params['media_keys']))
 
