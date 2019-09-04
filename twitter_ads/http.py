@@ -74,6 +74,10 @@ class Request(object):
         if 'headers' in self.options:
             headers.update(self.options['headers'].copy())
 
+        # internal-only
+        if 'x-as-user' in self._client.options:
+            headers['x-as-user'] = self._client.options.get('x-as-user')
+
         params = self.options.get('params', None)
         data = self.options.get('body', None)
         files = self.options.get('files', None)
