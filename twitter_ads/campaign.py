@@ -274,7 +274,7 @@ class LineItem(Analytics, Resource, Persistence, Batch):
         """
         self._validate_loaded()
         if id is None:
-            return TargetingCriteria.all(self.account, self.id, **kwargs)
+            return TargetingCriteria.all(self.account, line_item_ids=[self.id], **kwargs)
         else:
             return TargetingCriteria.load(self.account, id, **kwargs)
 
