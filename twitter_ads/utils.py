@@ -81,6 +81,13 @@ def extract_response_headers(headers):
     return values
 
 
+def split_list(list_, n):
+    """Splits a list by a given number (n) and returns a generator object."""
+    list_size = len(list_)
+    for sp in range(0, list_size, n):
+        yield list_[sp:min(sp + n, list_size)]
+
+
 class Deprecated(object):
     def __init__(self, message):
         self._message = message
