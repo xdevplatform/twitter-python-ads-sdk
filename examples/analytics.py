@@ -48,7 +48,7 @@ LineItem.all_stats(account, ids, metric_groups)
 queued_job = LineItem.queue_async_stats_job(account, ids, metric_groups)
 
 # get the job_id:
-job_id = queued_job['id']
+job_id = queued_job.id
 
 # let the job complete
 seconds = 15
