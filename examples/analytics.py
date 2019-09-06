@@ -13,6 +13,7 @@ import time
 from twitter_ads.client import Client
 from twitter_ads.campaign import LineItem
 from twitter_ads.enum import METRIC_GROUP
+from twitter_ads.utils import split_list
 
 CONSUMER_KEY = 'your consumer key'
 CONSUMER_SECRET = 'your consumer secret'
@@ -42,20 +43,29 @@ if not ids:
     print('Error: A minimum of 1 items must be provided for entity_ids')
     sys.exit()
 
-LineItem.all_stats(account, ids, metric_groups)
+sync_data = []
+# Sync/Async endpoint can handle max 20 entity IDs per request
+# so split the ids list into multiple requests
+for chunk_ids in split_list(ids, 20):
+    sync_data.append(LineItem.all_stats(account, chunk_ids, metric_groups))
 
-# fetching async stats on the instance
-queued_job = LineItem.queue_async_stats_job(account, ids, metric_groups)
+print(sync_data)
 
-# get the job_id:
-job_id = queued_job['id']
+# create async stats jobs and get job ids
+queued_job_ids = []
+for chunk_ids in split_list(ids, 20):
+    queued_job_ids.append(LineItem.queue_async_stats_job(account, chunk_ids, metric_groups).id)
+
+print(queued_job_ids)
 
 # let the job complete
-seconds = 15
+seconds = 30
 time.sleep(seconds)
 
-async_stats_job_result = LineItem.async_stats_job_result(account, [job_id]).first
+async_stats_job_results = LineItem.async_stats_job_result(account, queued_job_ids)
 
-async_data = LineItem.async_stats_job_data(account, async_stats_job_result.url)
+async_data = []
+for result in async_stats_job_results:
+    async_data.append(LineItem.async_stats_job_data(account, result.url))
 
 print(async_data)

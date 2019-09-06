@@ -143,7 +143,6 @@ resource_property(TargetingCriteria, 'operator_type')
 resource_property(TargetingCriteria, 'targeting_type')
 resource_property(TargetingCriteria, 'targeting_value')
 resource_property(TargetingCriteria, 'tailored_audience_expansion')
-resource_property(TargetingCriteria, 'tailored_audience_type')
 # sdk-only
 resource_property(TargetingCriteria, 'to_delete', transform=TRANSFORM.BOOL)
 
@@ -298,7 +297,7 @@ resource_property(LineItem, 'charge_by')
 resource_property(LineItem, 'end_time', transform=TRANSFORM.TIME)
 resource_property(LineItem, 'entity_status')
 resource_property(LineItem, 'include_sentiment')
-resource_property(LineItem, 'lookalike_expansion')
+resource_property(LineItem, 'audience_expansion')
 resource_property(LineItem, 'name')
 resource_property(LineItem, 'objective')
 resource_property(LineItem, 'optimization')
@@ -348,9 +347,9 @@ class Tweet(object):
         params = {}
         params.update(kwargs)
 
-        # handles array to string conversion for media IDs
-        if 'media_ids' in params and isinstance(params['media_ids'], list):
-            params['media_ids'] = ','.join(map(str, params['media_ids']))
+        # handles array to string conversion for media keys
+        if 'media_keys' in params and isinstance(params['media_keys'], list):
+            params['media_keys'] = ','.join(map(str, params['media_keys']))
 
         resource = klass.TWEET_CREATE.format(account_id=account.id)
         response = Request(account.client, 'post', resource, params=params).perform()

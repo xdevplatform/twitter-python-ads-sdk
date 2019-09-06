@@ -11,7 +11,7 @@ from twitter_ads.resource import resource_property, Resource, Persistence, Analy
 from twitter_ads.utils import Deprecated
 
 
-class PromotedAccount(Resource, Persistence):
+class PromotedAccount(Analytics, Resource, Persistence):
 
     PROPERTIES = {}
 
@@ -98,12 +98,10 @@ class AccountMedia(Resource, Persistence):
 resource_property(AccountMedia, 'created_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(AccountMedia, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
 resource_property(AccountMedia, 'id', readonly=True)
+resource_property(AccountMedia, 'creative_type', readonly=True)
 resource_property(AccountMedia, 'media_url', readonly=True)
+resource_property(AccountMedia, 'media_key', readonly=True)
 resource_property(AccountMedia, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
-# writable
-resource_property(AccountMedia, 'creative_type')
-resource_property(AccountMedia, 'media_id')
-resource_property(AccountMedia, 'video_id')
 
 
 class MediaCreative(Analytics, Resource, Persistence):
@@ -143,7 +141,7 @@ resource_property(WebsiteCard, 'card_type', readonly=True)
 resource_property(WebsiteCard, 'card_uri', readonly=True)
 resource_property(WebsiteCard, 'created_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(WebsiteCard, 'id', readonly=True)
-resource_property(WebsiteCard, 'image', readonly=True)
+resource_property(WebsiteCard, 'media_url', readonly=True)
 resource_property(WebsiteCard, 'image_display_height', readonly=True)
 resource_property(WebsiteCard, 'image_display_width', readonly=True)
 resource_property(WebsiteCard, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
@@ -151,7 +149,7 @@ resource_property(WebsiteCard, 'website_dest_url', readonly=True)
 resource_property(WebsiteCard, 'website_display_url', readonly=True)
 resource_property(WebsiteCard, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
 # writable
-resource_property(WebsiteCard, 'image_media_id')
+resource_property(WebsiteCard, 'media_key')
 resource_property(WebsiteCard, 'name')
 resource_property(WebsiteCard, 'website_title')
 resource_property(WebsiteCard, 'website_url')
@@ -174,21 +172,19 @@ resource_property(VideoWebsiteCard, 'created_at', readonly=True, transform=TRANS
 resource_property(VideoWebsiteCard, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
 resource_property(VideoWebsiteCard, 'id', readonly=True)
 resource_property(VideoWebsiteCard, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
-resource_property(VideoWebsiteCard, 'video_content_id', readonly=True)
 resource_property(VideoWebsiteCard, 'video_height', readonly=True)
-resource_property(VideoWebsiteCard, 'video_hls_url', readonly=True)
 resource_property(VideoWebsiteCard, 'video_owner_id', readonly=True)
 resource_property(VideoWebsiteCard, 'video_poster_height', readonly=True)
-resource_property(VideoWebsiteCard, 'video_poster_url', readonly=True)
+resource_property(VideoWebsiteCard, 'poster_media_url', readonly=True)
 resource_property(VideoWebsiteCard, 'video_poster_width', readonly=True)
-resource_property(VideoWebsiteCard, 'video_url', readonly=True)
+resource_property(VideoWebsiteCard, 'media_url', readonly=True)
 resource_property(VideoWebsiteCard, 'video_width', readonly=True)
 resource_property(VideoWebsiteCard, 'website_dest_url', readonly=True)
 resource_property(VideoWebsiteCard, 'website_display_url', readonly=True)
 # writable
 resource_property(VideoWebsiteCard, 'name')
 resource_property(VideoWebsiteCard, 'title')
-resource_property(VideoWebsiteCard, 'video_id')
+resource_property(VideoWebsiteCard, 'media_key')
 resource_property(VideoWebsiteCard, 'website_url')
 
 
@@ -205,7 +201,7 @@ class ImageAppDownloadCard(Resource, Persistence):
 resource_property(ImageAppDownloadCard, 'id', readonly=True)
 resource_property(ImageAppDownloadCard, 'image_display_height', readonly=True)
 resource_property(ImageAppDownloadCard, 'image_display_width', readonly=True)
-resource_property(ImageAppDownloadCard, 'wide_app_image', readonly=True)
+resource_property(ImageAppDownloadCard, 'media_url', readonly=True)
 resource_property(ImageAppDownloadCard, 'card_uri', readonly=True)
 resource_property(ImageAppDownloadCard, 'card_type', readonly=True)
 resource_property(ImageAppDownloadCard, 'created_at', readonly=True, transform=TRANSFORM.TIME)
@@ -221,7 +217,7 @@ resource_property(ImageAppDownloadCard, 'ipad_deep_link')
 resource_property(ImageAppDownloadCard, 'googleplay_app_id')
 resource_property(ImageAppDownloadCard, 'googleplay_deep_link')
 resource_property(ImageAppDownloadCard, 'name')
-resource_property(ImageAppDownloadCard, 'wide_app_image_media_id')
+resource_property(ImageAppDownloadCard, 'media_key')
 
 
 class VideoAppDownloadCard(Resource, Persistence):
@@ -240,15 +236,13 @@ resource_property(VideoAppDownloadCard, 'created_at', readonly=True, transform=T
 resource_property(VideoAppDownloadCard, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
 resource_property(VideoAppDownloadCard, 'id', readonly=True)
 resource_property(VideoAppDownloadCard, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
-resource_property(VideoAppDownloadCard, 'video_content_id', readonly=True)
-resource_property(VideoAppDownloadCard, 'video_hls_url', readonly=True)
 resource_property(VideoAppDownloadCard, 'video_owner_id', readonly=True)
-resource_property(VideoAppDownloadCard, 'video_poster_url', readonly=True)
-resource_property(VideoAppDownloadCard, 'video_url', readonly=True)
+resource_property(VideoAppDownloadCard, 'poster_media_url', readonly=True)
+resource_property(VideoAppDownloadCard, 'media_url', readonly=True)
 # writable
 resource_property(VideoAppDownloadCard, 'country_code')
 resource_property(VideoAppDownloadCard, 'app_cta')
-resource_property(VideoAppDownloadCard, 'image_media_id')
+resource_property(VideoAppDownloadCard, 'poster_media_key')
 resource_property(VideoAppDownloadCard, 'ipad_app_id')
 resource_property(VideoAppDownloadCard, 'ipad_deep_link')
 resource_property(VideoAppDownloadCard, 'iphone_app_id')
@@ -256,7 +250,7 @@ resource_property(VideoAppDownloadCard, 'iphone_deep_link')
 resource_property(VideoAppDownloadCard, 'googleplay_app_id')
 resource_property(VideoAppDownloadCard, 'googleplay_deep_link')
 resource_property(VideoAppDownloadCard, 'name')
-resource_property(VideoAppDownloadCard, 'video_id')
+resource_property(VideoAppDownloadCard, 'media_key')
 
 
 class ImageConversationCard(Resource, Persistence):
@@ -274,13 +268,13 @@ resource_property(ImageConversationCard, 'card_uri', readonly=True)
 resource_property(ImageConversationCard, 'created_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(ImageConversationCard, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
 resource_property(ImageConversationCard, 'id', readonly=True)
-resource_property(ImageConversationCard, 'image', readonly=True)
+resource_property(ImageConversationCard, 'media_url', readonly=True)
 resource_property(ImageConversationCard, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
 # writable
-resource_property(ImageConversationCard, 'cover_image_id')
+resource_property(ImageConversationCard, 'unlocked_image_media_key')
 resource_property(ImageConversationCard, 'fouth_cta')
 resource_property(ImageConversationCard, 'fouth_cta_tweet')
-resource_property(ImageConversationCard, 'image_media_id')
+resource_property(ImageConversationCard, 'media_key')
 resource_property(ImageConversationCard, 'first_cta')
 resource_property(ImageConversationCard, 'first_cta_tweet')
 resource_property(ImageConversationCard, 'name')
@@ -309,15 +303,15 @@ resource_property(VideoConversationCard, 'card_type', readonly=True)
 resource_property(VideoConversationCard, 'created_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(VideoConversationCard, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
 resource_property(VideoConversationCard, 'id', readonly=True)
-resource_property(VideoConversationCard, 'video_url', readonly=True)
-resource_property(VideoConversationCard, 'video_poster_url', readonly=True)
+resource_property(VideoConversationCard, 'media_url', readonly=True)
+resource_property(VideoConversationCard, 'poster_media_url', readonly=True)
 resource_property(VideoConversationCard, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
 # writable
-resource_property(ImageConversationCard, 'cover_image_id')
-resource_property(ImageConversationCard, 'cover_video_id')
+resource_property(ImageConversationCard, 'unlocked_image_media_key')
+resource_property(ImageConversationCard, 'unlocked_video_media_key')
 resource_property(ImageConversationCard, 'fouth_cta')
 resource_property(ImageConversationCard, 'fouth_cta_tweet')
-resource_property(ImageConversationCard, 'image_media_id')
+resource_property(ImageConversationCard, 'poster_media_key')
 resource_property(ImageConversationCard, 'first_cta')
 resource_property(ImageConversationCard, 'first_cta_tweet')
 resource_property(ImageConversationCard, 'name')
@@ -328,7 +322,7 @@ resource_property(ImageConversationCard, 'thank_you_url')
 resource_property(ImageConversationCard, 'third_cta')
 resource_property(ImageConversationCard, 'third_cta_tweet')
 resource_property(ImageConversationCard, 'title')
-resource_property(ImageConversationCard, 'video_id')
+resource_property(ImageConversationCard, 'media_key')
 
 
 class ScheduledTweet(Resource, Persistence):
@@ -345,7 +339,6 @@ resource_property(ScheduledTweet, 'created_at', readonly=True, transform=TRANSFO
 resource_property(ScheduledTweet, 'completed_at', read_only=True, transform=TRANSFORM.TIME)
 resource_property(ScheduledTweet, 'id', read_only=True)
 resource_property(ScheduledTweet, 'id_str', read_only=True)
-resource_property(ScheduledTweet, 'media_keys', readonly=True, transform=TRANSFORM.LIST)
 resource_property(ScheduledTweet, 'scheduled_status', read_only=True)
 resource_property(ScheduledTweet, 'tweet_id', readonly=True)
 resource_property(ScheduledTweet, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
@@ -353,7 +346,7 @@ resource_property(ScheduledTweet, 'user_id', read_only=True)
 # writable
 resource_property(ScheduledTweet, 'as_user_id')
 resource_property(ScheduledTweet, 'card_uri')
-resource_property(ScheduledTweet, 'media_ids', transform=TRANSFORM.LIST)
+resource_property(ScheduledTweet, 'media_keys', transform=TRANSFORM.LIST)
 resource_property(ScheduledTweet, 'nullcast', transform=TRANSFORM.BOOL)
 resource_property(ScheduledTweet, 'scheduled_at', transform=TRANSFORM.TIME)
 resource_property(ScheduledTweet, 'text')
@@ -371,14 +364,13 @@ class DraftTweet(Resource, Persistence):
 # read-only
 resource_property(DraftTweet, 'id', read_only=True)
 resource_property(DraftTweet, 'id_str', read_only=True)
-resource_property(DraftTweet, 'media_keys', readonly=True, transform=TRANSFORM.LIST)
 resource_property(DraftTweet, 'created_at', read_only=True, transform=TRANSFORM.TIME)
 resource_property(DraftTweet, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(DraftTweet, 'user_id', read_only=True)
 # writable
 resource_property(DraftTweet, 'as_user_id')
 resource_property(DraftTweet, 'card_uri')
-resource_property(DraftTweet, 'media_ids', transform=TRANSFORM.LIST)
+resource_property(DraftTweet, 'media_keys', transform=TRANSFORM.LIST)
 resource_property(DraftTweet, 'nullcast', transform=TRANSFORM.BOOL)
 resource_property(DraftTweet, 'text')
 
@@ -428,17 +420,15 @@ resource_property(MediaLibrary, 'duration', readonly=True, transform=TRANSFORM.I
 resource_property(MediaLibrary, 'media_status', readonly=True)
 resource_property(MediaLibrary, 'media_type', readonly=True)
 resource_property(MediaLibrary, 'media_url', readonly=True)
+resource_property(MediaLibrary, 'poster_media_url', readonly=True)
 resource_property(MediaLibrary, 'tweeted', readonly=True, transform=TRANSFORM.BOOL)
 resource_property(MediaLibrary, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
 # writable
-resource_property(MediaLibrary, 'media_category')
-resource_property(MediaLibrary, 'media_id')
 resource_property(MediaLibrary, 'media_key')
 resource_property(MediaLibrary, 'description')
 resource_property(MediaLibrary, 'file_name')
 resource_property(MediaLibrary, 'name')
-resource_property(MediaLibrary, 'poster_image_media_id')
-resource_property(MediaLibrary, 'poster_image_media_key')
+resource_property(MediaLibrary, 'poster_media_key')
 resource_property(MediaLibrary, 'title')
 
 
