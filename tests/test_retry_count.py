@@ -61,8 +61,7 @@ def test_retry_count_success(monkeypatch):
     assert len(responses.calls) == 3
     assert cursor is not None
     assert isinstance(cursor, Cursor)
-    assert cursor.rate_limit is None
-    assert cursor.account_rate_limit == '10000'
+    assert cursor.account_rate_limit_limit == '10000'
     assert cursor.account_rate_limit_remaining == '9999'
     assert cursor.account_rate_limit_reset == '1546300800'
 
