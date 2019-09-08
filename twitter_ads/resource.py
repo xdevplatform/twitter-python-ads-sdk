@@ -15,7 +15,7 @@ from twitter_ads.enum import ENTITY, GRANULARITY, PLACEMENT, TRANSFORM
 from twitter_ads.http import Request
 from twitter_ads.cursor import Cursor
 from twitter_ads import API_VERSION
-from twitter_ads.utils import extract_response_headers
+from twitter_ads.utils import extract_response_headers, FlattenParams
 
 
 def resource_property(klass, name, **kwargs):
@@ -295,17 +295,13 @@ class Analytics(Resource):
         return Analytics(account).from_response(response.body['data'], headers=response.headers)
 
     @classmethod
-    def async_stats_job_result(klass, account, job_ids=None, **kwargs):
+    @FlattenParams
+    def async_stats_job_result(klass, account, **kwargs):
         """
         Returns the results of the specified async job IDs
         """
-        params = {}
-        params.update(kwargs)
-        if isinstance(job_ids, list):
-            params['job_ids'] = ','.join(map(str, job_ids))
-
         resource = klass.RESOURCE_ASYNC.format(account_id=account.id)
-        request = Request(account.client, 'get', resource, params=params)
+        request = Request(account.client, 'get', resource, params=kwargs)
 
         return Cursor(Analytics, request, init_with=[account])
 
@@ -323,13 +319,14 @@ class Analytics(Resource):
         return response.body
 
     @classmethod
+    @FlattenParams
     def active_entities(klass, account, start_time, end_time, **kwargs):
         """
         Returns the details about which entities' analytics metrics
         have changed in a given time period.
         """
-        entity_type = klass.__name__
-        if entity_type == 'OrganicTweet':
+        entity = kwargs.get('entity') or klass.ANALYTICS_MAP[klass.__name__]
+        if entity == klass.ANALYTICS_MAP['OrganicTweet']:
             raise ValueError("'OrganicTweet' not support with 'active_entities'")
 
         # The start and end times must be expressed in whole hours
@@ -337,16 +334,11 @@ class Analytics(Resource):
         validate_whole_hours(end_time)
 
         params = {
-            'entity': klass.ANALYTICS_MAP[entity_type],
+            'entity': entity,
             'start_time': to_time(start_time, None),
             'end_time': to_time(end_time, None)
         }
-
-        for k in kwargs:
-            if isinstance(kwargs[k], list):
-                params[k] = ','.join(map(str, kwargs[k]))
-            else:
-                params[k] = kwargs[k]
+        params.update(kwargs)
 
         resource = klass.RESOURCE_ACTIVE_ENTITIES.format(account_id=account.id)
         response = Request(account.client, 'get', resource, params=params).perform()

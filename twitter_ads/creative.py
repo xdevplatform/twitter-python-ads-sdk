@@ -8,7 +8,7 @@ from twitter_ads.cursor import Cursor
 from twitter_ads.enum import TRANSFORM
 from twitter_ads.http import Request
 from twitter_ads.resource import resource_property, Resource, Persistence, Analytics
-from twitter_ads.utils import Deprecated
+from twitter_ads.utils import Deprecated, FlattenParams
 
 
 class PromotedAccount(Analytics, Resource, Persistence):
@@ -60,16 +60,13 @@ class PromotedTweet(Analytics, Resource, Persistence):
         return self.from_response(response.body['data'][0])
 
     @classmethod
-    def attach(klass, account, line_item_id=None, tweet_ids=None):
+    @FlattenParams
+    def attach(klass, account, **kwargs):
         """
         Associate one or more Tweets with the specified line item.
         """
-        params = {}
-        params['line_item_id'] = line_item_id
-        params['tweet_ids'] = ",".join(map(str, tweet_ids))
-
         resource = klass.RESOURCE_COLLECTION.format(account_id=account.id)
-        request = Request(account.client, 'post', resource, params=params)
+        request = Request(account.client, 'post', resource, params=kwargs)
         return Cursor(klass, request, init_with=[account])
 
 
@@ -482,24 +479,21 @@ class CardsFetch(Resource):
         raise AttributeError("'CardsFetch' object has no attribute 'all'")
 
     @classmethod
-    def load(klass, account, card_uris=None, card_id=None, with_deleted=None):
+    @FlattenParams
+    def load(klass, account, **kwargs):
         # check whether both are specified or neither are specified
-        if all([card_uris, card_id]) or not any([card_uris, card_id]):
+        if all([kwargs.get('card_uris'), kwargs.get('card_id')]) or \
+           not any([kwargs.get('card_uris'), kwargs.get('card_id')]):
             raise ValueError('card_uris and card_id are exclusive parameters. ' +
                              'Please supply one or the other, but not both.')
-        params = {}
-        if with_deleted:
-            params['with_deleted'] = 'true'
 
-        if card_uris:
-            params['card_uris'] = ','.join(map(str, card_uris))
+        if kwargs.get('card_uris'):
             resource = klass.FETCH_URI.format(account_id=account.id)
-            request = Request(account.client, 'get', resource, params=params)
+            request = Request(account.client, 'get', resource, params=kwargs)
             return Cursor(klass, request, init_with=[account])
         else:
-            params['card_id'] = card_id
-            resource = klass.FETCH_ID.format(account_id=account.id, id=card_id)
-            response = Request(account.client, 'get', resource, params=params).perform()
+            resource = klass.FETCH_ID.format(account_id=account.id, id=kwargs.get('card_id'))
+            response = Request(account.client, 'get', resource, params=kwargs).perform()
             return klass(account).from_response(response.body['data'])
 
     def reload(self):
@@ -575,13 +569,10 @@ class TweetPreview(Resource):
     RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/tweet_previews'
 
     @classmethod
-    def load(klass, account, tweet_ids=None, tweet_type=None):
-        params = {}
-
-        params['tweet_ids'] = ','.join(map(str, tweet_ids))
-        params['tweet_type'] = tweet_type
+    @FlattenParams
+    def load(klass, account, **kwargs):
         resource = klass.RESOURCE_COLLECTION.format(account_id=account.id)
-        request = Request(account.client, 'get', resource, params=params)
+        request = Request(account.client, 'get', resource, params=kwargs)
         return Cursor(klass, request, init_with=[account])
 
 
