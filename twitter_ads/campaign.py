@@ -6,6 +6,7 @@ from twitter_ads.enum import TRANSFORM
 from twitter_ads.resource import resource_property, Resource, Persistence, Batch, Analytics
 from twitter_ads.http import Request
 from twitter_ads.cursor import Cursor
+from twitter_ads.utils import FlattenParams
 from twitter_ads import API_VERSION
 
 
@@ -20,14 +21,11 @@ targeting_criteria'
     RESOURCE_OPTIONS = '/' + API_VERSION + '/targeting_criteria/'
 
     @classmethod
-    def all(klass, account, line_item_ids, **kwargs):
+    @FlattenParams
+    def all(klass, account, **kwargs):
         """Returns a Cursor instance for a given resource."""
-        params = {'line_item_ids': ','.join(map(str, line_item_ids))}
-        params.update(kwargs)
-
         resource = klass.RESOURCE_COLLECTION.format(account_id=account.id)
-        request = Request(account.client, 'get', resource, params=params)
-
+        request = Request(account.client, 'get', resource, params=kwargs)
         return Cursor(klass, request, init_with=[account])
 
     @classmethod
@@ -202,15 +200,12 @@ class AppList(Resource, Persistence):
     RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/app_lists'
     RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/app_lists/{id}'
 
-    def create(self, name, *ids):
-        if isinstance(ids, list):
-            ids = ','.join(map(str, ids))
-
-        resource = self.RESOURCE_COLLECTION.format(account_id=self.account.id)
-        params = self.to_params.update({'app_store_identifiers': ids, 'name': name})
-        response = Request(self.account.client, 'post', resource, params=params).perform()
-
-        return self.from_response(response.body['data'])
+    @classmethod
+    @FlattenParams
+    def create(klass, account, **kwargs):
+        resource = klass.RESOURCE_COLLECTION.format(account_id=account.id)
+        response = Request(account.client, 'post', resource, params=kwargs).perform()
+        return klass(account).from_response(response.body['data'])
 
     def apps(self):
         if self.id and not hasattr(self, '_apps'):
@@ -340,19 +335,13 @@ class Tweet(object):
             'Error! {name} cannot be instantiated.'.format(name=self.__class__.__name__))
 
     @classmethod
+    @FlattenParams
     def create(klass, account, **kwargs):
         """
         Creates a "Promoted-Only" Tweet using the specialized Ads API end point.
         """
-        params = {}
-        params.update(kwargs)
-
-        # handles array to string conversion for media keys
-        if 'media_keys' in params and isinstance(params['media_keys'], list):
-            params['media_keys'] = ','.join(map(str, params['media_keys']))
-
         resource = klass.TWEET_CREATE.format(account_id=account.id)
-        response = Request(account.client, 'post', resource, params=params).perform()
+        response = Request(account.client, 'post', resource, params=kwargs).perform()
         return response.body['data']
 
 

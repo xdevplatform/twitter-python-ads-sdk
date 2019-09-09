@@ -102,3 +102,17 @@ class Deprecated(object):
             )
             return decorated(*args, **kwargs)
         return wrapper
+
+
+class FlattenParams(object):
+    def __init__(self, function):
+        self._func = function
+
+    def __call__(self, *args, **kwargs):
+        params = kwargs
+        for i in params:
+            if isinstance(params[i], list):
+                params[i] = ','.join(map(str, params[i]))
+            elif isinstance(params[i], bool):
+                params[i] = str(params[i]).lower()
+        return self._func(*args, **params)

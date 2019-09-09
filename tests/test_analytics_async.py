@@ -75,7 +75,7 @@ def test_analytics_async():
     job_id = stats.id_str
     job_result = Campaign.async_stats_job_result(
         account,
-        [job_id]).first
+        job_ids=[job_id]).first
 
     assert job_result is not None
     assert isinstance(job_result, Analytics)
@@ -84,7 +84,7 @@ def test_analytics_async():
     # call async_stats_job_result() from Analytics class directly
     job_result = Analytics.async_stats_job_result(
         account,
-        [job_id]).first
+        job_ids=[job_id]).first
 
     assert job_result is not None
     assert isinstance(job_result, Analytics)
