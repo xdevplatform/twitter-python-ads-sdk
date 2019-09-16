@@ -10,7 +10,7 @@ from twitter_ads.utils import format_time
 from twitter_ads.enum import ENTITY, TRANSFORM
 from twitter_ads.http import Request
 from twitter_ads.cursor import Cursor
-from twitter_ads.utils import extract_response_headers
+from twitter_ads.utils import extract_response_headers, FlattenParams
 
 
 def resource_property(klass, name, **kwargs):
@@ -184,6 +184,16 @@ class Persistence(object):
     """
     Container for all persistence related logic used by API resource objects.
     """
+
+    @classmethod
+    @FlattenParams
+    def create(self, account, **kwargs):
+        """
+        Create a new item.
+        """
+        resource = self.RESOURCE_COLLECTION.format(account_id=account.id)
+        response = Request(account.client, 'post', resource, params=kwargs).perform()
+        return self(account).from_response(response.body['data'])
 
     def save(self):
         """
