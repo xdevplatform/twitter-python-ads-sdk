@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Index &#8212; Twitter Ads API SDK for Python 5.1.1 documentation</title>
+    <title>Index &#8212; Twitter Ads API SDK for Python 6.0.0 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -47,6 +47,7 @@
  | <a href="#L"><strong>L</strong></a>
  | <a href="#M"><strong>M</strong></a>
  | <a href="#N"><strong>N</strong></a>
+ | <a href="#O"><strong>O</strong></a>
  | <a href="#P"><strong>P</strong></a>
  | <a href="#Q"><strong>Q</strong></a>
  | <a href="#R"><strong>R</strong></a>
@@ -74,14 +75,10 @@
 </li>
       <li><a href="twitter_ads/client.html#client.Client.accounts">accounts() (client.Client method)</a>
 </li>
-      <li><a href="twitter_ads/resource.html#resource.Analytics.active_entities">active_entities() (resource.Analytics class method)</a>
-</li>
       <li><a href="twitter_ads/account.html#account.Account.all">all() (account.Account class method)</a>
 
       <ul>
         <li><a href="twitter_ads/audience.html#audience.TailoredAudiencePermission.all">(audience.TailoredAudiencePermission class method)</a>
-</li>
-        <li><a href="twitter_ads/campaign.html#campaign.TargetingCriteria.all">(campaign.TargetingCriteria class method)</a>
 </li>
         <li><a href="twitter_ads/creative.html#creative.CardsFetch.all">(creative.CardsFetch method)</a>
 </li>
@@ -102,11 +99,7 @@
 </li>
       <li><a href="twitter_ads/resource.html#resource.Analytics.async_stats_job_data">async_stats_job_data() (resource.Analytics class method)</a>
 </li>
-      <li><a href="twitter_ads/resource.html#resource.Analytics.async_stats_job_result">async_stats_job_result() (resource.Analytics class method)</a>
-</li>
       <li><a href="twitter_ads/audience.html#module-audience">audience (module)</a>
-</li>
-      <li><a href="twitter_ads/audience.html#audience.AudienceIntelligence">AudienceIntelligence (class in audience)</a>
 </li>
       <li><a href="twitter_ads/enum.html#enum.auto">auto (class in enum)</a>
 </li>
@@ -150,7 +143,7 @@
 </li>
       <li><a href="twitter_ads/client.html#client.Client.consumer_secret">consumer_secret() (client.Client property)</a>
 </li>
-      <li><a href="twitter_ads/audience.html#audience.AudienceIntelligence.conversations">conversations() (audience.AudienceIntelligence method)</a>
+      <li><a href="twitter_ads/campaign.html#campaign.TargetingCriteria.conversations">conversations() (campaign.TargetingCriteria class method)</a>
 </li>
       <li><a href="twitter_ads/cursor.html#cursor.Cursor.count">count() (cursor.Cursor property)</a>
 </li>
@@ -180,9 +173,9 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="twitter_ads/audience.html#audience.AudienceIntelligence.demographics">demographics() (audience.AudienceIntelligence method)</a>
-</li>
       <li><a href="twitter_ads/campaign.html#campaign.TargetingCriteria.devices">devices() (campaign.TargetingCriteria class method)</a>
+</li>
+      <li><a href="twitter_ads/creative.html#creative.DraftTweet">DraftTweet (class in creative)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -290,18 +283,16 @@
 </li>
       <li><a href="twitter_ads/campaign.html#campaign.LineItem">LineItem (class in campaign)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="twitter_ads/account.html#account.Account.load">load() (account.Account class method)</a>
 
       <ul>
-        <li><a href="twitter_ads/creative.html#creative.CardsFetch.load">(creative.CardsFetch class method)</a>
-</li>
-        <li><a href="twitter_ads/creative.html#creative.TweetPreview.load">(creative.TweetPreview class method)</a>
+        <li><a href="twitter_ads/campaign.html#campaign.TaxSettings.load">(campaign.TaxSettings class method)</a>
 </li>
         <li><a href="twitter_ads/resource.html#resource.Resource.load">(resource.Resource class method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="twitter_ads/campaign.html#campaign.TargetingCriteria.locations">locations() (campaign.TargetingCriteria class method)</a>
 </li>
   </ul></td>
@@ -339,6 +330,14 @@
   </ul></td>
 </tr></table>
 
+<h2 id="O">O</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="twitter_ads/client.html#client.Client.options">options() (client.Client property)</a>
+</li>
+  </ul></td>
+</tr></table>
+
 <h2 id="P">P</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -354,8 +353,6 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="twitter_ads/creative.html#creative.ScheduledTweet.preview">preview() (creative.ScheduledTweet method)</a>
-</li>
       <li><a href="twitter_ads/account.html#account.Account.promotable_users">promotable_users() (account.Account method)</a>
 </li>
       <li><a href="twitter_ads/campaign.html#campaign.PromotableUser">PromotableUser (class in campaign)</a>
@@ -413,9 +410,9 @@
       <li><a href="twitter_ads/audience.html#audience.TailoredAudiencePermission.save">save() (audience.TailoredAudiencePermission method)</a>
 
       <ul>
-        <li><a href="twitter_ads/creative.html#creative.MediaLibrary.save">(creative.MediaLibrary method)</a>
+        <li><a href="twitter_ads/campaign.html#campaign.TaxSettings.save">(campaign.TaxSettings method)</a>
 </li>
-        <li><a href="twitter_ads/creative.html#creative.PromotedTweet.save">(creative.PromotedTweet method)</a>
+        <li><a href="twitter_ads/creative.html#creative.MediaLibrary.save">(creative.MediaLibrary method)</a>
 </li>
         <li><a href="twitter_ads/resource.html#resource.Persistence.save">(resource.Persistence method)</a>
 </li>
@@ -430,11 +427,11 @@
 </li>
       <li><a href="twitter_ads/creative.html#creative.ScheduledTweet">ScheduledTweet (class in creative)</a>
 </li>
-      <li><a href="twitter_ads/account.html#account.Account.scoped_timeline">scoped_timeline() (account.Account method)</a>
-</li>
       <li><a href="twitter_ads/error.html#error.ServerError">ServerError</a>
 </li>
       <li><a href="twitter_ads/error.html#error.ServiceUnavailable">ServiceUnavailable</a>
+</li>
+      <li><a href="twitter_ads/utils.html#utils.split_list">split_list() (in module utils)</a>
 </li>
       <li><a href="twitter_ads/resource.html#resource.Analytics.stats">stats() (resource.Analytics method)</a>
 </li>

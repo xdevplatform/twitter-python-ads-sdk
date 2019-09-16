@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>campaign &#8212; Twitter Ads API SDK for Python 5.1.1 documentation</title>
+    <title>campaign &#8212; Twitter Ads API SDK for Python 6.0.0 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -76,12 +76,6 @@ current line item.</p>
 <dt id="campaign.TargetingCriteria">
 <em class="property">class </em><code class="sig-prename descclassname">campaign.</code><code class="sig-name descname">TargetingCriteria</code><span class="sig-paren">(</span><em class="sig-param">account</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/campaign.html#TargetingCriteria"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#campaign.TargetingCriteria" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="method">
-<dt id="campaign.TargetingCriteria.all">
-<em class="property">classmethod </em><code class="sig-name descname">all</code><span class="sig-paren">(</span><em class="sig-param">account</em>, <em class="sig-param">line_item_ids</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/campaign.html#TargetingCriteria.all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#campaign.TargetingCriteria.all" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a Cursor instance for a given resource.</p>
-</dd></dl>
-
-<dl class="method">
 <dt id="campaign.TargetingCriteria.app_store_categories">
 <em class="property">classmethod </em><code class="sig-name descname">app_store_categories</code><span class="sig-paren">(</span><em class="sig-param">account</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/campaign.html#TargetingCriteria.app_store_categories"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#campaign.TargetingCriteria.app_store_categories" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a list of supported app store categories</p>
@@ -97,6 +91,12 @@ current line item.</p>
 <dt id="campaign.TargetingCriteria.behaviors">
 <em class="property">classmethod </em><code class="sig-name descname">behaviors</code><span class="sig-paren">(</span><em class="sig-param">account</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/campaign.html#TargetingCriteria.behaviors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#campaign.TargetingCriteria.behaviors" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a list of supported behaviors</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="campaign.TargetingCriteria.conversations">
+<em class="property">classmethod </em><code class="sig-name descname">conversations</code><span class="sig-paren">(</span><em class="sig-param">account</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/campaign.html#TargetingCriteria.conversations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#campaign.TargetingCriteria.conversations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of supported conversations</p>
 </dd></dl>
 
 <dl class="method">
@@ -164,7 +164,19 @@ current line item.</p>
 <dl class="class">
 <dt id="campaign.TaxSettings">
 <em class="property">class </em><code class="sig-prename descclassname">campaign.</code><code class="sig-name descname">TaxSettings</code><span class="sig-paren">(</span><em class="sig-param">account</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/campaign.html#TaxSettings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#campaign.TaxSettings" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><dl class="method">
+<dt id="campaign.TaxSettings.load">
+<em class="property">classmethod </em><code class="sig-name descname">load</code><span class="sig-paren">(</span><em class="sig-param">account</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/campaign.html#TaxSettings.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#campaign.TaxSettings.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an object instance for a given account.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="campaign.TaxSettings.save">
+<code class="sig-name descname">save</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/campaign.html#TaxSettings.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#campaign.TaxSettings.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the current object instance.</p>
+</dd></dl>
+
+</dd></dl>
 
 <dl class="class">
 <dt id="campaign.UserSettings">

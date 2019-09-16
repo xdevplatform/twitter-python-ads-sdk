@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>cursor &#8212; Twitter Ads API SDK for Python 5.1.1 documentation</title>
+    <title>cursor &#8212; Twitter Ads API SDK for Python 6.0.0 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -37,6 +37,7 @@
 
 <span class="c1"># from twitter_ads import *</span>
 <span class="kn">from</span> <span class="nn">twitter_ads.http</span> <span class="k">import</span> <span class="n">Request</span>
+<span class="kn">from</span> <span class="nn">twitter_ads.utils</span> <span class="k">import</span> <span class="n">extract_response_headers</span>
 
 
 <div class="viewcode-block" id="Cursor"><a class="viewcode-back" href="../twitter_ads/cursor.html#cursor.Cursor">[docs]</a><span class="k">class</span> <span class="nc">Cursor</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -125,6 +126,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_next_cursor</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;next_cursor&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="k">if</span> <span class="s1">&#39;total_count&#39;</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_total_count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s1">&#39;total_count&#39;</span><span class="p">])</span>
+
+        <span class="n">limits</span> <span class="o">=</span> <span class="n">extract_response_headers</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">limits</span><span class="p">:</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">limits</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
 
         <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]:</span>
             <span class="k">if</span> <span class="s1">&#39;from_response&#39;</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_klass</span><span class="p">):</span>

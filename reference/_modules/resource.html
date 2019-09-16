@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>resource &#8212; Twitter Ads API SDK for Python 5.1.1 documentation</title>
+    <title>resource &#8212; Twitter Ads API SDK for Python 6.0.0 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
@@ -48,6 +48,7 @@
 <span class="kn">from</span> <span class="nn">twitter_ads.http</span> <span class="k">import</span> <span class="n">Request</span>
 <span class="kn">from</span> <span class="nn">twitter_ads.cursor</span> <span class="k">import</span> <span class="n">Cursor</span>
 <span class="kn">from</span> <span class="nn">twitter_ads</span> <span class="k">import</span> <span class="n">API_VERSION</span>
+<span class="kn">from</span> <span class="nn">twitter_ads.utils</span> <span class="k">import</span> <span class="n">extract_response_headers</span><span class="p">,</span> <span class="n">FlattenParams</span>
 
 
 <div class="viewcode-block" id="resource_property"><a class="viewcode-back" href="../twitter_ads/resource.html#resource.resource_property">[docs]</a><span class="k">def</span> <span class="nf">resource_property</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -75,12 +76,17 @@
     <span class="k">def</span> <span class="nf">account</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_account</span>
 
-<div class="viewcode-block" id="Resource.from_response"><a class="viewcode-back" href="../twitter_ads/resource.html#resource.Resource.from_response">[docs]</a>    <span class="k">def</span> <span class="nf">from_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+<div class="viewcode-block" id="Resource.from_response"><a class="viewcode-back" href="../twitter_ads/resource.html#resource.Resource.from_response">[docs]</a>    <span class="k">def</span> <span class="nf">from_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Populates a given objects attributes from a parsed JSON API response.</span>
 <span class="sd">        This helper handles all necessary type coercions as it assigns</span>
 <span class="sd">        attribute values.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">headers</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">limits</span> <span class="o">=</span> <span class="n">extract_response_headers</span><span class="p">(</span><span class="n">headers</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">limits</span><span class="p">:</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">limits</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+
         <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">PROPERTIES</span><span class="p">:</span>
             <span class="n">attr</span> <span class="o">=</span> <span class="s1">&#39;_</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
             <span class="n">transform</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">PROPERTIES</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;transform&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
@@ -245,17 +251,20 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">from_response</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">])</span></div></div>
 
 
-<div class="viewcode-block" id="Analytics"><a class="viewcode-back" href="../twitter_ads/resource.html#resource.Analytics">[docs]</a><span class="k">class</span> <span class="nc">Analytics</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="Analytics"><a class="viewcode-back" href="../twitter_ads/resource.html#resource.Analytics">[docs]</a><span class="k">class</span> <span class="nc">Analytics</span><span class="p">(</span><span class="n">Resource</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Container for all analytics related logic used by API resource objects.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">PROPERTIES</span> <span class="o">=</span> <span class="p">{}</span>
+
     <span class="n">ANALYTICS_MAP</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s1">&#39;Campaign&#39;</span><span class="p">:</span> <span class="n">ENTITY</span><span class="o">.</span><span class="n">CAMPAIGN</span><span class="p">,</span>
         <span class="s1">&#39;FundingInstrument&#39;</span><span class="p">:</span> <span class="n">ENTITY</span><span class="o">.</span><span class="n">FUNDING_INSTRUMENT</span><span class="p">,</span>
         <span class="s1">&#39;LineItem&#39;</span><span class="p">:</span> <span class="n">ENTITY</span><span class="o">.</span><span class="n">LINE_ITEM</span><span class="p">,</span>
         <span class="s1">&#39;MediaCreative&#39;</span><span class="p">:</span> <span class="n">ENTITY</span><span class="o">.</span><span class="n">MEDIA_CREATIVE</span><span class="p">,</span>
         <span class="s1">&#39;OrganicTweet&#39;</span><span class="p">:</span> <span class="n">ENTITY</span><span class="o">.</span><span class="n">ORGANIC_TWEET</span><span class="p">,</span>
-        <span class="s1">&#39;PromotedTweet&#39;</span><span class="p">:</span> <span class="n">ENTITY</span><span class="o">.</span><span class="n">PROMOTED_TWEET</span>
+        <span class="s1">&#39;PromotedTweet&#39;</span><span class="p">:</span> <span class="n">ENTITY</span><span class="o">.</span><span class="n">PROMOTED_TWEET</span><span class="p">,</span>
+        <span class="s1">&#39;PromotedAccount&#39;</span><span class="p">:</span> <span class="n">ENTITY</span><span class="o">.</span><span class="n">PROMOTED_ACCOUNT</span>
     <span class="p">}</span>
 
     <span class="n">RESOURCE_SYNC</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">API_VERSION</span> <span class="o">+</span> <span class="s1">&#39;/stats/accounts/</span><span class="si">{account_id}</span><span class="s1">&#39;</span>
@@ -277,17 +286,18 @@
         <span class="n">start_time</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;start_time&#39;</span><span class="p">,</span> <span class="n">end_time</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">604800</span><span class="p">))</span>
         <span class="n">granularity</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;granularity&#39;</span><span class="p">,</span> <span class="n">GRANULARITY</span><span class="o">.</span><span class="n">HOUR</span><span class="p">)</span>
         <span class="n">placement</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;placement&#39;</span><span class="p">,</span> <span class="n">PLACEMENT</span><span class="o">.</span><span class="n">ALL_ON_TWITTER</span><span class="p">)</span>
+        <span class="n">entity</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;entity&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 
         <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">&#39;metric_groups&#39;</span><span class="p">:</span> <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">metric_groups</span><span class="p">),</span>
+            <span class="s1">&#39;metric_groups&#39;</span><span class="p">:</span> <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">metric_groups</span><span class="p">)),</span>
             <span class="s1">&#39;start_time&#39;</span><span class="p">:</span> <span class="n">to_time</span><span class="p">(</span><span class="n">start_time</span><span class="p">,</span> <span class="n">granularity</span><span class="p">),</span>
             <span class="s1">&#39;end_time&#39;</span><span class="p">:</span> <span class="n">to_time</span><span class="p">(</span><span class="n">end_time</span><span class="p">,</span> <span class="n">granularity</span><span class="p">),</span>
             <span class="s1">&#39;granularity&#39;</span><span class="p">:</span> <span class="n">granularity</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span>
-            <span class="s1">&#39;entity&#39;</span><span class="p">:</span> <span class="n">klass</span><span class="o">.</span><span class="n">ANALYTICS_MAP</span><span class="p">[</span><span class="n">klass</span><span class="o">.</span><span class="vm">__name__</span><span class="p">],</span>
+            <span class="s1">&#39;entity&#39;</span><span class="p">:</span> <span class="n">entity</span> <span class="ow">or</span> <span class="n">klass</span><span class="o">.</span><span class="n">ANALYTICS_MAP</span><span class="p">[</span><span class="n">klass</span><span class="o">.</span><span class="vm">__name__</span><span class="p">],</span>
             <span class="s1">&#39;placement&#39;</span><span class="p">:</span> <span class="n">placement</span>
         <span class="p">}</span>
 
-        <span class="n">params</span><span class="p">[</span><span class="s1">&#39;entity_ids&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ids</span><span class="p">)</span>
+        <span class="n">params</span><span class="p">[</span><span class="s1">&#39;entity_ids&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">ids</span><span class="p">))</span>
 
         <span class="k">return</span> <span class="n">params</span>
 
@@ -315,21 +325,18 @@
 
         <span class="n">resource</span> <span class="o">=</span> <span class="n">klass</span><span class="o">.</span><span class="n">RESOURCE_ASYNC</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">account_id</span><span class="o">=</span><span class="n">account</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
         <span class="n">response</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="n">account</span><span class="o">.</span><span class="n">client</span><span class="p">,</span> <span class="s1">&#39;post&#39;</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span></div>
+        <span class="k">return</span> <span class="n">Analytics</span><span class="p">(</span><span class="n">account</span><span class="p">)</span><span class="o">.</span><span class="n">from_response</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">],</span> <span class="n">headers</span><span class="o">=</span><span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Analytics.async_stats_job_result"><a class="viewcode-back" href="../twitter_ads/resource.html#resource.Analytics.async_stats_job_result">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">async_stats_job_result</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="n">account</span><span class="p">,</span> <span class="n">job_id</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="nd">@classmethod</span>
+    <span class="nd">@FlattenParams</span>
+    <span class="k">def</span> <span class="nf">async_stats_job_result</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="n">account</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the results of the specified async job IDs</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">&#39;job_ids&#39;</span><span class="p">:</span> <span class="n">job_id</span>
-        <span class="p">}</span>
-
         <span class="n">resource</span> <span class="o">=</span> <span class="n">klass</span><span class="o">.</span><span class="n">RESOURCE_ASYNC</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">account_id</span><span class="o">=</span><span class="n">account</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
-        <span class="n">response</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="n">account</span><span class="o">.</span><span class="n">client</span><span class="p">,</span> <span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="n">account</span><span class="o">.</span><span class="n">client</span><span class="p">,</span> <span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">kwargs</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span></div>
+        <span class="k">return</span> <span class="n">Cursor</span><span class="p">(</span><span class="n">Analytics</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">init_with</span><span class="o">=</span><span class="p">[</span><span class="n">account</span><span class="p">])</span>
 
 <div class="viewcode-block" id="Analytics.async_stats_job_data"><a class="viewcode-back" href="../twitter_ads/resource.html#resource.Analytics.async_stats_job_data">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">async_stats_job_data</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="n">account</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -344,14 +351,15 @@
 
         <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span></div>
 
-<div class="viewcode-block" id="Analytics.active_entities"><a class="viewcode-back" href="../twitter_ads/resource.html#resource.Analytics.active_entities">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="nd">@classmethod</span>
+    <span class="nd">@FlattenParams</span>
     <span class="k">def</span> <span class="nf">active_entities</span><span class="p">(</span><span class="n">klass</span><span class="p">,</span> <span class="n">account</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the details about which entities&#39; analytics metrics</span>
 <span class="sd">        have changed in a given time period.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">entity_type</span> <span class="o">=</span> <span class="n">klass</span><span class="o">.</span><span class="vm">__name__</span>
-        <span class="k">if</span> <span class="n">entity_type</span> <span class="o">==</span> <span class="s1">&#39;OrganicTweet&#39;</span><span class="p">:</span>
+        <span class="n">entity</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;entity&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">klass</span><span class="o">.</span><span class="n">ANALYTICS_MAP</span><span class="p">[</span><span class="n">klass</span><span class="o">.</span><span class="vm">__name__</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">entity</span> <span class="o">==</span> <span class="n">klass</span><span class="o">.</span><span class="n">ANALYTICS_MAP</span><span class="p">[</span><span class="s1">&#39;OrganicTweet&#39;</span><span class="p">]:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;OrganicTweet&#39; not support with &#39;active_entities&#39;&quot;</span><span class="p">)</span>
 
         <span class="c1"># The start and end times must be expressed in whole hours</span>
@@ -359,14 +367,34 @@
         <span class="n">validate_whole_hours</span><span class="p">(</span><span class="n">end_time</span><span class="p">)</span>
 
         <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">&#39;entity&#39;</span><span class="p">:</span> <span class="n">klass</span><span class="o">.</span><span class="n">ANALYTICS_MAP</span><span class="p">[</span><span class="n">entity_type</span><span class="p">],</span>
+            <span class="s1">&#39;entity&#39;</span><span class="p">:</span> <span class="n">entity</span><span class="p">,</span>
             <span class="s1">&#39;start_time&#39;</span><span class="p">:</span> <span class="n">to_time</span><span class="p">(</span><span class="n">start_time</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
             <span class="s1">&#39;end_time&#39;</span><span class="p">:</span> <span class="n">to_time</span><span class="p">(</span><span class="n">end_time</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="p">}</span>
+        <span class="n">params</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
 
         <span class="n">resource</span> <span class="o">=</span> <span class="n">klass</span><span class="o">.</span><span class="n">RESOURCE_ACTIVE_ENTITIES</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">account_id</span><span class="o">=</span><span class="n">account</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
         <span class="n">response</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="n">account</span><span class="o">.</span><span class="n">client</span><span class="p">,</span> <span class="s1">&#39;get&#39;</span><span class="p">,</span> <span class="n">resource</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span><span class="o">.</span><span class="n">perform</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span></div></div>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span></div>
+
+
+<span class="c1"># Analytics properties</span>
+<span class="c1"># read-only</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">Analytics</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">Analytics</span><span class="p">,</span> <span class="s1">&#39;id_str&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">Analytics</span><span class="p">,</span> <span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">Analytics</span><span class="p">,</span> <span class="s1">&#39;url&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">Analytics</span><span class="p">,</span> <span class="s1">&#39;created_at&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">Analytics</span><span class="p">,</span> <span class="s1">&#39;expires_at&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">Analytics</span><span class="p">,</span> <span class="s1">&#39;updated_at&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span>
+
+<span class="n">resource_property</span><span class="p">(</span><span class="n">Analytics</span><span class="p">,</span> <span class="s1">&#39;start_time&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">Analytics</span><span class="p">,</span> <span class="s1">&#39;end_time&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">TRANSFORM</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">Analytics</span><span class="p">,</span> <span class="s1">&#39;entity&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">Analytics</span><span class="p">,</span> <span class="s1">&#39;entity_ids&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">Analytics</span><span class="p">,</span> <span class="s1">&#39;placement&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">Analytics</span><span class="p">,</span> <span class="s1">&#39;granularity&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">resource_property</span><span class="p">(</span><span class="n">Analytics</span><span class="p">,</span> <span class="s1">&#39;metric_groups&#39;</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 
           </div>
