@@ -3,7 +3,8 @@
 """Container for all campaign management logic used by the Ads API SDK."""
 
 from twitter_ads.enum import TRANSFORM
-from twitter_ads.resource import resource_property, Resource, Persistence, Batch, Analytics
+from twitter_ads.analytics import Analytics
+from twitter_ads.resource import resource_property, Resource, Persistence, Batch
 from twitter_ads.http import Request
 from twitter_ads.cursor import Cursor
 from twitter_ads.utils import FlattenParams
