@@ -581,3 +581,15 @@ class TweetPreview(Resource):
 # read-only
 resource_property(TweetPreview, 'preview', readonly=True)
 resource_property(TweetPreview, 'tweet_id', readonly=True)
+
+
+class Tweets(object):
+
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/tweets'
+
+    @classmethod
+    @FlattenParams
+    def all(klass, account, **kwargs):
+        resource = klass.RESOURCE_COLLECTION.format(account_id=account.id)
+        request = Request(account.client, 'get', resource, params=kwargs)
+        return Cursor(None, request)
