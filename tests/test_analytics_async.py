@@ -5,7 +5,7 @@ from tests.support import with_resource, with_fixture, characters
 from twitter_ads.account import Account
 from twitter_ads.client import Client
 from twitter_ads.campaign import Campaign
-from twitter_ads.resource import Analytics
+from twitter_ads.analytics import Analytics
 from twitter_ads.enum import ENTITY, METRIC_GROUP, GRANULARITY
 from twitter_ads import API_VERSION
 

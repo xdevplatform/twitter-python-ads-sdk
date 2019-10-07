@@ -3,7 +3,8 @@
 """Container for all campaign management logic used by the Ads API SDK."""
 
 from twitter_ads.enum import TRANSFORM
-from twitter_ads.resource import resource_property, Resource, Persistence, Batch, Analytics
+from twitter_ads.analytics import Analytics
+from twitter_ads.resource import resource_property, Resource, Persistence, Batch
 from twitter_ads.http import Request
 from twitter_ads.cursor import Cursor
 from twitter_ads.utils import FlattenParams
@@ -200,13 +201,6 @@ class AppList(Resource, Persistence):
     RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/app_lists'
     RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/app_lists/{id}'
 
-    @classmethod
-    @FlattenParams
-    def create(klass, account, **kwargs):
-        resource = klass.RESOURCE_COLLECTION.format(account_id=account.id)
-        response = Request(account.client, 'post', resource, params=kwargs).perform()
-        return klass(account).from_response(response.body['data'])
-
     def apps(self):
         if self.id and not hasattr(self, '_apps'):
             self.reload()
@@ -304,6 +298,33 @@ resource_property(LineItem, 'total_budget_amount_local_micro')
 resource_property(LineItem, 'tracking_tags')
 # sdk-only
 resource_property(LineItem, 'to_delete', transform=TRANSFORM.BOOL)
+
+
+class LineItemApps(Resource, Persistence):
+
+    PROPERTIES = {}
+
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/line_item_apps'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/line_item_apps/{id}'
+
+
+resource_property(LineItemApps, 'created_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(LineItemApps, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(LineItemApps, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
+resource_property(LineItemApps, 'id', readonly=True)
+resource_property(LineItemApps, 'os_type', readonly=True)
+resource_property(LineItemApps, 'app_store_identifier', readonly=True)
+resource_property(LineItemApps, 'line_item_id', readonly=True)
+
+
+class LineItemPlacements(Resource):
+
+    PROPERTIES = {}
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/line_items/placements'
+
+
+resource_property(LineItemPlacements, 'product_type', readonly=True)
+resource_property(LineItemPlacements, 'placements', readonly=True)
 
 
 class ScheduledPromotedTweet(Resource, Persistence):
@@ -415,3 +436,25 @@ resource_property(TaxSettings, 'invoice_jurisdiction')
 resource_property(TaxSettings, 'tax_category')
 resource_property(TaxSettings, 'tax_exemption_id')
 resource_property(TaxSettings, 'tax_id')
+
+
+class ContentCategories(Resource):
+
+    PROPERTIES = {}
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/content_categories'
+
+
+resource_property(ContentCategories, 'id', readonly=True)
+resource_property(ContentCategories, 'name', readonly=True)
+resource_property(ContentCategories, 'iab_categories', readonly=True)
+
+
+class IabCategories(Resource):
+
+    PROPERTIES = {}
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/iab_categories'
+
+
+resource_property(IabCategories, 'id', readonly=True)
+resource_property(IabCategories, 'name', readonly=True)
+resource_property(IabCategories, 'parent_id', readonly=True)
