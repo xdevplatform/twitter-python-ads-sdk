@@ -65,3 +65,34 @@ def test_promoted_tweets_load():
     promoted_tweet = PromotedTweet.load(account, '6thl4')
     assert promoted_tweet.id == '6thl4'
     assert promoted_tweet.entity_status == 'ACTIVE'
+
+
+@responses.activate
+def test_promoted_tweets_attach():
+    responses.add(responses.GET,
+                  with_resource('/' + API_VERSION + '/accounts/2iqph'),
+                  body=with_fixture('accounts_load'),
+                  content_type='application/json')
+
+    responses.add(responses.POST,
+                  with_resource('/' + API_VERSION + '/accounts/2iqph/promoted_tweets'),
+                  body=with_fixture('promoted_tweets_attach'),
+                  content_type='application/json')
+
+    client = Client(
+        characters(40),
+        characters(40),
+        characters(40),
+        characters(40)
+    )
+
+    account = Account.load(client, '2iqph')
+    response = PromotedTweet.attach(
+        account,
+        line_item_id='2b7xw',
+        tweet_ids=['585127452231467008']
+    )
+
+    assert isinstance(response, Cursor)
+    assert response.count == 1
+    assert response.first.id == '6thl4'

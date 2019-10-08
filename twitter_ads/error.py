@@ -72,16 +72,12 @@ class RateLimit(ClientError):
 
     def __init__(self, response, **kwargs):
         super(RateLimit, self).__init__(response, **kwargs)
-        self._retry_after = response.headers.get('retry-after', None)
-        self._reset_at = response.headers.get('rate_limit_reset', None)
+        self._reset_at = response.headers.get('x-account-rate-limit-reset')\
+            or response.headers.get('x-rate-limit-reset')
 
     @property
     def reset_at(self):
         return self._reset_at
-
-    @property
-    def retry_after(self):
-        return self._retry_after
 
 
 class ServerError(Error):

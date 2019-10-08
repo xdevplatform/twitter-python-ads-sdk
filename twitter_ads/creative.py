@@ -3,15 +3,16 @@
 """Container for all creative management logic used by the Ads API SDK."""
 
 from requests.exceptions import HTTPError
-
 from twitter_ads import API_VERSION
 from twitter_ads.cursor import Cursor
 from twitter_ads.enum import TRANSFORM
 from twitter_ads.http import Request
-from twitter_ads.resource import resource_property, Resource, Persistence, Analytics
+from twitter_ads.analytics import Analytics
+from twitter_ads.resource import resource_property, Resource, Persistence
+from twitter_ads.utils import Deprecated, FlattenParams
 
 
-class PromotedAccount(Resource, Persistence):
+class PromotedAccount(Analytics, Resource, Persistence):
 
     PROPERTIES = {}
 
@@ -32,13 +33,16 @@ resource_property(PromotedAccount, 'line_item_id')
 resource_property(PromotedAccount, 'user_id')
 
 
-class PromotedTweet(Resource, Persistence, Analytics):
+class PromotedTweet(Analytics, Resource, Persistence):
 
     PROPERTIES = {}
 
     RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/promoted_tweets'
     RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/promoted_tweets/{id}'
 
+    @Deprecated('This method has been deprecated and will no longer be available '
+                'in the next major version update. Please use PromotedTweet.attach() '
+                'method instead.')
     def save(self):
         """
         Saves or updates the current object instance depending on the
@@ -56,6 +60,16 @@ class PromotedTweet(Resource, Persistence, Analytics):
         response = Request(self.account.client, 'post', resource, params=params).perform()
         return self.from_response(response.body['data'][0])
 
+    @classmethod
+    @FlattenParams
+    def attach(klass, account, **kwargs):
+        """
+        Associate one or more Tweets with the specified line item.
+        """
+        resource = klass.RESOURCE_COLLECTION.format(account_id=account.id)
+        request = Request(account.client, 'post', resource, params=kwargs)
+        return Cursor(klass, request, init_with=[account])
+
 
 # promoted tweet properties
 # read-only
@@ -65,9 +79,8 @@ resource_property(PromotedTweet, 'deleted', readonly=True, transform=TRANSFORM.B
 resource_property(PromotedTweet, 'entity_status', readonly=True)
 resource_property(PromotedTweet, 'id', readonly=True)
 resource_property(PromotedTweet, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
-# writable
+resource_property(PromotedTweet, 'tweet_id')
 resource_property(PromotedTweet, 'line_item_id')
-resource_property(PromotedTweet, 'tweet_id')  # SDK limitation
 
 
 class AccountMedia(Resource, Persistence):
@@ -83,15 +96,13 @@ class AccountMedia(Resource, Persistence):
 resource_property(AccountMedia, 'created_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(AccountMedia, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
 resource_property(AccountMedia, 'id', readonly=True)
+resource_property(AccountMedia, 'creative_type', readonly=True)
 resource_property(AccountMedia, 'media_url', readonly=True)
+resource_property(AccountMedia, 'media_key', readonly=True)
 resource_property(AccountMedia, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
-# writable
-resource_property(AccountMedia, 'creative_type')
-resource_property(AccountMedia, 'media_id')
-resource_property(AccountMedia, 'video_id')
 
 
-class MediaCreative(Resource, Persistence, Analytics):
+class MediaCreative(Analytics, Resource, Persistence):
 
     PROPERTIES = {}
 
@@ -128,7 +139,7 @@ resource_property(WebsiteCard, 'card_type', readonly=True)
 resource_property(WebsiteCard, 'card_uri', readonly=True)
 resource_property(WebsiteCard, 'created_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(WebsiteCard, 'id', readonly=True)
-resource_property(WebsiteCard, 'image', readonly=True)
+resource_property(WebsiteCard, 'media_url', readonly=True)
 resource_property(WebsiteCard, 'image_display_height', readonly=True)
 resource_property(WebsiteCard, 'image_display_width', readonly=True)
 resource_property(WebsiteCard, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
@@ -136,7 +147,7 @@ resource_property(WebsiteCard, 'website_dest_url', readonly=True)
 resource_property(WebsiteCard, 'website_display_url', readonly=True)
 resource_property(WebsiteCard, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
 # writable
-resource_property(WebsiteCard, 'image_media_id')
+resource_property(WebsiteCard, 'media_key')
 resource_property(WebsiteCard, 'name')
 resource_property(WebsiteCard, 'website_title')
 resource_property(WebsiteCard, 'website_url')
@@ -159,21 +170,19 @@ resource_property(VideoWebsiteCard, 'created_at', readonly=True, transform=TRANS
 resource_property(VideoWebsiteCard, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
 resource_property(VideoWebsiteCard, 'id', readonly=True)
 resource_property(VideoWebsiteCard, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
-resource_property(VideoWebsiteCard, 'video_content_id', readonly=True)
 resource_property(VideoWebsiteCard, 'video_height', readonly=True)
-resource_property(VideoWebsiteCard, 'video_hls_url', readonly=True)
 resource_property(VideoWebsiteCard, 'video_owner_id', readonly=True)
 resource_property(VideoWebsiteCard, 'video_poster_height', readonly=True)
-resource_property(VideoWebsiteCard, 'video_poster_url', readonly=True)
+resource_property(VideoWebsiteCard, 'poster_media_url', readonly=True)
 resource_property(VideoWebsiteCard, 'video_poster_width', readonly=True)
-resource_property(VideoWebsiteCard, 'video_url', readonly=True)
+resource_property(VideoWebsiteCard, 'media_url', readonly=True)
 resource_property(VideoWebsiteCard, 'video_width', readonly=True)
 resource_property(VideoWebsiteCard, 'website_dest_url', readonly=True)
 resource_property(VideoWebsiteCard, 'website_display_url', readonly=True)
 # writable
 resource_property(VideoWebsiteCard, 'name')
 resource_property(VideoWebsiteCard, 'title')
-resource_property(VideoWebsiteCard, 'video_id')
+resource_property(VideoWebsiteCard, 'media_key')
 resource_property(VideoWebsiteCard, 'website_url')
 
 
@@ -190,7 +199,7 @@ class ImageAppDownloadCard(Resource, Persistence):
 resource_property(ImageAppDownloadCard, 'id', readonly=True)
 resource_property(ImageAppDownloadCard, 'image_display_height', readonly=True)
 resource_property(ImageAppDownloadCard, 'image_display_width', readonly=True)
-resource_property(ImageAppDownloadCard, 'wide_app_image', readonly=True)
+resource_property(ImageAppDownloadCard, 'media_url', readonly=True)
 resource_property(ImageAppDownloadCard, 'card_uri', readonly=True)
 resource_property(ImageAppDownloadCard, 'card_type', readonly=True)
 resource_property(ImageAppDownloadCard, 'created_at', readonly=True, transform=TRANSFORM.TIME)
@@ -206,7 +215,7 @@ resource_property(ImageAppDownloadCard, 'ipad_deep_link')
 resource_property(ImageAppDownloadCard, 'googleplay_app_id')
 resource_property(ImageAppDownloadCard, 'googleplay_deep_link')
 resource_property(ImageAppDownloadCard, 'name')
-resource_property(ImageAppDownloadCard, 'wide_app_image_media_id')
+resource_property(ImageAppDownloadCard, 'media_key')
 
 
 class VideoAppDownloadCard(Resource, Persistence):
@@ -225,15 +234,13 @@ resource_property(VideoAppDownloadCard, 'created_at', readonly=True, transform=T
 resource_property(VideoAppDownloadCard, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
 resource_property(VideoAppDownloadCard, 'id', readonly=True)
 resource_property(VideoAppDownloadCard, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
-resource_property(VideoAppDownloadCard, 'video_content_id', readonly=True)
-resource_property(VideoAppDownloadCard, 'video_hls_url', readonly=True)
 resource_property(VideoAppDownloadCard, 'video_owner_id', readonly=True)
-resource_property(VideoAppDownloadCard, 'video_poster_url', readonly=True)
-resource_property(VideoAppDownloadCard, 'video_url', readonly=True)
+resource_property(VideoAppDownloadCard, 'poster_media_url', readonly=True)
+resource_property(VideoAppDownloadCard, 'media_url', readonly=True)
 # writable
 resource_property(VideoAppDownloadCard, 'country_code')
 resource_property(VideoAppDownloadCard, 'app_cta')
-resource_property(VideoAppDownloadCard, 'image_media_id')
+resource_property(VideoAppDownloadCard, 'poster_media_key')
 resource_property(VideoAppDownloadCard, 'ipad_app_id')
 resource_property(VideoAppDownloadCard, 'ipad_deep_link')
 resource_property(VideoAppDownloadCard, 'iphone_app_id')
@@ -241,7 +248,7 @@ resource_property(VideoAppDownloadCard, 'iphone_deep_link')
 resource_property(VideoAppDownloadCard, 'googleplay_app_id')
 resource_property(VideoAppDownloadCard, 'googleplay_deep_link')
 resource_property(VideoAppDownloadCard, 'name')
-resource_property(VideoAppDownloadCard, 'video_id')
+resource_property(VideoAppDownloadCard, 'media_key')
 
 
 class ImageConversationCard(Resource, Persistence):
@@ -259,13 +266,13 @@ resource_property(ImageConversationCard, 'card_uri', readonly=True)
 resource_property(ImageConversationCard, 'created_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(ImageConversationCard, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
 resource_property(ImageConversationCard, 'id', readonly=True)
-resource_property(ImageConversationCard, 'image', readonly=True)
+resource_property(ImageConversationCard, 'media_url', readonly=True)
 resource_property(ImageConversationCard, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
 # writable
-resource_property(ImageConversationCard, 'cover_image_id')
+resource_property(ImageConversationCard, 'unlocked_image_media_key')
 resource_property(ImageConversationCard, 'fouth_cta')
 resource_property(ImageConversationCard, 'fouth_cta_tweet')
-resource_property(ImageConversationCard, 'image_media_id')
+resource_property(ImageConversationCard, 'media_key')
 resource_property(ImageConversationCard, 'first_cta')
 resource_property(ImageConversationCard, 'first_cta_tweet')
 resource_property(ImageConversationCard, 'name')
@@ -294,15 +301,15 @@ resource_property(VideoConversationCard, 'card_type', readonly=True)
 resource_property(VideoConversationCard, 'created_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(VideoConversationCard, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
 resource_property(VideoConversationCard, 'id', readonly=True)
-resource_property(VideoConversationCard, 'video_url', readonly=True)
-resource_property(VideoConversationCard, 'video_poster_url', readonly=True)
+resource_property(VideoConversationCard, 'media_url', readonly=True)
+resource_property(VideoConversationCard, 'poster_media_url', readonly=True)
 resource_property(VideoConversationCard, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
 # writable
-resource_property(ImageConversationCard, 'cover_image_id')
-resource_property(ImageConversationCard, 'cover_video_id')
+resource_property(ImageConversationCard, 'unlocked_image_media_key')
+resource_property(ImageConversationCard, 'unlocked_video_media_key')
 resource_property(ImageConversationCard, 'fouth_cta')
 resource_property(ImageConversationCard, 'fouth_cta_tweet')
-resource_property(ImageConversationCard, 'image_media_id')
+resource_property(ImageConversationCard, 'poster_media_key')
 resource_property(ImageConversationCard, 'first_cta')
 resource_property(ImageConversationCard, 'first_cta_tweet')
 resource_property(ImageConversationCard, 'name')
@@ -313,7 +320,7 @@ resource_property(ImageConversationCard, 'thank_you_url')
 resource_property(ImageConversationCard, 'third_cta')
 resource_property(ImageConversationCard, 'third_cta_tweet')
 resource_property(ImageConversationCard, 'title')
-resource_property(ImageConversationCard, 'video_id')
+resource_property(ImageConversationCard, 'media_key')
 
 
 class ScheduledTweet(Resource, Persistence):
@@ -322,17 +329,6 @@ class ScheduledTweet(Resource, Persistence):
 
     RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/scheduled_tweets'
     RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/scheduled_tweets/{id}'
-    PREVIEW = '/' + API_VERSION + '/accounts/{account_id}/scheduled_tweets/preview/{id}'
-
-    def preview(self):
-        """
-        Returns an HTML preview for a Scheduled Tweet.
-        """
-        if self.id:
-            resource = self.PREVIEW
-            resource = resource.format(account_id=self.account.id, id=self.id)
-            response = Request(self.account.client, 'get', resource).perform()
-            return response.body['data']
 
 
 # scheduled tweet properties
@@ -341,7 +337,6 @@ resource_property(ScheduledTweet, 'created_at', readonly=True, transform=TRANSFO
 resource_property(ScheduledTweet, 'completed_at', read_only=True, transform=TRANSFORM.TIME)
 resource_property(ScheduledTweet, 'id', read_only=True)
 resource_property(ScheduledTweet, 'id_str', read_only=True)
-resource_property(ScheduledTweet, 'media_keys', readonly=True, transform=TRANSFORM.LIST)
 resource_property(ScheduledTweet, 'scheduled_status', read_only=True)
 resource_property(ScheduledTweet, 'tweet_id', readonly=True)
 resource_property(ScheduledTweet, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
@@ -349,7 +344,7 @@ resource_property(ScheduledTweet, 'user_id', read_only=True)
 # writable
 resource_property(ScheduledTweet, 'as_user_id')
 resource_property(ScheduledTweet, 'card_uri')
-resource_property(ScheduledTweet, 'media_ids', transform=TRANSFORM.LIST)
+resource_property(ScheduledTweet, 'media_keys', transform=TRANSFORM.LIST)
 resource_property(ScheduledTweet, 'nullcast', transform=TRANSFORM.BOOL)
 resource_property(ScheduledTweet, 'scheduled_at', transform=TRANSFORM.TIME)
 resource_property(ScheduledTweet, 'text')
@@ -361,35 +356,19 @@ class DraftTweet(Resource, Persistence):
 
     RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/draft_tweets'
     RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/draft_tweets/{id}'
-    PREVIEW = '/' + API_VERSION + '/accounts/{account_id}/draft_tweets/preview/{id}'
-
-    def preview(self, draft_tweet_id=None):
-        """
-        Preview a Draft Tweet on a mobile device.
-        """
-        if not (draft_tweet_id is None):
-            resource = self.PREVIEW.format(account_id=self.account.id, id=draft_tweet_id)
-        elif self.id:
-            resource = self.PREVIEW.format(account_id=self.account.id, id=self.id)
-        else:
-            raise AttributeError("object has no 'draft_tweet_id' to preview")
-
-        response = Request(self.account.client, 'post', resource).perform()
-        return response.body
 
 
 # draft tweet properties
 # read-only
 resource_property(DraftTweet, 'id', read_only=True)
 resource_property(DraftTweet, 'id_str', read_only=True)
-resource_property(DraftTweet, 'media_keys', readonly=True, transform=TRANSFORM.LIST)
 resource_property(DraftTweet, 'created_at', read_only=True, transform=TRANSFORM.TIME)
 resource_property(DraftTweet, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(DraftTweet, 'user_id', read_only=True)
 # writable
 resource_property(DraftTweet, 'as_user_id')
 resource_property(DraftTweet, 'card_uri')
-resource_property(DraftTweet, 'media_ids', transform=TRANSFORM.LIST)
+resource_property(DraftTweet, 'media_keys', transform=TRANSFORM.LIST)
 resource_property(DraftTweet, 'nullcast', transform=TRANSFORM.BOOL)
 resource_property(DraftTweet, 'text')
 
@@ -439,17 +418,15 @@ resource_property(MediaLibrary, 'duration', readonly=True, transform=TRANSFORM.I
 resource_property(MediaLibrary, 'media_status', readonly=True)
 resource_property(MediaLibrary, 'media_type', readonly=True)
 resource_property(MediaLibrary, 'media_url', readonly=True)
+resource_property(MediaLibrary, 'poster_media_url', readonly=True)
 resource_property(MediaLibrary, 'tweeted', readonly=True, transform=TRANSFORM.BOOL)
 resource_property(MediaLibrary, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
 # writable
-resource_property(MediaLibrary, 'media_category')
-resource_property(MediaLibrary, 'media_id')
 resource_property(MediaLibrary, 'media_key')
 resource_property(MediaLibrary, 'description')
 resource_property(MediaLibrary, 'file_name')
 resource_property(MediaLibrary, 'name')
-resource_property(MediaLibrary, 'poster_image_media_id')
-resource_property(MediaLibrary, 'poster_image_media_key')
+resource_property(MediaLibrary, 'poster_media_key')
 resource_property(MediaLibrary, 'title')
 
 
@@ -503,24 +480,21 @@ class CardsFetch(Resource):
         raise AttributeError("'CardsFetch' object has no attribute 'all'")
 
     @classmethod
-    def load(klass, account, card_uris=None, card_id=None, with_deleted=None):
+    @FlattenParams
+    def load(klass, account, **kwargs):
         # check whether both are specified or neither are specified
-        if all([card_uris, card_id]) or not any([card_uris, card_id]):
+        if all([kwargs.get('card_uris'), kwargs.get('card_id')]) or \
+           not any([kwargs.get('card_uris'), kwargs.get('card_id')]):
             raise ValueError('card_uris and card_id are exclusive parameters. ' +
                              'Please supply one or the other, but not both.')
-        params = {}
-        if with_deleted:
-            params['with_deleted'] = 'true'
 
-        if card_uris:
-            params['card_uris'] = ','.join(card_uris)
+        if kwargs.get('card_uris'):
             resource = klass.FETCH_URI.format(account_id=account.id)
-            request = Request(account.client, 'get', resource, params=params)
+            request = Request(account.client, 'get', resource, params=kwargs)
             return Cursor(klass, request, init_with=[account])
         else:
-            params['card_id'] = card_id
-            resource = klass.FETCH_ID.format(account_id=account.id, id=card_id)
-            response = Request(account.client, 'get', resource, params=params).perform()
+            resource = klass.FETCH_ID.format(account_id=account.id, id=kwargs.get('card_id'))
+            response = Request(account.client, 'get', resource, params=kwargs).perform()
             return klass(account).from_response(response.body['data'])
 
     def reload(self):
@@ -596,13 +570,10 @@ class TweetPreview(Resource):
     RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/tweet_previews'
 
     @classmethod
-    def load(klass, account, tweet_ids=None, tweet_type=None):
-        params = {}
-
-        params['tweet_ids'] = ','.join(map(str, tweet_ids))
-        params['tweet_type'] = tweet_type
+    @FlattenParams
+    def load(klass, account, **kwargs):
         resource = klass.RESOURCE_COLLECTION.format(account_id=account.id)
-        request = Request(account.client, 'get', resource, params=params)
+        request = Request(account.client, 'get', resource, params=kwargs)
         return Cursor(klass, request, init_with=[account])
 
 
@@ -610,3 +581,15 @@ class TweetPreview(Resource):
 # read-only
 resource_property(TweetPreview, 'preview', readonly=True)
 resource_property(TweetPreview, 'tweet_id', readonly=True)
+
+
+class Tweets(object):
+
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/tweets'
+
+    @classmethod
+    @FlattenParams
+    def all(klass, account, **kwargs):
+        resource = klass.RESOURCE_COLLECTION.format(account_id=account.id)
+        request = Request(account.client, 'get', resource, params=kwargs)
+        return Cursor(None, request)

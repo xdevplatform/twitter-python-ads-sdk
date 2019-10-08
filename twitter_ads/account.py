@@ -6,6 +6,7 @@ A Twitter supported and maintained Ads API SDK for Python.
 from twitter_ads.enum import TRANSFORM
 from twitter_ads.http import Request
 from twitter_ads.cursor import Cursor
+from twitter_ads.utils import Deprecated
 from twitter_ads import API_VERSION
 
 from twitter_ads.resource import resource_property, Resource
@@ -27,7 +28,7 @@ class Account(Resource):
     RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts'
     RESOURCE = '/' + API_VERSION + '/accounts/{id}'
     FEATURES = '/' + API_VERSION + '/accounts/{id}/features'
-    SCOPED_TIMELINE = '/' + API_VERSION + '/accounts/{id}/scoped_timeline'
+    SCOPED_TIMELINE = '/5/accounts/{id}/scoped_timeline'
 
     def __init__(self, client):
         self._client = client
@@ -155,6 +156,8 @@ class Account(Resource):
         """
         return self._load_resource(VideoWebsiteCard, id, **kwargs)
 
+    @Deprecated('This method has been deprecated as of version 5'
+                'and no longer works in the latest version.')
     def scoped_timeline(self, *id, **kwargs):
         """
         Returns the most recent promotable Tweets created by the specified Twitter user.

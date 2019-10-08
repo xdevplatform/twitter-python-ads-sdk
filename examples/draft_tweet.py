@@ -1,6 +1,7 @@
 from twitter_ads.client import Client
 from twitter_ads.campaign import Tweet
 from twitter_ads.creative import DraftTweet
+from twitter_ads.restapi import UserIdLookup
 
 
 CONSUMER_KEY = 'your consumer key'
@@ -15,6 +16,9 @@ client = Client(CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET
 # load the advertiser account instance
 account = client.accounts(ACCOUNT_ID)
 
+# get user_id for as_user_id parameter
+user_id = UserIdLookup.load(account, screen_name='your_twitter_handle_name').id
+
 # fetch draft tweets from a given account
 tweets = DraftTweet.all(account)
 for tweet in tweets:
@@ -24,6 +28,7 @@ for tweet in tweets:
 # create a new draft tweet
 draft_tweet = DraftTweet(account)
 draft_tweet.text = 'draft tweet - new'
+draft_tweet.as_user_id = user_id
 draft_tweet = draft_tweet.save()
 print(draft_tweet.id_str)
 print(draft_tweet.text)
@@ -40,13 +45,8 @@ draft_tweet = draft_tweet.save()
 print(draft_tweet.id_str)
 print(draft_tweet.text)
 
-# preview draft tweet of current instance (send notification)
-draft_tweet.preview()
-# or, specify any draft_tweet_id
-# draft_tweet.preview(draft_tweet_id='1142020720651673600')
-
 # create a nullcasted tweet using draft tweet metadata
-tweet = Tweet.create(account, text=draft_tweet.text)
+tweet = Tweet.create(account, text=draft_tweet.text, as_user_id=user_id)
 print(tweet)
 
 # delete draft tweet
