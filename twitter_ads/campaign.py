@@ -266,6 +266,16 @@ class LineItem(Analytics, Resource, Persistence, Batch):
         else:
             return TargetingCriteria.load(self.account, id, **kwargs)
 
+    def save(self):
+        # automatically_select_bid and bid_type are exclusive parameters
+        if self.automatically_select_bid and self.bid_type:
+            if self.bid_type == 'AUTO':
+                self.bid_type = None
+                self.automatically_select_bid = True
+            else:
+                self.automatically_select_bid = None
+        super(LineItem, self).save()
+
 
 # line item properties
 # read-only
