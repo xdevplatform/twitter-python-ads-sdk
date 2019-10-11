@@ -65,3 +65,4 @@ sdk/
 # IDE files
 .project
 .pydevproject
+.idea
