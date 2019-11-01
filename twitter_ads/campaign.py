@@ -3,9 +3,11 @@
 """Container for all campaign management logic used by the Ads API SDK."""
 
 from twitter_ads.enum import TRANSFORM
-from twitter_ads.resource import resource_property, Resource, Persistence, Batch, Analytics
+from twitter_ads.analytics import Analytics
+from twitter_ads.resource import resource_property, Resource, Persistence, Batch
 from twitter_ads.http import Request
 from twitter_ads.cursor import Cursor
+from twitter_ads.utils import FlattenParams
 from twitter_ads import API_VERSION
 
 
@@ -20,14 +22,11 @@ targeting_criteria'
     RESOURCE_OPTIONS = '/' + API_VERSION + '/targeting_criteria/'
 
     @classmethod
-    def all(klass, account, line_item_ids, **kwargs):
+    @FlattenParams
+    def all(klass, account, **kwargs):
         """Returns a Cursor instance for a given resource."""
-        params = {'line_item_ids': ','.join(line_item_ids)}
-        params.update(kwargs)
-
         resource = klass.RESOURCE_COLLECTION.format(account_id=account.id)
-        request = Request(account.client, 'get', resource, params=params)
-
+        request = Request(account.client, 'get', resource, params=kwargs)
         return Cursor(klass, request, init_with=[account])
 
     @classmethod
@@ -143,12 +142,11 @@ resource_property(TargetingCriteria, 'operator_type')
 resource_property(TargetingCriteria, 'targeting_type')
 resource_property(TargetingCriteria, 'targeting_value')
 resource_property(TargetingCriteria, 'tailored_audience_expansion')
-resource_property(TargetingCriteria, 'tailored_audience_type')
 # sdk-only
 resource_property(TargetingCriteria, 'to_delete', transform=TRANSFORM.BOOL)
 
 
-class FundingInstrument(Resource, Persistence, Analytics):
+class FundingInstrument(Analytics, Resource, Persistence):
 
     PROPERTIES = {}
 
@@ -203,16 +201,6 @@ class AppList(Resource, Persistence):
     RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/app_lists'
     RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/app_lists/{id}'
 
-    def create(self, name, *ids):
-        if isinstance(ids, list):
-            ids = ','.join(map(str, ids))
-
-        resource = self.RESOURCE_COLLECTION.format(account_id=self.account.id)
-        params = self.to_params.update({'app_store_identifiers': ids, 'name': name})
-        response = Request(self.account.client, 'post', resource, params=params).perform()
-
-        return self.from_response(response.body['data'])
-
     def apps(self):
         if self.id and not hasattr(self, '_apps'):
             self.reload()
@@ -226,7 +214,7 @@ resource_property(AppList, 'name', readonly=True)
 resource_property(AppList, 'apps', readonly=True)
 
 
-class Campaign(Resource, Persistence, Analytics, Batch):
+class Campaign(Analytics, Resource, Persistence, Batch):
 
     PROPERTIES = {}
 
@@ -259,7 +247,7 @@ resource_property(Campaign, 'total_budget_amount_local_micro')
 resource_property(Campaign, 'to_delete', transform=TRANSFORM.BOOL)
 
 
-class LineItem(Resource, Persistence, Analytics, Batch):
+class LineItem(Analytics, Resource, Persistence, Batch):
 
     PROPERTIES = {}
 
@@ -274,9 +262,19 @@ class LineItem(Resource, Persistence, Analytics, Batch):
         """
         self._validate_loaded()
         if id is None:
-            return TargetingCriteria.all(self.account, self.id, **kwargs)
+            return TargetingCriteria.all(self.account, line_item_ids=[self.id], **kwargs)
         else:
             return TargetingCriteria.load(self.account, id, **kwargs)
+
+    def save(self):
+        # automatically_select_bid and bid_type are exclusive parameters
+        if self.automatically_select_bid and self.bid_type:
+            if self.bid_type == 'AUTO':
+                self.bid_type = None
+                self.automatically_select_bid = True
+            else:
+                self.automatically_select_bid = None
+        super(LineItem, self).save()
 
 
 # line item properties
@@ -298,7 +296,7 @@ resource_property(LineItem, 'charge_by')
 resource_property(LineItem, 'end_time', transform=TRANSFORM.TIME)
 resource_property(LineItem, 'entity_status')
 resource_property(LineItem, 'include_sentiment')
-resource_property(LineItem, 'lookalike_expansion')
+resource_property(LineItem, 'audience_expansion')
 resource_property(LineItem, 'name')
 resource_property(LineItem, 'objective')
 resource_property(LineItem, 'optimization')
@@ -310,6 +308,33 @@ resource_property(LineItem, 'total_budget_amount_local_micro')
 resource_property(LineItem, 'tracking_tags')
 # sdk-only
 resource_property(LineItem, 'to_delete', transform=TRANSFORM.BOOL)
+
+
+class LineItemApps(Resource, Persistence):
+
+    PROPERTIES = {}
+
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/line_item_apps'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/line_item_apps/{id}'
+
+
+resource_property(LineItemApps, 'created_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(LineItemApps, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(LineItemApps, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
+resource_property(LineItemApps, 'id', readonly=True)
+resource_property(LineItemApps, 'os_type', readonly=True)
+resource_property(LineItemApps, 'app_store_identifier', readonly=True)
+resource_property(LineItemApps, 'line_item_id', readonly=True)
+
+
+class LineItemPlacements(Resource):
+
+    PROPERTIES = {}
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/line_items/placements'
+
+
+resource_property(LineItemPlacements, 'product_type', readonly=True)
+resource_property(LineItemPlacements, 'placements', readonly=True)
 
 
 class ScheduledPromotedTweet(Resource, Persistence):
@@ -334,8 +359,6 @@ resource_property(ScheduledPromotedTweet, 'scheduled_tweet_id')
 
 class Tweet(object):
 
-    TWEET_PREVIEW = '/' + API_VERSION + '/accounts/{account_id}/tweet/preview'
-    TWEET_ID_PREVIEW = '/' + API_VERSION + '/accounts/{account_id}/tweet/preview/{id}'
     TWEET_CREATE = '/' + API_VERSION + '/accounts/{account_id}/tweet'
 
     def __init__(self):
@@ -343,36 +366,13 @@ class Tweet(object):
             'Error! {name} cannot be instantiated.'.format(name=self.__class__.__name__))
 
     @classmethod
-    def preview(klass, account, **kwargs):
-        """
-        Returns an HTML preview of a tweet, either new or existing.
-        """
-        params = {}
-        params.update(kwargs)
-
-        # handles array to string conversion for media IDs
-        if 'media_ids' in params and isinstance(params['media_ids'], list):
-            params['media_ids'] = ','.join(map(str, params['media_ids']))
-
-        resource = klass.TWEET_ID_PREVIEW if params.get('id') else klass.TWEET_PREVIEW
-        resource = resource.format(account_id=account.id, id=params.get('id'))
-        response = Request(account.client, 'get', resource, params=params).perform()
-        return response.body['data']
-
-    @classmethod
+    @FlattenParams
     def create(klass, account, **kwargs):
         """
         Creates a "Promoted-Only" Tweet using the specialized Ads API end point.
         """
-        params = {}
-        params.update(kwargs)
-
-        # handles array to string conversion for media IDs
-        if 'media_ids' in params and isinstance(params['media_ids'], list):
-            params['media_ids'] = ','.join(map(str, params['media_ids']))
-
         resource = klass.TWEET_CREATE.format(account_id=account.id)
-        response = Request(account.client, 'post', resource, params=params).perform()
+        response = Request(account.client, 'post', resource, params=kwargs).perform()
         return response.body['data']
 
 
@@ -446,3 +446,25 @@ resource_property(TaxSettings, 'invoice_jurisdiction')
 resource_property(TaxSettings, 'tax_category')
 resource_property(TaxSettings, 'tax_exemption_id')
 resource_property(TaxSettings, 'tax_id')
+
+
+class ContentCategories(Resource):
+
+    PROPERTIES = {}
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/content_categories'
+
+
+resource_property(ContentCategories, 'id', readonly=True)
+resource_property(ContentCategories, 'name', readonly=True)
+resource_property(ContentCategories, 'iab_categories', readonly=True)
+
+
+class IabCategories(Resource):
+
+    PROPERTIES = {}
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/iab_categories'
+
+
+resource_property(IabCategories, 'id', readonly=True)
+resource_property(IabCategories, 'name', readonly=True)
+resource_property(IabCategories, 'parent_id', readonly=True)

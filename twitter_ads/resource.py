@@ -3,18 +3,14 @@
 """Container for all plugable resource object logic used by the Ads API SDK."""
 
 import dateutil.parser
-from datetime import datetime, timedelta
-try:
-    from urllib.parse import urlparse
-except ImportError:
-    from urlparse import urlparse
 import json
 
-from twitter_ads.utils import format_time, to_time, validate_whole_hours
-from twitter_ads.enum import ENTITY, GRANULARITY, PLACEMENT, TRANSFORM
+from datetime import datetime
+from twitter_ads.utils import format_time
+from twitter_ads.enum import ENTITY, TRANSFORM
 from twitter_ads.http import Request
 from twitter_ads.cursor import Cursor
-from twitter_ads import API_VERSION
+from twitter_ads.utils import extract_response_headers, FlattenParams
 
 
 def resource_property(klass, name, **kwargs):
@@ -42,12 +38,17 @@ class Resource(object):
     def account(self):
         return self._account
 
-    def from_response(self, response):
+    def from_response(self, response, headers=None):
         """
         Populates a given objects attributes from a parsed JSON API response.
         This helper handles all necessary type coercions as it assigns
         attribute values.
         """
+        if headers is not None:
+            limits = extract_response_headers(headers)
+            for k in limits:
+                setattr(self, k, limits[k])
+
         for name in self.PROPERTIES:
             attr = '_{0}'.format(name)
             transform = self.PROPERTIES[name].get('transform', None)
@@ -78,6 +79,8 @@ class Resource(object):
             if isinstance(value, datetime):
                 params[name] = format_time(value)
             elif isinstance(value, list):
+                if not value:
+                    continue
                 params[name] = ','.join(map(str, value))
             elif isinstance(value, bool):
                 params[name] = str(value).lower()
@@ -184,6 +187,16 @@ class Persistence(object):
     Container for all persistence related logic used by API resource objects.
     """
 
+    @classmethod
+    @FlattenParams
+    def create(self, account, **kwargs):
+        """
+        Create a new item.
+        """
+        resource = self.RESOURCE_COLLECTION.format(account_id=account.id)
+        response = Request(account.client, 'post', resource, params=kwargs).perform()
+        return self(account).from_response(response.body['data'])
+
     def save(self):
         """
         Saves or updates the current object instance depending on the
@@ -210,134 +223,3 @@ class Persistence(object):
         resource = self.RESOURCE.format(account_id=self.account.id, id=self.id)
         response = Request(self.account.client, 'delete', resource).perform()
         self.from_response(response.body['data'])
-
-
-class Analytics(object):
-    """
-    Container for all analytics related logic used by API resource objects.
-    """
-    ANALYTICS_MAP = {
-        'Campaign': ENTITY.CAMPAIGN,
-        'FundingInstrument': ENTITY.FUNDING_INSTRUMENT,
-        'LineItem': ENTITY.LINE_ITEM,
-        'MediaCreative': ENTITY.MEDIA_CREATIVE,
-        'OrganicTweet': ENTITY.ORGANIC_TWEET,
-        'PromotedTweet': ENTITY.PROMOTED_TWEET
-    }
-
-    RESOURCE_SYNC = '/' + API_VERSION + '/stats/accounts/{account_id}'
-    RESOURCE_ASYNC = '/' + API_VERSION + '/stats/jobs/accounts/{account_id}'
-    RESOURCE_ACTIVE_ENTITIES = '/' + API_VERSION + '/stats/accounts/{account_id}/active_entities'
-
-    def stats(self, metrics, **kwargs):  # noqa
-        """
-        Pulls a list of metrics for the current object instance.
-        """
-        return self.__class__.all_stats(self.account, [self.id], metrics, **kwargs)
-
-    @classmethod
-    def _standard_params(klass, ids, metric_groups, **kwargs):
-        """
-        Sets the standard params for a stats request
-        """
-        end_time = kwargs.get('end_time', datetime.utcnow())
-        start_time = kwargs.get('start_time', end_time - timedelta(seconds=604800))
-        granularity = kwargs.get('granularity', GRANULARITY.HOUR)
-        placement = kwargs.get('placement', PLACEMENT.ALL_ON_TWITTER)
-
-        params = {
-            'metric_groups': ','.join(metric_groups),
-            'start_time': to_time(start_time, granularity),
-            'end_time': to_time(end_time, granularity),
-            'granularity': granularity.upper(),
-            'entity': klass.ANALYTICS_MAP[klass.__name__],
-            'placement': placement
-        }
-
-        params['entity_ids'] = ','.join(ids)
-
-        return params
-
-    @classmethod
-    def all_stats(klass, account, ids, metric_groups, **kwargs):
-        """
-        Pulls a list of metrics for a specified set of object IDs.
-        """
-        params = klass._standard_params(ids, metric_groups, **kwargs)
-
-        resource = klass.RESOURCE_SYNC.format(account_id=account.id)
-        response = Request(account.client, 'get', resource, params=params).perform()
-        return response.body['data']
-
-    @classmethod
-    def queue_async_stats_job(klass, account, ids, metric_groups, **kwargs):
-        """
-        Queues a list of metrics for a specified set of object IDs asynchronously
-        """
-        params = klass._standard_params(ids, metric_groups, **kwargs)
-
-        params['platform'] = kwargs.get('platform', None)
-        params['country'] = kwargs.get('country', None)
-        params['segmentation_type'] = kwargs.get('segmentation_type', None)
-
-        resource = klass.RESOURCE_ASYNC.format(account_id=account.id)
-        response = Request(account.client, 'post', resource, params=params).perform()
-        return response.body['data']
-
-    @classmethod
-    def async_stats_job_result(klass, account, job_ids=None, **kwargs):
-        """
-        Returns the results of the specified async job IDs
-        """
-        params = {}
-        params.update(kwargs)
-        if isinstance(job_ids, list):
-            params['job_ids'] = ','.join(map(str, job_ids))
-
-        resource = klass.RESOURCE_ASYNC.format(account_id=account.id)
-        request = Request(account.client, 'get', resource, params=params)
-
-        return Cursor(None, request, init_with=[account])
-
-    @classmethod
-    def async_stats_job_data(klass, account, url, **kwargs):
-        """
-        Returns the results of the specified async job IDs
-        """
-        resource = urlparse(url)
-        domain = '{0}://{1}'.format(resource.scheme, resource.netloc)
-
-        response = Request(account.client, 'get', resource.path, domain=domain,
-                           raw_body=True, stream=True).perform()
-
-        return response.body
-
-    @classmethod
-    def active_entities(klass, account, start_time, end_time, **kwargs):
-        """
-        Returns the details about which entities' analytics metrics
-        have changed in a given time period.
-        """
-        entity_type = klass.__name__
-        if entity_type == 'OrganicTweet':
-            raise ValueError("'OrganicTweet' not support with 'active_entities'")
-
-        # The start and end times must be expressed in whole hours
-        validate_whole_hours(start_time)
-        validate_whole_hours(end_time)
-
-        params = {
-            'entity': klass.ANALYTICS_MAP[entity_type],
-            'start_time': to_time(start_time, None),
-            'end_time': to_time(end_time, None)
-        }
-
-        for k in kwargs:
-            if isinstance(kwargs[k], list):
-                params[k] = ','.join(map(str, kwargs[k]))
-            else:
-                params[k] = kwargs[k]
-
-        resource = klass.RESOURCE_ACTIVE_ENTITIES.format(account_id=account.id)
-        response = Request(account.client, 'get', resource, params=params).perform()
-        return response.body['data']
