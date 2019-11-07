@@ -89,6 +89,7 @@ class Request(object):
         retry_on_status = self._client.options.get('retry_on_status', [500, 503])
         retry_count = 0
         retry_after = None
+        timeout = self._client.options.get('timeout', None)
 
         consumer = OAuth1Session(
             self._client.consumer_key,
@@ -101,7 +102,7 @@ class Request(object):
 
         while (retry_count <= retry_max):
             response = method(url, headers=headers, data=data, params=params,
-                              files=files, stream=stream)
+                              files=files, stream=stream, timeout=timeout)
             # do not retry on 2XX status code
             if 200 <= response.status_code < 300:
                 break
