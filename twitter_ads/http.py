@@ -92,6 +92,7 @@ class Request(object):
         timeout = self._client.options.get('timeout', None)
         retry_count = 0
         retry_after = None
+        timeout = self._client.options.get('timeout', None)
 
         consumer = OAuth1Session(
             self._client.consumer_key,
