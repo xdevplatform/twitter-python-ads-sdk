@@ -15,6 +15,7 @@ if sys.version_info[0] != 3:
 else:
     import http.client as httplib
 
+from requests.exceptions import Timeout
 from requests_oauthlib import OAuth1Session
 from twitter_ads.utils import get_version
 from twitter_ads.error import Error
@@ -87,6 +88,8 @@ class Request(object):
         retry_max = self._client.options.get('retry_max', 0)
         retry_delay = self._client.options.get('retry_delay', 1500)
         retry_on_status = self._client.options.get('retry_on_status', [500, 503])
+        retry_on_timeouts = self._client.options.get('retry_on_timeouts', False)
+        timeout = self._client.options.get('timeout', None)
         retry_count = 0
         retry_after = None
         timeout = self._client.options.get('timeout', None)
@@ -101,8 +104,20 @@ class Request(object):
         method = getattr(consumer, self._method)
 
         while (retry_count <= retry_max):
-            response = method(url, headers=headers, data=data, params=params,
-                              files=files, stream=stream, timeout=timeout)
+            try:
+                response = method(url, headers=headers, data=data, params=params,
+                                  files=files, stream=stream, timeout=timeout)
+            except Timeout as e:
+                if retry_on_timeouts:
+                    if retry_count == retry_max:
+                        raise Exception(e)
+                    logger.warning("Timeout occurred: resume in %s seconds"
+                                   % (int(retry_delay) / 1000))
+                    time.sleep(int(retry_delay) / 1000)
+                    retry_count += 1
+                    continue
+                raise Exception(e)
+
             # do not retry on 2XX status code
             if 200 <= response.status_code < 300:
                 break
