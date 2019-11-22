@@ -59,10 +59,11 @@ def test_accounts_with_options():
             'handle_rate_limit': True,
             'retry_max': 1,
             'retry_delay': 3000,
-            'retry_on_status': [404, 500, 503]
+            'retry_on_status': [404, 500, 503],
+            'timeout': (1.0, 3.0)
         }
     )
 
     assert client is not None
     assert isinstance(client, Client)
-    assert len(client.options) == 4
+    assert len(client.options) == 5
