@@ -62,10 +62,10 @@ print(queued_job_ids)
 seconds = 30
 time.sleep(seconds)
 
-async_stats_job_results = LineItem.async_stats_job_result(account, queued_job_ids)
+async_stats_job_results = LineItem.async_stats_job_result(account, job_ids=queued_job_ids)
 
 async_data = []
 for result in async_stats_job_results:
-    async_data.append(LineItem.async_stats_job_data(account, result.url))
+    async_data.append(LineItem.async_stats_job_data(account, url=result.url))
 
 print(async_data)

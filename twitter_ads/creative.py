@@ -389,16 +389,18 @@ class MediaLibrary(Resource, Persistence):
 
         return self.from_response(response.body['data'])
 
-    def save(self):
-        if self.media_key:
-            method = 'put'
-            resource = self.RESOURCE.format(account_id=self.account.id, id=self.media_key)
-        else:
-            method = 'post'
-            resource = self.RESOURCE_COLLECTION.format(account_id=self.account.id)
-
+    def add(self):
+        resource = self.RESOURCE_COLLECTION.format(account_id=self.account.id)
         response = Request(
-            self.account.client, method,
+            self.account.client, 'post',
+            resource, params=self.to_params()).perform()
+
+        return self.from_response(response.body['data'])
+
+    def update(self):
+        resource = self.RESOURCE.format(account_id=self.account.id, id=self.media_key)
+        response = Request(
+            self.account.client, 'put',
             resource, params=self.to_params()).perform()
 
         return self.from_response(response.body['data'])
