@@ -39,7 +39,7 @@ class TailoredAudience(Resource):
         """
         This is a private API and requires whitelisting from Twitter.
         This endpoint will allow partners to add, update and remove users from a given
-            tailored_audience_id.
+        tailored_audience_id.
         The endpoint will also accept multiple user identifier types per user as well.
         """
         resource = self.RESOURCE_USERS.format(account_id=self.account.id, id=self.id)
@@ -117,20 +117,12 @@ class TailoredAudiencePermission(Resource):
         """
         Saves or updates the current tailored audience permission.
         """
-        if self.id:
-            method = 'put'
-            resource = self.RESOURCE.format(
-                account_id=self.account.id,
-                tailored_audience_id=self.tailored_audience_id,
-                id=self.id)
-        else:
-            method = 'post'
-            resource = self.RESOURCE_COLLECTION.format(
-                account_id=self.account.id,
-                tailored_audience_id=self.tailored_audience_id)
+        resource = self.RESOURCE_COLLECTION.format(
+            account_id=self.account.id,
+            tailored_audience_id=self.tailored_audience_id)
 
         response = Request(
-            self.account.client, method,
+            self.account.client, 'post',
             resource, params=self.to_params()).perform()
 
         return self.from_response(response.body['data'])
@@ -157,67 +149,3 @@ resource_property(TailoredAudiencePermission, 'deleted', readonly=True, transfor
 resource_property(TailoredAudiencePermission, 'tailored_audience_id')
 resource_property(TailoredAudiencePermission, 'granted_account_id')
 resource_property(TailoredAudiencePermission, 'permission_level')
-
-
-class AudienceIntelligence(Resource):
-
-    PROPERTIES = {}
-
-    RESOURCE_BASE = '/' + API_VERSION + '/accounts/{account_id}/audience_intelligence/'
-    RESOURCE_CONVERSATIONS = RESOURCE_BASE + 'conversations'
-    RESOURCE_DEMOGRAPHICS = RESOURCE_BASE + 'demographics'
-    METHOD = 'post'
-    HEADERS = {'Content-Type': 'application/json'}
-
-    @classmethod
-    def __get(klass, account, client, params):
-        """
-        Helper function to get the conversation data
-        Returns a Cursor instance
-        """
-        resource = klass.RESOURCE_CONVERSATIONS.format(account_id=account.id)
-
-        request = Request(
-            account.client, klass.METHOD,
-            resource, headers=klass.HEADERS, body=params)
-        return Cursor(klass, request, init_with=[account])
-
-    def conversations(self):
-        """
-        Get the conversation topics for an input targeting criteria
-        """
-        body = {
-            "conversation_type": self.conversation_type,
-            "audience_definition": self.audience_definition,
-            "targeting_inputs": self.targeting_inputs
-        }
-        return self.__get(account=self.account, client=self.account.client, params=json.dumps(body))
-
-    def demographics(self):
-        """
-        Get the demographic breakdown for an input targeting criteria
-        """
-        body = {
-            "audience_definition": self.audience_definition,
-            "targeting_inputs": self.targeting_inputs
-        }
-        resource = self.RESOURCE_DEMOGRAPHICS.format(account_id=self.account.id)
-        response = Request(
-            self.account.client, self.METHOD,
-            resource, headers=self.HEADERS, body=json.dumps(body)).perform()
-        return response.body['data']
-
-
-# tailored audience permission properties
-# read-only
-resource_property(AudienceIntelligence, 'operator_type', readonly=True)
-resource_property(AudienceIntelligence, 'targeting_type', readonly=True)
-resource_property(AudienceIntelligence, 'targeting_value', readonly=True)
-resource_property(AudienceIntelligence, 'localized', readonly=True)
-# writable
-resource_property(AudienceIntelligence, 'conversation_type')
-resource_property(AudienceIntelligence, 'targeting_inputs')
-resource_property(AudienceIntelligence, 'audience_definition')
-# demographics only
-resource_property(AudienceIntelligence, 'start_time', transform=TRANSFORM.TIME)
-resource_property(AudienceIntelligence, 'end_time', transform=TRANSFORM.TIME)
