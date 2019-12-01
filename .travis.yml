@@ -9,8 +9,6 @@ branches:
 matrix:
   fast_finish: true
   include:
-    - python: 2.7
-      script: python setup.py flake8 && python setup.py test
     - python: 3.5
       script: python setup.py flake8 && python setup.py test
     - python: 3.6
@@ -20,4 +18,4 @@ matrix:
     - python: pypy
       script: python setup.py flake8 && python setup.py test
     - python: pypy3
-      script: python setup.py flake8 && python setup.py test 
+      script: python setup.py flake8 && python setup.py test

@@ -31,7 +31,7 @@ video.save()
 
 #grab the video_id from the response
 video_id = video.id
-print video_id
+print(video_id)
 
 account_media = AccountMedia(account)
 account_media.video_id = video_id
@@ -76,7 +76,7 @@ try:
     response = Request(client, 'post', resource, params=params).perform()
 except Error as e:
     # see twitter_ads.error for more details
-    print e.details
+    print(e.details)
     raise
 
 resource = '/' + API_VERSION + '/batch/accounts/18ce54bgxky/targeting_criteria'.format(account_id=account.id)
@@ -106,7 +106,7 @@ try:
     response = Request(client, 'post', resource, params=params).perform()
 except Error as e:
     # see twitter_ads.error for more details
-    print e.details
+    print(e.details)
     raise
 
 # unpause the campaign

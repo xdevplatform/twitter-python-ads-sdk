@@ -59,14 +59,14 @@ For more help please see our `Examples and Guides`_ or check the online
 Compatibility & Versioning
 --------------------------
 
-This project is designed to work with Python 2.7 or greater. While it
+This project is designed to work with Python 3.5 or greater. While it
 may work on other version of Python, below are the platform and runtime
 versions we officially support and regularly test against.
 
 +------------+-------------------------+
 | Platform   | Versions                |
 +============+=========================+
-| CPython    | 2.7, 3.5, 3.6, 3.7      |
+| CPython    | 3.5, 3.6, 3.7           |
 +------------+-------------------------+
 | PyPy       | 7.x                     |
 +------------+-------------------------+

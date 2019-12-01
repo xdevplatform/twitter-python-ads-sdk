@@ -30,7 +30,7 @@ try:
     print(response.body['data'][0])
 except Error as e:
     # see twitter_ads.error for more details
-    print e.details
+    print(e.details)
     raise
 
 # you can also manually construct requests to be
