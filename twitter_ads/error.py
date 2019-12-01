@@ -41,7 +41,7 @@ class Error(Exception):
     @staticmethod
     def from_response(response):
         """Returns the correct error type from a ::class::`Response` object."""
-        if response.code:
+        if response.code and response.code in ERRORS:
             return ERRORS[response.code](response)
         else:
             return Error(response)
