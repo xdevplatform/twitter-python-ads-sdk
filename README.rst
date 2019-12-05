@@ -56,6 +56,50 @@ Command Line Helper
 For more help please see our `Examples and Guides`_ or check the online
 `Reference Documentation`_.
 
+Rate-limit handling and request options
+'''''''''''''''''''
+
+.. code:: python
+
+    client = Client(
+        CONSUMER_KEY,
+        CONSUMER_SECRET,
+        ACCESS_TOKEN,
+        ACCESS_TOKEN_SECRET,
+        options={
+            'handle_rate_limit': True,
+            'retry_max': 3,
+            'retry_delay': 5000,
+            'retry_on_status': [404, 500, 503],
+            'retry_on_timeouts': True,
+            'timeout': (1.0, 3.0)
+        })
+
+
+.. list-table::
+
+   * - Parameter
+     - Default
+     - Description
+   * - ``handle_rate_limit``
+     - ``False`` (boolean)
+     - Set ``True`` will check rate-limit response header and sleep if the request reached the limit (429).
+   * - ``retry_max``
+     - ``0`` (int)
+     - The number of times you want to retry when response code is found in ``retry_on_status``.
+   * - ``retry_delay``
+     - ``1500`` (int)
+     - The number of **milliseconds** you want to sleep before retry.
+   * - ``retry_on_status``
+     - ``[500, 503]`` (list)
+     - The response codes you want to retry on. You can only set >= 400 status codes.
+   * - ``retry_on_timeouts``
+     - ``False`` (boolean)
+     - Set ``True`` will catch the timeout error and retry the request.
+   * - ``timeout``
+     - ``None``
+     - You can specify either a single value OR a tuple. If a single value is specified, the timeout value will be applied to both the ``connect`` and the ``read`` timeouts. See https://2.python-requests.org/en/master/user/advanced/#timeouts for more details of the usage.
+
 Compatibility & Versioning
 --------------------------
 
