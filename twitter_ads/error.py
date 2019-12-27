@@ -96,6 +96,10 @@ class ServiceUnavailable(ServerError):
         return self._retry_after
 
 
+class GatewayTimeout(Error):
+    """Gateway Timeout (504)."""
+
+
 ERRORS = {
     400: BadRequest,
     401: NotAuthorized,
@@ -103,5 +107,6 @@ ERRORS = {
     404: NotFound,
     429: RateLimit,
     500: ServerError,
-    503: ServiceUnavailable
+    503: ServiceUnavailable,
+    504: GatewayTimeout
 }
