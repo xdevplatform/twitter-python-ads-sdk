@@ -283,6 +283,9 @@ resource_property(LineItem, 'created_at', readonly=True, transform=TRANSFORM.TIM
 resource_property(LineItem, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
 resource_property(LineItem, 'id', readonly=True)
 resource_property(LineItem, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(LineItem, 'creative_source', readonly=True)
+resource_property(LineItem, 'currency', readonly=True)
+resource_property(LineItem, 'target_cpa_local_micro', readonly=True)
 # writable
 resource_property(LineItem, 'advertiser_domain')
 resource_property(LineItem, 'advertiser_user_id')
