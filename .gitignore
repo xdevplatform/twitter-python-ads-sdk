@@ -66,3 +66,4 @@ sdk/
 .project
 .pydevproject
 .idea
+.vscode
