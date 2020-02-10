@@ -1,0 +1,14 @@
+{
+  "request": {
+    "params": {
+      "targeting_criteria": null,
+      "account_id": "2iqph"
+    }
+  },
+  "data": {
+    "audience_size": {
+      "min": 41133600,
+      "max": 50274400
+    }
+  }
+}

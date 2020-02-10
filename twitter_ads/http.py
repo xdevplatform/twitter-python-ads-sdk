@@ -75,10 +75,12 @@ class Request(object):
         if 'headers' in self.options:
             headers.update(self.options['headers'].copy())
 
-        # internal-only
+        # DEPRECATED: internal-only (Should pass a header to the client)
         if 'x-as-user' in self._client.options:
             headers['x-as-user'] = self._client.options.get('x-as-user')
-
+        # Add headers from the client to the request (Client headers take priority)
+        for key, val in self._client.headers.items():
+            headers[key] = val
         params = self.options.get('params', None)
         data = self.options.get('body', None)
         files = self.options.get('files', None)
