@@ -117,7 +117,7 @@ resource_property(MediaCreative, 'approval_status', readonly=True)
 resource_property(MediaCreative, 'created_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(MediaCreative, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
 resource_property(MediaCreative, 'id', readonly=True)
-resource_property(MediaCreative, 'serving_status', readonly=True)
+resource_property(MediaCreative, 'entity_status', readonly=True)
 resource_property(MediaCreative, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
 # writable
 resource_property(MediaCreative, 'account_media_id')

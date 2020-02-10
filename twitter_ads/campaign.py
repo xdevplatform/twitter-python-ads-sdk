@@ -298,6 +298,8 @@ resource_property(LineItem, 'categories', transform=TRANSFORM.LIST)
 resource_property(LineItem, 'charge_by')
 resource_property(LineItem, 'end_time', transform=TRANSFORM.TIME)
 resource_property(LineItem, 'entity_status')
+resource_property(LineItem, 'ios_app_store_identifier')
+resource_property(LineItem, 'android_app_store_identifier')
 resource_property(LineItem, 'audience_expansion')
 resource_property(LineItem, 'name')
 resource_property(LineItem, 'objective')
@@ -470,3 +472,14 @@ class IabCategories(Resource):
 resource_property(IabCategories, 'id', readonly=True)
 resource_property(IabCategories, 'name', readonly=True)
 resource_property(IabCategories, 'parent_id', readonly=True)
+
+
+class AdvertiserBusinessCategories(Resource):
+
+    PROPERTIES = {}
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/advertiser_business_categories'
+
+
+resource_property(ContentCategories, 'id', readonly=True)
+resource_property(ContentCategories, 'name', readonly=True)
+resource_property(ContentCategories, 'iab_categories', readonly=True)
