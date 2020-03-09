@@ -28,7 +28,6 @@ class Account(Resource):
     RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts'
     RESOURCE = '/' + API_VERSION + '/accounts/{id}'
     FEATURES = '/' + API_VERSION + '/accounts/{id}/features'
-    SCOPED_TIMELINE = '/5/accounts/{id}/scoped_timeline'
 
     def __init__(self, client):
         self._client = client
@@ -155,22 +154,6 @@ class Account(Resource):
         Returns a collection of video website cards available to the current account.
         """
         return self._load_resource(VideoWebsiteCard, id, **kwargs)
-
-    @Deprecated('This method has been deprecated as of version 5'
-                'and no longer works in the latest version.')
-    def scoped_timeline(self, *id, **kwargs):
-        """
-        Returns the most recent promotable Tweets created by the specified Twitter user.
-        """
-        self._validate_loaded()
-
-        params = {'user_id': id}
-        params.update(kwargs)
-
-        resource = self.SCOPED_TIMELINE.format(id=self.id)
-        response = Request(self.client, 'get', resource, params=params).perform()
-
-        return response.body['data']
 
 
 # account properties
