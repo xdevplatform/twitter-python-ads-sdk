@@ -3,7 +3,10 @@
 """Container for all targeting related logic used by the Ads API SDK."""
 
 from twitter_ads.http import Request
+from twitter_ads.resource import resource_property, Resource, Persistence
 from twitter_ads import API_VERSION
+from twitter_ads.utils import FlattenParams
+import json
 
 
 class AudienceSummary(Resource, Persistence):
@@ -11,12 +14,15 @@ class AudienceSummary(Resource, Persistence):
 
 	RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/audience_summary'
 
-	def load(self, params):
-		resource = self.RESOURCE.format(account_id=account.id)
+	@classmethod
+	@FlattenParams
+	def load(klass, account, params):
+		resource = klass.RESOURCE.format(account_id=account.id)
 		headers = {'Content-Type': 'application/json'}
-        response = Request(self.account.client,
-                           'post',
-                           resource,
-                           headers=headers,
-                           body=json.dumps(params)).perform()
-        return self.from_response(response.body['data'])
+		response = Request(account.client,
+							'post',
+							resource,
+							headers=headers,
+							body=json.dumps(params)).perform()
+		return response.body['data']
+
