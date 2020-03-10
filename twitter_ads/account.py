@@ -6,7 +6,6 @@ A Twitter supported and maintained Ads API SDK for Python.
 from twitter_ads.enum import TRANSFORM
 from twitter_ads.http import Request
 from twitter_ads.cursor import Cursor
-from twitter_ads.utils import Deprecated
 from twitter_ads import API_VERSION
 
 from twitter_ads.resource import resource_property, Resource

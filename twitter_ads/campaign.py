@@ -471,6 +471,7 @@ resource_property(IabCategories, 'id', readonly=True)
 resource_property(IabCategories, 'name', readonly=True)
 resource_property(IabCategories, 'parent_id', readonly=True)
 
+
 class AdvertiserBusinessCategories(Resource):
 
     PROPERTIES = {}

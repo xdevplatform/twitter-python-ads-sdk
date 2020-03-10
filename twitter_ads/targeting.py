@@ -10,20 +10,21 @@ import json
 
 
 class AudienceSummary(Resource, Persistence):
-	PROPERTIES = {}
+    PROPERTIES = {}
 
-	RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/audience_summary'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/audience_summary'
 
-	@classmethod
-	@FlattenParams
-	def load(klass, account, params):
-		resource = klass.RESOURCE.format(account_id=account.id)
-		headers = {'Content-Type': 'application/json'}
-		response = Request(account.client,
-							'post',
-							resource,
-							headers=headers,
-							body=json.dumps(params)).perform()
-		return klass(account).from_response(response.body['data'])
+    @classmethod
+    @FlattenParams
+    def load(klass, account, params):
+        resource = klass.RESOURCE.format(account_id=account.id)
+        headers = {'Content-Type': 'application/json'}
+        response = Request(account.client,
+                           'post',
+                           resource,
+                           headers=headers,
+                           body=json.dumps(params)).perform()
+        return klass(account).from_response(response.body['data'])
+
 
 resource_property(AudienceSummary, 'audience_size')
