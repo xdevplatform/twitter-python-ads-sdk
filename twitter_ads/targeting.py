@@ -24,5 +24,6 @@ class AudienceSummary(Resource, Persistence):
 							resource,
 							headers=headers,
 							body=json.dumps(params)).perform()
-		return response.body['data']
+		return klass(account).from_response(response.body['data'])
 
+resource_property(AudienceSummary, 'audience_size')

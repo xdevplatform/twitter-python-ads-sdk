@@ -56,7 +56,8 @@ def test_audience_summary():
         params=params
     )
 
+    print (audience_summary)
     assert audience_summary is not None
-    assert audience_summary['audience_size'] is not None
-    assert audience_summary['audience_size']['min'] == 41133600
-    assert audience_summary['audience_size']['max'] == 50274400
+    assert audience_summary.audience_size is not None
+    assert audience_summary.audience_size['min'] == 41133600
+    assert audience_summary.audience_size['max'] == 50274400
