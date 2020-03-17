@@ -470,3 +470,14 @@ class IabCategories(Resource):
 resource_property(IabCategories, 'id', readonly=True)
 resource_property(IabCategories, 'name', readonly=True)
 resource_property(IabCategories, 'parent_id', readonly=True)
+
+
+class AdvertiserBusinessCategories(Resource):
+
+    PROPERTIES = {}
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/advertiser_business_categories'
+
+
+resource_property(ContentCategories, 'id', readonly=True)
+resource_property(ContentCategories, 'name', readonly=True)
+resource_property(ContentCategories, 'iab_categories', readonly=True)
