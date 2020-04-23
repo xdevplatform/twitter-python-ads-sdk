@@ -78,8 +78,8 @@ class Request(object):
         # internal-only
         if 'x-as-user' in self._client.options:
             headers['x-as-user'] = self._client.options.get('x-as-user')
-	if 'x-as-user-id' in self._client.options:
-	    headers['x-as-user-id'] = self._client.options.get('x-as-user-id')
+        if 'x-as-user-id' in self._client.options:
+            headers['x-as-user-id'] = self._client.options.get('x-as-user-id')
         params = self.options.get('params', None)
         data = self.options.get('body', None)
         files = self.options.get('files', None)
