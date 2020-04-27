@@ -29,6 +29,7 @@ class Client(object):
         self._access_token = access_token
         self._access_token_secret = access_token_secret
         self._options = kwargs.get('options', {})
+        self._headers = kwargs.get('headers', {})
 
     def __repr__(self):
         return '<{name} object at {mem} consumer_key={key}>'.format(
@@ -41,6 +42,11 @@ class Client(object):
     def options(self):
         """Returns the options value."""
         return self._options
+
+    @property
+    def headers(self):
+        """Returns the headers value."""
+        return self._headers
 
     @property
     def consumer_key(self):
