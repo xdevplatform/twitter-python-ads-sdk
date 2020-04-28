@@ -79,7 +79,8 @@ class Request(object):
         if 'x-as-user' in self._client.options:
             headers['x-as-user'] = self._client.options.get('x-as-user')
         # Add headers from the client to the request (Client headers take priority)
-        headers = {**headers, **self._client.headers}
+        for key,val in self._client.headers.items():
+            headers[key] = val
         params = self.options.get('params', None)
         data = self.options.get('body', None)
         files = self.options.get('files', None)
