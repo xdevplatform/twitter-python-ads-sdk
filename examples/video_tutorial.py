@@ -48,10 +48,10 @@ campaign.entity_status = ENTITY_STATUS.PAUSED
 campaign.start_time = datetime.utcnow()
 campaign.save()
 
-# create a line item with the VIDEO_VIEWS_PREROLL
+# create a line item with the PREROLL_VIEWS
 # objective and product_type MEDIA
 line_item = LineItem(account)
-line_item.objective = OBJECTIVE.VIDEO_VIEWS_PREROLL
+line_item.objective = OBJECTIVE.PREROLL_VIEWS
 
 line_item.campaign_id = campaign.id
 line_item.name = 'Video tutorial example'
