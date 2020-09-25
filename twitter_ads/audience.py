@@ -83,14 +83,14 @@ resource_property(TailoredAudience, 'updated_at', readonly=True, transform=TRANS
 resource_property(TailoredAudience, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
 resource_property(TailoredAudience, 'audience_size', readonly=True)
 resource_property(TailoredAudience, 'audience_type', readonly=True)
-resource_property(TailoredAudience, 'metadata', readonly=True)
 resource_property(TailoredAudience, 'partner_source', readonly=True)
 resource_property(TailoredAudience, 'reasons_not_targetable', readonly=True)
 resource_property(TailoredAudience, 'targetable', readonly=True)
 resource_property(TailoredAudience, 'targetable_types', readonly=True)
+
 # writable
 resource_property(TailoredAudience, 'name')
-resource_property(TailoredAudience, 'list_type')
+resource_property(TailoredAudience, 'description')
 
 
 class TailoredAudiencePermission(Resource):
