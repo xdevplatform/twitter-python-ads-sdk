@@ -67,7 +67,7 @@ class TailoredAudience(Resource):
         """
         self._validate_loaded()
         return TailoredAudiencePermission.all(self.account, self.id, **kwargs)
-    
+
     def targeted(self, **kwargs):
         """
         Returns a collection of campaigns and line items targeting the curent tailored audience.
@@ -157,6 +157,7 @@ resource_property(TailoredAudiencePermission, 'tailored_audience_id')
 resource_property(TailoredAudiencePermission, 'granted_account_id')
 resource_property(TailoredAudiencePermission, 'permission_level')
 
+
 class TailoredAudienceTargeted(Resource):
 
     PROPERTIES = {}
@@ -174,6 +175,7 @@ class TailoredAudienceTargeted(Resource):
         request = Request(account.client, 'get', resource, params=kwargs)
 
         return Cursor(klass, request, init_with=[account])
+
 
 # tailored audience targeted properties
 # read-only
