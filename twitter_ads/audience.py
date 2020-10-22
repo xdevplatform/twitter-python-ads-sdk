@@ -94,6 +94,7 @@ resource_property(TailoredAudience, 'partner_source', readonly=True)
 resource_property(TailoredAudience, 'reasons_not_targetable', readonly=True)
 resource_property(TailoredAudience, 'targetable', readonly=True)
 resource_property(TailoredAudience, 'targetable_types', readonly=True)
+resource_property(TailoredAudience, 'owner_account_id', readonly=True)
 
 # writable
 resource_property(TailoredAudience, 'name')

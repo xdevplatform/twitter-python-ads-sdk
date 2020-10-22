@@ -14,6 +14,7 @@
       ],
       "audience_type": "WEB",
       "id": "abc2",
+      "owner_account_id": "2iqph",
       "reasons_not_targetable": [
         "TOO_SMALL"
       ],
@@ -27,6 +28,7 @@
     {
       "targetable": true,
       "name": "TA #1",
+      "owner_account_id": "2iqph",
       "targetable_types": [
         "CRM",
         "EXCLUDED_CRM"
@@ -44,6 +46,7 @@
     {
       "targetable": false,
       "name": "TA #3",
+      "owner_account_id": "2iqph",
       "targetable_types": [
         "CRM",
         "EXCLUDED_CRM"
@@ -61,7 +64,6 @@
       "audience_size": null
     }
   ],
-  "data_type": "tailored_audience",
   "total_count": 3,
   "next_cursor": null
 }
