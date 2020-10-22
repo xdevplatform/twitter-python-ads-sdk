@@ -55,19 +55,12 @@ class Resource(object):
             value = response.get(name, None)
             if transform and transform == TRANSFORM.TIME and value:
                 setattr(self, attr, dateutil.parser.parse(value))
-            if transform and transform == TRANSFORM.OBJECT and value:
-                setattr(self, attr, )
             if isinstance(value, int) and value == 0:
                 continue  # skip attribute
             else:
                 setattr(self, attr, value)
 
         return self
-    
-    def to_obj(self:
-        """
-        Generates an object for the values of the 
-        """
 
     def to_params(self):
         """

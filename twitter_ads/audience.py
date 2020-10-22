@@ -179,7 +179,7 @@ class TailoredAudienceTargeted(Resource):
 # read-only
 resource_property(TailoredAudienceTargeted, 'campaign_id', readonly=True)
 resource_property(TailoredAudienceTargeted, 'campaign_name', readonly=True)
-resource_property(TailoredAudienceTargeted, 'line_items', readonly=True, transform=TRANSFORM.OBJECT)
+resource_property(TailoredAudienceTargeted, 'line_items', readonly=True)
 resource_property(TailoredAudienceTargeted, 'id', readonly=True)
 resource_property(TailoredAudienceTargeted, 'name', readonly=True)
 resource_property(TailoredAudienceTargeted, 'servable', readonly=True, transform=TRANSFORM.BOOL)
