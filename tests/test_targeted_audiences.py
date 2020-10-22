@@ -38,13 +38,10 @@ def test_targeted_audiences():
         with_active=True
     )
 
-    for campaign in targeted_audiences:
-        assert campaign.campaign_id == '59hod'
-        assert isinstance(campaign.line_items, Cursor)
-    
-    # assert len(responses.calls) == 2
-    # assert 'campaign_ids=foo%2Cbar' in responses.calls[1].request.url
-    # assert active_entities is not None
-    # assert isinstance(active_entities, list)
-    # assert len(active_entities) == 4
-    # assert active_entities[0]['entity_id'] == '2mvb28'
+    assert isinstance(targeted_audiences, Cursor)
+    assert isinstance(targeted_audiences.first.line_items, list)
+    assert targeted_audiences.first.campaign_id  == '59hod'
+    assert targeted_audiences.first.line_items[0]['id'] == '5gzog'
+    assert targeted_audiences.first.line_items[0]['name'] == 'test-line-item'
+    assert targeted_audiences.first.line_items[0]['servable'] == True
+    assert len(responses.calls) == 3
