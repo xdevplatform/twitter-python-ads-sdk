@@ -168,7 +168,7 @@ class TailoredAudienceTargeted(Resource):
 
     @classmethod
     def all(klass, account, tailored_audience_id, **kwargs):
-        """Returns a Cursor instance for the given tailored audience permission resource."""
+        """Returns a Cursor instance for the given targeted tailored audience resource."""
 
         resource = klass.RESOURCE.format(
             account_id=account.id,
