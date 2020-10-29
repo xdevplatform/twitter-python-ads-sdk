@@ -1,0 +1,33 @@
+{
+    "request": {
+      "params": {
+        "account_id": "2iqph",
+        "tailored_audience_id": "abc2"
+      }
+    },
+    "next_cursor": null,
+    "data": [
+      {
+        "campaign_id": "59hod",
+        "campaign_name": "test-campaign",
+        "line_items": [
+          {
+            "id": "5gzog",
+            "name": "test-line-item",
+            "servable": true
+          }
+        ]
+      },
+      {
+        "campaign_id": "arja7",
+        "campaign_name": "Untitled campaign",
+        "line_items": [
+          {
+            "id": "bjw1q",
+            "name": null,
+            "servable": true
+          }
+        ]
+      }
+    ]
+}  

@@ -46,7 +46,7 @@ line_item_1.campaign_id = campaign_1.id
 line_item_1.name = 'my first ad'
 line_item_1.product_type = PRODUCT.PROMOTED_TWEETS
 line_item_1.placements = [PLACEMENT.ALL_ON_TWITTER]
-line_item_1.objective = OBJECTIVE.TWEET_ENGAGEMENTS
+line_item_1.objective = OBJECTIVE.ENGAGEMENTS
 line_item_1.bid_amount_local_micro = 10000
 line_item_1.entity_status = ENTITY_STATUS.PAUSED
 
@@ -55,7 +55,7 @@ line_item_2.campaign_id = campaign_1.id
 line_item_2.name = 'my second ad'
 line_item_2.product_type = PRODUCT.PROMOTED_TWEETS
 line_item_2.placements = [PLACEMENT.ALL_ON_TWITTER]
-line_item_2.objective = OBJECTIVE.TWEET_ENGAGEMENTS
+line_item_2.objective = OBJECTIVE.ENGAGEMENTS
 line_item_2.bid_amount_local_micro = 20000
 line_item_2.entity_status = ENTITY_STATUS.PAUSED
 
