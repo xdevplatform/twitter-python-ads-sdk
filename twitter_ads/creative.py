@@ -604,6 +604,7 @@ class Card(Resource):
 
     RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/cards'
 
+    @classmethod
     def create(klass, account, name, components):
         method = 'post'
         resource = klass.RESOURCE_COLLECTION.format(account_id=account.id)
@@ -613,7 +614,7 @@ class Card(Resource):
             account.client, method, resource,
             headers=headers, body=json.dumps(payload)
         ).perform()
-        return response.body['data']
+        return klass(account).from_response(response.body['data'])
 
     def load(klass):
         raise AttributeError("'Card' object has no attribute 'load'")
