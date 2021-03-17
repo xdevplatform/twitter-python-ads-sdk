@@ -621,6 +621,7 @@ class Card(Resource):
     def reload(klass):
         raise AttributeError("'Card' object has no attribute 'reload'")
 
+
 # card properties
 # read-only
 resource_property(Card, 'card_uri', readonly=True)
