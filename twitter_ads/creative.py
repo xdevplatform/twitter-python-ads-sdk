@@ -2,6 +2,7 @@
 
 """Container for all creative management logic used by the Ads API SDK."""
 
+import json
 from requests.exceptions import HTTPError
 from twitter_ads import API_VERSION
 from twitter_ads.cursor import Cursor
@@ -595,3 +596,39 @@ class Tweets(object):
         resource = klass.RESOURCE_COLLECTION.format(account_id=account.id)
         request = Request(account.client, 'get', resource, params=kwargs)
         return Cursor(None, request)
+
+
+class Card(Resource):
+
+    PROPERTIES = {}
+
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/cards'
+
+    @classmethod
+    def create(klass, account, name, components):
+        method = 'post'
+        resource = klass.RESOURCE_COLLECTION.format(account_id=account.id)
+        headers = {'Content-Type': 'application/json'}
+        payload = {'name': name, 'components': components}
+        response = Request(
+            account.client, method, resource,
+            headers=headers, body=json.dumps(payload)
+        ).perform()
+        return klass(account).from_response(response.body['data'])
+
+    def load(klass):
+        raise AttributeError("'Card' object has no attribute 'load'")
+
+    def reload(klass):
+        raise AttributeError("'Card' object has no attribute 'reload'")
+
+
+# card properties
+# read-only
+resource_property(Card, 'card_uri', readonly=True)
+resource_property(Card, 'created_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(Card, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
+resource_property(Card, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
+# these are writable, but not in the sense that they can be set on an object and then saved
+resource_property(Card, 'name', readonly=True)
+resource_property(Card, 'components', readonly=True, transform=TRANSFORM.LIST)
