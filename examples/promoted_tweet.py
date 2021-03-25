@@ -2,7 +2,7 @@
 
 from twitter_ads.client import Client
 from twitter_ads.campaign import Tweet
-from twitter_ads.creative import PromotedTweet, WebsiteCard
+from twitter_ads.creative import Card, PromotedTweet
 from twitter_ads.restapi import UserIdLookup
 
 CONSUMER_KEY = 'your consumer key'
@@ -26,13 +26,13 @@ line_item = account.line_items(None, campaign_ids=campaign.id).next()
 # create request for a simple nullcasted tweet
 tweet1 = Tweet.create(account, text='There can be only one...', as_user_id=user_id)
 
-# create request for a nullcasted tweet with a website card
-website_card = WebsiteCard.all(account).next()
+# create request for a nullcasted tweet with a card
+card = Card.all(account).next()
 tweet2 = Tweet.create(
     account,
     text='Fine. There can be two.',
     as_user_id=user_id,
-    card_uri=website_card.card_uri)
+    card_uri=card.card_uri)
 
 # promote the tweet using our line item
 tweet_ids = [tweet1['id'], tweet2['id']]
