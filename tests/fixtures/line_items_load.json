@@ -2,7 +2,7 @@
   "data_type": "line_item",
   "data": {
     "placement_type": "PROMOTED_ACCOUNT",
-    "bid_type": "MAX",
+    "bid_strategy": "MAX",
     "name": "Untitled",
     "placements": [
       "ALL_ON_TWITTER"
@@ -11,15 +11,14 @@
     "automatically_select_bid": false,
     "advertiser_domain": null,
     "primary_web_event_tag": null,
-    "charge_by": "ENGAGEMENT",
+    "pay_by": "ENGAGEMENT",
     "product_type": "PROMOTED_ACCOUNT",
-    "bid_unit": "ENGAGEMENT",
     "total_budget_amount_local_micro": null,
     "objective": "CUSTOM",
     "id": "bw2",
     "entity_status": "ACTIVE",
     "account_id": "2iqph",
-    "optimization": "DEFAULT",
+    "goal": null,
     "categories": [],
     "currency": "USD",
     "created_at": "2011-07-11T20:36:11Z",
