@@ -15,7 +15,7 @@ client = Client(CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET
 account = client.accounts(ACCOUNT_ID)
 
 # create a new custom audience
-audience = CustomAudience.create(account, 'test TA')
+audience = CustomAudience.create(account, 'test CA')
 
 # sample user
 # all values musth be sha256 hashed
