@@ -12,20 +12,20 @@ from twitter_ads import API_VERSION
 import json
 
 
-class TailoredAudience(Resource):
+class CustomAudience(Resource):
 
     PROPERTIES = {}
-    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/tailored_audiences'
-    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/tailored_audiences/{id}'
-    RESOURCE_USERS = '/' + API_VERSION + '/accounts/{account_id}/tailored_audiences/\
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/custom_audiences'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/custom_audiences/{id}'
+    RESOURCE_USERS = '/' + API_VERSION + '/accounts/{account_id}/custom_audiences/\
 {id}/users'
-    RESOURCE_PERMISSIONS = '/' + API_VERSION + '/accounts/{account_id}/tailored_audiences/\
+    RESOURCE_PERMISSIONS = '/' + API_VERSION + '/accounts/{account_id}/custom_audiences/\
 {id}/permissions'
 
     @classmethod
     def create(klass, account, name):
         """
-        Creates a new tailored audience.
+        Creates a new custom audience.
         """
         audience = klass(account)
         getattr(audience, '__create_audience__')(name)
@@ -39,7 +39,7 @@ class TailoredAudience(Resource):
         """
         This is a private API and requires whitelisting from Twitter.
         This endpoint will allow partners to add, update and remove users from a given
-        tailored_audience_id.
+        custom_audience_id.
         The endpoint will also accept multiple user identifier types per user as well.
         """
         resource = self.RESOURCE_USERS.format(account_id=self.account.id, id=self.id)
@@ -55,7 +55,7 @@ class TailoredAudience(Resource):
 
     def delete(self):
         """
-        Deletes the current tailored audience instance.
+        Deletes the current custom audience instance.
         """
         resource = self.RESOURCE.format(account_id=self.account.id, id=self.id)
         response = Request(self.account.client, 'delete', resource).perform()
@@ -63,17 +63,17 @@ class TailoredAudience(Resource):
 
     def permissions(self, **kwargs):
         """
-        Returns a collection of permissions for the curent tailored audience.
+        Returns a collection of permissions for the curent custom audience.
         """
         self._validate_loaded()
-        return TailoredAudiencePermission.all(self.account, self.id, **kwargs)
+        return CustomAudiencePermission.all(self.account, self.id, **kwargs)
 
     def targeted(self, **kwargs):
         """
-        Returns a collection of campaigns and line items targeting the curent tailored audience.
+        Returns a collection of campaigns and line items targeting the curent custom audience.
         """
         self._validate_loaded()
-        return TailoredAudienceTargeted.all(self.account, self.id, **kwargs)
+        return CustomAudienceTargeted.all(self.account, self.id, **kwargs)
 
     def __create_audience__(self, name):
         params = {'name': name}
@@ -82,52 +82,52 @@ class TailoredAudience(Resource):
         return self.from_response(response.body['data'])
 
 
-# tailored audience properties
+# Custom audience properties
 # read-only
-resource_property(TailoredAudience, 'id', readonly=True)
-resource_property(TailoredAudience, 'created_at', readonly=True, transform=TRANSFORM.TIME)
-resource_property(TailoredAudience, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
-resource_property(TailoredAudience, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
-resource_property(TailoredAudience, 'audience_size', readonly=True)
-resource_property(TailoredAudience, 'audience_type', readonly=True)
-resource_property(TailoredAudience, 'partner_source', readonly=True)
-resource_property(TailoredAudience, 'reasons_not_targetable', readonly=True)
-resource_property(TailoredAudience, 'targetable', readonly=True)
-resource_property(TailoredAudience, 'targetable_types', readonly=True)
-resource_property(TailoredAudience, 'owner_account_id', readonly=True)
+resource_property(CustomAudience, 'id', readonly=True)
+resource_property(CustomAudience, 'created_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(CustomAudience, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(CustomAudience, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
+resource_property(CustomAudience, 'audience_size', readonly=True)
+resource_property(CustomAudience, 'audience_type', readonly=True)
+resource_property(CustomAudience, 'partner_source', readonly=True)
+resource_property(CustomAudience, 'reasons_not_targetable', readonly=True)
+resource_property(CustomAudience, 'targetable', readonly=True)
+resource_property(CustomAudience, 'targetable_types', readonly=True)
+resource_property(CustomAudience, 'owner_account_id', readonly=True)
 
 # writable
-resource_property(TailoredAudience, 'name')
-resource_property(TailoredAudience, 'description')
+resource_property(CustomAudience, 'name')
+resource_property(CustomAudience, 'description')
 
 
-class TailoredAudiencePermission(Resource):
+class CustomAudiencePermission(Resource):
 
     PROPERTIES = {}
 
-    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/tailored_audiences/'
-    RESOURCE_COLLECTION += '{tailored_audience_id}/permissions'
-    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/tailored_audiences/\
-{tailored_audience_id}/permissions/{id}'
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/custom_audiences/'
+    RESOURCE_COLLECTION += '{custom_audience_id}/permissions'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/custom_audiences/\
+{custom_audience_id}/permissions/{id}'
 
     @classmethod
-    def all(klass, account, tailored_audience_id, **kwargs):
-        """Returns a Cursor instance for the given tailored audience permission resource."""
+    def all(klass, account, custom_audience_id, **kwargs):
+        """Returns a Cursor instance for the given custom audience permission resource."""
 
         resource = klass.RESOURCE_COLLECTION.format(
             account_id=account.id,
-            tailored_audience_id=tailored_audience_id)
+            custom_audience_id=custom_audience_id)
         request = Request(account.client, 'get', resource, params=kwargs)
 
         return Cursor(klass, request, init_with=[account])
 
     def save(self):
         """
-        Saves or updates the current tailored audience permission.
+        Saves or updates the current custom audience permission.
         """
         resource = self.RESOURCE_COLLECTION.format(
             account_id=self.account.id,
-            tailored_audience_id=self.tailored_audience_id)
+            custom_audience_id=self.custom_audience_id)
 
         response = Request(
             self.account.client, 'post',
@@ -137,56 +137,56 @@ class TailoredAudiencePermission(Resource):
 
     def delete(self):
         """
-        Deletes the current tailored audience permission.
+        Deletes the current custom audience permission.
         """
         resource = self.RESOURCE.format(
             account_id=self.account.id,
-            tailored_audience_id=self.tailored_audience_id,
+            custom_audience_id=self.custom_audience_id,
             id=self.id)
         response = Request(self.account.client, 'delete', resource).perform()
         return self.from_response(response.body['data'])
 
 
-# tailored audience permission properties
+# custom audience permission properties
 # read-only
-resource_property(TailoredAudiencePermission, 'id', readonly=True)
-resource_property(TailoredAudiencePermission, 'created_at', readonly=True, transform=TRANSFORM.TIME)
-resource_property(TailoredAudiencePermission, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
-resource_property(TailoredAudiencePermission, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
+resource_property(CustomAudiencePermission, 'id', readonly=True)
+resource_property(CustomAudiencePermission, 'created_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(CustomAudiencePermission, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(CustomAudiencePermission, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
 # writable
-resource_property(TailoredAudiencePermission, 'tailored_audience_id')
-resource_property(TailoredAudiencePermission, 'granted_account_id')
-resource_property(TailoredAudiencePermission, 'permission_level')
+resource_property(CustomAudiencePermission, 'custom_audience_id')
+resource_property(CustomAudiencePermission, 'granted_account_id')
+resource_property(CustomAudiencePermission, 'permission_level')
 
 
-class TailoredAudienceTargeted(Resource):
+class CustomAudienceTargeted(Resource):
 
     PROPERTIES = {}
 
-    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/tailored_audiences/\
-{tailored_audience_id}/targeted'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/custom_audiences/\
+{custom_audience_id}/targeted'
 
     @classmethod
-    def all(klass, account, tailored_audience_id, **kwargs):
-        """Returns a Cursor instance for the given targeted tailored audience resource."""
+    def all(klass, account, custom_audience_id, **kwargs):
+        """Returns a Cursor instance for the given targeted custom audience resource."""
 
         resource = klass.RESOURCE.format(
             account_id=account.id,
-            tailored_audience_id=tailored_audience_id)
+            custom_audience_id=custom_audience_id)
         request = Request(account.client, 'get', resource, params=kwargs)
 
         return Cursor(klass, request, init_with=[account])
 
 
-# tailored audience targeted properties
+# custom audience targeted properties
 # read-only
-resource_property(TailoredAudienceTargeted, 'campaign_id', readonly=True)
-resource_property(TailoredAudienceTargeted, 'campaign_name', readonly=True)
-resource_property(TailoredAudienceTargeted, 'line_items', readonly=True)
-resource_property(TailoredAudienceTargeted, 'id', readonly=True)
-resource_property(TailoredAudienceTargeted, 'name', readonly=True)
-resource_property(TailoredAudienceTargeted, 'servable', readonly=True, transform=TRANSFORM.BOOL)
+resource_property(CustomAudienceTargeted, 'campaign_id', readonly=True)
+resource_property(CustomAudienceTargeted, 'campaign_name', readonly=True)
+resource_property(CustomAudienceTargeted, 'line_items', readonly=True)
+resource_property(CustomAudienceTargeted, 'id', readonly=True)
+resource_property(CustomAudienceTargeted, 'name', readonly=True)
+resource_property(CustomAudienceTargeted, 'servable', readonly=True, transform=TRANSFORM.BOOL)
 
 # writable
-resource_property(TailoredAudienceTargeted, 'tailored_audience_id')
-resource_property(TailoredAudienceTargeted, 'with_active', transform=TRANSFORM.BOOL)
+resource_property(CustomAudienceTargeted, 'custom_audience_id')
+resource_property(CustomAudienceTargeted, 'with_active', transform=TRANSFORM.BOOL)

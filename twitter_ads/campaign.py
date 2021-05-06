@@ -141,7 +141,7 @@ resource_property(TargetingCriteria, 'line_item_id')
 resource_property(TargetingCriteria, 'operator_type')
 resource_property(TargetingCriteria, 'targeting_type')
 resource_property(TargetingCriteria, 'targeting_value')
-resource_property(TargetingCriteria, 'tailored_audience_expansion')
+resource_property(TargetingCriteria, 'custom_audience_expansion')
 # sdk-only
 resource_property(TargetingCriteria, 'to_delete', transform=TRANSFORM.BOOL)
 
