@@ -10,8 +10,8 @@ from twitter_ads import API_VERSION
 
 from twitter_ads.resource import resource_property, Resource
 from twitter_ads.creative import (AccountMedia, MediaCreative, ScheduledTweet,
-                                  VideoWebsiteCard, PromotedTweet)
-from twitter_ads.audience import TailoredAudience
+                                  Card, PromotedTweet)
+from twitter_ads.audience import CustomAudience
 from twitter_ads.campaign import (AppList, Campaign, FundingInstrument, LineItem,
                                   PromotableUser, ScheduledPromotedTweet)
 
@@ -111,12 +111,12 @@ class Account(Resource):
         """
         return self._load_resource(AppList, id, **kwargs)
 
-    def tailored_audiences(self, id=None, **kwargs):
+    def custom_audiences(self, id=None, **kwargs):
         """
-        Returns a collection of tailored audiences available to the
+        Returns a collection of custom audiences available to the
         current account.
         """
-        return self._load_resource(TailoredAudience, id, **kwargs)
+        return self._load_resource(CustomAudience, id, **kwargs)
 
     def account_media(self, id=None, **kwargs):
         """
@@ -148,11 +148,11 @@ class Account(Resource):
         """
         return self._load_resource(ScheduledPromotedTweet, id, **kwargs)
 
-    def video_website_cards(self, id=None, **kwargs):
+    def cards(self, id=None, **kwargs):
         """
-        Returns a collection of video website cards available to the current account.
+        Returns a collection of Cards available to the current account.
         """
-        return self._load_resource(VideoWebsiteCard, id, **kwargs)
+        return self._load_resource(Card, id, **kwargs)
 
 
 # account properties
