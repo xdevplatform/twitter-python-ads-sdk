@@ -13,7 +13,6 @@
         "ALL_ON_TWITTER"
       ],
       "bid_amount_local_micro": 2000000,
-      "automatically_select_bid": false,
       "advertiser_domain": null,
       "primary_web_event_tag": null,
       "pay_by": "ENGAGEMENT",
@@ -39,7 +38,6 @@
         "ALL_ON_TWITTER"
       ],
       "bid_amount_local_micro": 2000000,
-      "automatically_select_bid": false,
       "advertiser_domain": null,
       "primary_web_event_tag": null,
       "pay_by": "ENGAGEMENT",
@@ -65,7 +63,6 @@
         "TWITTER_SEARCH"
       ],
       "bid_amount_local_micro": 100000,
-      "automatically_select_bid": false,
       "advertiser_domain": null,
       "primary_web_event_tag": null,
       "pay_by": "ENGAGEMENT",
@@ -91,7 +88,6 @@
         "TWITTER_SEARCH"
       ],
       "bid_amount_local_micro": 500000,
-      "automatically_select_bid": false,
       "advertiser_domain": null,
       "primary_web_event_tag": null,
       "pay_by": "ENGAGEMENT",
@@ -117,7 +113,6 @@
         "TWITTER_TIMELINE"
       ],
       "bid_amount_local_micro": 50000000,
-      "automatically_select_bid": false,
       "advertiser_domain": null,
       "primary_web_event_tag": null,
       "pay_by": "ENGAGEMENT",
@@ -143,7 +138,6 @@
         "TWITTER_TIMELINE"
       ],
       "bid_amount_local_micro": 50000000,
-      "automatically_select_bid": false,
       "advertiser_domain": null,
       "primary_web_event_tag": null,
       "pay_by": "ENGAGEMENT",
@@ -169,7 +163,6 @@
         "TWITTER_SEARCH"
       ],
       "bid_amount_local_micro": 50000000,
-      "automatically_select_bid": false,
       "advertiser_domain": null,
       "primary_web_event_tag": null,
       "pay_by": "ENGAGEMENT",
@@ -195,7 +188,6 @@
         "TWITTER_TIMELINE"
       ],
       "bid_amount_local_micro": 500000,
-      "automatically_select_bid": false,
       "advertiser_domain": null,
       "primary_web_event_tag": null,
       "pay_by": "ENGAGEMENT",
@@ -221,7 +213,6 @@
         "TWITTER_SEARCH"
       ],
       "bid_amount_local_micro": 50000000,
-      "automatically_select_bid": false,
       "advertiser_domain": null,
       "primary_web_event_tag": null,
       "pay_by": "ENGAGEMENT",
@@ -247,7 +238,6 @@
         "TWITTER_TIMELINE"
       ],
       "bid_amount_local_micro": 2009999,
-      "automatically_select_bid": false,
       "advertiser_domain": null,
       "primary_web_event_tag": null,
       "pay_by": "ENGAGEMENT",
