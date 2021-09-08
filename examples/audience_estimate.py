@@ -1,5 +1,5 @@
 from twitter_ads.client import Client
-from twitter_ads.targeting import AudienceSummary
+from twitter_ads.targeting import AudienceEstimate
 
 CONSUMER_KEY = 'your consumer key'
 CONSUMER_SECRET = 'your consumer secret'
@@ -35,6 +35,6 @@ params = {
         ]
 }
 
-audience_summary = AudienceSummary.load(account=account, params=params)
+audience_estimate = AudienceEstimate.load(account=account, params=params)
 
-print (audience_summary.audience_size)
+print (audience_estimate.audience_size)
