@@ -8,7 +8,6 @@
       "ALL_ON_TWITTER"
     ],
     "bid_amount_local_micro": 2000000,
-    "automatically_select_bid": false,
     "advertiser_domain": null,
     "primary_web_event_tag": null,
     "pay_by": "ENGAGEMENT",
