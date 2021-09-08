@@ -35,6 +35,6 @@ params = {
         ]
 }
 
-audience_summary = AudienceEstimate.load(account=account, params=params)
+audience_estimate = AudienceEstimate.load(account=account, params=params)
 
-print (audience_summary.audience_size)
+print (audience_estimate.audience_size)
