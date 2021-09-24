@@ -626,6 +626,7 @@ class Card(Resource):
 # card properties
 # read-only
 resource_property(Card, 'card_uri', readonly=True)
+resource_property(Card, 'card_type', readonly=True)
 resource_property(Card, 'created_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(Card, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
 resource_property(Card, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
