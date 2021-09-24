@@ -13,7 +13,7 @@ from twitter_ads.creative import (AccountMedia, MediaCreative, ScheduledTweet,
                                   Card, VideoWebsiteCard, PromotedTweet)
 from twitter_ads.audience import CustomAudience
 from twitter_ads.campaign import (AppList, Campaign, FundingInstrument, LineItem,
-                                  PromotableUser, ScheduledPromotedTweet)
+                                  PromotableUser, TrackingTags, ScheduledPromotedTweet)
 
 
 class Account(Resource):
@@ -147,6 +147,12 @@ class Account(Resource):
         Returns a collection of Scheduled Promoted Tweets available to the current account.
         """
         return self._load_resource(ScheduledPromotedTweet, id, **kwargs)
+
+    def tracking_tags(self, id=None, **kwargs):
+        """
+        Returns a collection of Tracking Tags available to the current account.
+        """
+        return self._load_resource(TrackingTags, id, **kwargs)
 
     def video_website_cards(self, id=None, **kwargs):
         """

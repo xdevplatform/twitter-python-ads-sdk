@@ -359,6 +359,26 @@ resource_property(ScheduledPromotedTweet, 'line_item_id')
 resource_property(ScheduledPromotedTweet, 'scheduled_tweet_id')
 
 
+class TrackingTags(Resource, Persistence):
+
+    PROPERTIES = {}
+
+    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/tracking_tags'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/tracking_tags/{id}'
+
+
+# tracking tags properties
+# read-only
+resource_property(TrackingTags, 'created_at', readonly=True, transform=TRANSFORM.TIME)
+resource_property(TrackingTags, 'id', readonly=True)
+resource_property(TrackingTags, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
+resource_property(TrackingTags, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
+# writable
+resource_property(TrackingTags, 'line_item_id')
+resource_property(TrackingTags, 'tracking_tag_type')
+resource_property(TrackingTags, 'tracking_tag_url')
+
+
 class Tweet(object):
 
     TWEET_CREATE = '/' + API_VERSION + '/accounts/{account_id}/tweet'
