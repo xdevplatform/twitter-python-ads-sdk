@@ -170,7 +170,6 @@ class Account(Resource):
 # account properties
 resource_property(Account, 'id', readonly=True)
 resource_property(Account, 'name', readonly=True)
-resource_property(Account, 'salt', readonly=True)
 resource_property(Account, 'timezone', readonly=True)
 resource_property(Account, 'approval_status', readonly=True)
 resource_property(Account, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
