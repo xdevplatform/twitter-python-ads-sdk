@@ -5,7 +5,7 @@ from tests.support import with_resource, with_fixture, characters
 
 from twitter_ads.account import Account
 from twitter_ads.client import Client
-from twitter_ads.targeting import AudienceSummary
+from twitter_ads.targeting import AudienceEstimate
 from twitter_ads import API_VERSION
 
 
@@ -17,8 +17,8 @@ def test_audience_summary():
                   content_type='application/json')
 
     responses.add(responses.POST,
-                  with_resource('/' + API_VERSION + '/accounts/2iqph/audience_summary'),
-                  body=with_fixture('audience_summary'),
+                  with_resource('/' + API_VERSION + '/accounts/2iqph/audience_estimate'),
+                  body=with_fixture('audience_estimate'),
                   content_type='application/json')
 
     client = Client(
@@ -51,7 +51,7 @@ def test_audience_summary():
         ]
       }
 
-    audience_summary = AudienceSummary.load(
+    audience_summary = AudienceEstimate.load(
         account=account,
         params=params
     )

@@ -266,13 +266,6 @@ class LineItem(Analytics, Resource, Persistence, Batch):
             return TargetingCriteria.load(self.account, id, **kwargs)
 
     def save(self):
-        # automatically_select_bid and bid_type are exclusive parameters
-        if self.automatically_select_bid and self.bid_type:
-            if self.bid_type == 'AUTO':
-                self.bid_type = None
-                self.automatically_select_bid = True
-            else:
-                self.automatically_select_bid = None
         super(LineItem, self).save()
 
 
@@ -288,7 +281,6 @@ resource_property(LineItem, 'target_cpa_local_micro', readonly=True)
 # writable
 resource_property(LineItem, 'advertiser_domain')
 resource_property(LineItem, 'advertiser_user_id')
-resource_property(LineItem, 'automatically_select_bid', transform=TRANSFORM.BOOL)
 resource_property(LineItem, 'bid_amount_local_micro')
 resource_property(LineItem, 'bid_strategy')
 resource_property(LineItem, 'campaign_id')
