@@ -13,7 +13,7 @@ from twitter_ads.creative import (AccountMedia, MediaCreative, ScheduledTweet,
                                   Card, VideoWebsiteCard, PromotedTweet)
 from twitter_ads.audience import CustomAudience
 from twitter_ads.campaign import (AppList, Campaign, FundingInstrument, LineItem,
-                                  PromotableUser, ScheduledPromotedTweet)
+                                  PromotableUser, TrackingTags, ScheduledPromotedTweet)
 
 
 class Account(Resource):
@@ -148,6 +148,12 @@ class Account(Resource):
         """
         return self._load_resource(ScheduledPromotedTweet, id, **kwargs)
 
+    def tracking_tags(self, id=None, **kwargs):
+        """
+        Returns a collection of Tracking Tags available to the current account.
+        """
+        return self._load_resource(TrackingTags, id, **kwargs)
+
     def video_website_cards(self, id=None, **kwargs):
         """
         Returns a collection of video website cards available to the current account.
@@ -164,7 +170,6 @@ class Account(Resource):
 # account properties
 resource_property(Account, 'id', readonly=True)
 resource_property(Account, 'name', readonly=True)
-resource_property(Account, 'salt', readonly=True)
 resource_property(Account, 'timezone', readonly=True)
 resource_property(Account, 'approval_status', readonly=True)
 resource_property(Account, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
