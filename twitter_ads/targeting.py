@@ -9,10 +9,10 @@ from twitter_ads.utils import FlattenParams
 import json
 
 
-class AudienceSummary(Resource, Persistence):
+class AudienceEstimate(Resource, Persistence):
     PROPERTIES = {}
 
-    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/audience_summary'
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/audience_estimate'
 
     @classmethod
     @FlattenParams
@@ -27,4 +27,4 @@ class AudienceSummary(Resource, Persistence):
         return klass(account).from_response(response.body['data'])
 
 
-resource_property(AudienceSummary, 'audience_size')
+resource_property(AudienceEstimate, 'audience_size')
