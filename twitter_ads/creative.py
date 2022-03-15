@@ -610,8 +610,8 @@ class Card(Resource):
         headers = {'Content-Type': 'application/json'}
         payload = {'name': self.name, 'components': self.components}
         response = Request(self.account.client, method, resource, headers=headers,
-            body=json.dumps(payload)
-        ).perform()
+                           body=json.dumps(payload)
+                           ).perform()
         return self.from_response(response.body['data'])
 
     @classmethod
@@ -620,7 +620,7 @@ class Card(Resource):
         resource = klass.RESOURCE.format(account_id=account.id, id=id)
         response = Request(account.client, 'get', resource, params=kwargs).perform()
         return klass(account).from_response(response.body['data'])
-        
+
     def reload(self):
         if self.id:
             self.load(self.account, card_id=self.id)
