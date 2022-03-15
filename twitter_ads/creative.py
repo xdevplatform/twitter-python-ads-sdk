@@ -596,34 +596,44 @@ class Card(Resource):
 
     PROPERTIES = {}
 
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/cards/{id}'
     RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/cards'
 
-    @classmethod
-    def create(klass, account, name, components):
-        method = 'post'
-        resource = klass.RESOURCE_COLLECTION.format(account_id=account.id)
+    def save(self):
+        if self.id:
+            method = 'put'
+            resource = self.RESOURCE.format(account_id=self.account.id, id=self.id)
+        else:
+            method = 'post'
+            resource = self.RESOURCE_COLLECTION.format(account_id=self.account.id)
+
         headers = {'Content-Type': 'application/json'}
-        payload = {'name': name, 'components': components}
-        response = Request(
-            account.client, method, resource,
-            headers=headers, body=json.dumps(payload)
+        payload = {'name': self.name, 'components': self.components}
+        response = Request(self.account.client, method, resource, headers=headers,
+            body=json.dumps(payload)
         ).perform()
+        return self.from_response(response.body['data'])
+
+    @classmethod
+    @FlattenParams
+    def load(klass, account, id, **kwargs):
+        resource = klass.RESOURCE.format(account_id=account.id, id=id)
+        response = Request(account.client, 'get', resource, params=kwargs).perform()
         return klass(account).from_response(response.body['data'])
-
-    def load(klass):
-        raise AttributeError("'Card' object has no attribute 'load'")
-
-    def reload(klass):
-        raise AttributeError("'Card' object has no attribute 'reload'")
+        
+    def reload(self):
+        if self.id:
+            self.load(self.account, card_id=self.id)
 
 
 # card properties
 # read-only
+resource_property(Card, 'id', readonly=True)
 resource_property(Card, 'card_uri', readonly=True)
 resource_property(Card, 'card_type', readonly=True)
 resource_property(Card, 'created_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(Card, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
 resource_property(Card, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
-# these are writable, but not in the sense that they can be set on an object and then saved
-resource_property(Card, 'name', readonly=True)
-resource_property(Card, 'components', readonly=True, transform=TRANSFORM.LIST)
+# these are writable
+resource_property(Card, 'name')
+resource_property(Card, 'components', transform=TRANSFORM.LIST)
