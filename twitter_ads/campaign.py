@@ -243,6 +243,7 @@ resource_property(Campaign, 'name')
 resource_property(Campaign, 'standard_delivery', transform=TRANSFORM.BOOL)
 resource_property(Campaign, 'start_time', transform=TRANSFORM.TIME)
 resource_property(Campaign, 'total_budget_amount_local_micro')
+resource_property(Campaign, 'budget_optimization')
 # sdk-only
 resource_property(Campaign, 'to_delete', transform=TRANSFORM.BOOL)
 
@@ -301,6 +302,7 @@ resource_property(LineItem, 'product_type')
 resource_property(LineItem, 'start_time', transform=TRANSFORM.TIME)
 resource_property(LineItem, 'total_budget_amount_local_micro')
 resource_property(LineItem, 'tracking_tags')
+resource_property(Campaign, 'standard_delivery', transform=TRANSFORM.BOOL)
 # sdk-only
 resource_property(LineItem, 'to_delete', transform=TRANSFORM.BOOL)
 
