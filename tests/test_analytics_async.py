@@ -72,7 +72,7 @@ def test_analytics_async():
     assert stats2.concurrent_job_limit == '100'
 
     # call async_stats_job_result() through Campaign class (inheritance)
-    job_id = stats.id_str
+    job_id = stats.id
     job_result = Campaign.async_stats_job_result(
         account,
         job_ids=[job_id]).first
