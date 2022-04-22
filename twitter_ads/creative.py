@@ -211,7 +211,6 @@ class ScheduledTweet(Resource, Persistence):
 resource_property(ScheduledTweet, 'created_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(ScheduledTweet, 'completed_at', read_only=True, transform=TRANSFORM.TIME)
 resource_property(ScheduledTweet, 'id', read_only=True)
-resource_property(ScheduledTweet, 'id_str', read_only=True)
 resource_property(ScheduledTweet, 'scheduled_status', read_only=True)
 resource_property(ScheduledTweet, 'tweet_id', readonly=True)
 resource_property(ScheduledTweet, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
@@ -236,7 +235,6 @@ class DraftTweet(Resource, Persistence):
 # draft tweet properties
 # read-only
 resource_property(DraftTweet, 'id', read_only=True)
-resource_property(DraftTweet, 'id_str', read_only=True)
 resource_property(DraftTweet, 'created_at', read_only=True, transform=TRANSFORM.TIME)
 resource_property(DraftTweet, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(DraftTweet, 'user_id', read_only=True)
