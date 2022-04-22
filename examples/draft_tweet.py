@@ -22,7 +22,7 @@ user_id = UserIdLookup.load(account, screen_name='your_twitter_handle_name').id
 # fetch draft tweets from a given account
 tweets = DraftTweet.all(account)
 for tweet in tweets:
-    print(tweet.id_str)
+    print(tweet.id)
     print(tweet.text)
 
 # create a new draft tweet
@@ -30,19 +30,19 @@ draft_tweet = DraftTweet(account)
 draft_tweet.text = 'draft tweet - new'
 draft_tweet.as_user_id = user_id
 draft_tweet = draft_tweet.save()
-print(draft_tweet.id_str)
+print(draft_tweet.id)
 print(draft_tweet.text)
 
 # fetch single draft tweet metadata
-tweet_id = draft_tweet.id_str
+tweet_id = draft_tweet.id
 draft_tweet = draft_tweet.load(account, tweet_id)
-print(draft_tweet.id_str)
+print(draft_tweet.id)
 print(draft_tweet.text)
 
 # update (PUT) metadata
 draft_tweet.text = 'draft tweet - update'
 draft_tweet = draft_tweet.save()
-print(draft_tweet.id_str)
+print(draft_tweet.id)
 print(draft_tweet.text)
 
 # create a nullcasted tweet using draft tweet metadata
