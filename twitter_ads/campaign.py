@@ -235,14 +235,13 @@ resource_property(Campaign, 'updated_at', readonly=True, transform=TRANSFORM.TIM
 # writable
 resource_property(Campaign, 'daily_budget_amount_local_micro')
 resource_property(Campaign, 'duration_in_days', transform=TRANSFORM.INT)
-resource_property(Campaign, 'end_time', transform=TRANSFORM.TIME)
 resource_property(Campaign, 'entity_status')
 resource_property(Campaign, 'frequency_cap', transform=TRANSFORM.INT)
 resource_property(Campaign, 'funding_instrument_id')
 resource_property(Campaign, 'name')
 resource_property(Campaign, 'standard_delivery', transform=TRANSFORM.BOOL)
-resource_property(Campaign, 'start_time', transform=TRANSFORM.TIME)
 resource_property(Campaign, 'total_budget_amount_local_micro')
+resource_property(Campaign, 'budget_optimization')
 # sdk-only
 resource_property(Campaign, 'to_delete', transform=TRANSFORM.BOOL)
 
@@ -301,6 +300,7 @@ resource_property(LineItem, 'product_type')
 resource_property(LineItem, 'start_time', transform=TRANSFORM.TIME)
 resource_property(LineItem, 'total_budget_amount_local_micro')
 resource_property(LineItem, 'tracking_tags')
+resource_property(Campaign, 'standard_delivery', transform=TRANSFORM.BOOL)
 # sdk-only
 resource_property(LineItem, 'to_delete', transform=TRANSFORM.BOOL)
 

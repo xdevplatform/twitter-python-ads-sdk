@@ -18,7 +18,7 @@
     "start_time": "2019-01-01T00:00:00Z",
     "segmentation_type": null,
     "url": null,
-    "id_str": "111111111111111111",
+    "id": "111111111111111111",
     "entity_ids": [
       "aaaa"
     ],

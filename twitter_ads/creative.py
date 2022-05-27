@@ -126,128 +126,6 @@ resource_property(MediaCreative, 'landing_url')
 resource_property(MediaCreative, 'line_item_id')
 
 
-class WebsiteCard(Resource, Persistence):
-
-    PROPERTIES = {}
-
-    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/cards/website'
-    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/cards/website/{id}'
-
-
-# website card properties
-# read-only
-resource_property(WebsiteCard, 'card_type', readonly=True)
-resource_property(WebsiteCard, 'card_uri', readonly=True)
-resource_property(WebsiteCard, 'created_at', readonly=True, transform=TRANSFORM.TIME)
-resource_property(WebsiteCard, 'id', readonly=True)
-resource_property(WebsiteCard, 'media_url', readonly=True)
-resource_property(WebsiteCard, 'image_display_height', readonly=True)
-resource_property(WebsiteCard, 'image_display_width', readonly=True)
-resource_property(WebsiteCard, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
-resource_property(WebsiteCard, 'website_dest_url', readonly=True)
-resource_property(WebsiteCard, 'website_display_url', readonly=True)
-resource_property(WebsiteCard, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
-# writable
-resource_property(WebsiteCard, 'media_key')
-resource_property(WebsiteCard, 'name')
-resource_property(WebsiteCard, 'website_title')
-resource_property(WebsiteCard, 'website_url')
-
-
-class VideoWebsiteCard(Resource, Persistence):
-
-    PROPERTIES = {}
-
-    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/cards/video_website'
-    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/cards/video_website/{id}'
-
-
-# video website card properties
-# read-only
-resource_property(VideoWebsiteCard, 'account_id', readonly=True)
-resource_property(VideoWebsiteCard, 'card_type', readonly=True)
-resource_property(VideoWebsiteCard, 'card_uri', readonly=True)
-resource_property(VideoWebsiteCard, 'created_at', readonly=True, transform=TRANSFORM.TIME)
-resource_property(VideoWebsiteCard, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
-resource_property(VideoWebsiteCard, 'id', readonly=True)
-resource_property(VideoWebsiteCard, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
-resource_property(VideoWebsiteCard, 'video_height', readonly=True)
-resource_property(VideoWebsiteCard, 'video_owner_id', readonly=True)
-resource_property(VideoWebsiteCard, 'video_poster_height', readonly=True)
-resource_property(VideoWebsiteCard, 'poster_media_url', readonly=True)
-resource_property(VideoWebsiteCard, 'video_poster_width', readonly=True)
-resource_property(VideoWebsiteCard, 'media_url', readonly=True)
-resource_property(VideoWebsiteCard, 'video_width', readonly=True)
-resource_property(VideoWebsiteCard, 'website_dest_url', readonly=True)
-resource_property(VideoWebsiteCard, 'website_display_url', readonly=True)
-# writable
-resource_property(VideoWebsiteCard, 'name')
-resource_property(VideoWebsiteCard, 'title')
-resource_property(VideoWebsiteCard, 'media_key')
-resource_property(VideoWebsiteCard, 'website_url')
-
-
-class ImageAppDownloadCard(Resource, Persistence):
-
-    PROPERTIES = {}
-
-    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/cards/image_app_download'
-    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/cards/image_app_download/{id}'
-
-
-# image app download card properties
-# read-only
-resource_property(ImageAppDownloadCard, 'id', readonly=True)
-resource_property(ImageAppDownloadCard, 'image_display_height', readonly=True)
-resource_property(ImageAppDownloadCard, 'image_display_width', readonly=True)
-resource_property(ImageAppDownloadCard, 'media_url', readonly=True)
-resource_property(ImageAppDownloadCard, 'card_uri', readonly=True)
-resource_property(ImageAppDownloadCard, 'card_type', readonly=True)
-resource_property(ImageAppDownloadCard, 'created_at', readonly=True, transform=TRANSFORM.TIME)
-resource_property(ImageAppDownloadCard, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
-resource_property(ImageAppDownloadCard, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
-# writable
-resource_property(ImageAppDownloadCard, 'country_code')
-resource_property(ImageAppDownloadCard, 'app_cta')
-resource_property(ImageAppDownloadCard, 'ios_app_store_identifier')
-resource_property(ImageAppDownloadCard, 'ios_deep_link')
-resource_property(ImageAppDownloadCard, 'googleplay_app_id')
-resource_property(ImageAppDownloadCard, 'googleplay_deep_link')
-resource_property(ImageAppDownloadCard, 'name')
-resource_property(ImageAppDownloadCard, 'media_key')
-
-
-class VideoAppDownloadCard(Resource, Persistence):
-
-    PROPERTIES = {}
-
-    RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/cards/video_app_download'
-    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/cards/video_app_download/{id}'
-
-
-# video app download card properties
-# read-only
-resource_property(VideoAppDownloadCard, 'card_uri', readonly=True)
-resource_property(VideoAppDownloadCard, 'card_type', readonly=True)
-resource_property(VideoAppDownloadCard, 'created_at', readonly=True, transform=TRANSFORM.TIME)
-resource_property(VideoAppDownloadCard, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
-resource_property(VideoAppDownloadCard, 'id', readonly=True)
-resource_property(VideoAppDownloadCard, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
-resource_property(VideoAppDownloadCard, 'video_owner_id', readonly=True)
-resource_property(VideoAppDownloadCard, 'poster_media_url', readonly=True)
-resource_property(VideoAppDownloadCard, 'media_url', readonly=True)
-# writable
-resource_property(VideoAppDownloadCard, 'country_code')
-resource_property(VideoAppDownloadCard, 'app_cta')
-resource_property(VideoAppDownloadCard, 'poster_media_key')
-resource_property(VideoAppDownloadCard, 'ios_app_store_identifier')
-resource_property(VideoAppDownloadCard, 'ios_deep_link')
-resource_property(VideoAppDownloadCard, 'googleplay_app_id')
-resource_property(VideoAppDownloadCard, 'googleplay_deep_link')
-resource_property(VideoAppDownloadCard, 'name')
-resource_property(VideoAppDownloadCard, 'media_key')
-
-
 class ImageConversationCard(Resource, Persistence):
 
     PROPERTIES = {}
@@ -333,7 +211,6 @@ class ScheduledTweet(Resource, Persistence):
 resource_property(ScheduledTweet, 'created_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(ScheduledTweet, 'completed_at', read_only=True, transform=TRANSFORM.TIME)
 resource_property(ScheduledTweet, 'id', read_only=True)
-resource_property(ScheduledTweet, 'id_str', read_only=True)
 resource_property(ScheduledTweet, 'scheduled_status', read_only=True)
 resource_property(ScheduledTweet, 'tweet_id', readonly=True)
 resource_property(ScheduledTweet, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
@@ -358,7 +235,6 @@ class DraftTweet(Resource, Persistence):
 # draft tweet properties
 # read-only
 resource_property(DraftTweet, 'id', read_only=True)
-resource_property(DraftTweet, 'id_str', read_only=True)
 resource_property(DraftTweet, 'created_at', read_only=True, transform=TRANSFORM.TIME)
 resource_property(DraftTweet, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(DraftTweet, 'user_id', read_only=True)
@@ -596,34 +472,44 @@ class Card(Resource):
 
     PROPERTIES = {}
 
+    RESOURCE = '/' + API_VERSION + '/accounts/{account_id}/cards/{id}'
     RESOURCE_COLLECTION = '/' + API_VERSION + '/accounts/{account_id}/cards'
 
-    @classmethod
-    def create(klass, account, name, components):
-        method = 'post'
-        resource = klass.RESOURCE_COLLECTION.format(account_id=account.id)
+    def save(self):
+        if self.id:
+            method = 'put'
+            resource = self.RESOURCE.format(account_id=self.account.id, id=self.id)
+        else:
+            method = 'post'
+            resource = self.RESOURCE_COLLECTION.format(account_id=self.account.id)
+
         headers = {'Content-Type': 'application/json'}
-        payload = {'name': name, 'components': components}
-        response = Request(
-            account.client, method, resource,
-            headers=headers, body=json.dumps(payload)
-        ).perform()
+        payload = {'name': self.name, 'components': self.components}
+        response = Request(self.account.client, method, resource, headers=headers,
+                           body=json.dumps(payload)
+                           ).perform()
+        return self.from_response(response.body['data'])
+
+    @classmethod
+    @FlattenParams
+    def load(klass, account, id, **kwargs):
+        resource = klass.RESOURCE.format(account_id=account.id, id=id)
+        response = Request(account.client, 'get', resource, params=kwargs).perform()
         return klass(account).from_response(response.body['data'])
 
-    def load(klass):
-        raise AttributeError("'Card' object has no attribute 'load'")
-
-    def reload(klass):
-        raise AttributeError("'Card' object has no attribute 'reload'")
+    def reload(self):
+        if self.id:
+            self.load(self.account, card_id=self.id)
 
 
 # card properties
 # read-only
+resource_property(Card, 'id', readonly=True)
 resource_property(Card, 'card_uri', readonly=True)
 resource_property(Card, 'card_type', readonly=True)
 resource_property(Card, 'created_at', readonly=True, transform=TRANSFORM.TIME)
 resource_property(Card, 'deleted', readonly=True, transform=TRANSFORM.BOOL)
 resource_property(Card, 'updated_at', readonly=True, transform=TRANSFORM.TIME)
-# these are writable, but not in the sense that they can be set on an object and then saved
-resource_property(Card, 'name', readonly=True)
-resource_property(Card, 'components', readonly=True, transform=TRANSFORM.LIST)
+# these are writable
+resource_property(Card, 'name')
+resource_property(Card, 'components', transform=TRANSFORM.LIST)

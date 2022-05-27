@@ -147,7 +147,6 @@ class Analytics(Resource):
 # Analytics properties
 # read-only
 resource_property(Analytics, 'id', readonly=True)
-resource_property(Analytics, 'id_str', readonly=True)
 resource_property(Analytics, 'status', readonly=True)
 resource_property(Analytics, 'url', readonly=True)
 resource_property(Analytics, 'created_at', readonly=True, transform=TRANSFORM.TIME)
