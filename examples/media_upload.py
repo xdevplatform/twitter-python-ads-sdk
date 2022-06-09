@@ -17,7 +17,7 @@ client = Client(CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET
 # https://developer.twitter.com/en/docs/ads/creatives/guides/media-library
 resource = '/1.1/media/upload.json'
 params = {
-    'additional_owners': '756201191646691328',
+    'additional_owners': ACCOUNT_ID,
     'media_category': MEDIA_CATEGORY.TWEET_IMAGE
 }
 domain = 'https://upload.twitter.com'
